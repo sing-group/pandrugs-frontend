@@ -1,0 +1,115 @@
+<h2>Query PandrugsDB: Genes</h2>
+
+
+<form role="query form">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="col-md-6">
+  <div class="form-group">
+    <label for="genes">Genes:</label>
+    <textarea name="genes" class="form-control" id="genestextarea" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="10"></textarea>
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#/query#advanced" aria-expanded="true" aria-controls="advanced">
+          Advanced Options
+        </a>
+      </h4>
+    </div>
+    <div id="advanced" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+      
+      <!-- drug and status level-->
+      <div class="panel panel-default">      
+	<div class="panel-heading">Drug status level</div>
+	<div class="panel-body">
+	
+	  <h4>Cancer</h4>	
+	    <label><input type="checkbox" ng-model="query_cancer_fda">FDA approved</label>
+	    <label><input type="checkbox" ng-model="query_cancer_clinical">Clinical</label>	
+	  <h4>Other pathologies</h4>	
+	    <label><input type="checkbox" ng-model="query_other_fda">FDA approved</label>	
+	    <label><input type="checkbox" ng-model="query_other_clinical">Clinical</label>	
+	    <label><input type="checkbox" ng-model="query_other_experimental">Experimental</label>
+	  
+	</div><!-- end panel-body -->
+      
+      </div><!-- end drug and status level -->
+     
+      
+      <!-- interaction evidence level -->
+      <div class="panel panel-default">      
+	<div class="panel-heading">Interaction evidence level</div>
+	<div class="panel-body">
+	    <label><input type="checkbox" ng-model="query_target">Target</label>
+	
+	    <label><input type="checkbox" ng-model="query_marker">Marker</label>
+	</div><!-- end panel-body -->
+      </div><!-- end  interaction evidence level -->
+      
+      <!-- drug-target relation -->
+      <div class="panel panel-default">      
+	<div class="panel-heading">Drug-target relation</div>
+	<div class="panel-body">
+	    <label><input type="checkbox" ng-model="query_indirect">Direct</label>
+	
+	    <label><input type="checkbox" ng-model="query_direct">Indirect</label>
+	</div><!-- end panel-body -->
+      </div><!-- end  interaction evidence level -->
+      
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+</div>
+
+  <button type="submit" class="btn btn-primary" ng-click="query()" ng-disabled="genes.length==0 || isLoading">Submit</button>
+  
+</form>
+
+
+<div class="container-fluid" ng-hide="results.length == 0">
+<h3>Results</h3>
+<table st-table="results" st-pipe="query" class="table table-striped">
+	<thead>
+	<tr>
+		<th>Gene</th>
+		<th>Drug</th>
+		<th>Family</th>
+		<th>Source</th>
+		<th>Status</th>
+		<th>Cancer</th>
+		<th st-sort="therapy">Type of therapy</th>
+		<th>Indirect</th>
+		<th>Target</th>
+		<th st-sort="score">Score</th>
+	</tr>
+	</thead>
+	<tbody ng-hide="isLoading">
+	<tr ng-repeat="row in results">
+		<td>{{row.gene}}</td>
+		<td>{{row.drug}}</td>
+		<td>{{row.family}}</td>
+		<td>{{row.source}}</td>
+		<td>{{row.status}}</td>
+		<td>{{row.cancer}}</td>
+		<td>{{row.therapy}}</td>
+		<td>{{row.indirect}}</td>
+		<td>{{row.target}}</td>
+		<td>{{row.score}}</td>
+	</tr>
+	</tbody>
+	
+	<tbody ng-hide="!isLoading">
+	<tr><td colspan="10">Loading...</td></tr>
+	</tbody>
+</table>
+
+</div>
+</div>
+
