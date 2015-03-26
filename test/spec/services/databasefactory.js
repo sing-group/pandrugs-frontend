@@ -3,7 +3,7 @@
 describe('Service: DatabaseFactory', function () {
 
   // load the service's module
-  beforeEach(module('pandrugsFrontendApp'));
+  beforeEach(module('pandrugsdbFrontendApp'));
 
   // instantiate service
   var DatabaseFactory;
