@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'smart-table'
+    'smart-table',
+    'highcharts-ng'
   ])
   .config(function ($routeProvider) {
     $routeProvider
