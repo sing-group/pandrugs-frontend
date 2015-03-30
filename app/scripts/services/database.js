@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc service
- * @name pandrugsdbFrontendApp.DatabaseFactory
+ * @name pandrugsdbFrontendApp.Database
  * @description
- * # DatabaseFactory
+ * # Database
  * Factory in the pandrugsdbFrontendApp.
  */
 angular.module('pandrugsdbFrontendApp')
-  .factory('DatabaseFactory', ['$q', '$timeout', '$filter', '$http', function ($q, $timeout, $filter, $http) {
+  .factory('Database', ['$q', '$timeout', '$filter', '$http', function databaseFactory($q, $timeout, $filter, $http) {
     // Service logic
     // ...
-    var SERVER = "http://192.168.111.150:8080";
+    var SERVER = 'http://192.168.111.150:8080';
   
     // Public API here
     return {
