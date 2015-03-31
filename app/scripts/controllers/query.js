@@ -11,29 +11,29 @@ angular.module('pandrugsdbFrontendApp')
   .controller('QueryCtrl', ['$scope', 'MockDatabase', function ($scope, db) {
    
     // query filters
-    $scope.query_cancer_fda = true;
-    $scope.query_cancer_clinical = true;
-    $scope.query_other_fda = true;
-    $scope.query_other_clinical = true;
-    $scope.query_other_experimental = true;
-    $scope.query_target = true;
-    $scope.query_marker = true;
-    $scope.query_direct = true;
-    $scope.query_indirect = true;
+    $scope.queryCancerFda = true;
+    $scope.queryCancerClinical = true;
+    $scope.queryOtherFda = true;
+    $scope.queryOtherClinical = true;
+    $scope.queryOtherExperimental = true;
+    $scope.queryTarget = true;
+    $scope.queryMarker = true;
+    $scope.queryDirect = true;
+    $scope.queryIndirect = true;
     
     $scope.results=[];
-    $scope.genes="";
+    $scope.genes='';
     // methods
     $scope.query = function(tableState) {
       
-      if($scope.genes!="") {	
+      if($scope.genes!=='') {	
 	$scope.isLoading=true;
 	db.search($scope.genes, tableState).then(function(result) {
 	  $scope.results = result;
 	  $scope.isLoading=false;
 	});
       }
-    }
+    };
     
     //chart
     $scope.highchartsNG = {
@@ -49,5 +49,5 @@ angular.module('pandrugsdbFrontendApp')
             text: 'Hello'
         },
         loading: false
-    }
+    };
 }]);

@@ -20,7 +20,7 @@ angular.module('pandrugsdbFrontendApp')
 	
 	deferred.resolve(
 	  [
-	    { gene: "BRCA2" }
+	    { gene: 'BRCA2' }
 	  ]
 	);
 	
