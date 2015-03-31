@@ -21,9 +21,41 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
 
+  grunt.loadNpmTasks('grunt-protractor-runner');
+
   // Define the configuration for all the tasks
   grunt.initConfig({
-
+  protractor: {
+    options: {
+          configFile: "protractor.conf.js",//your protractor config file
+          keepAlive: true, // If false, the grunt process stops when the test fails.
+          noColor: false, // If true, protractor will not use colors in its output.
+          args: {
+              // Arguments passed to the command
+          }
+      },
+    chrome: {
+        options: {
+              args: {
+                  browser: "chrome"
+              }
+          }
+    },
+    safari: {
+        options: {
+            args: {
+                browser: "safari"
+            }
+        }
+    },
+    firefox: {
+        options: {
+            args: {
+                browser: "firefox"
+            }
+        }
+    }
+},
     // Project settings
     yeoman: appConfig,
 
@@ -60,7 +92,12 @@ module.exports = function (grunt) {
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
+      },
+      e2eTest: {
+        files: ['test/e2e_spec/{,*/}*.js'],
+        tasks: ['newer:jshint:test', 'protractor-e2e']
       }
+
     },
 
     // The actual grunt server settings
@@ -130,7 +167,7 @@ module.exports = function (grunt) {
         options: {
           jshintrc: 'test/.jshintrc'
         },
-        src: ['test/spec/{,*/}*.js']
+        src: ['test/spec/{,*/}*.js', 'test/e2e_spec/{,*/}*.js']
       }
     },
 
@@ -410,7 +447,8 @@ module.exports = function (grunt) {
         'compass:dist',
         'imagemin',
         'svgmin'
-      ]
+      ],
+      protractor_test: ['protractor-chrome', /*'protractor-safari',*/ 'protractor-firefox']
     },
 
     // Test settings
@@ -422,7 +460,11 @@ module.exports = function (grunt) {
     }
   });
 
-
+  grunt.registerTask('protractor-chrome', ['protractor:chrome']);
+  grunt.registerTask('protractor-safari', ['protractor:safari']);
+  grunt.registerTask('protractor-firefox', ['protractor:firefox']);
+  grunt.registerTask('protractor-e2e', ['concurrent:protractor_test']);
+  
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -449,7 +491,8 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma',
+    'concurrent:protractor_test'
   ]);
 
   grunt.registerTask('build', [
@@ -474,4 +517,7 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  
+  
+
 };
