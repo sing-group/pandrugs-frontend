@@ -21,7 +21,7 @@ describe('Controller: QueryCtrl', function () {
     
     beforeEach(function() {
       service = {search: function() {}};      
-      $controller('QueryCtrl', { $scope: $scope, MockDatabase: service });
+      $controller('QueryCtrl', { $scope: $scope, database: service });
       deferred = $q.defer();      
       spyOn(service, 'search').and.returnValue(deferred.promise);
     });

@@ -8,7 +8,7 @@
  * Controller of the pandrugsdbFrontendApp
  */
 angular.module('pandrugsdbFrontendApp')
-  .controller('QueryCtrl', ['$scope', 'MockDatabase', function ($scope, db) {
+  .controller('QueryCtrl', ['$scope', 'database', function ($scope, db) {
    
     // query filters
     $scope.queryCancerFda = true;

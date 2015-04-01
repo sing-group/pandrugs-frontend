@@ -19,7 +19,8 @@ angular
     'smart-table',
     'highcharts-ng'
   ])
-  .config(function ($routeProvider) {
+  .config(['databaseProvider', '$routeProvider', function (databaseProvider, $routeProvider) {
+    databaseProvider.useMock(true);
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -36,4 +37,4 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }]);

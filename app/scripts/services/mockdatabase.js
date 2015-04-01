@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name pandrugsdbFrontendApp.MockDatabase
+ * @name pandrugsdbFrontendApp.mockDatabase
  * @description
  * # MockDatabase
  * Factory in the pandrugsdbFrontendApp.
  */
 angular.module('pandrugsdbFrontendApp')
-  .factory('MockDatabase', ['$q', '$timeout', function mockDatabaseFactory($q, $timeout) {
+  .factory('mockDatabase', ['$q', '$timeout', function mockDatabaseFactory($q, $timeout) {
     // Service logic
     // ...
 
