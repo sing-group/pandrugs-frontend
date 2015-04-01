@@ -39,7 +39,7 @@
 
             <ul class="nav navbar-nav">
               <li ng-class="{ active: isActive('/') }"><a href="#/">Home</a></li>
-              <li ng-class="{ active: isActive('/query') }"><a ng-href="#/query">Query</a></li>
+              <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/queryMenu">Query</a></li>
               <li ng-class="{ active: isActive('/about') }"><a ng-href="#/about">About</a></li>
              
             </ul>
@@ -99,6 +99,7 @@
         <script src="scripts/services/mockdatabase.js"></script>
         <script src="scripts/services/restdatabase.js"></script>
         <script src="scripts/services/database.js"></script>
+        <script src="scripts/controllers/querymenu.js"></script>
         <!-- endbuild -->
 </body>
 </html>

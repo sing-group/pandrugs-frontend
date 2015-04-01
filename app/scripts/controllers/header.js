@@ -8,8 +8,8 @@
  * Controller of the pandrugsdbFrontendApp
  */
 angular.module('pandrugsdbFrontendApp')
-  .controller('HeaderCtrl', function ($scope) {
-    $scope.isActive = function (viewLocation) {      
+  .controller('HeaderCtrl', function ($scope, $location) {
+    $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
     };
   });
