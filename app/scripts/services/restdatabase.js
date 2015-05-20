@@ -15,27 +15,85 @@ angular.module('pandrugsdbFrontendApp')
   
     // Public API here
     return {
-      search: function (genes, params) {
+      search: function (genes,
+		  queryCancerFda,
+		  queryCancerClinical,
+		  queryOtherFda,
+		  queryOtherClinical,
+		  queryOtherExperimental,
+		  queryTarget,
+		  queryMarker,
+		  queryDirect,
+		  queryIndirect,
+		  tableState) {
+	
 	
 	var deferred = $q.defer();
 	
+	var genesArray = genes.split('\n');
 	
-	 $http.get(SERVER+'/pandrugsdb-backend/public/genedrugs')
+	// build query string
+	var queryString = '';
+	for (var i = 0; i<genes.length; i++) {
+	  if (!angular.isUndefined(genesArray[i])) {
+	    genesArray[i] = genesArray[i].trim().toUpperCase();
+	    if (genesArray[i].length > 0 ) {
+	      queryString += 'gene='+genesArray[i]+'&';
+	    }
+	 }
+	}
+	
+	// query server
+	var cancerDrugStatus = "";
+	if (queryCancerFda) {
+	    cancerDrugStatus += "cancerDrugStatus=APPROVED&";
+	}
+	if (queryCancerClinical) {
+	    cancerDrugStatus += "cancerDrugStatus=CLINICAL&";
+	}
+	
+	var nonCancerDrugStatus = "";
+	if (queryOtherClinical) {
+	  cancerDrugStatus += "nonCancerDrugStatus=CLINICAL&";
+	}
+	if (queryOtherExperimental) {
+	  cancerDrugStatus += "nonCancerDrugStatus=EXPERIMENTAL&";
+	}
+	if (queryOtherFda) {
+	  cancerDrugStatus += "nonCancerDrugStatus=APPROVED&";
+	}
+	
+	var target = "";
+	if (queryTarget && queryMarker) {
+	  target = "target=BOTH&";
+	} else if (queryTarget) {
+	  target = "target=TARGET&";
+	} else if (queryMarker) {
+	  target = "target=MARKER&";
+	}
+	
+	var direct = "";
+	if (queryDirect && queryIndirect) {
+	  direct = "direct=BOTH&";
+	} else if (queryDirect) {
+	  direct = "direct=DIRECT&";
+	} else if (queryIndirect) {
+	  direct = "direct=INDIRECT&";
+	}
+	
+	$http.get(SERVER+'/pandrugsdb-backend/public/genedrug/?'+queryString+cancerDrugStatus+nonCancerDrugStatus+target+direct)
 	 .success(function(results) {
 	   
-	 
-	  if (!angular.isUndefined(params)) {
-	    if (params.sort.predicate) {
-		results = $filter('orderBy')(results, params.sort.predicate, params.sort.reverse);
+	   if (!angular.isUndefined(tableState)) {
+	      if (tableState.sort.predicate) {
+		results = $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
+	      }
 	    }
-	  }
-	  deferred.resolve(
-	     results
-	  );
-	});
+	    deferred.resolve(results);
+	    }
+	);
 	
-	return deferred.promise;
-        
+	return deferred.promise;        
       }
     };
   }]);

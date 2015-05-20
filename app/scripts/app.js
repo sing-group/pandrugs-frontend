@@ -20,7 +20,7 @@ angular
     'highcharts-ng'
   ])
   .config(['databaseProvider', '$routeProvider', function (databaseProvider, $routeProvider) {
-    databaseProvider.useMock(true);
+    databaseProvider.useMock(false);
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',

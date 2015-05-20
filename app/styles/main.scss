@@ -97,7 +97,26 @@ body {
 .st-sort-descent:before{
     content: '\25BC';
 }
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+	background-color: white; 
+}
+.table-striped > tbody:nth-of-type(2n+1) > tr {
+	background-color: #f9f9f9;
+}
+.table-striped > tbody:nth-of-type(2n) > tr {
+        background-color: white;
+}
 
+table#results tbody td:nth-child(3) {
+  word-break: break-all;
+  min-width: 100px;
+}
+a.curated {
+	color: #297856;
+}
+tr.moreinfo {
+	font-size: 0.9em;
+}
 #team {
   div {
      margin-top: 10px;

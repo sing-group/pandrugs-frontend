@@ -32,10 +32,10 @@ describe('Controller: QueryCtrl', function () {
       
       $scope.query(tableState);
       
-      deferred.resolve([]);
+      deferred.resolve({'gene-drug-group':[]});
       $scope.$digest(); // force then method in promise to run
       
-      expect(service.search).toHaveBeenCalledWith('BRCA2', tableState);      
+      expect(service.search).toHaveBeenCalledWith('BRCA2', true, true, true, true, true, true, true, true, true, tableState);      
     });
     
     it('should put results on $scope.results', function() {
@@ -44,7 +44,7 @@ describe('Controller: QueryCtrl', function () {
       
       $scope.query(tableState);
       
-      deferred.resolve([{gene:'BRCA2'}, {gene:'BRCA2'}]);
+      deferred.resolve({'gene-drug-group':[{gene:'BRCA2', 'gene-drug-info':[]}, {gene:'BRCA2', 'gene-drug-info':[] }]});
       $scope.$digest(); // force then method in promise to run
       
       expect($scope.results.length).toBe(2);

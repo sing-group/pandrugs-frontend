@@ -1,5 +1,7 @@
 'use strict';
 
+
+var mockdata = JSON.parse('[{"gene":["KRAS","EGFR","NF1"],"drug":"ERLOTINIB","family":["Receptor Tyrosine Kinase"],"source":["CancerCommons","ClearityFoundationBiomarkers","ClearityFoundationClinicalTrial","DrugBank","MyCancerGenome","PharmGKB","TALC","TARGET-CGA","TEND","TTD"],"curated-source":["CancerCommons","ClearityFoundationBiomarkers","ClearityFoundationClinicalTrial","MyCancerGenome","TALC","TARGET-CGA","TEND"],"status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect-gene":["MAPK1","MAPK3"],"target":true,"dScore":0.9380000000000001,"gScore":0.8577127454000001,"gene-drug-info":[{"gene":["KRAS"],"alteration": "Missense_mutatio / Amplification","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":null,"target":"marker","sensitivity":"resistance","dScore":-0.968,"gScore":0.9577127454000001,"source":["ClearityFoundationBiomarkers"]},{"gene":["KRAS","NF1"],"alteration": "Missense_mutatio / Amplification","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":"MAPK3","target":"marker","sensitivity":"resistance","dScore":-0.968,"gScore":0.0,"source":["TARGET-CGA"]},{"gene":["EGFR"],"alteration": "Amplification","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":null,"target":"target","sensitivity":"sensitivity","dScore":0.9380000000000001,"gScore":0.9397637670000001,"source":["CancerCommons","ClearityFoundationBiomarkers","ClearityFoundationClinicalTrial","DrugBank","MyCancerGenome","PharmGKB","TALC","TARGET-CGA","TEND","TTD"]},{"gene":["KRAS","NF1"],"alteration": "Missense_mutatio / Amplification","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":"MAPK1","target":"marker","sensitivity":"resistance","dScore":-0.968,"gScore":0.35221087532,"source":["TARGET-CGA"]}]},{"gene":["KRAS","EGFR","NF1"],"drug":"ERLOTINIB","family":["Receptor Tyrosine Kinase"],"source":["CancerCommons","ClearityFoundationBiomarkers","ClearityFoundationClinicalTrial","DrugBank","MyCancerGenome","PharmGKB","TALC","TARGET-CGA","TEND","TTD"],"curated-source":["CancerCommons","ClearityFoundationBiomarkers","ClearityFoundationClinicalTrial","MyCancerGenome","TALC","TARGET-CGA","TEND"],"status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect-gene":["MAPK1","MAPK3"],"target":true,"dScore":0.9380000000000001,"gScore":0.9577127454000001,"gene-drug-info":[{"gene":["KRAS"],"alteration": "Missense_mutatio / Amplification","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":null,"target":"marker","sensitivity":"resistance","dScore":-0.968,"gScore":0.9577127454000001,"source":["ClearityFoundationBiomarkers"]},{"gene":["KRAS","NF1"],"alteration": "Missense_mutatio / Amplification","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":"MAPK3","target":"marker","sensitivity":"resistance","dScore":-0.968,"gScore":0.0,"source":["TARGET-CGA"]},{"gene":["EGFR"],"alteration": "Missense_mutatio / Amplification","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":null,"target":"target","sensitivity":"sensitivity","dScore":0.9380000000000001,"gScore":0.9397637670000001,"source":["CancerCommons","ClearityFoundationBiomarkers","ClearityFoundationClinicalTrial","DrugBank","MyCancerGenome","PharmGKB","TALC","TARGET-CGA","TEND","TTD"]},{"gene":["KRAS","NF1"],"alteration": "Missense_mutatio","drug":"ERLOTINIB","family":"Receptor Tyrosine Kinase","status":"Approved","cancer":"advanced refractory metastatic non-small cell lung cancer","therapy":"TARGETED THERAPY","indirect":"MAPK1","target":"marker","sensitivity":"resistance","dScore":-0.968,"gScore":0.35221087532,"source":["TARGET-CGA"]}]}]');
 /**
  * @ngdoc service
  * @name pandrugsdbFrontendApp.mockDatabase
@@ -8,82 +10,23 @@
  * Factory in the pandrugsdbFrontendApp.
  */
 angular.module('pandrugsdbFrontendApp')
-  .factory('mockDatabase', ['$q', '$timeout', function mockDatabaseFactory($q, $timeout) {
+  .factory('mockDatabase', ['$q', '$timeout', '$filter', '$log',  function mockDatabaseFactory($q, $timeout, $filter, $log) {
     // Service logic
     // ...
 
     // Public API here
     return {
       search: function (gene, params) {
-	
+	$log.log(params);
 	var deferred = $q.defer();
 	
 	$timeout(function() {
-	    deferred.resolve(
-	      [
-		{ 
-		  gene: 'BRCA2',
-		  drug: 'AFATINIB',
-		  family: 'Other',
-		  source: 'GDSC',
-		  status: 'Approved',
-		  cancer: 'metastatic non-small cell lung cancer with EGFR mutations',
-		  therapy: 'TARGETED THERAPY',
-		  indirect: '-',
-		  target: '',
-		  score: 0.5
-		},
-		{ 
-		  gene: 'BRCA2',
-		  drug: 'IDARUBICIN',
-		  family: 'Other',
-		  source: 'CTRP',
-		  status: 'Approved',
-		  cancer: 'acute myelogenous leukemia',
-		  therapy: 'CHEMOTHERAPY',
-		  indirect: '-',
-		  target: '',
-		  score: 0.5
-		},
-		{ 
-		  gene: 'BRCA2',
-		  drug: 'PEMETREXED',
-		  family: 'Other',
-		  source: 'CTRP',
-		  status: 'Approved',
-		  cancer: 'malignant pleural mesothelioma',
-		  therapy: 'CHEMOTHERAPY',
-		  indirect: '-',
-		  target: '',
-		  score: 0.5
-		},
-		{ 
-		  gene: 'BRCA2',
-		  drug: 'ABT-751',
-		  family: 'Other',
-		  source: 'CTRP',
-		  status: 'Clinical',
-		  cancer: 'cancer',
-		  therapy: '',
-		  indirect: '-',
-		  target: '',
-		  score: 0.3
-		},
-		{ 
-		  gene: 'BRCA2',
-		  drug: 'BMN673',
-		  family: 'Other',
-		  source: 'ClearityFoundationBiomarkers',
-		  status: 'Clinical',
-		  cancer: 'cancer',
-		  therapy: '',
-		  indirect: '-',
-		  target: '',
-		  score: 0.3
-		}
-		
-	      ]
-	    )	  
+	  if (!angular.isUndefined(params)){
+	    if (params.sort.predicate) {
+	      mockdata = $filter('orderBy')(mockdata, params.sort.predicate, params.sort.reverse);
+	    }
+	  }
+	    deferred.resolve(mockdata)
 	}, 1000);
 	
         return deferred.promise;
