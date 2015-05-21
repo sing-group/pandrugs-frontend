@@ -78,7 +78,7 @@
 </div>
 
 
-  <button type="submit" class="btn btn-primary btn-lg" ng-show="results==null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical) || (!queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (!queryDirect && !queryIndirect)">Query</button>
+  <button type="submit" class="btn btn-primary btn-lg" ng-show="results==null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (!queryDirect && !queryIndirect)">Query</button>
   
 </form>
 
@@ -113,7 +113,7 @@
 		  <span ng-show="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
 		</button></td>
 		<td>{{row.gene.join(', ')}}</td>
-		<td>{{row.drug}}</td>
+		<td>{{row['show-drug-name']}}</td>
 		<td>{{row.family.join(', ')}}</td>
 		<td>
 		<span ng-repeat="source in row.source"><a href="{{source.link}}" ng-class="{'curated': row['curated-source'].indexOf(source.name) != -1 }">{{source.name}}</a>{{$last? '': ', '}} </span>

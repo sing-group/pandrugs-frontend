@@ -12,7 +12,7 @@ angular.module('pandrugsdbFrontendApp')
     // Service logic
     // ...
     var SERVER = 'http://xistral.ei.uvigo.es:8080';
-  
+	  
     // Public API here
     return {
       search: function (genes,
@@ -51,16 +51,22 @@ angular.module('pandrugsdbFrontendApp')
 	if (queryCancerClinical) {
 	    cancerDrugStatus += "cancerDrugStatus=CLINICAL&";
 	}
+	if (cancerDrugStatus === "") {
+	    cancerDrugStatus = "cancerDrugStatus=NONE&";
+	}
 	
 	var nonCancerDrugStatus = "";
 	if (queryOtherClinical) {
-	  cancerDrugStatus += "nonCancerDrugStatus=CLINICAL&";
+	  nonCancerDrugStatus += "nonCancerDrugStatus=CLINICAL&";
 	}
 	if (queryOtherExperimental) {
-	  cancerDrugStatus += "nonCancerDrugStatus=EXPERIMENTAL&";
+	  nonCancerDrugStatus += "nonCancerDrugStatus=EXPERIMENTAL&";
 	}
 	if (queryOtherFda) {
-	  cancerDrugStatus += "nonCancerDrugStatus=APPROVED&";
+	  nonCancerDrugStatus += "nonCancerDrugStatus=APPROVED&";
+	}
+	if (nonCancerDrugStatus == "") {
+	  nonCancerDrugStatus = "nonCancerDrugStatus=NONE&";
 	}
 	
 	var target = "";
