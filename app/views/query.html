@@ -39,10 +39,10 @@
 	
 	  <h4>Cancer</h4>	
 	    <label><input type="checkbox" ng-model="queryCancerFda">FDA approved</label>
-	    <label><input type="checkbox" ng-model="queryCancerClinical">Clinical</label>	
+	    <label><input type="checkbox" ng-model="queryCancerClinical">Clinical trials</label>	
 	  <h4>Other pathologies</h4>	
 	    <label><input type="checkbox" ng-model="queryOtherFda">FDA approved</label>	
-	    <label><input type="checkbox" ng-model="queryOtherClinical">Clinical</label>	
+	    <label><input type="checkbox" ng-model="queryOtherClinical">Clinical trials</label>	
 	    <label><input type="checkbox" ng-model="queryOtherExperimental">Experimental</label>
 	  
 	</div><!-- end panel-body -->
@@ -139,7 +139,8 @@
 	    Alteration: {{genedrug.alteration}}
 	  </td>
 	  <td >{{genedrug.family}}</td>
-	  <td colspan="4">&nbsp;</td>
+	  <td >{{genedrug.source.join(', ')}}</td>
+	  <td colspan="3">&nbsp;</td>
 	  <td >{{genedrug.indirect!=null? genedrug.indirect : ''}}</td>
 	  <td >{{genedrug.target}}</td>
 	  <td >{{genedrug.dScore | number: 4}}</td>
