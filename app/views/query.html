@@ -83,8 +83,8 @@
 </form>
 
 
-<div class="container-fluid" ng-if="results!=null && results.length != 0">
-
+<div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
+<h3>PanDrugs Candidate Therapies</h3>
   <highchart id="chart1" config="highchartsBubble" style="margin-top:20px"></highchart>
 
 <table id="results" st-table="results" st-pipe="query" class="table table-striped">

@@ -27,36 +27,147 @@ angular.module('pandrugsdbFrontendApp')
     $scope.results=null;
     $scope.genes='';
     
+    
     $scope.highchartsBubble = {
       options: {
        chart: {
             type: 'bubble',
-            zoomType: 'xy'
+            zoomType: 'xy',
+	    events: {
+	      
+	      redraw: function() {
+		var hchart = $scope.highchartsBubble.getHighcharts();
+		
+		function toXPixel(xAxisPos) {
+		  return hchart.xAxis[0].toPixels(xAxisPos, false);
+		}
+		function toYPixel(yAxisPos) {
+		  return hchart.yAxis[0].toPixels(yAxisPos, false);
+		}
+		
+		function drawRectFromCoordinates(fromX, fromY, toX, toY, radius) {		  
+		  return hchart.renderer.rect(
+		    toXPixel(fromX),
+		    toYPixel(fromY),     
+		    toXPixel(toX) - toXPixel(fromX),
+		    toYPixel(toY) - toYPixel(fromY),    
+		    radius);
+		}
+		
+		function drawPath(fromX, fromY, toX, toY) {
+		    return hchart.renderer.path(['M',  
+		    toXPixel(fromX),
+		    toYPixel(fromY), 
+		    'L', 
+		    toXPixel(toX),
+		    toYPixel(toY)]);
+		}
+		
+		function drawText(atX, atY, text) {
+		  return hchart.renderer.text(text, toXPixel(atX), toYPixel(atY));
+		}
+		 
+		 //clearing rectangle
+		  
+		 drawRectFromCoordinates(-1.5, 1.5, 1.5, -0.5, 0).attr({
+		    fill: '#ffffff',
+		    stroke: 'black',	
+		    'stroke-width': 0
+		    
+		  }).add();
+		  
+		  // add rectangle for best candidates
+		  drawRectFromCoordinates(0.7, 1, 1, 0.6, 20).attr({
+		    fill: '#DCFCEF',
+		    stroke: 'black',	
+		    'stroke-width': 0
+		    
+		  }).add();
+		
+		  //plot lines
+		  drawPath(-1, 0.6, 1, 0.6).attr({
+		    'stroke-width': 2,
+		    dashstyle: 'ShortDot',
+		    stroke: '#FAAFC4'
+		  }).add();
+		  
+		  drawPath(0.7, 0, 0.7, 1).attr({
+		    'stroke-width': 2,
+		    dashstyle: 'ShortDot',
+		    stroke: '#FAAFC4'
+		  }).add();
+		  
+		  drawPath(0, 0, 0, 1).attr({
+		    'stroke-width': 1,
+		    dashstyle: 'Solid',
+		    stroke: '#888'
+		  }).add();
+		  
+		  drawPath(-1, 0, 0, 0).attr({
+		    'stroke-width': 5,
+		    stroke: '#FAAFC4'
+		  }).add();
+		  
+		  drawPath(0, 0, 1, 0).attr({
+		    'stroke-width': 5,
+		    stroke: '#79DFB6'
+		  }).add();
+		  		  
+		  
+		  drawText(0.72, 1.01, 'BEST CANDIDATES')
+		  .css({color: '#888', fontWeight:'bold'})
+		  .add();
+		  
+		  drawText(-0.45, -0.115, 'RESISTANCE')
+		  .css({color: '#FAAFC4', fontWeight:'bold'})
+		  .add();
+		  
+		  drawText(0.45, -0.115, 'SENSITIVITY')
+		  .css({color: '#79DFB6', fontWeight:'bold'})
+		  .add();
+		  
+	      }
+	    }
         },
+	legend: {
+	    verticalAlign: 'top'
+	},
 	xAxis: {
-	  title: { text: "Drug Score" },
+	  title: { 
+	    text: '<span class=\"help_chart_icon\" title=\"Drug Score is ... under construction\"></span>Drug Score',  
+	    useHTML: true    
+	  },
+	  min: -1,
+	  max: 1,
 	  plotLines: [
 	    {
 	      color: 'red',
 	      dashStyle: 'ShortDash',
-	      value: 0.40,
-	      width: 2
+	      value: 0.7,
+	      width: 2      
 	    }
 	  ]
 	},
 	yAxis: {
-	  title: { text: "Gene Score" },
+	  title: { 
+	    text: '<span class=\"help_chart_icon\" title=\"Gene Score is ... under construction\"></span>Gene Score',  
+	    useHTML: true    
+	  },
+	 
+	  min: 0,
+	  max: 1,
 	  plotLines: [
 	    {
 	      color: 'red',
 	      dashStyle: 'ShortDash',
 	      value: 0.60,
-	      width: 2
+	      width: 2	      
 	    }
+	    
 	  ]
 	},
         title: {
-            text: 'Candidate Therapies by GScore vs. DScore'
+            text: '',    
         },
 	plotOptions: {
             bubble: {
@@ -64,7 +175,7 @@ angular.module('pandrugsdbFrontendApp')
                 maxSize: 20,
                 tooltip: {
                     headerFormat: '',
-                    pointFormat: "Status: {series.name}<br>DScore: {point.x}<br>GScore: {point.y}<br>Genes: {point.genes}<br>Drug: {point.drug}<br>",
+                    pointFormat: 'Status: {series.name}<br>DScore: {point.x}<br>GScore: {point.y}<br>Genes: {point.genes}<br>Drug: {point.drug}<br>',
                     style: { wrap: 'hard'}
 
                 }
@@ -72,54 +183,43 @@ angular.module('pandrugsdbFrontendApp')
         }
       },
         series:  [
-	{name: 'approved', data: [] },
-	{name: 'clinical trials', data: [] },
-	{name: 'experimental', data: [] },
-	{name: 'resistance', data: [] }
+	{name: 'approved', data: [], color:'#2BBE83'},
+	{name: 'clinical trials', data: [], color: '#FFCF3A'},
+	{name: 'experimental', data: [], color: '#337BB7'}
+
       ]
       };
     
-    function updateChart(results) {
-       /*var series = [
-	{name: 'approved', data: [] },
-	{name: 'clinical trials', data: [] },
-	{name: 'experimental', data: [] },
-	{name: 'resistance', data: [] }
-      ];*/
+    function updateChart(results) {       
       var series = $scope.highchartsBubble.series;
     
       for (var i = 0; i < results.length; i++) {
 	var genedrugresults = results[i]['gene-drug-info'];
 	for (var j = 0; j < genedrugresults.length; j++ ) {
 	  var result = genedrugresults[j];
-	  var datapoint = {genes: result.gene.join(', '), drug: result['show-drug-name'], x: result.dScore, y: result.gScore, z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
-	  if (result.status == 'Approved') {
+	  var datapoint = {genes: result.gene.join(', '), drug: results[i]['show-drug-name'], x: result.dScore, y: result.gScore, z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
+	  if (result.status === 'Approved') {
 	    series[0].data.push(datapoint);
 	  }
-	  if (result.status == 'Clinical') {
+	  if (result.status === 'Clinical') {
 	    series[1].data.push(datapoint);
 	  }
-	  if (result.status == 'Experimental') {
+	  if (result.status === 'Experimental') {
 	    series[2].data.push(datapoint);
-	  }
-	  if (result.sensitivity.indexOf('esistance')!=-1) {
-	    series[3].data.push(datapoint);
-	  }
+	  }  
 	}
       }
-
+      
     }
     
     $scope.newQuery = function() {
       $scope.results = null;
-    }
+    };
     
-    $scope.showChart = function() {
-      
-     /* $timeout(function() {*/
+    $scope.showChart = function() {      
 	updateChart($scope.results);
-	$scope.chartIsShowing = true; // }, 1000);
-    }
+	$scope.chartIsShowing = true;
+    };
     
     // methods
     $scope.query = function(tableState) {

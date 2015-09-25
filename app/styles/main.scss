@@ -122,3 +122,17 @@ tr.moreinfo {
      margin-top: 10px;
   }
 }
+
+#resultsContainer h3 {
+  text-align:center;
+  
+}
+
+.help_chart_icon {
+   width: 20px;
+   height: 20px;
+   background-image: url("../images/question.png");   
+   display:inline-block;
+   margin-right: 3px;
+   vertical-align: middle
+}
