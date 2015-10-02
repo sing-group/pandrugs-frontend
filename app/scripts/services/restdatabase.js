@@ -11,7 +11,8 @@ angular.module('pandrugsdbFrontendApp')
   .factory('restDatabase', ['$q', '$timeout', '$filter', '$http', function restDatabaseFactory($q, $timeout, $filter, $http) {
     // Service logic
     // ...
-    var SERVER = 'http://xistral.ei.uvigo.es:8080';
+    //var SERVER = 'http://xistral.ei.uvigo.es:8080';
+    var SERVER = 'http://localhost:9080';
 	  
     // Public API here
     return {
@@ -49,7 +50,7 @@ angular.module('pandrugsdbFrontendApp')
 	    cancerDrugStatus += "cancerDrugStatus=APPROVED&";
 	}
 	if (queryCancerClinical) {
-	    cancerDrugStatus += "cancerDrugStatus=CLINICAL&";
+	    cancerDrugStatus += "cancerDrugStatus=CLINICAL_TRIALS&";
 	}
 	if (cancerDrugStatus === "") {
 	    cancerDrugStatus = "cancerDrugStatus=NONE&";
@@ -57,7 +58,7 @@ angular.module('pandrugsdbFrontendApp')
 	
 	var nonCancerDrugStatus = "";
 	if (queryOtherClinical) {
-	  nonCancerDrugStatus += "nonCancerDrugStatus=CLINICAL&";
+	  nonCancerDrugStatus += "nonCancerDrugStatus=CLINICAL_TRIALS&";
 	}
 	if (queryOtherExperimental) {
 	  nonCancerDrugStatus += "nonCancerDrugStatus=EXPERIMENTAL&";
