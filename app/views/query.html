@@ -116,7 +116,7 @@
 		<td>{{row['show-drug-name']}}</td>
 		<td>{{row.family.join(', ')}}</td>
 		<td>
-		<span ng-repeat="source in row.source"><a href="{{source.link}}" ng-class="{'curated': row['curated-source'].indexOf(source.name) != -1 }">{{source.name}}</a>{{$last? '': ', '}} </span>
+		<span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>
 		</td>
 		<td>{{row.status}}</td>
 		<td>{{row.cancer}}</td>

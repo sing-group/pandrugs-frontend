@@ -2,6 +2,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import "compass/css3/border-radius";
 
 .browsehappy {
   margin: 0.2em 0;
@@ -111,9 +112,6 @@ table#results tbody td:nth-child(3) {
   word-break: break-all;
   min-width: 100px;
 }
-a.curated {
-	color: #297856;
-}
 tr.moreinfo {
 	font-size: 0.9em;
 }
@@ -132,7 +130,42 @@ tr.moreinfo {
    width: 20px;
    height: 20px;
    background-image: url("../images/question.png");   
-   display:inline-block;
+   display: inline-block;
    margin-right: 3px;
    vertical-align: middle
+}
+
+.curated {
+  @include border-radius(4px);
+  padding: 2px;
+  border-width: 1px;
+  border-style: solid;
+  text-decoration: none;
+  margin: 1px;
+}
+
+a.curated_source {
+  @extend .curated;
+  border-color: #297856;
+  color: #297856;
+  background-color: #EEFAEE;
+  
+  &:hover {
+    border-color: #EEFAEE;
+    color: #EEFAEE;
+    background-color: #297856;
+  }
+}
+
+a.non_curated_source {
+  @extend .curated;
+  border-color: #295678;
+  color: #295678;
+  background-color: #EEEEFA;
+  
+  &:hover {
+    border-color: #EEEEFA;
+    color: #EEEEFA;
+    background-color: #295678;
+  }
 }
