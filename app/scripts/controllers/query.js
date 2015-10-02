@@ -103,14 +103,15 @@ angular.module('pandrugsdbFrontendApp')
 		    stroke: '#888'
 		  }).add();
 		  
+		  // draw thik RESISTANCE - SENSISITIVITY bars
 		  drawPath(-1, 0, 0, 0).attr({
 		    'stroke-width': 5,
-		    stroke: '#FAAFC4'
+		    stroke: '#FF7F7F'
 		  }).add();
 		  
 		  drawPath(0, 0, 1, 0).attr({
 		    'stroke-width': 5,
-		    stroke: '#79DFB6'
+		    stroke: '#7FBF7F'
 		  }).add();
 		  		  
 		  
@@ -119,11 +120,11 @@ angular.module('pandrugsdbFrontendApp')
 		  .add();
 		  
 		  drawText(-0.45, -0.115, 'RESISTANCE')
-		  .css({color: '#FAAFC4', fontWeight:'bold'})
+		  .css({color: '#FF7F7F', fontWeight:'bold'})
 		  .add();
 		  
 		  drawText(0.45, -0.115, 'SENSITIVITY')
-		  .css({color: '#79DFB6', fontWeight:'bold'})
+		  .css({color: '#7FBF7F', fontWeight:'bold'})
 		  .add();
 		  
 	      }
@@ -134,7 +135,7 @@ angular.module('pandrugsdbFrontendApp')
 	},
 	xAxis: {
 	  title: { 
-	    text: '<span class=\"help_chart_icon\" title=\"Drug Score is ... under construction\"></span>Drug Score',  
+	    text: '<span class=\"help_icon\" title=\"Drug Score is ... under construction\"></span>Drug Score',  
 	    useHTML: true    
 	  },
 	  min: -1,
@@ -150,7 +151,7 @@ angular.module('pandrugsdbFrontendApp')
 	},
 	yAxis: {
 	  title: { 
-	    text: '<span class=\"help_chart_icon\" title=\"Gene Score is ... under construction\"></span>Gene Score',  
+	    text: '<span class=\"help_icon\" title=\"Gene Score is ... under construction\"></span>Gene Score',  
 	    useHTML: true    
 	  },
 	 
@@ -175,7 +176,7 @@ angular.module('pandrugsdbFrontendApp')
                 maxSize: 20,
                 tooltip: {
                     headerFormat: '',
-                    pointFormat: 'Status: {series.name}<br>DScore: {point.x}<br>GScore: {point.y}<br>Genes: {point.genes}<br>Drug: {point.drug}<br>',
+                    pointFormat: 'Status: {series.name}<br>DScore: {point.xRound}<br>GScore: {point.yRound}<br>Genes: {point.genes}<br>Drug: {point.drug}<br>',
                     style: { wrap: 'hard'}
 
                 }
@@ -197,7 +198,7 @@ angular.module('pandrugsdbFrontendApp')
 	var genedrugresults = results[i]['gene-drug-info'];
 	for (var j = 0; j < genedrugresults.length; j++ ) {
 	  var result = genedrugresults[j];
-	  var datapoint = {genes: result.gene.join(', '), drug: results[i]['show-drug-name'], x: result.dScore, y: result.gScore, z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
+	  var datapoint = {genes: result.gene.join(', '), drug: results[i]['show-drug-name'], x: result.dScore, xRound: result.dScore.toFixed(4), y: result.gScore, yRound: result.gScore.toFixed(2), z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
 	  if (result.status === 'Approved') {
 	    series[0].data.push(datapoint);
 	  }

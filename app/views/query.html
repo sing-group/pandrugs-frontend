@@ -91,12 +91,11 @@
 	<thead>
 	<tr>
 		<th>Actions</th>
-		<th>Gene(s)</th>
+		<th>Gene(s) <span class="help_icon" title="Gene is ... under construction"></span></th>
 		<th>Drug</th>
 		<th>Family</th>
 		<th>Source(s)</th>
-		<th>Status</th>
-		<th>Cancer</th>
+		<th>Drug status</th>
 		<th st-sort="therapy">Type of therapy</th>
 		<th>Interaction</th>
 		<th>Target</th>
@@ -112,15 +111,14 @@
 		  <span ng-show="row.moreinfo" class="glyphicon glyphicon-minus"></span>
 		  <span ng-show="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
 		</button></td>
-		<td>{{row.gene.join(', ')}}</td>
+		<td>{{row.gene | enumeration}}</td>
 		<td>{{row['show-drug-name']}}</td>
-		<td>{{row.family.join(', ')}}</td>
+		<td>{{row.family | enumeration}}</td>
 		<td>
 		<span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>
 		</td>
-		<td>{{row.status}}</td>
-		<td>{{row.cancer}}</td>
-		<td>{{row.therapy}}</td>
+		<td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}</td>
+		<td>{{row.therapy?row.therapy:'' | titlecase | replace:'_':' '}}</td>
 		<td><img src="images/query/{{row['indirect-gene'].length == 0 ? 'direct-interaction.png' : 'indirect-interaction.png'}}"/></td>
 		<td>{{row.target?'yes':'-'}}</td>
 		<td>{{row.dScore | number: 4}}</td>
@@ -140,7 +138,7 @@
 	  </td>
 	  <td >{{genedrug.family}}</td>
 	  <td >{{genedrug.source.join(', ')}}</td>
-	  <td colspan="3">&nbsp;</td>
+	  <td colspan="2">&nbsp;</td>
 	  <td><img src="images/query/{{genedrug.indirect == null ? 'direct-interaction.png' : 'indirect-interaction.png'}}"/></td>
 	  <td >{{genedrug.target}}</td>
 	  <td >{{genedrug.dScore | number: 4}}</td>

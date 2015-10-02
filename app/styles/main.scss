@@ -112,6 +112,11 @@ table#results tbody td:nth-child(3) {
   word-break: break-all;
   min-width: 100px;
 }
+
+table#results th {
+   white-space: nowrap;
+}
+
 tr.moreinfo {
 	font-size: 0.9em;
 }
@@ -126,7 +131,7 @@ tr.moreinfo {
   
 }
 
-.help_chart_icon {
+.help_icon {
    width: 20px;
    height: 20px;
    background-image: url("../images/question.png");   

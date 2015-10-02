@@ -17,7 +17,7 @@ angular
     'ngSanitize',
     'ngTouch',
     'smart-table',
-    'highcharts-ng'
+    'highcharts-ng'    
   ])
   .config(['databaseProvider', '$routeProvider', function (databaseProvider, $routeProvider) {
     databaseProvider.useMock(false);

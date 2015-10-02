@@ -13,7 +13,7 @@ angular.module('pandrugsdbFrontendApp')
     // ...
     //var SERVER = 'http://xistral.ei.uvigo.es:8080';
     var SERVER = 'http://localhost:9080';
-	  
+      
     // Public API here
     return {
       search: function (genes,
