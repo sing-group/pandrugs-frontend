@@ -107,13 +107,12 @@
 	<tr>
 		<td>
 		<button class="btn btn-default" ng-click="row.moreinfo=!row.moreinfo">
-		  
 		  <span ng-show="row.moreinfo" class="glyphicon glyphicon-minus"></span>
 		  <span ng-show="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
 		</button></td>
-		<td>{{row.gene | enumeration}}</td>
+		<td ng-bind-html="row.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
 		<td>{{row['show-drug-name']}}</td>
-		<td>{{row.family | enumeration}}</td>
+		<td>{{row.family | enumeration }}</td>
 		<td>
 		<span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>
 		</td>
@@ -128,7 +127,7 @@
 	  <td>&nbsp;</td>
 	  <td colspan="2">
 	   <div ng-show="{{genedrug.drugStatusInfo.length>0}}">{{genedrug.drugStatusInfo}}</div>
-	    <b>{{genedrug.gene.join(', ')}}</b><br>
+	    <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
 	    PubMed Link: 
 	    <a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>{{genedrug.indirect!=null?(genedrug.drug+'+'+genedrug.indirect):(genedrug.drug+'+'+genedrug.gene.join())}}</a>
 	    
