@@ -187,3 +187,16 @@ a.non_curated_source {
     background-color: #295678;
   }
 }
+
+.cancer_type_checkbox input {
+  display:none;
+}
+.cancer_type_checkbox label {
+  @extend .curated;
+  border-color: #297856;
+  cursor: pointer;
+}
+
+.cancer_type_checkbox input:checked + label {
+  background-color: #EEFAEE;
+}

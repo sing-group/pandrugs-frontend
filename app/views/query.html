@@ -1,7 +1,6 @@
 <div>
 <button type="submit" class="btn btn-success btn-lg" ng-show="results!=null" ng-click="newQuery()" style="float:right">New Query</button>
 <h2>Query Pandrugs: Genes</h2>
-
 </div>
 
 <form role="query form">
@@ -60,6 +59,26 @@
 	</div><!-- end panel-body -->
       </div><!-- end  interaction evidence level -->
       
+
+      <!-- cancer types -->
+      <div class="panel panel-default">
+	<div class="panel-heading">Select Cancer Types</div>
+	<div class="panel-body">
+	 <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
+	    <input
+	      type="checkbox"
+	      name="cancerType_{{$index}}"
+	      id="cancerType_{{$index}}"
+	      value="{{cancerType.name}}"
+	      ng-model="cancerType.selected"
+	    />
+	    <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
+	  </span>
+	</div><!-- end panel-body -->
+      </div><!-- end cancer types -->
+
+
+
       </div>
     </div>
   </div>

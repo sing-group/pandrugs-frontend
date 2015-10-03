@@ -101,6 +101,21 @@ angular.module('pandrugsdbFrontendApp')
 	);
 	
 	return deferred.promise;        
+      },
+      
+      getCancerTypes: function() {
+	
+	var deferred = $q.defer();
+	
+	$http.get(SERVER+'/pandrugsdb-backend/public/cancer')
+	 .success(function(results) {
+	   
+	    deferred.resolve(results['name']);
+	    }
+	);
+	
+	return deferred.promise;
+	
       }
     };
   }]);

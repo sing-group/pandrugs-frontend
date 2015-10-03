@@ -30,6 +30,18 @@ angular.module('pandrugsdbFrontendApp')
 	}, 1000);
 	
         return deferred.promise;
+      },
+      
+      getCancerTypes: function() {
+	
+	var deferred = $q.defer();
+	$timeout(function() {	    
+	    deferred.resolve(['adrenal gland','bladder', 'stomach']);
+	}, 1000);
+	
+	
+	return deferred.promise;
+	
       }
     };
   }]);

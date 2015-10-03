@@ -10,7 +10,7 @@
  * Controller of the pandrugsdbFrontendApp
  */
 angular.module('pandrugsdbFrontendApp')
-  .controller('QueryCtrl', ['$scope', 'database', '$timeout', function ($scope, db, $timeout) {
+  .controller('QueryCtrl', ['$scope', 'database', '$timeout', 'filterFilter', function ($scope, db, $timeout, filterFilter) {
    
     $scope.$timeout = $timeout;
     // query filters
@@ -25,7 +25,29 @@ angular.module('pandrugsdbFrontendApp')
     $scope.results=null;
     $scope.genes='';
     
+    // cancer types
+    $scope.cancerTypes = [];
+    db.getCancerTypes().then(function(results) {
+      for (var i=0; i<results.length; i++){
+	 $scope.cancerTypes.push({name:results[i], selected:false});
+      }      
+    });
     
+    // selected cancer types
+    $scope.selectedCancerTypes = [];
+
+    // helper method to get selected fruits
+    $scope.selectedFruits = function selectedFruits() {
+      return filterFilter($scope.fruits, { selected: true });
+    };
+
+    // watch cancerTypes for changes
+    $scope.$watch('cancerTypes|filter:{selected:true}', function (nv) {
+      $scope.selectedCancerTypes = nv.map(function (cancerType) {
+	return cancerType.name;
+      });      
+    }, true);
+  
     $scope.highchartsBubble = {
       options: {
        chart: {
