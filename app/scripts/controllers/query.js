@@ -8,8 +8,8 @@
  * Controller of the pandrugsdbFrontendApp
  */
 angular.module('pandrugsdbFrontendApp')
-  .controller('QueryCtrl', ['$scope', 'database', 'bubbleTherapyChart', '$timeout', 'filterFilter', 
-	      function ($scope, db, bubblechart, $timeout, filterFilter) {   
+  .controller('QueryCtrl', ['$scope', 'database', 'bubbleTherapyChart', 'therapyByStatusChart', '$timeout', 'filterFilter', 
+	      function ($scope, db, bubbleChart, therapyByStatusChart, $timeout, filterFilter) {   
 
     $scope.$timeout = $timeout;
     
@@ -45,13 +45,26 @@ angular.module('pandrugsdbFrontendApp')
     $scope.results=null;
     
     // bubble chart
-    $scope.highchartsBubble = bubblechart;
+    $scope.highchartsBubble = bubbleChart;
     
     $scope.newQuery = function() {
       $scope.results = null;
     };    
+    
+    
+    // therapy by status chart
+    $scope.highchartsTherapyByStatus = therapyByStatusChart;
+    
+    var charts = [bubbleChart, therapyByStatusChart];
+    
+    function updateCharts(results) {
+      for (var i = 0; i<charts.length; i++) {
+	charts[i].updateChart(results);
+      }      
+    }
+    
     $scope.showChart = function() {
-	bubblechart.updateChart($scope.results);
+	updateCharts($scope.results);
 	$scope.chartIsShowing = true;
     };
     
@@ -85,7 +98,7 @@ angular.module('pandrugsdbFrontendApp')
 		}
 	}
 	
-	  bubblechart.updateChart($scope.results);
+	  updateCharts($scope.results);
 	  $scope.isLoading=false;  
 	});
       }

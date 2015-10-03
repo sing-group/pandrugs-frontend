@@ -13,7 +13,7 @@ angular.module('pandrugsdbFrontendApp')
     // Public API here
     return {
       options: {
-       chart: {
+	chart: {
             type: 'bubble',
             zoomType: 'xy',
 	    events: {

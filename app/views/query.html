@@ -93,9 +93,18 @@
 
 
 <div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
+<div class="row">
 <h3>PanDrugs Candidate Therapies</h3>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <highchart id="chart2" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>    
+  </div>
+  <div class="col-lg-6">
   <highchart id="chart1" config="highchartsBubble" style="margin-top:20px"></highchart>
-
+  </div>
+</div>
+<div class="row">
 <table id="results" st-table="results" st-pipe="query" class="table table-striped">
 	<thead>
 	<tr>
@@ -160,7 +169,7 @@
 	</tr>
 	</tbody>
 </table>
-
+</div>
 </div>
 </div>
 
