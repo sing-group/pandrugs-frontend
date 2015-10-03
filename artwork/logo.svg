@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="New document 1">
+   sodipodi:docname="logo.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="317.04851"
-     inkscape:cy="772.79231"
+     inkscape:zoom="1.4"
+     inkscape:cx="359.69416"
+     inkscape:cy="777.51868"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -57,7 +57,10 @@
        x="152.53304"
        y="125.04215"
        id="text2985"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/mnt/750gb/workspaces/workspace-luna-jee/pandrugsdb-frontend/app/images/pandrugsdb-logo-big.png"
+       inkscape:export-xdpi="134.03142"
+       inkscape:export-ydpi="134.03142"><tspan
          sodipodi:role="line"
          id="tspan2987"
          x="152.53304"
@@ -66,6 +69,6 @@
    style="font-weight:bold;-inkscape-font-specification:Sawasdee Bold"
    id="tspan2996">DRUGS</tspan><tspan
    style="font-size:65.00091553%;baseline-shift:super;fill:#333333"
-   id="tspan2993">db</tspan></tspan></text>
+   id="tspan2993" /></tspan></text>
   </g>
 </svg>
