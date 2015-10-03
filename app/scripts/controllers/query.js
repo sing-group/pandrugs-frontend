@@ -198,7 +198,7 @@ angular.module('pandrugsdbFrontendApp')
 	var genedrugresults = results[i]['gene-drug-info'];
 	for (var j = 0; j < genedrugresults.length; j++ ) {
 	  var result = genedrugresults[j];
-	  var datapoint = {genes: result.gene.join(', '), drug: results[i]['show-drug-name'], x: result.dScore, xRound: result.dScore.toFixed(4), y: result.gScore, yRound: result.gScore.toFixed(2), z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
+	  var datapoint = {genes: result.gene.join(', '), drug: results[i]['show-drug-name'], x: result.dScore, xRound: result.dScore.toFixed(4), y: result.gScore, yRound: result.gScore.toFixed(4), z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
 	  if (result.status === 'Approved') {
 	    series[0].data.push(datapoint);
 	  }
