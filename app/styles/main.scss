@@ -128,16 +128,29 @@ tr.moreinfo {
 
 #resultsContainer h3 {
   text-align:center;
-  
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 3px;
+  vertical-align: middle;
 }
 
 .help_icon {
-   width: 20px;
-   height: 20px;
-   background-image: url("../images/question.png");   
-   display: inline-block;
-   margin-right: 3px;
-   vertical-align: middle
+  @extend .icon;
+   background-image: url("../images/question.png");
+}
+
+.gene_icon {
+  @extend .icon;
+   background-image: url("../images/gene.png");
+}
+
+.drug_icon {
+  @extend .icon;
+   background-image: url("../images/drug.png");
 }
 
 .curated {
