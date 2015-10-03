@@ -219,13 +219,13 @@ angular.module('pandrugsdbFrontendApp')
 	for (var j = 0; j < genedrugresults.length; j++ ) {
 	  var result = genedrugresults[j];
 	  var datapoint = {genes: result.gene.join(', '), drug: results[i]['show-drug-name'], x: result.dScore, xRound: result.dScore.toFixed(4), y: result.gScore, yRound: result.gScore.toFixed(4), z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
-	  if (result.status === 'Approved') {
+	  if (result.status === 'APPROVED') {
 	    series[0].data.push(datapoint);
 	  }
-	  if (result.status === 'Clinical_trials') {
+	  if (result.status === 'CLINICAL_TRIALS') {
 	    series[1].data.push(datapoint);
 	  }
-	  if (result.status === 'Experimental') {
+	  if (result.status === 'EXPERIMENTAL') {
 	    series[2].data.push(datapoint);
 	  }  
 	}
@@ -260,6 +260,20 @@ angular.module('pandrugsdbFrontendApp')
 		  true,
 		  tableState).then(function(result) {	  
 	  $scope.results = result['gene-drug-group'];
+	  
+	for (var i = 0; i < $scope.results.length; i++) {
+		var result = $scope.results[i];
+		result.isOnlyIndirect = function() {
+			for (var i = 0; i < this['gene-drug-info'].length; i++) {
+				if (this['gene-drug-info'][i]['indirect'] == null) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+	}
+	
 	  updateChart($scope.results);
 	  $scope.isLoading=false;
 	  //$scope.$apply();

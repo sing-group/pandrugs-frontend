@@ -126,13 +126,13 @@
 		<span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>
 		</td>
 		<td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}</td>
-		<td>{{row.therapy?row.therapy:'' | titlecase | replace:'_':' '}}</td>
-		<td><img src="images/query/{{row['indirect-gene'].length == 0 ? 'direct-interaction.png' : 'indirect-interaction.png'}}"/></td>
+		<td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
+		<td><img src="images/query/{{row.isOnlyIndirect() ? 'indirect-interaction.png' : 'direct-interaction.png'}}"/></td>
 		<td>{{row.target?'yes':'-'}}</td>
 		<td>{{row.dScore | number: 4}}</td>
 		<td>{{row.gScore | number: 4}}</td>		
 	</tr>	
-	<tr ng-repeat="genedrug in row['gene-drug-info']" ng-show="row.moreinfo" class="moreinfo">
+	<tr ng-repeat="genedrug in row['gene-drug-info']" ng-show="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
 	  <td>&nbsp;</td>
 	  <td colspan="2">
 	   <div ng-show="{{genedrug.drugStatusInfo.length>0}}">{{genedrug.drugStatusInfo}}</div>
