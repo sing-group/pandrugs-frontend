@@ -20,9 +20,7 @@ angular.module('pandrugsdbFrontendApp')
     $scope.queryOtherClinical = true;
     $scope.queryOtherExperimental = true;
     $scope.queryTarget = true;
-    $scope.queryMarker = true;
-    $scope.queryDirect = true;
-    $scope.queryIndirect = true;
+    $scope.queryMarker = true;    
     
     $scope.results=null;
     $scope.genes='';
@@ -236,8 +234,8 @@ angular.module('pandrugsdbFrontendApp')
 		  $scope.queryOtherExperimental,
 		  $scope.queryTarget,
 		  $scope.queryMarker,
-		  $scope.queryDirect,
-		  $scope.queryIndirect,
+		  true,
+		  true,
 		  tableState).then(function(result) {	  
 	  $scope.results = result['gene-drug-group'];
 	  updateChart($scope.results);
