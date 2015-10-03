@@ -113,7 +113,7 @@
 	</tr>
 	</thead>
 	<tbody ng-hide="isLoading" ng-repeat="row in results">
-	<tr>
+	<tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
 		<td>
 		<button class="btn btn-default" ng-click="row.moreinfo=!row.moreinfo">
 		  <span ng-show="row.moreinfo" class="glyphicon glyphicon-minus"></span>
