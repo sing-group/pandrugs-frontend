@@ -222,7 +222,7 @@ angular.module('pandrugsdbFrontendApp')
 	  if (result.status === 'Approved') {
 	    series[0].data.push(datapoint);
 	  }
-	  if (result.status === 'Clinical') {
+	  if (result.status === 'Clinical_trials') {
 	    series[1].data.push(datapoint);
 	  }
 	  if (result.status === 'Experimental') {
