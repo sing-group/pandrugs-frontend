@@ -109,8 +109,8 @@
 	<thead>
 	<tr>
 		<th>Actions</th>
-		<th>Gene(s) <span class="gene_icon" title="Gene"/> <span class="help_icon" title="Gene(s) is ... under construction"/></th>
-		<th>Drug <span class="drug_icon" title="Drug"/> <span class="help_icon" title="Drug is ... under construction"/></th>
+		<th>Gene(s) <span class="gene_icon" title="Gene"></span> <span class="help_icon" title="Gene(s) is ... under construction"></span></th>
+		<th>Drug <span class="drug_icon" title="Drug"></span> <span class="help_icon" title="Drug is ... under construction"></span></th>
 		<th>Family <span class="help_icon" title="Family is ... under construction"/></th>
 		<th>Source(s) <span class="help_icon" title="Source(s) is ... under construction"/></th>
 		<th>Drug status <span class="help_icon" title="Drug status is ... under construction"/></th>
@@ -136,7 +136,10 @@
 		</td>
 		<td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}</td>
 		<td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
-		<td><img src="images/query/{{row.isOnlyIndirect() ? 'indirect-interaction.png' : 'direct-interaction.png'}}"/></td>
+		<td>
+		<img ng-show='{{row.isOnlyIndirect()}}' src="images/query/indirect-interaction.png"/>
+		<img ng-hide='{{row.isOnlyIndirect()}}' src="images/query/direct-interaction.png"/>	
+		</td>
 		<td>{{row.target?'yes':'-'}}</td>
 		<td>{{row.dScore | number: 4}}</td>
 		<td>{{row.gScore | number: 4}}</td>		
@@ -156,7 +159,10 @@
 	  <td >{{genedrug.family}}</td>
 	  <td >{{genedrug.source.join(', ')}}</td>
 	  <td colspan="2">&nbsp;</td>
-	  <td><img src="images/query/{{genedrug.indirect == null ? 'direct-interaction.png' : 'indirect-interaction.png'}}"/></td>
+	  <td>
+	  <img ng-show='{{genedrug.indirect == null}}' src="images/query/direct-interaction.png"/>
+	  <img ng-hide='{{genedrug.indirect == null}}' src="images/query/indirect-interaction.png"/>
+	  </td>
 	  <td >{{genedrug.target}}</td>
 	  <td >{{genedrug.dScore | number: 4}}</td>
 	  <td >{{genedrug.gScore | number: 4}}</td>
