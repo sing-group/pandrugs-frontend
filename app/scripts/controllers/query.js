@@ -49,6 +49,21 @@ function (
     // selected cancer types
     $scope.selectedCancerTypes = [];
 
+    $scope.selectAllCancerTypes = function() {
+      $scope.cancerTypes.forEach(function(cancerType){
+        cancerType.selected = true;
+      });
+    };
+
+    $scope.clearCancerTypesSelection = function() {
+      if ($scope.firstTimeCancerSelection) {
+        $scope.firstTimeCancerSelection = false;
+      }
+      $scope.cancerTypes.forEach(function(cancerType){
+        cancerType.selected = false;
+      });
+    };
+
     $scope.firstTimeCancerSelection = true;
     // watch cancerTypes for changes
     $scope.$watch('cancerTypes|filter:{selected:true}', function (nv) {
@@ -112,10 +127,13 @@ function (
           tableState).then(function(result) {
             var results = result['gene-drug-group'];
             $scope.results = results.filter(function(elem){
+              if (elem.status === "EXPERIMENTAL") {
+                return true;
+              }
               var interesting = false;
+
               elem.cancer.forEach(function(cancerType){
                 if ($scope.selectedCancerTypes.indexOf(cancerType.toUpperCase())!=-1) {
-                  //alert("true");
                   interesting = true;
                   return;
                 }

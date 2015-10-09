@@ -64,7 +64,11 @@
                   <!-- cancer types -->
                   <div class="col-md-12">
                     <div class="panel panel-default">
-                      <div class="panel-heading">Select Cancer Types</div>
+                      <div class="panel-heading">
+                        Select Cancer Types
+                        <input class="btn btn-default" type="button" ng-click="selectAllCancerTypes()" value="Select all"></input>
+                        <input class="btn btn-default" type="button" ng-click="clearCancerTypesSelection()" value="Clear all"></input>
+                      </div>
                       <div class="panel-body">
                         <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
                           <input
@@ -76,6 +80,7 @@
                           />
                           <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
                         </span>
+
                       </div>
                     </div><!-- end panel-body -->
                   </div>

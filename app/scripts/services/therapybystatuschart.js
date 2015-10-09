@@ -41,21 +41,7 @@ angular.module('pandrugsdbFrontendApp')
     series: [{
       name: "Drugs",
       colorByPoint: true,
-      data: [{
-        name: "approved",
-        y: 0,
-        sliced: true,
-        selected: true,
-        color:'#2BBE83'
-      }, {
-        name: "clinical trials",
-        y: 0,
-        color: '#FFCF3A'
-      }, {
-        name: "experimental",
-        y: 0,
-        color: '#337BB7'
-      }]
+      data: []
     }]
     ,
     updateChart: function(results) {
@@ -64,8 +50,6 @@ angular.module('pandrugsdbFrontendApp')
       var experimental = 0;
 
       for (var i = 0; i < results.length; i++) {
-
-
         if (results[i].status === 'APPROVED') {
           approved ++;
         }
@@ -77,9 +61,30 @@ angular.module('pandrugsdbFrontendApp')
         }
       }
 
-      this.series[0].data[0].y = approved;
-      this.series[0].data[1].y = clinical;
-      this.series[0].data[2].y = experimental;
+      this.series[0].data[0] = {
+        name: "approved",
+        y: approved,
+        sliced: true,
+        selected: true,
+        color:'#2BBE83'
+      };
+
+      this.series[0].data[1] =  {
+        name: "clinical trials",
+        y: clinical,
+        color: '#FFCF3A'
+      };
+
+      this.series[0].data[2] = {
+        name: "experimental",
+        y: experimental,
+        color: '#337BB7'
+      };
+
+      //sort
+      this.series[0].data = this.series[0].data.sort(function(data1, data2){
+        return data1.y - data2.y;
+      });
     }
   };
 });

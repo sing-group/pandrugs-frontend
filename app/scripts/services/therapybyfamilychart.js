@@ -86,7 +86,10 @@ angular.module('pandrugsdbFrontendApp')
         );
       }
 
-
+      //sort
+      this.series[0].data = this.series[0].data.sort(function(data1, data2){
+        return data1.y - data2.y;
+      });
     }
   };
 });
