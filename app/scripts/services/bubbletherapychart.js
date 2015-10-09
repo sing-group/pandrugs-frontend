@@ -157,7 +157,7 @@ angular.module('pandrugsdbFrontendApp')
             maxSize: 20,
             tooltip: {
               headerFormat: '',
-              pointFormat: 'Status: {series.name}<br>DScore: {point.xRound}<br>GScore: {point.yRound}<br>Genes: {point.genes}<br>Drug: {point.drug}<br>',
+              pointFormat: 'Status: {series.name}<br>DScore: {point.xRound}<br>GScore: {point.yRound}<br>Genes: {point.genes}<br>Drug: {point.drug}<br>Jitter: {point.jitter}',
               style: { wrap: 'hard'}
 
             }
@@ -179,9 +179,18 @@ angular.module('pandrugsdbFrontendApp')
           var genedrugresults = results[i]['gene-drug-info'];
           for (var j = 0; j < genedrugresults.length; j++ ) {
             var result = genedrugresults[j];
-            var jitterX = (Math.random() - 0.5) / 1000;
-            var jitterY = (Math.random() - 0.5) / 1000;
-            var datapoint = {genes: result.gene.join(', '), drug: results[i]['show-drug-name'], x: result.dScore + jitterX, xRound: result.dScore.toFixed(4), y: result.gScore + jitterY, yRound: result.gScore.toFixed(4), z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10) };
+            var jitterX = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
+            var jitterY = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
+            var datapoint = {
+              genes: result.gene.join(', '),
+              drug: results[i]['show-drug-name'],
+              x: result.dScore + jitterX,
+              xRound: result.dScore.toFixed(4),
+              y: result.gScore + jitterY,
+              yRound: result.gScore.toFixed(4),
+              z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10),
+              jitter: "x: "+jitterX.toExponential()+", y: "+jitterY.toExponential()
+            };
             if (result.status === 'APPROVED') {
               series[0].data.push(datapoint);
             }
