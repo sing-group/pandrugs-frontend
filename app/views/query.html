@@ -1,181 +1,178 @@
 <div>
-<button type="submit" class="btn btn-success btn-lg" ng-show="results!=null" ng-click="newQuery()" style="float:right">New Query</button>
-<h2>Query Pandrugs: Genes</h2>
+  <button type="submit" class="btn btn-success btn-lg" ng-show="results!=null" ng-click="newQuery()" style="float:right">New Query</button>
+  <h2>Query Pandrugs: Genes</h2>
 </div>
 
 <form role="query form">
   <div class="container-fluid">
     <div class="row"  id="genequeryform" ng-show="results==null">
-    <div class="col-md-6">
-  <div class="form-group">
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingOne">
-      <h4 class="panel-title">
-          Genes
-      </h4>
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                Genes
+              </h4>
+            </div>
+            <textarea name="genes" class="form-control" id="genestextarea" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#/query#advanced" aria-expanded="true" aria-controls="advanced">
+                  Advanced Options
+                </a>
+              </h4>
+            </div>
+            <div id="advanced" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+
+                <!-- drug and status level-->
+                <div class="panel panel-default">
+                  <div class="panel-heading">Drug status level</div>
+                  <div class="panel-body">
+
+                    <h4>Cancer</h4>
+                    <label><input type="checkbox" ng-model="queryCancerFda">FDA approved</label>
+                    <label><input type="checkbox" ng-model="queryCancerClinical">Clinical trials</label>
+                    <h4>Other pathologies</h4>
+                    <label><input type="checkbox" ng-model="queryOtherFda">FDA approved</label>
+                    <label><input type="checkbox" ng-model="queryOtherClinical">Clinical trials</label>
+                    <label><input type="checkbox" ng-model="queryOtherExperimental">Experimental</label>
+
+                  </div><!-- end panel-body -->
+
+                </div><!-- end drug and status level -->
+
+
+                <!-- interaction evidence level -->
+                <div class="panel panel-default">
+                  <div class="panel-heading">Interaction evidence level</div>
+                  <div class="panel-body">
+                    <label><input type="checkbox" ng-model="queryTarget">Target</label>
+
+                    <label><input type="checkbox" ng-model="queryMarker">Marker</label>
+                  </div><!-- end panel-body -->
+                </div><!-- end  interaction evidence level -->
+
+
+                <!-- cancer types -->
+                <div class="panel panel-default">
+                  <div class="panel-heading">Select Cancer Types</div>
+                  <div class="panel-body">
+                    <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
+                      <input
+                      type="checkbox"
+                      name="cancerType_{{$index}}"
+                      id="cancerType_{{$index}}"
+                      value="{{cancerType.name}}"
+                      ng-model="cancerType.selected"
+                      />
+                      <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
+                    </span>
+                  </div><!-- end panel-body -->
+                </div><!-- end cancer types -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <textarea name="genes" class="form-control" id="genestextarea" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20"></textarea>
-  </div>
-  </div>
-  </div>
-  <div class="col-md-6">
-  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingOne">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#/query#advanced" aria-expanded="true" aria-controls="advanced">
-          Advanced Options
-        </a>
-      </h4>
+
+
+    <button type="submit" class="btn btn-primary btn-lg" ng-show="results==null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker)">Query</button>
+
+  </form>
+
+
+  <div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
+    <div class="row">
+      <h3>PanDrugs Candidate Therapies</h3>
     </div>
-    <div id="advanced" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-      <div class="panel-body">
-      
-      <!-- drug and status level-->
-      <div class="panel panel-default">      
-	<div class="panel-heading">Drug status level</div>
-	<div class="panel-body">
-	
-	  <h4>Cancer</h4>	
-	    <label><input type="checkbox" ng-model="queryCancerFda">FDA approved</label>
-	    <label><input type="checkbox" ng-model="queryCancerClinical">Clinical trials</label>	
-	  <h4>Other pathologies</h4>	
-	    <label><input type="checkbox" ng-model="queryOtherFda">FDA approved</label>	
-	    <label><input type="checkbox" ng-model="queryOtherClinical">Clinical trials</label>	
-	    <label><input type="checkbox" ng-model="queryOtherExperimental">Experimental</label>
-	  
-	</div><!-- end panel-body -->
-      
-      </div><!-- end drug and status level -->
-     
-      
-      <!-- interaction evidence level -->
-      <div class="panel panel-default">      
-	<div class="panel-heading">Interaction evidence level</div>
-	<div class="panel-body">
-	    <label><input type="checkbox" ng-model="queryTarget">Target</label>
-	
-	    <label><input type="checkbox" ng-model="queryMarker">Marker</label>
-	</div><!-- end panel-body -->
-      </div><!-- end  interaction evidence level -->
-      
+    <div class="row">
+      <div class="col-lg-6">
+        <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
+      </div>
+      <div class="col-lg-6">
+        <highchart id="therapyByStatusChart" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>
+        <highchart id="therapyByFamilyChart" config="highchartsTherapyByFamily" style="margin-top:20px"></highchart>
+      </div>
+    </div>
+    <div class="row">
+      <table id="results" st-table="results" st-pipe="query" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Actions</th>
+            <th>Gene(s) <span class="gene_icon" title="Gene"></span> <span class="help_icon" title="Gene(s) is ... under construction"></span></th>
+            <th>Drug <span class="drug_icon" title="Drug"></span> <span class="help_icon" title="Drug is ... under construction"></span></th>
+            <th>Family <span class="help_icon" title="Family is ... under construction"/></th>
+            <th>Source(s) <span class="help_icon" title="Source(s) is ... under construction"/></th>
+            <th>Drug status <span class="help_icon" title="Drug status is ... under construction"/></th>
+            <th st-sort="therapy">Type of therapy <span class="help_icon" title="Types of therapy is ... under construction"/></th>
+            <th>Interaction <span class="help_icon" title="Interaction is ... under construction"/></th>
+            <th>Target <span class="help_icon" title="Target is ... under construction"/></th>
+            <th st-sort="dScore">DScore <span class="help_icon" title="DScore is ... under construction"/></th>
+            <th st-sort="gScore">GScore <span class="help_icon" title="GScore is ... under construction"/></th>
+          </tr>
+        </thead>
+        <tbody ng-hide="isLoading" ng-repeat="row in results">
+          <tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
+            <td>
+              <button class="btn btn-default" ng-click="row.moreinfo=!row.moreinfo">
+                <span ng-show="row.moreinfo" class="glyphicon glyphicon-minus"></span>
+                <span ng-show="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
+              </button></td>
+              <td ng-bind-html="row.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
+              <td>{{row['show-drug-name']}}</td>
+              <td>{{row.family | enumeration }}</td>
+              <td>
+                <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
+              </td>
+              <td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}</td>
+              <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
+              <td>
+                <img ng-show='{{row.isOnlyIndirect()}}' src="images/query/indirect-interaction.png"/>
+                <img ng-hide='{{row.isOnlyIndirect()}}' src="images/query/direct-interaction.png"/>
+              </td>
+              <td>{{row.target?'yes':'-'}}</td>
+              <td>{{row.dScore | number: 4}}</td>
+              <td>{{row.gScore | number: 4}}</td>
+            </tr>
+            <tr ng-repeat="genedrug in row['gene-drug-info']" ng-show="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
+              <td>&nbsp;</td>
+              <td colspan="2">
+                <div ng-show="{{genedrug.drugStatusInfo.length>0}}">{{genedrug.drugStatusInfo}}</div>
+                <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
+                PubMed Link:
+                <a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>{{genedrug.indirect!=null?(genedrug.drug+'+'+genedrug.indirect):(genedrug.drug+'+'+genedrug.gene.join())}}</a>
 
-      <!-- cancer types -->
-      <div class="panel panel-default">
-	<div class="panel-heading">Select Cancer Types</div>
-	<div class="panel-body">
-	 <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
-	    <input
-	      type="checkbox"
-	      name="cancerType_{{$index}}"
-	      id="cancerType_{{$index}}"
-	      value="{{cancerType.name}}"
-	      ng-model="cancerType.selected"
-	    />
-	    <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
-	  </span>
-	</div><!-- end panel-body -->
-      </div><!-- end cancer types -->
+                <br>
+                Sensitivity: {{genedrug.sensitivity}} <br>
+                Alteration: {{genedrug.alteration}}
+              </td>
+              <td >{{genedrug.family}}</td>
+              <td >{{genedrug.source.join(', ')}}</td>
+              <td colspan="2">&nbsp;</td>
+              <td>
+                <img ng-show='{{genedrug.indirect == null}}' src="images/query/direct-interaction.png"/>
+                <img ng-hide='{{genedrug.indirect == null}}' src="images/query/indirect-interaction.png"/>
+              </td>
+              <td >{{genedrug.target}}</td>
+              <td >{{genedrug.dScore | number: 4}}</td>
+              <td >{{genedrug.gScore | number: 4}}</td>
+            </tr>
+          </tbody>
 
-
-
+          <tbody ng-hide="!isLoading">
+            <tr>
+              <td colspan="10">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  </div>
-  </div>
-</div>
-
-
-  <button type="submit" class="btn btn-primary btn-lg" ng-show="results==null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker)">Query</button>
-  
-</form>
-
-
-<div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
-<div class="row">
-<h3>PanDrugs Candidate Therapies</h3>
-</div>
-<div class="row">
-  <div class="col-lg-6">
-    <highchart id="chart2" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>    
-  </div>
-  <div class="col-lg-6">
-  <highchart id="chart1" config="highchartsBubble" style="margin-top:20px"></highchart>
-  </div>
-</div>
-<div class="row">
-<table id="results" st-table="results" st-pipe="query" class="table table-striped">
-	<thead>
-	<tr>
-		<th>Actions</th>
-		<th>Gene(s) <span class="gene_icon" title="Gene"></span> <span class="help_icon" title="Gene(s) is ... under construction"></span></th>
-		<th>Drug <span class="drug_icon" title="Drug"></span> <span class="help_icon" title="Drug is ... under construction"></span></th>
-		<th>Family <span class="help_icon" title="Family is ... under construction"/></th>
-		<th>Source(s) <span class="help_icon" title="Source(s) is ... under construction"/></th>
-		<th>Drug status <span class="help_icon" title="Drug status is ... under construction"/></th>
-		<th st-sort="therapy">Type of therapy <span class="help_icon" title="Types of therapy is ... under construction"/></th>
-		<th>Interaction <span class="help_icon" title="Interaction is ... under construction"/></th>
-		<th>Target <span class="help_icon" title="Target is ... under construction"/></th>
-		<th st-sort="dScore">DScore <span class="help_icon" title="DScore is ... under construction"/></th>
-		<th st-sort="gScore">GScore <span class="help_icon" title="GScore is ... under construction"/></th>
-	</tr>
-	</thead>
-	<tbody ng-hide="isLoading" ng-repeat="row in results">
-	<tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
-		<td>
-		<button class="btn btn-default" ng-click="row.moreinfo=!row.moreinfo">
-		  <span ng-show="row.moreinfo" class="glyphicon glyphicon-minus"></span>
-		  <span ng-show="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
-		</button></td>
-		<td ng-bind-html="row.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
-		<td>{{row['show-drug-name']}}</td>
-		<td>{{row.family | enumeration }}</td>
-		<td>
-		<span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>
-		</td>
-		<td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}</td>
-		<td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
-		<td>
-		<img ng-show='{{row.isOnlyIndirect()}}' src="images/query/indirect-interaction.png"/>
-		<img ng-hide='{{row.isOnlyIndirect()}}' src="images/query/direct-interaction.png"/>	
-		</td>
-		<td>{{row.target?'yes':'-'}}</td>
-		<td>{{row.dScore | number: 4}}</td>
-		<td>{{row.gScore | number: 4}}</td>		
-	</tr>	
-	<tr ng-repeat="genedrug in row['gene-drug-info']" ng-show="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
-	  <td>&nbsp;</td>
-	  <td colspan="2">
-	   <div ng-show="{{genedrug.drugStatusInfo.length>0}}">{{genedrug.drugStatusInfo}}</div>
-	    <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
-	    PubMed Link: 
-	    <a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>{{genedrug.indirect!=null?(genedrug.drug+'+'+genedrug.indirect):(genedrug.drug+'+'+genedrug.gene.join())}}</a>
-	    
-	    <br>
-	    Sensitivity: {{genedrug.sensitivity}} <br>
-	    Alteration: {{genedrug.alteration}}
-	  </td>
-	  <td >{{genedrug.family}}</td>
-	  <td >{{genedrug.source.join(', ')}}</td>
-	  <td colspan="2">&nbsp;</td>
-	  <td>
-	  <img ng-show='{{genedrug.indirect == null}}' src="images/query/direct-interaction.png"/>
-	  <img ng-hide='{{genedrug.indirect == null}}' src="images/query/indirect-interaction.png"/>
-	  </td>
-	  <td >{{genedrug.target}}</td>
-	  <td >{{genedrug.dScore | number: 4}}</td>
-	  <td >{{genedrug.gScore | number: 4}}</td>
-	</tr>
-	</tbody>
-	
-	<tbody ng-hide="!isLoading">
-	<tr>
-	<td colspan="10">Loading...</td>
-	</tr>
-	</tbody>
-</table>
-</div>
-</div>
-</div>
-

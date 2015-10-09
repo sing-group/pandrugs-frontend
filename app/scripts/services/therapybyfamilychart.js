@@ -2,13 +2,13 @@
 
 /**
 * @ngdoc service
-* @name pandrugsdbFrontendApp.therapyByStatusChart
+* @name pandrugsdbFrontendApp.therapyByFamilyChart
 * @description
-* # therapyByStatusChart
+* # therapyByFamilyChart
 * Factory in the pandrugsdbFrontendApp.
 */
 angular.module('pandrugsdbFrontendApp')
-.factory('therapyByStatusChart', function () {
+.factory('therapyByFamilyChart', function () {
   // Public API here
   return {
     options: {
@@ -19,10 +19,10 @@ angular.module('pandrugsdbFrontendApp')
         type: 'pie'
       },
       title: {
-        text: 'Drugs by approval status'
+        text: 'Drugs by family'
       },
       tooltip: {
-        pointFormat: '{point.y} drugs ({point.percentage:.1f}%)</b>'
+        pointFormat: '{point.y} drugs ({point.percentage:.1f}%)'
       },
       plotOptions: {
         pie: {
@@ -62,24 +62,31 @@ angular.module('pandrugsdbFrontendApp')
       var approved = 0;
       var clinical = 0;
       var experimental = 0;
-
+      var total = 0;
+      var familycounts = {};
       for (var i = 0; i < results.length; i++) {
-
-
-        if (results[i].status === 'APPROVED') {
-          approved ++;
-        }
-        if (results[i].status === 'CLINICAL_TRIALS') {
-          clinical ++;
-        }
-        if (results[i].status === 'EXPERIMENTAL') {
-          experimental ++;
+        var families = results[i].family;
+        total = total + 1;
+        for (var j = 0; j < families.length; j++) {
+          var family = families[j];
+          familycounts[""+family] =
+          family in familycounts ? familycounts[family] + 1: 1;
         }
       }
 
-      this.series[0].data[0].y = approved;
-      this.series[0].data[1].y = clinical;
-      this.series[0].data[2].y = experimental;
+      this.series[0].data = [];
+      for (family in familycounts) {
+        this.series[0].data.push(
+          {
+            name: family,
+            y: familycounts[family],
+            sliced: true,
+            selected: true
+          }
+        );
+      }
+
+
     }
   };
 });

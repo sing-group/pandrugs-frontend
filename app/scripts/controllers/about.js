@@ -10,5 +10,5 @@
 angular.module('pandrugsdbFrontendApp')
   .controller('AboutCtrl', function ($scope) {
     
-    
+
   });

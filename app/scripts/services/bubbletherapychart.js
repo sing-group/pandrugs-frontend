@@ -17,7 +17,7 @@ angular.module('pandrugsdbFrontendApp')
             type: 'bubble',
             zoomType: 'xy',
 	    events: {
-	      
+
 	      redraw: function() {
 		var hchart = this;
 		//window.alert("axis: "+hchart.xAxis[0])
@@ -27,89 +27,89 @@ angular.module('pandrugsdbFrontendApp')
 		function toYPixel(yAxisPos) {
 		  return hchart.yAxis[0].toPixels(yAxisPos, false);
 		}
-		
-		function drawRectFromCoordinates(fromX, fromY, toX, toY, radius) {		  
+
+		function drawRectFromCoordinates(fromX, fromY, toX, toY, radius) {
 		  return hchart.renderer.rect(
 		    toXPixel(fromX),
-		    toYPixel(fromY),     
+		    toYPixel(fromY),
 		    toXPixel(toX) - toXPixel(fromX),
-		    toYPixel(toY) - toYPixel(fromY),    
+		    toYPixel(toY) - toYPixel(fromY),
 		    radius);
 		}
-		
+
 		function drawPath(fromX, fromY, toX, toY) {
-		    return hchart.renderer.path(['M',  
+		    return hchart.renderer.path(['M',
 		    toXPixel(fromX),
-		    toYPixel(fromY), 
-		    'L', 
+		    toYPixel(fromY),
+		    'L',
 		    toXPixel(toX),
 		    toYPixel(toY)]);
 		}
-		
+
 		function drawText(atX, atY, text) {
 		  return hchart.renderer.text(text, toXPixel(atX), toYPixel(atY));
 		}
-		 
+
 		 //clearing rectangle
-		  
-		 drawRectFromCoordinates(-1.5, 1.5, 1.5, -0.5, 0).attr({
+
+		 drawRectFromCoordinates(-1.5, 1.05, 1.5, -0.5, 0).attr({
 		    fill: '#ffffff',
-		    stroke: 'black',	
+		    stroke: 'black',
 		    'stroke-width': 0
-		    
+
 		  }).add();
-		  
+
 		  // add rectangle for best candidates
 		  drawRectFromCoordinates(0.7, 1, 1, 0.6, 20).attr({
 		    fill: '#DCFCEF',
-		    stroke: 'black',	
+		    stroke: 'black',
 		    'stroke-width': 0
-		    
+
 		  }).add();
-		
+
 		  //plot lines
 		  drawPath(-1, 0.6, 1, 0.6).attr({
 		    'stroke-width': 2,
 		    dashstyle: 'ShortDot',
 		    stroke: '#FAAFC4'
 		  }).add();
-		  
+
 		  drawPath(0.7, 0, 0.7, 1).attr({
 		    'stroke-width': 2,
 		    dashstyle: 'ShortDot',
 		    stroke: '#FAAFC4'
 		  }).add();
-		  
+
 		  drawPath(0, 0, 0, 1).attr({
 		    'stroke-width': 1,
 		    dashstyle: 'Solid',
 		    stroke: '#888'
 		  }).add();
-		  
+
 		  // draw thik RESISTANCE - SENSISITIVITY bars
 		  drawPath(-1, 0, 0, 0).attr({
 		    'stroke-width': 5,
 		    stroke: '#FF7F7F'
 		  }).add();
-		  
+
 		  drawPath(0, 0, 1, 0).attr({
 		    'stroke-width': 5,
 		    stroke: '#7FBF7F'
 		  }).add();
-		  		  
-		  
+
+
 		  drawText(0.72, 1.01, 'BEST CANDIDATES')
 		  .css({color: '#888', fontWeight:'bold'})
 		  .add();
-		  
+
 		  drawText(-0.45, -0.115, 'RESISTANCE')
 		  .css({color: '#FF7F7F', fontWeight:'bold'})
 		  .add();
-		  
+
 		  drawText(0.45, -0.115, 'SENSITIVITY')
 		  .css({color: '#7FBF7F', fontWeight:'bold'})
 		  .add();
-		  
+
 	      }
 	    }
         },
@@ -117,9 +117,9 @@ angular.module('pandrugsdbFrontendApp')
 	    verticalAlign: 'top'
 	},
 	xAxis: {
-	  title: { 
-	    text: '<span class=\"help_icon\" title=\"Drug Score is ... under construction\"></span>Drug Score',  
-	    useHTML: true    
+	  title: {
+	    text: '<span class=\"help_icon\" title=\"Drug Score is ... under construction\"></span>Drug Score',
+	    useHTML: true
 	  },
 	  min: -1,
 	  max: 1,
@@ -128,14 +128,14 @@ angular.module('pandrugsdbFrontendApp')
 	      color: 'red',
 	      dashStyle: 'ShortDash',
 	      value: 0.7,
-	      width: 2      
+	      width: 2
 	    }
 	  ]
 	},
 	yAxis: {
-	  title: { 
-	    text: '<span class=\"help_icon\" title=\"Gene Score is ... under construction\"></span>Gene Score',  
-	    useHTML: true    
+	  title: {
+	    text: '<span class=\"help_icon\" title=\"Gene Score is ... under construction\"></span>Gene Score',
+	    useHTML: true
 	  },
 	  min: 0,
 	  max: 1,
@@ -144,12 +144,12 @@ angular.module('pandrugsdbFrontendApp')
 	      color: 'red',
 	      dashStyle: 'ShortDash',
 	      value: 0.60,
-	      width: 2	      
+	      width: 2
 	    }
 	  ]
 	},
         title: {
-            text: '',    
+            text: '',
         },
 	plotOptions: {
             bubble: {
@@ -171,10 +171,10 @@ angular.module('pandrugsdbFrontendApp')
 
       ],
 
-      updateChart: function(results) {       
+      updateChart: function(results) {
 	//window.alert(this.options.chart);
 	var series = this.series;
-   
+
 	for (var i = 0; i < results.length; i++) {
 	  var genedrugresults = results[i]['gene-drug-info'];
 	  for (var j = 0; j < genedrugresults.length; j++ ) {
@@ -188,9 +188,9 @@ angular.module('pandrugsdbFrontendApp')
 	    }
 	    if (result.status === 'EXPERIMENTAL') {
 	      series[2].data.push(datapoint);
-	    }  
+	    }
 	  }
-	}      
+	}
       }
     };
   });
