@@ -118,7 +118,6 @@
             <th>Drug status <span class="help_icon" title="Drug status is ... under construction"/></th>
             <th st-sort="therapy">Type of therapy <span class="help_icon" title="Types of therapy is ... under construction"/></th>
             <th>Interaction <span class="help_icon" title="Interaction is ... under construction"/></th>
-            <th>Target <span class="help_icon" title="Target is ... under construction"/></th>
             <th st-sort="dScore">DScore <span class="help_icon" title="DScore is ... under construction"/></th>
             <th st-sort="gScore">GScore <span class="help_icon" title="GScore is ... under construction"/></th>
           </tr>
@@ -139,10 +138,10 @@
               <td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}</td>
               <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
               <td>
-                <img ng-show='{{row.isOnlyIndirect()}}' src="images/query/indirect-interaction.png"/>
-                <img ng-hide='{{row.isOnlyIndirect()}}' src="images/query/direct-interaction.png"/>
+                <img ng-show="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
+                <img ng-show="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
+                <img ng-show="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
               </td>
-              <td>{{row.target?'yes':'-'}}</td>
               <td>{{row.dScore | number: 4}}</td>
               <td>{{row.gScore | number: 4}}</td>
             </tr>
@@ -162,10 +161,10 @@
               <td >{{genedrug.source.join(', ')}}</td>
               <td colspan="2">&nbsp;</td>
               <td>
-                <img ng-show='{{genedrug.indirect == null}}' src="images/query/direct-interaction.png"/>
-                <img ng-hide='{{genedrug.indirect == null}}' src="images/query/indirect-interaction.png"/>
+                <img ng-show="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
+                <img ng-show="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
+                <img ng-show="genedrug.target == 'target' && genedrug.indirect != null" src="images/query/indirect-interaction.png"/>
               </td>
-              <td >{{genedrug.target}}</td>
               <td >{{genedrug.dScore | number: 4}}</td>
               <td >{{genedrug.gScore | number: 4}}</td>
             </tr>
