@@ -30,51 +30,55 @@
             </div>
             <div id="advanced" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
               <div class="panel-body">
+                <div class="row">
+                  <!-- drug and status level-->
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Drug status level</div>
+                      <div class="panel-body">
 
-                <!-- drug and status level-->
-                <div class="panel panel-default">
-                  <div class="panel-heading">Drug status level</div>
-                  <div class="panel-body">
+                        <h4>Cancer</h4>
+                        <label><input type="checkbox" ng-model="queryCancerFda">FDA approved</label>
+                        <label><input type="checkbox" ng-model="queryCancerClinical">Clinical trials</label>
+                        <h4>Other pathologies</h4>
+                        <label><input type="checkbox" ng-model="queryOtherFda">FDA approved</label>
+                        <label><input type="checkbox" ng-model="queryOtherClinical">Clinical trials</label>
+                        <label><input type="checkbox" ng-model="queryOtherExperimental">Experimental</label>
 
-                    <h4>Cancer</h4>
-                    <label><input type="checkbox" ng-model="queryCancerFda">FDA approved</label>
-                    <label><input type="checkbox" ng-model="queryCancerClinical">Clinical trials</label>
-                    <h4>Other pathologies</h4>
-                    <label><input type="checkbox" ng-model="queryOtherFda">FDA approved</label>
-                    <label><input type="checkbox" ng-model="queryOtherClinical">Clinical trials</label>
-                    <label><input type="checkbox" ng-model="queryOtherExperimental">Experimental</label>
+                      </div><!-- end panel-body -->
 
-                  </div><!-- end panel-body -->
+                    </div><!-- end drug and status level -->
+                  </div>
 
-                </div><!-- end drug and status level -->
+                  <!-- interaction evidence level -->
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Interaction evidence level</div>
+                      <div class="panel-body">
+                        <label><input type="checkbox" ng-model="queryTarget">Target</label>
+                        <label><input type="checkbox" ng-model="queryMarker">Marker</label>
+                      </div><!-- end panel-body -->
+                    </div><!-- end  interaction evidence level -->
+                  </div>
 
-
-                <!-- interaction evidence level -->
-                <div class="panel panel-default">
-                  <div class="panel-heading">Interaction evidence level</div>
-                  <div class="panel-body">
-                    <label><input type="checkbox" ng-model="queryTarget">Target</label>
-
-                    <label><input type="checkbox" ng-model="queryMarker">Marker</label>
-                  </div><!-- end panel-body -->
-                </div><!-- end  interaction evidence level -->
-
-
-                <!-- cancer types -->
-                <div class="panel panel-default">
-                  <div class="panel-heading">Select Cancer Types</div>
-                  <div class="panel-body">
-                    <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
-                      <input
-                      type="checkbox"
-                      name="cancerType_{{$index}}"
-                      id="cancerType_{{$index}}"
-                      value="{{cancerType.name}}"
-                      ng-model="cancerType.selected"
-                      />
-                      <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
-                    </span>
-                  </div><!-- end panel-body -->
+                  <!-- cancer types -->
+                  <div class="col-md-12">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">Select Cancer Types</div>
+                      <div class="panel-body">
+                        <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
+                          <input
+                          type="checkbox"
+                          name="cancerType_{{$index}}"
+                          id="cancerType_{{$index}}"
+                          value="{{cancerType.name}}"
+                          ng-model="cancerType.selected"
+                          />
+                          <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
+                        </span>
+                      </div>
+                    </div><!-- end panel-body -->
+                  </div>
                 </div><!-- end cancer types -->
               </div>
             </div>
@@ -82,22 +86,17 @@
         </div>
       </div>
     </div>
-
-
     <button type="submit" class="btn btn-primary btn-lg" ng-show="results==null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker)">Query</button>
-
   </form>
-
-
   <div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
     <div class="row">
       <h3>PanDrugs Candidate Therapies</h3>
     </div>
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <highchart id="therapyByStatusChart" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>
         <highchart id="therapyByFamilyChart" config="highchartsTherapyByFamily" style="margin-top:20px"></highchart>
       </div>

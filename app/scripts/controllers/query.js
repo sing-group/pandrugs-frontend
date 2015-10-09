@@ -42,14 +42,24 @@ function (
     $scope.cancerTypes = [];
     db.getCancerTypes().then(function(results) {
       for (var i=0; i<results.length; i++){
-        $scope.cancerTypes.push({name:results[i], selected:false});
+        $scope.cancerTypes.push({name:results[i], selected:true});
       }
     });
 
     // selected cancer types
     $scope.selectedCancerTypes = [];
+
+    $scope.firstTimeCancerSelection = true;
     // watch cancerTypes for changes
     $scope.$watch('cancerTypes|filter:{selected:true}', function (nv) {
+      //the first time we will unchek all and invert the unselected one
+      //as selected
+      if ($scope.firstTimeCancerSelection == true && nv.length < $scope.cancerTypes.length) {
+        $scope.firstTimeCancerSelection = false;
+        $scope.cancerTypes.forEach(function(cancerType){
+          cancerType.selected = !cancerType.selected;
+        });
+      }
       $scope.selectedCancerTypes = nv.map(function (cancerType) {
         return cancerType.name;
       });
@@ -100,7 +110,20 @@ function (
           true,
           true,
           tableState).then(function(result) {
-            $scope.results = result['gene-drug-group'];
+            var results = result['gene-drug-group'];
+            $scope.results = results.filter(function(elem){
+              var interesting = false;
+              elem.cancer.forEach(function(cancerType){
+                if ($scope.selectedCancerTypes.indexOf(cancerType.toUpperCase())!=-1) {
+                  //alert("true");
+                  interesting = true;
+                  return;
+                }
+              });
+              return interesting;
+            });
+
+            //$scope.results = result['gene-drug-group'];
             for (var i = 0; i < $scope.results.length; i++) {
               var result = $scope.results[i];
               result.isOnlyIndirect = function() {

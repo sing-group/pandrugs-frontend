@@ -68,28 +68,11 @@ body {
   }
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-  max-width: 730px;
+.panel {
+  margin: 10px;
 }
 
-/* Remove the padding we set earlier */
-.header,
-.marketing,
-.footer {
-  padding-left: 0;
-  padding-right: 0;
-}
-/* Space out the masthead */
-.header {
-  margin-bottom: 30px;
-}
-/* Remove the bottom border on the jumbotron for visual effect */
-.jumbotron {
-  border-bottom: 0;
-}
-}
+
 
 .st-sort-ascent:before{
   content: '\25B2';
@@ -193,12 +176,19 @@ a.non_curated_source {
 }
 .cancer_type_checkbox label {
   @extend .curated;
-  border-color: #297856;
+  border-color: #EEFAEE;
   cursor: pointer;
+  color: #c2c2c2;
 }
 
+.cancer_type_checkbox input:hover + label:hover {
+  border-color: #cccccc;
+  color: #333;
+}
 .cancer_type_checkbox input:checked + label {
-  background-color: #EEFAEE;
+  border-color: #cccccc;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
 .highlightedResult {
@@ -211,4 +201,29 @@ a.non_curated_source {
 
 #therapyByStatusChart, #therapyByFamilyChart {
   height: 280px;
+}
+
+/* =========== RESPONSIVE ======================*/
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
 }
