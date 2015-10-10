@@ -174,7 +174,9 @@ angular.module('pandrugsdbFrontendApp')
       updateChart: function(results) {
         //window.alert(this.options.chart);
         var series = this.series;
-
+        series[0].data = [];
+        series[1].data = [];
+        series[2].data = [];
         for (var i = 0; i < results.length; i++) {
           var genedrugresults = results[i]['gene-drug-info'];
           for (var j = 0; j < genedrugresults.length; j++ ) {
