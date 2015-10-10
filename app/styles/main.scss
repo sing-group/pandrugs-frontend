@@ -97,7 +97,7 @@ table#results tbody td:nth-child(3) {
 }
 
 table#results th {
-  /*white-space: nowrap;*/
+  white-space: nowrap;
 }
 
 tr.moreinfo {
@@ -143,6 +143,7 @@ tr.moreinfo {
   border-style: solid;
   text-decoration: none;
   margin: 1px;
+  display: inline-block;
 }
 
 a.curated_source {
