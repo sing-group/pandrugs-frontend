@@ -127,7 +127,7 @@ function (
           tableState).then(function(result) {
             var results = result['gene-drug-group'];
             $scope.results = results.filter(function(elem){
-              if (elem.status === "EXPERIMENTAL") {
+              if (elem.status === "EXPERIMENTAL" || elem.status === "CLINICAL_TRIALS") {
                 return true;
               }
               var interesting = false;
@@ -145,18 +145,18 @@ function (
             for (var i = 0; i < $scope.results.length; i++) {
               var result = $scope.results[i];
               result.getBestInteraction = function() {
-		var best = "target-indirect";
-		
+		            var best = "target-indirect";
+
                 for (var i = 0; i < this['gene-drug-info'].length; i++) {
-		  if (this['gene-drug-info'][i]['target'] == 'marker') {
-		    if (best = "target-indirect")
-		      best = "marker";
-		  } else if (this['gene-drug-info'][i]['indirect'] == null) {
-		    best = "target-direct";
-		    break;
-		  }
+                  if (this['gene-drug-info'][i]['target'] == 'marker') {
+                    if (best = "target-indirect")
+                      best = "marker";
+		              } else if (this['gene-drug-info'][i]['indirect'] == null) {
+                    best = "target-direct";
+                    break;
+                  }
                 }
-                
+
                 return best;
               }
             }
