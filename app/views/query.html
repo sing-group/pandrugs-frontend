@@ -9,7 +9,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
+            <div class="panel-heading" role="tab">
               <h4 class="panel-title">
                 Genes
               </h4>
@@ -66,8 +66,8 @@
                     <div class="panel panel-default">
                       <div class="panel-heading">
                         Select Cancer Types
-                        <input class="btn btn-default btn-xs pull-right" type="button" ng-click="clearCancerTypesSelection()" value="Clear all"></input>
-                        <input class="btn btn-default btn-xs pull-right" type="button" ng-click="selectAllCancerTypes()" value="Select all"></input>
+                        <input class="btn btn-default btn-xs pull-right" type="button" ng-click="clearCancerTypesSelection()" value="Clear all"/>
+                        <input class="btn btn-default btn-xs pull-right" type="button" ng-click="selectAllCancerTypes()" value="Select all"/>
                       </div>
                       <div class="panel-body">
                         <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
@@ -92,7 +92,8 @@
       </div>
     </div>
     <button type="submit" class="btn btn-primary btn-lg" ng-show="results==null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker)">Query</button>
-  </form>
+  </div>
+</form>
   <div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
     <div class="row">
       <h3>PanDrugs Candidate Therapies</h3>
@@ -131,9 +132,9 @@
               </button></td>
               <td ng-bind-html="row.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
               <td>
-		<span ng-show="row.pubchemId.length == 0">{{row['show-drug-name']}}</span>
-		<span ng-show="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row['show-drug-name']}}</a></span>
-	      </td>
+                <span ng-show="row.pubchemId.length == 0">{{row['show-drug-name']}}</span>
+                <span ng-show="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row['show-drug-name']}}</a></span>
+              </td>
               <td>{{row.family | enumeration }}</td>
               <td>
                 <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
@@ -151,13 +152,13 @@
             <tr ng-repeat="genedrug in row['gene-drug-info']" ng-show="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
               <td>&nbsp;</td>
               <td colspan="2">
-                <div ng-show="{{genedrug.drugStatusInfo.length>0}}">{{genedrug.drugStatusInfo}}</div>
+                <div ng-show="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
                 <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
                 PubMed Link:
                 <a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>{{genedrug.indirect!=null?(genedrug.drug+'+'+genedrug.indirect):(genedrug.drug+'+'+genedrug.gene.join())}}</a>
 
                 <br>
-                Sensitivity: {{genedrug.sensitivity}} <br>
+                Sensitivity: {{genedrug.sensitivity == "BOTH" ? "SENSITIVITY / RESISTANCE" : genedrug.sensitivity}} <br>
                 Alteration: {{genedrug.alteration}}
               </td>
               <td >{{genedrug.family}}</td>
