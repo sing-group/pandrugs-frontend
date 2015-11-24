@@ -39,9 +39,9 @@
 
             <ul class="nav navbar-nav">
               <li ng-class="{ active: isActive('/') }"><a href="#/">Home</a></li>
-              <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/queryMenu">Query</a></li>
+              <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/query">Query</a></li>
               <li ng-class="{ active: isActive('/about') }"><a ng-href="#/about">About</a></li>
-             
+
             </ul>
           </div>
         </div>
@@ -88,14 +88,14 @@
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-   
+
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/query.js"></script>
-        <script src="scripts/services/database.js"></script>        
+        <script src="scripts/services/database.js"></script>
         <script src="scripts/controllers/header.js"></script>
         <script src="scripts/services/mockdatabase.js"></script>
         <script src="scripts/services/restdatabase.js"></script>
