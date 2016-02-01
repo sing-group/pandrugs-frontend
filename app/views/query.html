@@ -1,5 +1,5 @@
 <div>
-  <button type="submit" class="btn btn-success btn-lg" ng-show="results!=null" ng-click="newQuery()" style="float:right">New Query</button>
+  <button type="submit" class="btn btn-success btn-lg" ng-show="results != null" ng-click="newQuery()" style="float:right">New Query</button>
   <h2>Query Pandrugs: Genes</h2>
 </div>
 
@@ -72,11 +72,11 @@
                       <div class="panel-body">
                         <span class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
                           <input
-                          type="checkbox"
-                          name="cancerType_{{$index}}"
-                          id="cancerType_{{$index}}"
-                          value="{{cancerType.name}}"
-                          ng-model="cancerType.selected"
+                            type="checkbox"
+                            name="cancerType_{{$index}}"
+                            id="cancerType_{{$index}}"
+                            value="{{cancerType.name}}"
+                            ng-model="cancerType.selected"
                           />
                           <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
                         </span>
@@ -91,7 +91,7 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-lg" ng-show="results==null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker)">Query</button>
+    <button type="submit" class="btn btn-primary btn-lg" ng-show="results == null" ng-click="query()" ng-disabled="genes.length==0 || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker)">Query</button>
   </div>
 </form>
   <div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
@@ -127,13 +127,13 @@
           <tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
             <td>
               <button class="btn btn-default" ng-click="row.moreinfo=!row.moreinfo">
-                <span ng-show="row.moreinfo" class="glyphicon glyphicon-minus"></span>
-                <span ng-show="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
+                <span ng-if="row.moreinfo" class="glyphicon glyphicon-minus"></span>
+                <span ng-if="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
               </button></td>
               <td ng-bind-html="row.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
               <td>
-                <span ng-show="row.pubchemId.length == 0">{{row['show-drug-name']}}</span>
-                <span ng-show="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row['show-drug-name']}}</a></span>
+                <span ng-if="row.pubchemId.length == 0">{{row['show-drug-name']}}</span>
+                <span ng-if="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row['show-drug-name']}}</a></span>
               </td>
               <td>{{row.family | enumeration }}</td>
               <td>
@@ -142,17 +142,17 @@
               <td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}{{row.cancer.length>0?' cancer':''}}</td>
               <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
               <td>
-                <img ng-show="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
-                <img ng-show="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
-                <img ng-show="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
+                <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
+                <img ng-if="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
+                <img ng-if="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
               </td>
               <td>{{row.dScore | number: 4}}</td>
               <td>{{row.gScore | number: 4}}</td>
             </tr>
-            <tr ng-repeat="genedrug in row['gene-drug-info']" ng-show="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
+            <tr ng-repeat="genedrug in row['gene-drug-info']" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
               <td>&nbsp;</td>
               <td colspan="2">
-                <div ng-show="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
+                <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
                 <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
                 PubMed Link:
                 <a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>{{genedrug.indirect!=null?(genedrug.drug+'+'+genedrug.indirect):(genedrug.drug+'+'+genedrug.gene.join())}}</a>
@@ -165,12 +165,12 @@
               <td >{{genedrug.source.join(', ')}}</td>
               <td colspan="2">&nbsp;</td>
               <td>
-                <img ng-show="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
-                <img ng-show="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
-                <img ng-show="genedrug.target == 'target' && genedrug.indirect != null" src="images/query/indirect-interaction.png"/>
+                <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
+                <img ng-if="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
+                <img ng-if="genedrug.target == 'target' && genedrug.indirect != null" src="images/query/indirect-interaction.png"/>
               </td>
-              <td >{{genedrug.dScore | number: 4}}</td>
-              <td >{{genedrug.gScore | number: 4}}</td>
+              <td>{{genedrug.dScore | number: 4}}</td>
+              <td>{{genedrug.gScore | number: 4}}</td>
             </tr>
           </tbody>
 
