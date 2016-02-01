@@ -154,12 +154,12 @@
               <td colspan="2">
                 <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
                 <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
-                PubMed Link:
-                <a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>{{genedrug.indirect!=null?(genedrug.drug+'+'+genedrug.indirect):(genedrug.drug+'+'+genedrug.gene.join())}}</a>
-
-                <br>
                 Sensitivity: {{genedrug.sensitivity == "BOTH" ? "SENSITIVITY / RESISTANCE" : genedrug.sensitivity}} <br>
-                Alteration: {{genedrug.alteration}}
+                Alteration: {{genedrug.alteration}}<br>
+                Find more info for &quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot; in:
+                [<a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>PubMed</a>]
+                [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>ClinicalTrials.gov</a>]
+                <br>
               </td>
               <td >{{genedrug.family}}</td>
               <td >{{genedrug.source.join(', ')}}</td>
