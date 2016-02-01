@@ -112,9 +112,12 @@ function (
 
     //  ========== QUERY ========
     $scope.query = function(tableState) {
+      var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim()}));
+      $scope.genes = uniqueGenes.join("\n");
+      
       if($scope.genes!=='') {
         $scope.isLoading=true;
-        db.search($scope.genes,
+        db.search(uniqueGenes,
           $scope.queryCancerFda,
           $scope.queryCancerClinical,
           $scope.queryOtherFda,
@@ -165,4 +168,17 @@ function (
           });
         }
       };
+
+      function unique(data) {
+        var unique = [];
+        var toUpper = [];
+        data.forEach(function(item) {
+          if (toUpper.indexOf(item.toUpperCase())== -1) {
+            unique.push(item);
+            toUpper.push(item.toUpperCase());
+          }
+        });
+        return unique;
+      }
+
     }]);

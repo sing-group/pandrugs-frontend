@@ -11,12 +11,11 @@ angular.module('pandrugsdbFrontendApp')
 .factory('restDatabase', ['$q', '$timeout', '$filter', '$http', function restDatabaseFactory($q, $timeout, $filter, $http) {
   // Service logic
   // ...
-  //var SERVER = 'http://xistral.ei.uvigo.es:8080';
-  var SERVER = 'http://localhost:9080';
+  var SERVER = 'http://sing.ei.uvigo.es';
 
   // Public API here
   return {
-    search: function (genes,
+    search: function (genesArray,
       queryCancerFda,
       queryCancerClinical,
       queryOtherFda,
@@ -28,14 +27,11 @@ angular.module('pandrugsdbFrontendApp')
       queryIndirect,
       tableState) {
 
-
         var deferred = $q.defer();
-
-        var genesArray = genes.split('\n');
 
         // build query string
         var queryString = '';
-        for (var i = 0; i<genes.length; i++) {
+        for (var i = 0; i<genesArray.length; i++) {
           if (!angular.isUndefined(genesArray[i])) {
             genesArray[i] = genesArray[i].trim().toUpperCase();
             if (genesArray[i].length > 0 ) {
