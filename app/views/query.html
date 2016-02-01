@@ -139,7 +139,7 @@
               <td>
                 <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
               </td>
-              <td>{{row.status | replace:'_':' ' |titlecase}}{{row.cancer.length>0?' for ':''}}{{row.cancer |enumeration | replace:'_':' '|lowercase}}{{row.cancer.length>0?' cancer':''}}</td>
+              <td>{{row['status-description']}}</td>
               <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
               <td>
                 <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
