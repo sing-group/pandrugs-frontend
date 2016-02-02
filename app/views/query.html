@@ -108,6 +108,7 @@
       </div>
     </div>
     <div class="row">
+      <a href="{{csvcontent}}" download="data.csv">Download as CSV</a>
       <table id="results" st-table="results" st-pipe="query" class="table table-striped">
         <thead>
           <tr>
@@ -123,6 +124,7 @@
             <th st-sort="gScore">GScore <span class="help_icon" title="GScore is ... under construction"/></th>
           </tr>
         </thead>
+
         <tbody ng-hide="isLoading" ng-repeat="row in results">
           <tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
             <td>

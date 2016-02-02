@@ -17,9 +17,9 @@ angular
     'ngSanitize',
     'ngTouch',
     'smart-table',
-    'highcharts-ng'    
+    'highcharts-ng'
   ])
-  .config(['databaseProvider', '$routeProvider', function (databaseProvider, $routeProvider) {
+  .config(['databaseProvider', '$routeProvider', '$compileProvider', function (databaseProvider, $routeProvider, $compileProvider) {
     databaseProvider.useMock(false);
     $routeProvider
       .when('/', {
@@ -41,4 +41,6 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+      $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
+
   }]);

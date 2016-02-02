@@ -69,7 +69,7 @@ function (
     $scope.$watch('cancerTypes|filter:{selected:true}', function (nv) {
       //the first time we will unchek all and invert the unselected one
       //as selected
-      if ($scope.firstTimeCancerSelection == true && nv.length < $scope.cancerTypes.length) {
+      if ($scope.firstTimeCancerSelection === true && nv.length < $scope.cancerTypes.length) {
         $scope.firstTimeCancerSelection = false;
         $scope.cancerTypes.forEach(function(cancerType){
           cancerType.selected = !cancerType.selected;
@@ -105,6 +105,41 @@ function (
       }
     }
 
+    function generateCSV(results) {
+
+      var csv = [];
+      csv.push("Gene(s),Drug,Family,Source(s),Drug status,Type of therapy,Interaction,DScore,GScore,Info,Gene,Sensitivity,Alteration,Family,Source(s),DScore,GScore");
+
+      results.forEach(function(row) {
+
+        csv.push("\""+row.gene+"\""+","
+          +"\""+row['show-drug-name']+"\""+","
+          +"\""+row['family'].join("|")+"\""+","
+          +"\""+row['source'].map(function(elem){ return elem.name;}).join(", ")+"\""+","
+          +"\""+row['status-description']+"\""+","
+          +"\""+(row['therapy']?row['therapy']:"")+"\""+","
+          +"\""+row.getBestInteraction()+"\""+","
+          +"\""+(Math.round(row['dScore']*10000)/10000)+"\""+","
+          +"\""+(Math.round(row['gScore']*10000)/10000)+"\"");
+
+          row['gene-drug-info'].forEach(
+            function(genedrug) {
+              csv.push("\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\","
+                +"\""+genedrug['drugStatusInfo']+"\""+","
+                +"\""+genedrug['gene']+"\""+","
+                +"\""+(genedrug['sensitivity']=='BOTH'?'SENSITIVITY / RESISTANCE':genedrug['sensitivity'])+"\""+","
+                +"\""+genedrug['alteration']+"\""+","
+                +"\""+genedrug['family']+"\""+","
+                +"\""+genedrug['source'].join(', ')+"\""+","
+                +"\""+(Math.round(genedrug['dScore']*10000)/10000)+"\""+","
+                +"\""+(Math.round(genedrug['gScore']*10000)/10000)+"\""
+              );
+            }
+          );
+      });
+      return csv.join("\n");
+    }
+
     $scope.showChart = function() {
       updateCharts($scope.results);
       $scope.chartIsShowing = true;
@@ -112,9 +147,9 @@ function (
 
     //  ========== QUERY ========
     $scope.query = function(tableState) {
-      var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim()}));
-      $scope.genes = uniqueGenes.join("\n");
-      
+      var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim();}));
+      $scope.genes = uniqueGenes.join('\n');
+
       if($scope.genes!=='') {
         $scope.isLoading=true;
         db.search(uniqueGenes,
@@ -129,6 +164,7 @@ function (
           true,
           tableState).then(function(result) {
             var results = result['gene-drug-group'];
+
             $scope.results = results.filter(function(elem){
               if (elem.status === "EXPERIMENTAL" || elem.status === "CLINICAL_TRIALS") {
                 return true;
@@ -163,6 +199,10 @@ function (
                 return best;
               }
             }
+            $scope.csvcontent = "data:text/csv;charset=utf-8,";
+            $scope.csvcontent += generateCSV($scope.results);
+            $scope.csvcontent = encodeURI($scope.csvcontent);
+
             updateCharts($scope.results);
             $scope.isLoading=false;
           });
