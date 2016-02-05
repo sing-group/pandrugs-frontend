@@ -23,12 +23,15 @@ function (
   therapyByStatusChart,
   therapyByFamilyChart,
   $timeout,
-  filterFilter) {
+  filterFilter
+) {
 
     $scope.$timeout = $timeout;
 
     // ======== QUERY PARAMETERS ======
-    $scope.genes='';
+    $scope.genes = '';
+    $scope.generank = '';
+    $scope.selectedTab = 'genes';
     $scope.queryCancerFda = true;
     $scope.queryCancerClinical = true;
     $scope.queryOtherFda = true;
@@ -37,6 +40,9 @@ function (
     $scope.queryTarget = true;
     $scope.queryMarker = true;
 
+    $scope.setSelectedTab = function (tab) {
+      $scope.selectedTab = tab;
+    };
 
     // cancer types
     $scope.cancerTypes = [];
@@ -145,14 +151,59 @@ function (
       $scope.chartIsShowing = true;
     };
 
+    function managerResults(result) {
+      var results = result['gene-drug-group'];
+
+      $scope.results = results.filter(function(elem){
+        if (elem.status === "EXPERIMENTAL" || elem.status === "CLINICAL_TRIALS") {
+          return true;
+        }
+        var interesting = false;
+
+        elem.cancer.forEach(function(cancerType){
+          if ($scope.selectedCancerTypes.indexOf(cancerType.toUpperCase())!=-1) {
+            interesting = true;
+            return;
+          }
+        });
+        return interesting;
+      });
+
+      //$scope.results = result['gene-drug-group'];
+      for (var i = 0; i < $scope.results.length; i++) {
+        var result = $scope.results[i];
+        result.getBestInteraction = function() {
+          var best = "target-indirect";
+
+          for (var i = 0; i < this['gene-drug-info'].length; i++) {
+            if (this['gene-drug-info'][i]['target'] == 'marker') {
+              if (best = "target-indirect")
+                best = "marker";
+            } else if (this['gene-drug-info'][i]['indirect'] == null) {
+              best = "target-direct";
+              break;
+            }
+          }
+
+          return best;
+        }
+      }
+      $scope.csvcontent = "data:text/csv;charset=utf-8,";
+      $scope.csvcontent += generateCSV($scope.results);
+      $scope.csvcontent = encodeURI($scope.csvcontent);
+
+      updateCharts($scope.results);
+      $scope.isLoading=false;
+    }
+
     //  ========== QUERY ========
     $scope.query = function(tableState) {
-      var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim();}));
-      $scope.genes = uniqueGenes.join('\n');
 
-      if($scope.genes!=='') {
-        $scope.isLoading=true;
-        db.search(uniqueGenes,
+      console.log($scope.generank);
+      if ($scope.generank !== '') {
+        $scope.isLoading = true;
+
+        db.rankedSearch($scope.generank,
           $scope.queryCancerFda,
           $scope.queryCancerClinical,
           $scope.queryOtherFda,
@@ -162,50 +213,25 @@ function (
           $scope.queryMarker,
           true,
           true,
-          tableState).then(function(result) {
-            var results = result['gene-drug-group'];
+          tableState
+        ).then(managerResults);
+      } else if ($scope.genes !== '') {
+          var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim();}));
+          $scope.genes = uniqueGenes.join('\n');
 
-            $scope.results = results.filter(function(elem){
-              if (elem.status === "EXPERIMENTAL" || elem.status === "CLINICAL_TRIALS") {
-                return true;
-              }
-              var interesting = false;
-
-              elem.cancer.forEach(function(cancerType){
-                if ($scope.selectedCancerTypes.indexOf(cancerType.toUpperCase())!=-1) {
-                  interesting = true;
-                  return;
-                }
-              });
-              return interesting;
-            });
-
-            //$scope.results = result['gene-drug-group'];
-            for (var i = 0; i < $scope.results.length; i++) {
-              var result = $scope.results[i];
-              result.getBestInteraction = function() {
-		            var best = "target-indirect";
-
-                for (var i = 0; i < this['gene-drug-info'].length; i++) {
-                  if (this['gene-drug-info'][i]['target'] == 'marker') {
-                    if (best = "target-indirect")
-                      best = "marker";
-		              } else if (this['gene-drug-info'][i]['indirect'] == null) {
-                    best = "target-direct";
-                    break;
-                  }
-                }
-
-                return best;
-              }
-            }
-            $scope.csvcontent = "data:text/csv;charset=utf-8,";
-            $scope.csvcontent += generateCSV($scope.results);
-            $scope.csvcontent = encodeURI($scope.csvcontent);
-
-            updateCharts($scope.results);
-            $scope.isLoading=false;
-          });
+          $scope.isLoading = true;
+          db.search(uniqueGenes,
+            $scope.queryCancerFda,
+            $scope.queryCancerClinical,
+            $scope.queryOtherFda,
+            $scope.queryOtherClinical,
+            $scope.queryOtherExperimental,
+            $scope.queryTarget,
+            $scope.queryMarker,
+            true,
+            true,
+            tableState
+          ).then(managerResults);
         }
       };
 

@@ -13,9 +13,68 @@ angular.module('pandrugsdbFrontendApp')
   // ...
   var SERVER = 'http://sing.ei.uvigo.es';
 
+  function constructQueryString(
+    queryCancerFda,
+    queryCancerClinical,
+    queryOtherFda,
+    queryOtherClinical,
+    queryOtherExperimental,
+    queryTarget,
+    queryMarker,
+    queryDirect,
+    queryIndirect
+  ) {
+    // query server
+    var cancerDrugStatus = "";
+    if (queryCancerFda) {
+      cancerDrugStatus += "cancerDrugStatus=APPROVED&";
+    }
+    if (queryCancerClinical) {
+      cancerDrugStatus += "cancerDrugStatus=CLINICAL_TRIALS&";
+    }
+    if (cancerDrugStatus === "") {
+      cancerDrugStatus = "cancerDrugStatus=NONE&";
+    }
+
+    var nonCancerDrugStatus = "";
+    if (queryOtherClinical) {
+      nonCancerDrugStatus += "nonCancerDrugStatus=CLINICAL_TRIALS&";
+    }
+    if (queryOtherExperimental) {
+      nonCancerDrugStatus += "nonCancerDrugStatus=EXPERIMENTAL&";
+    }
+    if (queryOtherFda) {
+      nonCancerDrugStatus += "nonCancerDrugStatus=APPROVED&";
+    }
+    if (nonCancerDrugStatus == "") {
+      nonCancerDrugStatus = "nonCancerDrugStatus=NONE&";
+    }
+
+    var target = "";
+    if (queryTarget && queryMarker) {
+      target = "target=BOTH&";
+    } else if (queryTarget) {
+      target = "target=TARGET&";
+    } else if (queryMarker) {
+      target = "target=MARKER&";
+    }
+
+    var direct = "";
+    if (queryDirect && queryIndirect) {
+      direct = "direct=BOTH&";
+    } else if (queryDirect) {
+      direct = "direct=DIRECT&";
+    } else if (queryIndirect) {
+      direct = "direct=INDIRECT&";
+    }
+
+    return cancerDrugStatus + nonCancerDrugStatus + target + direct;
+  }
+
   // Public API here
   return {
-    search: function (genesArray,
+    rankedSearch: function(
+      geneRankFile,
       queryCancerFda,
       queryCancerClinical,
       queryOtherFda,
@@ -25,66 +84,81 @@ angular.module('pandrugsdbFrontendApp')
       queryMarker,
       queryDirect,
       queryIndirect,
-      tableState) {
+      tableState
+    ) {
+      var deferred = $q.defer();
 
+      var queryString = constructQueryString(
+        queryCancerFda,
+        queryCancerClinical,
+        queryOtherFda,
+        queryOtherClinical,
+        queryOtherExperimental,
+        queryTarget,
+        queryMarker,
+        queryDirect,
+        queryIndirect
+      );
+
+      var fd = new FormData();
+      fd.append("generank", geneRankFile);
+
+      $http.post(SERVER + '/pandrugsdb-backend/public/genedrug/?' + queryString, fd, {
+          transformRequest: angular.identity,
+          headers: {'Content-Type': undefined}
+      })
+      .success(function(results) {
+          if (!angular.isUndefined(tableState)) {
+            if (tableState.sort.predicate) {
+              results = $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
+            }
+          }
+          deferred.resolve(results);
+        }
+      );
+
+      return deferred.promise;
+    },
+
+    search: function (
+      genesArray,
+      queryCancerFda,
+      queryCancerClinical,
+      queryOtherFda,
+      queryOtherClinical,
+      queryOtherExperimental,
+      queryTarget,
+      queryMarker,
+      queryDirect,
+      queryIndirect,
+      tableState
+    ) {
         var deferred = $q.defer();
 
         // build query string
         var queryString = '';
-        for (var i = 0; i<genesArray.length; i++) {
+        for (var i = 0; i < genesArray.length; i++) {
           if (!angular.isUndefined(genesArray[i])) {
             genesArray[i] = genesArray[i].trim().toUpperCase();
-            if (genesArray[i].length > 0 ) {
-              queryString += 'gene='+genesArray[i]+'&';
+            if (genesArray[i].length > 0) {
+              queryString += 'gene=' + genesArray[i] + '&';
             }
           }
         }
 
-        // query server
-        var cancerDrugStatus = "";
-        if (queryCancerFda) {
-          cancerDrugStatus += "cancerDrugStatus=APPROVED&";
-        }
-        if (queryCancerClinical) {
-          cancerDrugStatus += "cancerDrugStatus=CLINICAL_TRIALS&";
-        }
-        if (cancerDrugStatus === "") {
-          cancerDrugStatus = "cancerDrugStatus=NONE&";
-        }
+        queryString += constructQueryString(
+          queryCancerFda,
+          queryCancerClinical,
+          queryOtherFda,
+          queryOtherClinical,
+          queryOtherExperimental,
+          queryTarget,
+          queryMarker,
+          queryDirect,
+          queryIndirect
+        );
 
-        var nonCancerDrugStatus = "";
-        if (queryOtherClinical) {
-          nonCancerDrugStatus += "nonCancerDrugStatus=CLINICAL_TRIALS&";
-        }
-        if (queryOtherExperimental) {
-          nonCancerDrugStatus += "nonCancerDrugStatus=EXPERIMENTAL&";
-        }
-        if (queryOtherFda) {
-          nonCancerDrugStatus += "nonCancerDrugStatus=APPROVED&";
-        }
-        if (nonCancerDrugStatus == "") {
-          nonCancerDrugStatus = "nonCancerDrugStatus=NONE&";
-        }
-
-        var target = "";
-        if (queryTarget && queryMarker) {
-          target = "target=BOTH&";
-        } else if (queryTarget) {
-          target = "target=TARGET&";
-        } else if (queryMarker) {
-          target = "target=MARKER&";
-        }
-
-        var direct = "";
-        if (queryDirect && queryIndirect) {
-          direct = "direct=BOTH&";
-        } else if (queryDirect) {
-          direct = "direct=DIRECT&";
-        } else if (queryIndirect) {
-          direct = "direct=INDIRECT&";
-        }
-
-        $http.get(SERVER+'/pandrugsdb-backend/public/genedrug/?'+queryString+cancerDrugStatus+nonCancerDrugStatus+target+direct)
+        $http.get(SERVER + '/pandrugsdb-backend/public/genedrug/?' + queryString)
         .success(function(results) {
 
           if (!angular.isUndefined(tableState)) {

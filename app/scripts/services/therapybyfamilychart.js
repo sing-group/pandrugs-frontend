@@ -24,9 +24,6 @@ angular.module('pandrugsdbFrontendApp')
       tooltip: {
         pointFormat: '{point.y} drugs ({point.percentage:.1f}%)'
       },
-      title: {
-        text: '',
-      },
       plotOptions: {
         pie: {
           allowPointSelect: true,
