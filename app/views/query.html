@@ -25,6 +25,7 @@
               <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
                 <label for="generankinput">Select a gene rank file</label>
                 <input name="generank" id="generankinput" class="form-control" type="file" file-model="generank"/>
+                Download <a href="downloads/sample-rank.rnk">sample RNK file</a>
               </div>
             </div>
           </div>
@@ -111,14 +112,42 @@
       <h3>PanDrugs Candidate Therapies</h3>
     </div>
     <div class="row">
-      <div class="col-lg-7">
-        <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
-      </div>
-      <div class="col-lg-5">
-        <highchart id="therapyByStatusChart" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>
-        <highchart id="therapyByFamilyChart" config="highchartsTherapyByFamily" style="margin-top:20px"></highchart>
+
+      <div class="panel panel-default">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="active" role="presentation" ng-click="setSelectedTab('charts')">
+            <a href="/query#charts" aria-controls="charts" data-toggle="tab" role="tab">Charts</a>
+          </li>
+          <li role="presentation" ng-click="setSelectedTab('network')">
+            <a href="/query#network" aria-controls="network" data-toggle="tab" role="tab">Network</a>
+          </li>
+        </ul>
+
+        <div class="tab-content panel-body">
+          <div id="charts" class="tab-pane active">
+            <div class="row">
+              <div class="col-lg-7">
+                <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
+              </div>
+              <div class="col-lg-5">
+                <highchart id="therapyByStatusChart" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>
+                <highchart id="therapyByFamilyChart" config="highchartsTherapyByFamily" style="margin-top:20px"></highchart>
+              </div>
+            </div>
+          </div>
+          <div id="network" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
+            <div class="row">
+              <div>
+                <h4>Network Graph of best candidates</h4>
+                <a ng-click="exportnetwork()" download="network.png" href="{{pngcontent}}">Download image</a>
+                <div id="genedrugnetworkgraph"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
     <div class="row">
       <a href="{{csvcontent}}" download="data.csv">Download as CSV</a>
       <table id="results" st-table="results" st-pipe="query" class="table table-striped">

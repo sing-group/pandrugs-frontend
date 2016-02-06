@@ -14,6 +14,7 @@ angular.module('pandrugsdbFrontendApp')
 'bubbleTherapyChart',
 'therapyByStatusChart',
 'therapyByFamilyChart',
+'geneDrugNetworkChart',
 '$timeout',
 'filterFilter',
 function (
@@ -22,6 +23,7 @@ function (
   bubbleChart,
   therapyByStatusChart,
   therapyByFamilyChart,
+  geneDrugNetworkChart,
   $timeout,
   filterFilter
 ) {
@@ -31,7 +33,6 @@ function (
     // ======== QUERY PARAMETERS ======
     $scope.genes = '';
     $scope.generank = '';
-    $scope.selectedTab = 'genes';
     $scope.queryCancerFda = true;
     $scope.queryCancerClinical = true;
     $scope.queryOtherFda = true;
@@ -40,8 +41,17 @@ function (
     $scope.queryTarget = true;
     $scope.queryMarker = true;
 
+
+    var previousResults = null; //do not redraw graph each time the network tab is selected
     $scope.setSelectedTab = function (tab) {
-      $scope.selectedTab = tab;
+      if (tab === 'network') {
+        if (previousResults === null || previousResults != results){
+          $timeout(function(){
+            geneDrugNetworkChart.updateChart(results);
+          }, 500);
+          previousResults = results;
+        }
+      }
     };
 
     // cancer types
@@ -103,7 +113,7 @@ function (
     // therapy by family chart
     $scope.highchartsTherapyByFamily = therapyByFamilyChart;
 
-    var charts = [bubbleChart, therapyByStatusChart, therapyByFamilyChart];
+    var charts = [bubbleChart, therapyByStatusChart, therapyByFamilyChart, geneDrugNetworkChart];
 
     function updateCharts(results) {
       for (var i = 0; i<charts.length; i++) {
@@ -151,8 +161,9 @@ function (
       $scope.chartIsShowing = true;
     };
 
+    var results;
     function managerResults(result) {
-      var results = result['gene-drug-group'];
+      results = result['gene-drug-group'];
 
       $scope.results = results.filter(function(elem){
         if (elem.status === "EXPERIMENTAL" || elem.status === "CLINICAL_TRIALS") {
@@ -247,4 +258,7 @@ function (
         return unique;
       }
 
+      $scope.exportnetwork = function() {
+        $scope.pngcontent = geneDrugNetworkChart.exportnetwork(3);
+      }
     }]);
