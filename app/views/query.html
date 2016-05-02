@@ -154,15 +154,15 @@
         <thead>
           <tr>
             <th>Actions</th>
-            <th><span class="gene">Gene(s)</span> </span> <span class="help_icon" title="Gene(s) is ... under construction"></span></th>
-            <th><span class="drug">Drug</span> </span> <span class="help_icon" title="Drug is ... under construction"></span></th>
-            <th>Family <span class="help_icon" title="Family is ... under construction"/></th>
-            <th>Source(s) <span class="help_icon" title="Source(s) is ... under construction"/></th>
-            <th>Drug status <span class="help_icon" title="Drug status is ... under construction"/></th>
-            <th st-sort="therapy">Type of therapy <span class="help_icon" title="Types of therapy is ... under construction"/></th>
-            <th>Interaction <span class="help_icon" title="Interaction is ... under construction"/></th>
-            <th st-sort="dScore">DScore <span class="help_icon" title="DScore is ... under construction"/></th>
-            <th st-sort="gScore">GScore <span class="help_icon" title="GScore is ... under construction"/></th>
+            <th><span class="gene">Gene(s)</span> </span> <span class="help_icon" title="gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
+            <th><span class="drug">Drug</span> </span> <span class="help_icon" title="compound name"></span></th>
+            <th>Family <span class="help_icon" title="drug family based on the KEGG target-based classification of drugs"/></th>
+            <th>Source(s) <span class="help_icon" title="source(s) where the drug-gene interaction came from"/></th>
+            <th>Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
+            <th st-sort="therapy">Type of therapy <span class="help_icon" title="type of therapy for the approved drugs in cancer"/></th>
+            <th>Interaction <span class="help_icon" title="type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
+            <th st-sort="dScore">DScore <span class="help_icon" title="score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
+            <th st-sort="gScore">GScore <span class="help_icon" title="score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
           </tr>
         </thead>
 
