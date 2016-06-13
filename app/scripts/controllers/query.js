@@ -162,22 +162,27 @@ function (
     };
 
     var results;
-    function managerResults(result) {
+    function manageResults(result) {
       results = result['gene-drug-group'];
 
-      $scope.results = results.filter(function(elem){
-        if (elem.status === "EXPERIMENTAL" || elem.status === "CLINICAL_TRIALS") {
+      $scope.results = results.filter(function(elem) {
+        if (elem.status === 'EXPERIMENTAL' || elem.status === 'CLINICAL_TRIALS') {
           return true;
         }
-        var interesting = false;
 
-        elem.cancer.forEach(function(cancerType){
-          if ($scope.selectedCancerTypes.indexOf(cancerType.toUpperCase())!=-1) {
-            interesting = true;
-            return;
-          }
-        });
-        return interesting;
+        if (elem.cancer.length == 0) {
+          var allCancerSelected = $scope.cancerTypes.every(function (cancerType) {
+            return cancerType.selected;
+          });
+
+          return allCancerSelected;
+        } else {
+          var interesting = elem.cancer.find(function(cancerType) {
+            return $scope.selectedCancerTypes.indexOf(cancerType.toUpperCase()) != -1;
+          });
+
+          return interesting;
+        }
       });
 
       //$scope.results = result['gene-drug-group'];
@@ -225,7 +230,7 @@ function (
           true,
           true,
           tableState
-        ).then(managerResults);
+        ).then(manageResults);
       } else if ($scope.genes !== '') {
           var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim();}));
           $scope.genes = uniqueGenes.join('\n');
@@ -242,7 +247,7 @@ function (
             true,
             true,
             tableState
-          ).then(managerResults);
+          ).then(manageResults);
         }
       };
 
