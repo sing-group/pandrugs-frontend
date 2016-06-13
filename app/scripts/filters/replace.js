@@ -11,6 +11,6 @@
 angular.module('pandrugsdbFrontendApp')
   .filter('replace', function () {
     return function (input, from, to) {
-      return input.replace(from, to);
+      return input.split(from).join(to);
     };
   });
