@@ -46,9 +46,7 @@ function (
     $scope.setSelectedTab = function (tab) {
       if (tab === 'network') {
         if (previousResults === null || previousResults != results){
-          $timeout(function(){
-            geneDrugNetworkChart.updateChart(results);
-          }, 500);
+          $scope.updateNetworkChart();
           previousResults = results;
         }
       }
@@ -113,12 +111,28 @@ function (
     // therapy by family chart
     $scope.highchartsTherapyByFamily = therapyByFamilyChart;
 
-    var charts = [bubbleChart, therapyByStatusChart, therapyByFamilyChart, geneDrugNetworkChart];
+    var charts = [bubbleChart, therapyByStatusChart, therapyByFamilyChart/*, geneDrugNetworkChart*/];
 
     function updateCharts(results) {
       for (var i = 0; i<charts.length; i++) {
         charts[i].updateChart(results);
       }
+    }
+
+    $scope.networkparams = {
+      showInteractions: false
+    };
+
+    $scope.networkChartLoading = true;
+    $scope.updateNetworkChart = function() {
+      $scope.networkChartLoading = true;
+      var degree = 0;
+      if ($scope.networkparams.showInteractions) {
+        degree = 1;
+      }
+      $timeout(function(){
+        geneDrugNetworkChart.updateChart(results, degree).then(function(graph){$scope.networkChartLoading = false;});
+      }, 500);
     }
 
     function generateCSV(results) {

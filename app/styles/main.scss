@@ -218,8 +218,26 @@ a.non_curated_source {
 
 #genedrugnetworkgraph {
   height: 500px;
-  cursor:crosshair;
+  //cursor:crosshair;
 }
+#genedrugnetworkgraph.ng-hide {
+  visibility: hidden;
+  display: block !important;
+}
+div#chartarea {
+  position: relative;
+}
+div#chartarea #loading-banner {
+  position: absolute;
+  height: 500px;
+  top: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 4em;
+  color: #d9d9d9;
+  padding-top: 200px;
+}
+
 /* =========== RESPONSIVE ======================*/
 
 /* Responsive: Portrait tablets and up */

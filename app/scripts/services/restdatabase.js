@@ -11,7 +11,7 @@ angular.module('pandrugsdbFrontendApp')
 .factory('restDatabase', ['$q', '$timeout', '$filter', '$http', function restDatabaseFactory($q, $timeout, $filter, $http) {
   // Service logic
   // ...
-  var SERVER = 'http://sing.ei.uvigo.es';
+var SERVER = 'http://sing.ei.uvigo.es';
 
   function constructQueryString(
     queryCancerFda,
@@ -179,13 +179,21 @@ angular.module('pandrugsdbFrontendApp')
 
       $http.get(SERVER+'/pandrugsdb-backend/public/cancer')
       .success(function(results) {
-
         deferred.resolve(results['name']);
+        }
+      );
+      return deferred.promise;
+  },
+
+  getInteractingGenes: function(genes, degree) {
+    var deferred = $q.defer();
+
+    $http.get(SERVER+'/pandrugsdb-backend/public/gene/interactions', {params: {gene: genes, degree: degree}})
+    .success(function(results) {
+      deferred.resolve(results);
       }
     );
-
     return deferred.promise;
-
   }
 };
 }]);

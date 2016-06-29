@@ -139,8 +139,14 @@
             <div class="row">
               <div>
                 <h4>Network Graph of best candidates</h4>
+                <form>
+                <input type="checkbox" ng-model="networkparams.showInteractions" ng-change="updateNetworkChart()">show interactions
+              </form>
                 <a ng-click="exportnetwork()" download="network.png" href="{{pngcontent}}">Download image</a>
-                <div id="genedrugnetworkgraph"></div>
+                <div id="chartarea">
+                  <div ng-hide="networkChartLoading" id="genedrugnetworkgraph"></div>
+                  <div ng-show="networkChartLoading" id="loading-banner"><img src="images/spinner.gif"></div>
+                </div>
               </div>
             </div>
           </div>
