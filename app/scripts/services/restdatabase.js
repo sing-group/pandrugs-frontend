@@ -194,6 +194,15 @@ var SERVER = 'http://sing.ei.uvigo.es';
       }
     );
     return deferred.promise;
+  },
+
+  listGeneSymbols: function(query, maxResults) {
+    return $http.get(SERVER + '/pandrugsdb-backend/public/gene/symbol', {
+      params: {
+        query: query,
+        maxResults: maxResults == undefined ? 20 : maxResults
+      }
+    });
   }
 };
 }]);

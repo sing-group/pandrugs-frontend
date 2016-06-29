@@ -279,5 +279,31 @@ function (
 
       $scope.exportnetwork = function() {
         $scope.pngcontent = geneDrugNetworkChart.exportnetwork(3);
-      }
+      };
+
+      $scope.areaConfig = {
+        autocomplete: [{
+          words: [/([()-_A-Za-z0-9]+)/gi]
+        }],
+        dropdown: [{
+          trigger: /([()-_A-Za-z0-9]+)/gi,
+          list: function(match, callback) {
+            db.listGeneSymbols(match[1])
+              .then(function(response) {
+                var data = response.data.map(function(geneSymbol) {
+                  return {
+                    display: geneSymbol,
+                    item: geneSymbol
+                  }
+                });
+
+                callback(data);
+              });
+          },
+          onSelect: function(item) {
+            return item.item + '\n';
+          },
+          mode: 'replace'
+        }]
+      };
     }]);
