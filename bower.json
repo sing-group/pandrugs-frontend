@@ -13,7 +13,7 @@
     "angular-smart-table": "^2.0.1",
     "highcharts-release": "^4.1.4",
     "highcharts-ng": "^0.0.8",
-    "cytoscape": "^2.6.1",
+    "cytoscape": "~2.6.1",
     "smart-area": "~1.2.0"
   },
   "devDependencies": {
