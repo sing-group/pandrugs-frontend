@@ -10,6 +10,7 @@
 angular.module('pandrugsdbFrontendApp')
 .controller('QueryCtrl',
 ['$scope',
+'user',
 'database',
 'bubbleTherapyChart',
 'therapyByStatusChart',
@@ -19,6 +20,7 @@ angular.module('pandrugsdbFrontendApp')
 'filterFilter',
 function (
   $scope,
+  user,
   db,
   bubbleChart,
   therapyByStatusChart,
@@ -229,6 +231,7 @@ function (
     //  ========== QUERY ========
     $scope.query = function(tableState) {
 
+      user.incrementCounter();
       console.log($scope.generank);
       if ($scope.generank !== '') {
         $scope.isLoading = true;

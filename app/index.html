@@ -42,7 +42,8 @@
               <li ng-class="{ active: isActive('/') }"><a href="#/">Home</a></li>
               <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/query">Query</a></li>
               <li ng-class="{ active: isActive('/about') }"><a ng-href="#/about">About</a></li>
-
+              <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
+              <li ng-show="getCurrentUser() !== 'anonymous'"><a style="cursor: pointer" ng-click="logout()">Logout ({{getCurrentUser()}})</a></li>
             </ul>
           </div>
         </div>
@@ -95,25 +96,26 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/query.js"></script>
-        <script src="scripts/services/database.js"></script>
-        <script src="scripts/controllers/header.js"></script>
         <script src="scripts/services/mockdatabase.js"></script>
         <script src="scripts/services/restdatabase.js"></script>
         <script src="scripts/services/database.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/services/bubbletherapychart.js"></script>
+        <script src="scripts/services/therapybystatuschart.js"></script>
+        <script src="scripts/services/therapybyfamilychart.js"></script>
+        <script src="scripts/services/genedrugnetworkchart.js"></script>
+        <script src="scripts/services/utilities.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/query.js"></script>
+        <script src="scripts/controllers/header.js"></script>
+        <script src="scripts/controllers/user.js"></script>
         <script src="scripts/controllers/querymenu.js"></script>
         <script src="scripts/filters/enumeration.js"></script>
         <script src="scripts/filters/enumerationWithLink.js"></script>
         <script src="scripts/filters/titlecase.js"></script>
         <script src="scripts/filters/replace.js"></script>
-        <script src="scripts/services/bubbletherapychart.js"></script>
-        <script src="scripts/services/therapybystatuschart.js"></script>
-        <script src="scripts/services/therapybyfamilychart.js"></script>
         <script src="scripts/directives/fileupload.js"></script>
-        <script src="scripts/services/genedrugnetworkchart.js"></script>
-        <script src="scripts/services/utilities.js"></script>
         <!-- endbuild -->
 </body>
 </html>

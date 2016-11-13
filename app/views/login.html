@@ -1,0 +1,7 @@
+<form ng-show="currentUser() === 'anonymous'">
+
+  Login <input ng-model="login" type="text" class="form-control">
+  Password <input ng-model="password" type="password" class="form-control">
+  <input class="btn btn-default" type="button" value="Login" ng-click="doLogin()">
+</form>
+<input type="button" class="btn btn-default" value="Logout" ng-if="currentUser() !== 'anonymous'" ng-click="logout()">

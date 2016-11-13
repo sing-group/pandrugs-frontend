@@ -11,9 +11,9 @@ angular.module('pandrugsdbFrontendApp')
 .factory('restDatabase', ['$q', '$timeout', '$filter', '$http', function restDatabaseFactory($q, $timeout, $filter, $http) {
   // Service logic
   // ...
-var SERVER = 'http://sing.ei.uvigo.es';
+//var SERVER = 'http://sing.ei.uvigo.es';
   //var SERVER = 'http://localhost:8080'; // development: local backend;
-  //var SERVER = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
+  var SERVER = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
   function constructQueryString(
     queryCancerFda,
     queryCancerClinical,
