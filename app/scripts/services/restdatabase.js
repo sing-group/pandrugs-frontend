@@ -12,7 +12,8 @@ angular.module('pandrugsdbFrontendApp')
   // Service logic
   // ...
 var SERVER = 'http://sing.ei.uvigo.es';
-
+  //var SERVER = 'http://localhost:8080'; // development: local backend;
+  //var SERVER = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
   function constructQueryString(
     queryCancerFda,
     queryCancerClinical,
