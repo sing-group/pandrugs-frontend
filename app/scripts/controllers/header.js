@@ -9,6 +9,7 @@
  */
 angular.module('pandrugsdbFrontendApp')
   .controller('HeaderCtrl', ['user', '$scope', '$location', function (user, $scope, $location) {
+    
     $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
     };

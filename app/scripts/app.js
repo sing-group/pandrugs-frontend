@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ngStorage',
     'smart-table',
     'highcharts-ng',
     'smartArea'

@@ -35,6 +35,7 @@ module.exports = function(config) {
       'bower_components/highcharts-ng/dist/highcharts-ng.js',
       'bower_components/cytoscape/dist/cytoscape.js',
       'bower_components/smart-area/dist/smart-area.js',
+      'bower_components/ng-storage/ngStorage.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
