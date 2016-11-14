@@ -2,17 +2,17 @@
 
 describe('Service: utilities', function () {
 
-  // load the service's module
-  beforeEach(module('pandrugsdbFrontendApp'));
+	// load the service's module
+	beforeEach(module('pandrugsdbFrontendApp'));
 
-  // instantiate service
-  var utilities;
-  beforeEach(inject(function (_utilities_) {
-    utilities = _utilities_;
-  }));
+	// instantiate service
+	var utilities;
+	beforeEach(inject(function (_utilities_) {
+		utilities = _utilities_;
+	}));
 
-  it('should do something', function () {
-    expect(!!utilities).toBe(true);
-  });
+	it('should do something', function () {
+		expect(!!utilities).toBe(true);
+	});
 
 });

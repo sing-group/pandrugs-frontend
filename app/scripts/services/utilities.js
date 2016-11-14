@@ -8,16 +8,16 @@
  * Value in the pandrugsdbFrontendApp.
  */
 angular.module('pandrugsdbFrontendApp')
-  .value('utilities', {
-    unique: function(array) {
-      var result = [];
+	.value('utilities', {
+		unique: function(array) {
+			var result = [];
 
-      array.forEach(function(elem){
-        if (result.indexOf(elem)==-1) {
-          result.push(elem);
-        }
-      });
-      return result;
-    }
-  }
+			array.forEach(function(elem){
+				if (result.indexOf(elem)==-1) {
+					result.push(elem);
+				}
+			});
+			return result;
+		}
+	}
 );

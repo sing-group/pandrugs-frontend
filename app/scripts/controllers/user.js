@@ -8,7 +8,7 @@
  * Controller of the pandrugsdbFrontendApp
  */
 angular.module('pandrugsdbFrontendApp')
-  .controller('UserCtrl', ['user', '$scope', '$location',
+	.controller('UserCtrl', ['user', '$scope', '$location',
 		function (user, $scope, $location) {
 		if ($location.search().confirmuuid) {
 					user.confirm($location.search().confirmuuid, function(){
@@ -20,14 +20,14 @@ angular.module('pandrugsdbFrontendApp')
 		}
 
 
-    $scope.doLogin = function() {
-      user.login(
-        $scope.login,
-        $scope.password,
-        function() { $location.path('/')},
-        function() {alert("error");}
-      );
-    }
+		$scope.doLogin = function() {
+			user.login(
+				$scope.login,
+				$scope.password,
+				function() { $location.path('/')},
+				function() {alert("error");}
+			);
+		}
 
 		$scope.register = function() {
 			user.register(
@@ -46,12 +46,12 @@ angular.module('pandrugsdbFrontendApp')
 			)
 		}
 
-    $scope.currentUser = function() {
-      return user.getCurrentUser();
-    }
+		$scope.currentUser = function() {
+			return user.getCurrentUser();
+		}
 
-    $scope.logout = function() {
-      user.logout();
-    }
+		$scope.logout = function() {
+			user.logout();
+		}
 
-  }]);
+	}]);

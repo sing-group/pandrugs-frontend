@@ -1,122 +1,122 @@
 <!DOCTYPE html>
 <html class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/smart-area/dist/smart-area.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
-  </head>
-  <body ng-app="pandrugsdbFrontendApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+		<!-- build:css(.) styles/vendor.css -->
+		<!-- bower:css -->
+		<link rel="stylesheet" href="bower_components/smart-area/dist/smart-area.css" />
+		<!-- endbower -->
+		<!-- endbuild -->
+		<!-- build:css(.tmp) styles/main.css -->
+		<link rel="stylesheet" href="styles/main.css">
+		<!-- endbuild -->
+	</head>
+	<body ng-app="pandrugsdbFrontendApp">
+		<!--[if lt IE 7]>
+			<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
 
-    <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
+		<!-- Add your site or application content here -->
+		<div class="header">
+			<div class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<div class="navbar-header">
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
 
-            <a ng-href="#/"><img class="navbar-brand" src="images/pandrugsdb-logo.png"></a>
-          </div>
+						<a ng-href="#/"><img class="navbar-brand" src="images/pandrugsdb-logo.png"></a>
+					</div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse" ng-controller="HeaderCtrl">
+					<div class="collapse navbar-collapse" id="js-navbar-collapse" ng-controller="HeaderCtrl">
 
-            <ul class="nav navbar-nav">
-              <li ng-class="{ active: isActive('/') }"><a href="#/">Home</a></li>
-              <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/query">Query</a></li>
-              <li ng-class="{ active: isActive('/about') }"><a ng-href="#/about">About</a></li>
-              <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
-              <li ng-show="getCurrentUser() !== 'anonymous'"><a style="cursor: pointer" ng-click="logout()">Logout ({{getCurrentUser()}})</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+						<ul class="nav navbar-nav">
+							<li ng-class="{ active: isActive('/') }"><a href="#/">Home</a></li>
+							<li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/query">Query</a></li>
+							<li ng-class="{ active: isActive('/about') }"><a ng-href="#/about">About</a></li>
+							<li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
+							<li ng-show="getCurrentUser() !== 'anonymous'"><a style="cursor: pointer" ng-click="logout()">Logout ({{getCurrentUser()}})</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <div class="container-fluid">
-    <div ng-view=""></div>
-    </div>
+		<div class="container-fluid">
+		<div ng-view=""></div>
+		</div>
 
-    <div class="footer">
-      <div class="container">
-        <p>A collaboration between <a href="http://www.cnio.es/ES/grupos/plantillas/presentacion.asp?grupo=50008762">Traslational Bioinformatics Unit</a> (<a href="http://www.cnio.es">CNIO</a>) &amp; <a href="http://sing.ei.uvigo.es">SING</a> (<a href="http://www.uvigo.es">U. Vigo</a>)</p>
-      </div>
-    </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
-    <script src="bower_components/highcharts-release/highcharts.js"></script>
-    <script src="bower_components/highcharts-release/highcharts-more.js"></script>
-    <script src="bower_components/highcharts-release/modules/exporting.js"></script>
-    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
-    <script src="bower_components/cytoscape/dist/cytoscape.js"></script>
-    <script src="bower_components/smart-area/dist/smart-area.js"></script>
-    <script src="bower_components/ng-storage/ngStorage.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+		<div class="footer">
+			<div class="container">
+				<p>A collaboration between <a href="http://www.cnio.es/ES/grupos/plantillas/presentacion.asp?grupo=50008762">Traslational Bioinformatics Unit</a> (<a href="http://www.cnio.es">CNIO</a>) &amp; <a href="http://sing.ei.uvigo.es">SING</a> (<a href="http://www.uvigo.es">U. Vigo</a>)</p>
+			</div>
+		</div>
 
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/services/mockdatabase.js"></script>
-        <script src="scripts/services/restdatabase.js"></script>
-        <script src="scripts/services/database.js"></script>
-        <script src="scripts/services/user.js"></script>
-        <script src="scripts/services/bubbletherapychart.js"></script>
-        <script src="scripts/services/therapybystatuschart.js"></script>
-        <script src="scripts/services/therapybyfamilychart.js"></script>
-        <script src="scripts/services/genedrugnetworkchart.js"></script>
-        <script src="scripts/services/utilities.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/query.js"></script>
-        <script src="scripts/controllers/header.js"></script>
-        <script src="scripts/controllers/user.js"></script>
-        <script src="scripts/controllers/querymenu.js"></script>
-        <script src="scripts/filters/enumeration.js"></script>
-        <script src="scripts/filters/enumerationWithLink.js"></script>
-        <script src="scripts/filters/titlecase.js"></script>
-        <script src="scripts/filters/replace.js"></script>
-        <script src="scripts/directives/fileupload.js"></script>
-        <!-- endbuild -->
+		<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+		 <script>
+			 !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+			 (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+			 r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+			 }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			 ga('create', 'UA-XXXXX-X');
+			 ga('send', 'pageview');
+		</script>
+
+		<!-- build:js(.) scripts/vendor.js -->
+		<!-- bower:js -->
+		<script src="bower_components/jquery/dist/jquery.js"></script>
+		<script src="bower_components/angular/angular.js"></script>
+		<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+		<script src="bower_components/angular-animate/angular-animate.js"></script>
+		<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.js"></script>
+		<script src="bower_components/angular-route/angular-route.js"></script>
+		<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+		<script src="bower_components/angular-touch/angular-touch.js"></script>
+		<script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+		<script src="bower_components/highcharts-release/highcharts.js"></script>
+		<script src="bower_components/highcharts-release/highcharts-more.js"></script>
+		<script src="bower_components/highcharts-release/modules/exporting.js"></script>
+		<script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
+		<script src="bower_components/cytoscape/dist/cytoscape.js"></script>
+		<script src="bower_components/smart-area/dist/smart-area.js"></script>
+		<script src="bower_components/ng-storage/ngStorage.js"></script>
+		<!-- endbower -->
+		<!-- endbuild -->
+
+
+				<!-- build:js({.tmp,app}) scripts/scripts.js -->
+				<script src="scripts/app.js"></script>
+				<script src="scripts/services/mockdatabase.js"></script>
+				<script src="scripts/services/restdatabase.js"></script>
+				<script src="scripts/services/database.js"></script>
+				<script src="scripts/services/user.js"></script>
+				<script src="scripts/services/bubbletherapychart.js"></script>
+				<script src="scripts/services/therapybystatuschart.js"></script>
+				<script src="scripts/services/therapybyfamilychart.js"></script>
+				<script src="scripts/services/genedrugnetworkchart.js"></script>
+				<script src="scripts/services/utilities.js"></script>
+				<script src="scripts/controllers/main.js"></script>
+				<script src="scripts/controllers/about.js"></script>
+				<script src="scripts/controllers/query.js"></script>
+				<script src="scripts/controllers/header.js"></script>
+				<script src="scripts/controllers/user.js"></script>
+				<script src="scripts/controllers/querymenu.js"></script>
+				<script src="scripts/filters/enumeration.js"></script>
+				<script src="scripts/filters/enumerationWithLink.js"></script>
+				<script src="scripts/filters/titlecase.js"></script>
+				<script src="scripts/filters/replace.js"></script>
+				<script src="scripts/directives/fileupload.js"></script>
+				<!-- endbuild -->
 </body>
 </html>
