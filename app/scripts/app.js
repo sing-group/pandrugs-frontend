@@ -19,7 +19,8 @@ angular
 		'ngStorage',
 		'smart-table',
 		'highcharts-ng',
-		'smartArea'
+		'smartArea',
+		'angular-loading-bar'
 	])
 	.config(['databaseProvider', '$routeProvider', '$compileProvider', function (databaseProvider, $routeProvider, $compileProvider) {
 		databaseProvider.useMock(false);
@@ -49,4 +50,7 @@ angular
 			});
 			$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 
-	}]);
+	}])
+	.run(function($rootScope){
+		$rootScope.keys = Object.keys;
+	});

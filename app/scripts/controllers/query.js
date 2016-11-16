@@ -17,6 +17,7 @@ angular.module('pandrugsdbFrontendApp')
 'therapyByFamilyChart',
 'geneDrugNetworkChart',
 '$timeout',
+'$interval',
 'filterFilter',
 function (
 	$scope,
@@ -27,14 +28,21 @@ function (
 	therapyByFamilyChart,
 	geneDrugNetworkChart,
 	$timeout,
+	$interval,
 	filterFilter
 ) {
 
 		$scope.$timeout = $timeout;
 
+		$scope.vcffile = '';
+		$scope.computationName = 'My Computation';
+
+		$scope.computations = {};
+
 		// ======== QUERY PARAMETERS ======
 		$scope.genes = '';
 		$scope.generank = '';
+		$scope.computationId = '';
 		$scope.queryCancerFda = true;
 		$scope.queryCancerClinical = true;
 		$scope.queryOtherFda = true;
@@ -45,7 +53,9 @@ function (
 
 
 		var previousResults = null; //do not redraw graph each time the network tab is selected
+		$scope.selectedTab = "genes";
 		$scope.setSelectedTab = function (tab) {
+			$scope.selectedTab = tab;
 			if (tab === 'network') {
 				if (previousResults === null || previousResults != results){
 					$scope.updateNetworkChart();
@@ -230,10 +240,8 @@ function (
 
 		//	========== QUERY ========
 		$scope.query = function(tableState) {
-
-			user.incrementCounter();
 			console.log($scope.generank);
-			if ($scope.generank !== '') {
+			if ($scope.selectedTab == 'generank' && $scope.generank !== '') {
 				$scope.isLoading = true;
 
 				db.rankedSearch($scope.generank,
@@ -248,7 +256,22 @@ function (
 					true,
 					tableState
 				).then(manageResults);
-			} else if ($scope.genes !== '') {
+			} else if ($scope.selectedTab == 'vcfranking' && $scope.computationId !== '') {
+				$scope.isLoading = true;
+
+				db.computationIdSearch($scope.computationId,
+					$scope.queryCancerFda,
+					$scope.queryCancerClinical,
+					$scope.queryOtherFda,
+					$scope.queryOtherClinical,
+					$scope.queryOtherExperimental,
+					$scope.queryTarget,
+					$scope.queryMarker,
+					true,
+					true,
+					tableState
+				).then(manageResults);
+			} else if ($scope.selectedTab == 'genes' && $scope.genes !== '') {
 					var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim();}));
 					$scope.genes = uniqueGenes.join('\n');
 
@@ -309,4 +332,45 @@ function (
 					mode: 'replace'
 				}]
 			};
+
+			$scope.getCurrentUser = function() {
+				return user.getCurrentUser();
+			}
+
+			$scope.submitVCF = function() {
+				$scope.largeProcess = "Uploading VCF File, please wait";
+				user.submitComputation($scope.vcffile, $scope.computationName,
+					function(){
+						alert("Computation submitted successfully. We will start to analyze it as soon as we can.");
+						$scope.largeProcess = null;
+					},
+					function(){
+						alert("ERROR: computation could not be submitted.");
+						$scope.largeProcess = null;
+					}
+				)
+			}
+
+			$scope.deleteComputation = function(computationId) {
+				if (window.confirm("Are you sure?")) {
+					user.deleteComputation(computationId,
+					function() {
+							alert("Computation deleted successfully.")
+					},
+					function() {
+						alert("ERROR: computation could not be deleted.")
+					});
+				}
+			}
+
+			//update computation status...
+			function reloadComputations() {
+				if (user.getCurrentUser() !== 'anonymous') {
+					user.getComputations(function(computations) {
+						$scope.computations = computations;
+					}, null);
+				}
+			}
+			reloadComputations();
+			$interval(reloadComputations, 5000);
 		}]);

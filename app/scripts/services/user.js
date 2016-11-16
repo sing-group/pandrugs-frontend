@@ -12,9 +12,9 @@ angular.module('pandrugsdbFrontendApp')
 	function restDatabaseFactory($q, $timeout, $filter, $http, $sessionStorage, $location) {
 	// Service logic
 	// ...
-	//var SERVER = 'http://sing.ei.uvigo.es'; // production
+	var SERVER = 'http://sing.ei.uvigo.es'; // production
 	//var SERVER = 'http://localhost:8080'; // development: local backend;
-	var SERVER = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
+	//var SERVER = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
 
 	var currentUser = "anonymous";
 
@@ -45,15 +45,38 @@ angular.module('pandrugsdbFrontendApp')
 
 	function doRegister(login, email, password, onSuccess, onError) {
 		var encodedTemplate = encodeURIComponent($location.absUrl().substring(0, $location.absUrl().indexOf('#'))+'#/login?confirmuuid=%s');
-		$http.post(SERVER + '/pandrugsdb-backend/public/registration/?confirmurltemplate='+encodedTemplate,
+		$http.post(SERVER + '/pandrugsdb-backend/public/registration/?confirmurltemplate=' + encodedTemplate,
 		{"login": login, "email": email, "password":password})
+		.success(onSuccess).error(onError);
+	}
+
+	function getComputations(onSuccess, onError) {
+		if (currentUser !== 'anonymous') {
+			$http.get(SERVER + '/pandrugsdb-backend/api/variantsanalysis/' + currentUser)
+			.success(function(data) { if (onSuccess!=null) onSuccess(data) })
+			.error(function() { if (onError!=null) onError() });
+		}
+	}
+
+	function submitComputation(vcfFile, computationName, onSuccess, onError) {
+		var fd = new FormData();
+		fd.append("vcf", vcfFile);
+		$http.post(SERVER + '/pandrugsdb-backend/api/variantsanalysis/' + currentUser +'?name='+computationName, fd, {
+				transformRequest: angular.identity,
+				headers: {'Content-Type': undefined}
+		}).success(onSuccess).error(onError);
+
+	}
+
+	function deleteComputation(computationId, onSuccess, onError) {
+		$http.delete(
+			SERVER + '/pandrugsdb-backend/api/variantsanalysis/' + currentUser + '/' + computationId)
 		.success(onSuccess).error(onError);
 	}
 
 	if ('user' in $sessionStorage) {
 		doLogin($sessionStorage.user, $sessionStorage.password, null, null);
 	}
-
 
 
 	// Public API here
@@ -64,6 +87,9 @@ angular.module('pandrugsdbFrontendApp')
 		register: doRegister,
 		login: doLogin,
 		logout: doLogout,
-		confirm: doConfirm
+		confirm: doConfirm,
+		getComputations: getComputations,
+		submitComputation: submitComputation,
+		deleteComputation: deleteComputation
 	};
 }]);

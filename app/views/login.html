@@ -1,7 +1,7 @@
 <div class="row">
 <form name="loginForm" ng-show="currentUser() === 'anonymous'" class="col-md-6">
 	<h2>Login</h2>
-	<label for="loginfield">Login</label><input name="loginfield" ng-model="login" type="text" class="form-control" required>
+	<label for="loginfield">Login</label><input name="loginfield" ng-model="login" type="text" class="form-control" required autofocus>
 	<label for="passwordfield">Password</label><input name="passwordfield" ng-model="password" type="password" class="form-control" required></label>
 	<input ng-disabled="!loginForm.$valid" class="btn btn-default" type="submit" value="Login" ng-click="doLogin()">
 </form>

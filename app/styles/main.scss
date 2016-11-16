@@ -238,6 +238,37 @@ div#chartarea #loading-banner {
 	padding-top: 200px;
 }
 
+.disabled {
+	color: gray;
+}
+a.disabled:hover {
+	color:gray;
+}
+
+.progress-bar.error {
+	background-color: #d43f3a;
+}
+
+.progress-bar.success {
+	background-color: #4cae4c;
+}
+
+.affectedGenes {
+	color: #4cae4c;
+}
+
+.error {
+	color: #d43f3a;
+}
+
+#computationSubmit .deleteButton {
+	float: right;
+}
+
+#computationSubmit .progress {
+	clear: both;
+	margin-top: 25px;
+}
 /* =========== RESPONSIVE ======================*/
 
 /* Responsive: Portrait tablets and up */
