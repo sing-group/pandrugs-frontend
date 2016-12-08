@@ -13,6 +13,9 @@
 							<li class="active" role="presentation" ng-click="setSelectedTab('genes')">
 								<a href="/query#genes" aria-controls="genes" data-toggle="tab" role="tab">Genes</a>
 							</li>
+              <li role="presentation" ng-click="setSelectedTab('drugs')">
+                <a href="/query#drugs" aria-controls="drugs" data-toggle="tab" role="tab">Drugs</a>
+              </li>
 							<li role="presentation" ng-click="setSelectedTab('generank')">
 								<a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Rank</a>
 							</li>
@@ -26,40 +29,43 @@
 
 						<div class="tab-content panel-body">
 							<div id="genes" class="tab-pane active">
-								<textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20" spellcheck="false" smart-area="areaConfig"></textarea>
+								<textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20" spellcheck="false" smart-area="genesTextAreaConfig"></textarea>
 							</div>
+              <div id="drugs" class="tab-pane">
+                <textarea name="drugs" id="drugstextarea" class="form-control" placeholder="Standard drug names" ng-model="drugs" rows="20" spellcheck="false" smart-area="drugsTextAreaConfig"></textarea>
+              </div>
 							<div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
 								<label for="generankinput">Select a gene rank file</label>
 								<input name="generank" id="generankinput" class="form-control" type="file" file-model="generank"/>
 								Download <a href="downloads/sample-rank.rnk">sample RNK file</a>
 							</div>
 							<div id="vcfranking" class="tab-pane form-group" role="tabpanel">
-											<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newComputationModal">
-											  New variants analysis...
-											</button>
-											<div id = "newComputationModal" class="modal fade" tabindex="-1" role="dialog">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-											        <h4 class="modal-title">New variants analysis</h4>
-											      </div>
-											      <div class="modal-body">
-															<fieldset class="form-group">
-																<label for="generankinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>)</label>
-																<input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
-																<label for="computationNameInput">Computation name</label>
-																<input name="computationName" id="computationNameInput" class="form-control" type="text" ng-model="computationName"/>
-																<!--<input type="button" class="btn btn-success" value="Submit VCF to analyze" ng-click="submitVCF()" />-->
-															</fieldset>
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-											        <button ng-disabled="vcffile == '' || computationName.length == 0" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="submitVCF()">Submit VCF</button>
-											      </div>
-											    </div><!-- /.modal-content -->
-											  </div><!-- /.modal-dialog -->
-											</div><!-- /.modal -->
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newComputationModal">
+                  New variants analysis...
+                </button>
+                <div id = "newComputationModal" class="modal fade" tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">New variants analysis</h4>
+                      </div>
+                      <div class="modal-body">
+                        <fieldset class="form-group">
+                          <label for="generankinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>)</label>
+                          <input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
+                          <label for="computationNameInput">Computation name</label>
+                          <input name="computationName" id="computationNameInput" class="form-control" type="text" ng-model="computationName"/>
+                          <!--<input type="button" class="btn btn-success" value="Submit VCF to analyze" ng-click="submitVCF()" />-->
+                        </fieldset>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button ng-disabled="vcffile == '' || computationName.length == 0" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="submitVCF()">Submit VCF</button>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
 								<div class="panel panel-default" ng-show="keys(computations).length > 0">
 									<div class="panel-heading" role="tab" id="headingVCFSubmit">
 										<h4 class="panel-title">
@@ -86,14 +92,10 @@
 															{{status.taskName}}
 													</div>
 												</div>
-
 											</div>
 										</div>
 									</div>
 								</div>
-
-
-
 							</div>
 						</div>
 					</div>
@@ -117,7 +119,6 @@
 										<div class="panel panel-default">
 											<div class="panel-heading">Drug status level</div>
 											<div class="panel-body">
-
 												<h4>Cancer</h4>
 												<label><input type="checkbox" ng-model="queryCancerFda">FDA approved</label>
 												<label><input type="checkbox" ng-model="queryCancerClinical">Clinical trials</label>
@@ -125,9 +126,7 @@
 												<label><input type="checkbox" ng-model="queryOtherFda">FDA approved</label>
 												<label><input type="checkbox" ng-model="queryOtherClinical">Clinical trials</label>
 												<label><input type="checkbox" ng-model="queryOtherExperimental">Experimental</label>
-
 											</div><!-- end panel-body -->
-
 										</div><!-- end drug and status level -->
 									</div>
 
@@ -173,7 +172,7 @@
 			</div>
 		</div>
 		<button type="submit" class="btn btn-primary btn-lg" ng-show="results == null" ng-click="query()"
-		ng-disabled="(selectedTab == 'genes' && genes.length == 0) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
+		ng-disabled="(selectedTab == 'genes' && genes.length == 0) || (selectedTab == 'drugs' && drugs.length == 0) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
 	</div>
 </form>
 	<div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">

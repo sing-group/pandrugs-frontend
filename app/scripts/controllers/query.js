@@ -41,6 +41,7 @@ function (
 
 		// ======== QUERY PARAMETERS ======
 		$scope.genes = '';
+    $scope.drugs = '';
 		$scope.generank = '';
 		$scope.computationId = '';
 		$scope.queryCancerFda = true;
@@ -142,13 +143,12 @@ function (
 			if ($scope.networkparams.showInteractions) {
 				degree = 1;
 			}
-			$timeout(function(){
+			$timeout(function() {
 				geneDrugNetworkChart.updateChart(results, degree).then(function(graph){$scope.networkChartLoading = false;});
 			}, 500);
 		}
 
 		function generateCSV(results) {
-
 			var csv = [];
 			csv.push("Gene(s),Drug,Family,Source(s),Drug status,Type of therapy,Interaction,DScore,GScore,Info,Gene,Sensitivity,Alteration,Family,Source(s),DScore,GScore");
 
@@ -240,7 +240,6 @@ function (
 
 		//	========== QUERY ========
 		$scope.query = function(tableState) {
-			console.log($scope.generank);
 			if ($scope.selectedTab == 'generank' && $scope.generank !== '') {
 				$scope.isLoading = true;
 
@@ -272,54 +271,66 @@ function (
 					tableState
 				).then(manageResults);
 			} else if ($scope.selectedTab == 'genes' && $scope.genes !== '') {
-					var uniqueGenes = unique($scope.genes.split('\n').map(function(item) { return item.trim();}));
-					$scope.genes = uniqueGenes.join('\n');
+				searchBy('searchByGenes', 'genes', tableState);
+			} else if ($scope.selectedTab == 'drugs' && $scope.drugs !== '') {
+				searchBy('searchByDrugs', 'drugs', tableState);
+      }
+		};
 
-					$scope.isLoading = true;
-					db.search(uniqueGenes,
-						$scope.queryCancerFda,
-						$scope.queryCancerClinical,
-						$scope.queryOtherFda,
-						$scope.queryOtherClinical,
-						$scope.queryOtherExperimental,
-						$scope.queryTarget,
-						$scope.queryMarker,
-						true,
-						true,
-						tableState
-					).then(manageResults);
+		function unique(data) {
+			var unique = [];
+			var toUpper = [];
+			data.forEach(function(item) {
+				if (toUpper.indexOf(item.toUpperCase())== -1) {
+					unique.push(item);
+					toUpper.push(item.toUpperCase());
 				}
-			};
+			});
+			return unique;
+		}
 
-			function unique(data) {
-				var unique = [];
-				var toUpper = [];
-				data.forEach(function(item) {
-					if (toUpper.indexOf(item.toUpperCase())== -1) {
-						unique.push(item);
-						toUpper.push(item.toUpperCase());
-					}
-				});
-				return unique;
-			}
+		function searchBy(searchFunction, scopeValue, tableState) {
+			var uniqueUpperCaseValues = unique($scope[scopeValue].split('\n')
+				.map(function(item) {
+					return item.trim().toUpperCase();
+				})
+			);
 
-			$scope.exportnetwork = function() {
-				$scope.pngcontent = geneDrugNetworkChart.exportnetwork(3);
-			};
+			$scope[scopeValue] = uniqueUpperCaseValues.join('\n');
 
-			$scope.areaConfig = {
+			$scope.isLoading = true;
+			db[searchFunction](uniqueUpperCaseValues,
+				$scope.queryCancerFda,
+				$scope.queryCancerClinical,
+				$scope.queryOtherFda,
+				$scope.queryOtherClinical,
+				$scope.queryOtherExperimental,
+				$scope.queryTarget,
+				$scope.queryMarker,
+				true,
+				true,
+				tableState
+			).then(manageResults);
+		}
+
+		$scope.exportnetwork = function() {
+			$scope.pngcontent = geneDrugNetworkChart.exportnetwork(3);
+		};
+
+		function buildTextAreaConfig(searchFunction) {
+			return {
 				autocomplete: [{
 					words: [/([()-_A-Za-z0-9]+)/gi]
 				}],
 				dropdown: [{
 					trigger: /([()-_A-Za-z0-9]+)/gi,
 					list: function(match, callback) {
-						db.listGeneSymbols(match[1])
+						db[searchFunction](match[1])
 							.then(function(response) {
-								var data = response.data.map(function(geneSymbol) {
+								var data = response.data.map(function(queryValue) {
 									return {
-										display: geneSymbol,
-										item: geneSymbol
+										display: queryValue,
+										item: queryValue
 									}
 								});
 
@@ -332,45 +343,50 @@ function (
 					mode: 'replace'
 				}]
 			};
+		}
 
-			$scope.getCurrentUser = function() {
-				return user.getCurrentUser();
-			}
+		$scope.genesTextAreaConfig = buildTextAreaConfig('listGeneSymbols');
 
-			$scope.submitVCF = function() {
-				$scope.largeProcess = "Uploading VCF File, please wait";
-				user.submitComputation($scope.vcffile, $scope.computationName,
-					function(){
-						alert("Computation submitted successfully. We will start to analyze it as soon as we can.");
-						$scope.largeProcess = null;
-					},
-					function(){
-						alert("ERROR: computation could not be submitted.");
-						$scope.largeProcess = null;
-					}
-				)
-			}
+    $scope.drugsTextAreaConfig = buildTextAreaConfig('listStandardDrugNames');
 
-			$scope.deleteComputation = function(computationId) {
-				if (window.confirm("Are you sure?")) {
-					user.deleteComputation(computationId,
-					function() {
-							alert("Computation deleted successfully.")
-					},
-					function() {
-						alert("ERROR: computation could not be deleted.")
-					});
+		$scope.getCurrentUser = function() {
+			return user.getCurrentUser();
+		}
+
+		$scope.submitVCF = function() {
+			$scope.largeProcess = "Uploading VCF File, please wait";
+			user.submitComputation($scope.vcffile, $scope.computationName,
+				function(){
+					alert("Computation submitted successfully. We will start to analyze it as soon as we can.");
+					$scope.largeProcess = null;
+				},
+				function(){
+					alert("ERROR: computation could not be submitted.");
+					$scope.largeProcess = null;
 				}
-			}
+			)
+		}
 
-			//update computation status...
-			function reloadComputations() {
-				if (user.getCurrentUser() !== 'anonymous') {
-					user.getComputations(function(computations) {
-						$scope.computations = computations;
-					}, null);
-				}
+		$scope.deleteComputation = function(computationId) {
+			if (window.confirm("Are you sure?")) {
+				user.deleteComputation(computationId,
+				function() {
+					alert("Computation deleted successfully.")
+				},
+				function() {
+					alert("ERROR: computation could not be deleted.")
+				});
 			}
-			reloadComputations();
-			$interval(reloadComputations, 5000);
-		}]);
+		}
+
+		//update computation status...
+		function reloadComputations() {
+			if (user.getCurrentUser() !== 'anonymous') {
+				user.getComputations(function(computations) {
+					$scope.computations = computations;
+				}, null);
+			}
+		}
+		reloadComputations();
+		$interval(reloadComputations, 5000);
+	}]);
