@@ -14,7 +14,6 @@
 		"highcharts-release": "^4.1.4",
 		"highcharts-ng": "^0.0.8",
 		"cytoscape": "~2.6.1",
-		"smart-area": "~1.2.0",
 		"ng-storage": "~0.3",
 		"angular-loading-bar": "~0.9"
 	},
