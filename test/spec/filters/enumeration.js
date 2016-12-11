@@ -11,9 +11,9 @@ describe('Filter: enumeration', function () {
 		enumeration = $filter('enumeration');
 	}));
 
-	it('should return the input prefixed with "enumeration filter:"', function () {
-		var text = 'angularjs';
-		expect(enumeration(text)).toBe('enumeration filter: ' + text);
+	it('should return the array input comma-separated with \' and \' at the end"', function () {
+		var text = [1, 2, 5];
+		expect(enumeration(text)).toBe('1, 2 and 5');
 	});
 
 });

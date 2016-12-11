@@ -461,7 +461,7 @@ module.exports = function (grunt) {
 				'imagemin',
 				'svgmin'
 			],
-			protractorTest: ['protractor-chrome', /*'protractor-safari',*/ 'protractor-firefox']
+			protractorTest: ['protractor-chrome', /*'protractor-safari',*/ /*'protractor-firefox'*/]
 		},
 
 		// Test settings

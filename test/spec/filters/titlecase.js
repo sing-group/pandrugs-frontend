@@ -11,9 +11,9 @@ describe('Filter: titlecase', function () {
 		titlecase = $filter('titlecase');
 	}));
 
-	it('should return the input prefixed with "titlecase filter:"', function () {
-		var text = 'angularjs';
-		expect(titlecase(text)).toBe('titlecase filter: ' + text);
+	it('should return the input in title-case', function () {
+		var text = 'the show must go on';
+		expect(titlecase(text)).toBe('The Show Must Go On');
 	});
 
 });

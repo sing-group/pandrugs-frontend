@@ -11,9 +11,9 @@ describe('Filter: percentage', function () {
     percentage = $filter('percentage');
   }));
 
-  it('should return the input prefixed with "percentage filter:"', function () {
-    var text = 'angularjs';
-    expect(percentage(text)).toBe('percentage filter: ' + text);
+  it('should return 10% when input is 0.1"', function () {
+    var text = '0.1';
+    expect(percentage(text)).toBe('10%');
   });
 
 });

@@ -287,7 +287,6 @@ angular.module('pandrugsdbFrontendApp')
 		getCancerTypes: function() {
 
 			var deferred = $q.defer();
-
 			$http.get(SERVER+'/pandrugsdb-backend/public/cancer')
 			.success(function(results) {
 				deferred.resolve(results['name']);

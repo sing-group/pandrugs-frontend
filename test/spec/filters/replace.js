@@ -11,9 +11,9 @@ describe('Filter: replace', function () {
 		replace = $filter('replace');
 	}));
 
-	it('should return the input prefixed with "replace filter:"', function () {
-		var text = 'angularjs';
-		expect(replace(text)).toBe('replace filter: ' + text);
+	it('should return the input prefixed with the replacement made', function () {
+		var text = 'Hello I am foo';
+		expect(replace(text, 'foo', 'bar')).toBe('Hello I am bar');
 	});
 
 });

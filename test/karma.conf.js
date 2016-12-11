@@ -34,7 +34,6 @@ module.exports = function(config) {
 			'bower_components/highcharts-release/modules/exporting.js',
 			'bower_components/highcharts-ng/dist/highcharts-ng.js',
 			'bower_components/cytoscape/dist/cytoscape.js',
-			'bower_components/smart-area/dist/smart-area.js',
 			'bower_components/ng-storage/ngStorage.js',
 			'bower_components/angular-loading-bar/build/loading-bar.js',
 			'bower_components/angular-mocks/angular-mocks.js',
@@ -60,11 +59,13 @@ module.exports = function(config) {
 		// - PhantomJS
 		// - IE (only Windows)
 		browsers: [
-			'PhantomJS'
+			//'PhantomJS'
+			'Firefox'
 		],
 
 		// Which plugins to enable
 		plugins: [
+			'karma-firefox-launcher',
 			'karma-phantomjs-launcher',
 			'karma-jasmine'
 		],
