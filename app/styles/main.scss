@@ -5,269 +5,269 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "compass/css3/border-radius";
 
 .browsehappy {
-	margin: 0.2em 0;
-	background: #ccc;
-	color: #000;
-	padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
 body {
-	padding: 0;
+  padding: 0;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
 .footer {
-	padding-left: 15px;
-	padding-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* Custom page header */
 .header {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 
-	/* Make the masthead heading the same height as the navigation */
-	h3 {
-		margin-top: 0;
-		margin-bottom: 0;
-		line-height: 40px;
-		padding-bottom: 19px;
-	}
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
 }
 
 /* Custom page footer */
 .footer {
-	padding-top: 19px;
-	color: #777;
-	border-top: 1px solid #e5e5e5;
-	margin-top: 10px;
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+  margin-top: 10px;
 }
 
 .container-narrow > hr {
-	margin: 30px 0;
+  margin: 30px 0;
 }
 
 /* Main marketing message and sign up button */
 .jumbotron {
-	text-align: center;
-	border-bottom: 1px solid #e5e5e5;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
 
-	.btn {
-		font-size: 21px;
-		padding: 14px 24px;
-	}
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
 }
 
 /* Supporting marketing content */
 .marketing {
-	margin: 40px 0;
+  margin: 40px 0;
 
-	p + h4 {
-		margin-top: 28px;
-	}
+  p + h4 {
+    margin-top: 28px;
+  }
 }
 
 .panel {
-	margin: 10px;
+  margin: 10px;
 }
 
 
 
 .st-sort-ascent:before{
-	content: '\25B2';
+  content: '\25B2';
 }
 
 .st-sort-descent:before{
-	content: '\25BC';
+  content: '\25BC';
 }
 .table-striped > tbody > tr:nth-of-type(2n+1) {
-	background-color: white;
+  background-color: white;
 }
 .table-striped > tbody:nth-of-type(2n+1) > tr {
-	background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 .table-striped > tbody:nth-of-type(2n) > tr {
-	background-color: white;
+  background-color: white;
 }
 
 table#results tbody td:nth-child(3) {
-	word-break: break-all;
-	/*min-width: 100px;*/
+  word-break: break-all;
+  /*min-width: 100px;*/
 }
 
 table#results th {
-	white-space: nowrap;
+  white-space: nowrap;
 }
 
 tr.moreinfo {
-	font-size: 0.9em;
+  font-size: 0.9em;
 }
 #team {
-	div {
-		margin-top: 10px;
-	}
+  div {
+    margin-top: 10px;
+  }
 }
 
 #resultsContainer h3 {
-	text-align:center;
+  text-align:center;
 }
 
 .icon {
-	width: 20px;
-	height: 20px;
-	display: inline-block;
-	margin-right: 3px;
-	vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 3px;
+  vertical-align: middle;
 }
 
 .help_icon {
-	@extend .icon;
-	background-image: url("../images/question.png");
+  @extend .icon;
+  background-image: url("../images/question.png");
 }
 
 .gene_icon {
-	@extend .icon;
-	background-image: url("../images/gene.png");
+  @extend .icon;
+  background-image: url("../images/gene.png");
 }
 
 .drug_icon {
-	@extend .icon;
-	background-image: url("../images/drug.png");
+  @extend .icon;
+  background-image: url("../images/drug.png");
 }
 
 .curated {
-	@include border-radius(4px);
-	padding: 2px;
-	border-width: 1px;
-	border-style: solid;
-	text-decoration: none;
-	margin: 1px;
-	display: inline-block;
+  @include border-radius(4px);
+  padding: 2px;
+  border-width: 1px;
+  border-style: solid;
+  text-decoration: none;
+  margin: 1px;
+  display: inline-block;
 }
 
 a.curated_source {
-	@extend .curated;
-	border-color: #297856;
-	color: #297856;
-	background-color: #EEFAEE;
+  @extend .curated;
+  border-color: #297856;
+  color: #297856;
+  background-color: #EEFAEE;
 
-	&:hover {
-		border-color: #EEFAEE;
-		color: #EEFAEE;
-		background-color: #297856;
-	}
+  &:hover {
+    border-color: #EEFAEE;
+    color: #EEFAEE;
+    background-color: #297856;
+  }
 }
 
 a.non_curated_source {
-	@extend .curated;
-	border-color: #295678;
-	color: #295678;
-	background-color: #EEEEFA;
+  @extend .curated;
+  border-color: #295678;
+  color: #295678;
+  background-color: #EEEEFA;
 
-	&:hover {
-		border-color: #EEEEFA;
-		color: #EEEEFA;
-		background-color: #295678;
-	}
+  &:hover {
+    border-color: #EEEEFA;
+    color: #EEEEFA;
+    background-color: #295678;
+  }
 }
 
 .cancer_type_checkbox input {
-	display:none;
+  display:none;
 }
 .cancer_type_checkbox label {
-	@extend .curated;
-	border-color: #EEFAEE;
-	cursor: pointer;
-	color: #c2c2c2;
+  @extend .curated;
+  border-color: #EEFAEE;
+  cursor: pointer;
+  color: #c2c2c2;
 }
 
 .cancer_type_checkbox input:hover + label:hover {
-	border-color: #cccccc;
-	color: #333;
+  border-color: #cccccc;
+  color: #333;
 }
 .cancer_type_checkbox input:checked + label {
-	border-color: #cccccc;
-	background-color: #f5f5f5;
-	color: #333;
+  border-color: #cccccc;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
 .highlightedResult {
-	background-color: #DCFCEF !important;
+  background-color: #DCFCEF !important;
 }
 
 #therapiesChart {
-	height: 600px;
+  height: 600px;
 }
 
 #therapyByStatusChart, #therapyByFamilyChart {
-	height: 280px;
+  height: 280px;
 }
 
 .panel-heading input[type='button'] {
-	margin-left: 2px;
+  margin-left: 2px;
 }
 
 .gene {
-	color: red;
+  color: red;
 }
 
 .drug {
-	color: blue;
+  color: blue;
 }
 
 #genedrugnetworkgraph {
-	height: 500px;
-	//cursor:crosshair;
+  height: 500px;
+  //cursor:crosshair;
 }
 #genedrugnetworkgraph.ng-hide {
-	visibility: hidden;
-	display: block !important;
+  visibility: hidden;
+  display: block !important;
 }
 div#chartarea {
-	position: relative;
+  position: relative;
 }
 div#chartarea #loading-banner {
-	position: absolute;
-	height: 500px;
-	top: 0px;
-	width: 100%;
-	text-align: center;
-	font-size: 4em;
-	color: #d9d9d9;
-	padding-top: 200px;
+  position: absolute;
+  height: 500px;
+  top: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 4em;
+  color: #d9d9d9;
+  padding-top: 200px;
 }
 
 .disabled {
-	color: gray;
+  color: gray;
 }
 a.disabled:hover {
-	color:gray;
+  color:gray;
 }
 
 .progress-bar.error {
-	background-color: #d43f3a;
+  background-color: #d43f3a;
 }
 
 .progress-bar.success {
-	background-color: #4cae4c;
+  background-color: #4cae4c;
 }
 
 .affectedGenes {
-	color: #4cae4c;
+  color: #4cae4c;
 }
 
 .error {
-	color: #d43f3a;
+  color: #d43f3a;
 }
 
 #computationSubmit .deleteButton {
-	float: right;
+  float: right;
 }
 
 #computationSubmit .progress {
-	clear: both;
-	margin-top: 25px;
+  clear: both;
+  margin-top: 25px;
 }
 /* =========== RESPONSIVE ======================*/
 
@@ -279,23 +279,23 @@ a.disabled:hover {
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-	.container {
-		max-width: 730px;
-	}
+  .container {
+    max-width: 730px;
+  }
 
-	/* Remove the padding we set earlier */
-	.header,
-	.marketing,
-	.footer {
-		padding-left: 0;
-		padding-right: 0;
-	}
-	/* Space out the masthead */
-	.header {
-		margin-bottom: 30px;
-	}
-	/* Remove the bottom border on the jumbotron for visual effect */
-	.jumbotron {
-		border-bottom: 0;
-	}
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
 }

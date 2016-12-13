@@ -1,3 +1,4 @@
+'use strict';
 /**
  * AngularJS Directive to allow autocomplete and dropdown suggestions
  * on textareas.
@@ -19,7 +20,7 @@ angular.module('smartArea', [])
         replace: true,
         link: function(scope, textArea){
             if(textArea[0].tagName.toLowerCase() !== 'textarea'){
-                console.warn("smartArea can only be used on textareas");
+                console.warn('smartArea can only be used on textareas');
                 return false;
             }
 
@@ -81,8 +82,8 @@ angular.module('smartArea', [])
             ];
 
             // Build the HTML structure
-            var mainWrap = angular.element('<div class="sa-wrapper"></div>'),
-                isFirefox = !(window.mozInnerScreenX === null);
+            var mainWrap = angular.element('<div class="sa-wrapper"></div>');
+            //var isFirefox = !(window.mozInnerScreenX === null);
 
             scope.fakeAreaElement = angular.element($compile('<div class="sa-fakeArea" ng-trim="false" ng-bind-html="fakeArea"></div>')(scope))
                 .appendTo(mainWrap);
@@ -309,15 +310,24 @@ angular.module('smartArea', [])
                 }
 
                 $scope.areaConfig.autocomplete.forEach(function(autoList){
-                    for(var i=0; i<autoList.words.length; i++){
-                        if(typeof(autoList.words[i]) === "string"){
-                            text = text.replace(new RegExp("([^\\w]|\\b)("+autoList.words[i]+")([^\\w]|\\b)", 'g'), '$1<span class="'+autoList.cssClass+'">$2</span>$3');
+                  autoList.words.forEach(function(word){
+                    if(typeof(word) === 'string'){
+                        text = text.replace(new RegExp('([^\\w]|\\b)('+word+')([^\\w]|\\b)', 'g'), '$1<span class="'+autoList.cssClass+'">$2</span>$3');
+                    }else{
+                        text = text.replace(word, function(match){
+                            return '<span class="'+autoList.cssClass+'">'+match+'</span>';
+                        });
+                    }
+                  });
+                    /*for(var i=0; i<autoList.words.length; i++){
+                        if(typeof(autoList.words[i]) === 'string'){
+                            text = text.replace(new RegExp('([^\\w]|\\b)('+autoList.words[i]+')([^\\w]|\\b)', 'g'), '$1<span class="'+autoList.cssClass+'">$2</span>$3');
                         }else{
                             text = text.replace(autoList.words[i], function(match){
                                 return '<span class="'+autoList.cssClass+'">'+match+'</span>';
                             });
                         }
-                    }
+                    }*/
                 });
                 // Add to the fakeArea
                 $scope.fakeArea = $sce.trustAsHtml(text);
@@ -367,11 +377,11 @@ angular.module('smartArea', [])
                                 $scope.dropdown.filterElement.focus();
                             }, 10);
                         });
-                    }else if(typeof(element.trigger) === 'object'){
+                    } else if(typeof(element.trigger) === 'object'){
                         // I need to get the index of the last match
                         var searchable = text.substr(0, position),
                             match, found = false, lastPosition = -1;
-			element.trigger.lastIndex = 0;
+      element.trigger.lastIndex = 0;
                         while ((match = element.trigger.exec(searchable)) !== null){
                             if(match.index === lastPosition){
                                 break;
@@ -463,7 +473,7 @@ angular.module('smartArea', [])
              */
             function getCharacterPosition() {
               var el = $element[0];
-              if (typeof(el.selectionEnd) == "number") {
+              if (typeof(el.selectionEnd) === 'number') {
                 return el.selectionEnd;
               }
           }

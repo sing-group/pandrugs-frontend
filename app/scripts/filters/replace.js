@@ -9,8 +9,8 @@
  * Filter in the pandrugsdbFrontendApp.
  */
 angular.module('pandrugsdbFrontendApp')
-	.filter('replace', function () {
-		return function (input, from, to) {
-			return input.split(from).join(to);
-		};
-	});
+  .filter('replace', function () {
+    return function (input, from, to) {
+      return input.split(from).join(to);
+    };
+  });

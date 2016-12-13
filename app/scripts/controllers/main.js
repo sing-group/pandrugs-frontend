@@ -8,7 +8,7 @@
  * Controller of the pandrugsdbFrontendApp
  */
 angular.module('pandrugsdbFrontendApp')
-	.controller('MainCtrl', function ($scope) {
-	 
-		
-	});
+  .controller('MainCtrl', function () {
+
+
+  });

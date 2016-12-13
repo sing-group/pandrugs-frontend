@@ -10,40 +10,40 @@ var mockdata = JSON.parse('[{"gene":["KRAS","EGFR","NF1"],"drug":"ERLOTINIB","fa
 * Factory in the pandrugsdbFrontendApp.
 */
 angular.module('pandrugsdbFrontendApp')
-.factory('mockDatabase', ['$q', '$timeout', '$filter', '$log',	function mockDatabaseFactory($q, $timeout, $filter, $log) {
-	// Service logic
-	// ...
+.factory('mockDatabase', ['$q', '$timeout', '$filter', '$log',  function mockDatabaseFactory($q, $timeout, $filter, $log) {
+  // Service logic
+  // ...
 
-	// Public API here
-	return {
-		search: function (gene, params) {
-			$log.log(params);
-			var deferred = $q.defer();
+  // Public API here
+  return {
+    search: function (gene, params) {
+      $log.log(params);
+      var deferred = $q.defer();
 
-			$timeout(function() {
-				if (!angular.isUndefined(params)){
-					if (params.sort.predicate) {
-						mockdata = $filter('orderBy')(mockdata, params.sort.predicate, params.sort.reverse);
-					}
-				}
-				deferred.resolve(mockdata)
-			}, 1000);
+      $timeout(function() {
+        if (!angular.isUndefined(params)){
+          if (params.sort.predicate) {
+            mockdata = $filter('orderBy')(mockdata, params.sort.predicate, params.sort.reverse);
+          }
+        }
+        deferred.resolve(mockdata);
+      }, 1000);
 
-			return deferred.promise;
-		},
+      return deferred.promise;
+    },
 
-		getCancerTypes: function() {
+    getCancerTypes: function() {
 
-			var deferred = $q.defer();
-			$timeout(function() {
-				deferred.resolve(['adrenal gland','bladder', 'stomach']);
-			}, 1000);
+      var deferred = $q.defer();
+      $timeout(function() {
+        deferred.resolve(['adrenal gland','bladder', 'stomach']);
+      }, 1000);
 
 
-			return deferred.promise;
+      return deferred.promise;
 
-		}
-	};
+    }
+  };
 }]);
 /*
 * <td>{{row.gene}}</td>
