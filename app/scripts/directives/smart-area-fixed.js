@@ -36,6 +36,8 @@ angular.module('smartArea', [])
                 'color',
                 'height',
 
+            /*  lipido fix: do not copy border properties */
+                /*
                 'borderTopWidth',
                 'borderRightWidth',
                 'borderBottomWidth',
@@ -50,7 +52,7 @@ angular.module('smartArea', [])
                 'borderRightStyle',
                 'borderBottomStyle',
                 'borderLeftStyle',
-                'borderRadius',
+                'borderRadius',*/
 
                 'backgroundColor',
 
@@ -102,10 +104,12 @@ angular.module('smartArea', [])
             properties.forEach(function (prop) {
                 scope.fakeAreaElement.css(prop, textArea.css(prop));
             });
-//
-//lipido fix, comment this line
-//scope.fakeAreaElement.css('width',(parseInt(textArea.outerWidth()) + 1) + 'px');
 
+            //lipido fix, set the width when resizing also
+            scope.fakeAreaElement.css('width',(parseInt(textArea.outerWidth()) + 1) + 'px');
+            window.addEventListener('resize', function(){
+              scope.fakeAreaElement.css('width',(parseInt(textArea.outerWidth()) + 1) + 'px');
+            }, true);
             // Special considerations for Firefox
 //            if (isFirefox) {
 //                scope.fakeAreaElement.css('width',parseInt(textArea.width()) - 2 + 'px');  // Firefox adds 2 pixels to the padding - https://bugzilla.mozilla.org/show_bug.cgi?id=753662
