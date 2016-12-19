@@ -17,7 +17,7 @@
                 <a href="/query#drugs" aria-controls="drugs" data-toggle="tab" role="tab">Drugs</a>
               </li>
               <li role="presentation" ng-click="setSelectedTab('generank')">
-                <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Rank</a>
+                <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Ranking</a>
               </li>
               <li ng-if="getCurrentUser() ==='anonymous'" >
                 <a class="disabled" aria-controls="vcf-rank" role="tab">VCF (Genomic Variants, requires login)</a>
@@ -35,7 +35,7 @@
                 <textarea name="drugs" id="drugstextarea" class="form-control" placeholder="Standard drug names" ng-model="drugs" rows="20" spellcheck="false" smart-area="drugsTextAreaConfig"></textarea>
               </div>
               <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
-                <label for="generankinput">Select a gene rank file</label>
+                <label for="generankinput">Select a gene ranking file</label>
                 <input name="generank" id="generankinput" class="form-control" type="file" file-model="generank"/>
                 Download <a href="downloads/sample-rank.rnk">sample RNK file</a>
               </div>
@@ -223,7 +223,7 @@
     </div>
 
     <div class="row">
-      <a href="{{csvcontent}}" download="data.csv">Download as CSV</a>
+      <a href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
       <table id="results" st-table="results" st-pipe="query" class="table table-striped">
         <thead>
           <tr>
