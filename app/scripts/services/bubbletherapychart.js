@@ -178,14 +178,14 @@ angular.module('pandrugsdbFrontendApp')
         series[1].data = [];
         series[2].data = [];
         for (var i = 0; i < results.length; i++) {
-          var genedrugresults = results[i]['gene-drug-info'];
+          var genedrugresults = results[i].geneDrugInfo;
           for (var j = 0; j < genedrugresults.length; j++ ) {
             var result = genedrugresults[j];
             var jitterX = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
             var jitterY = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
             var datapoint = {
               genes: result.gene.join(', '),
-              drug: results[i]['show-drug-name'],
+              drug: results[i].showDrugName,
               x: result.dScore + jitterX,
               xRound: result.dScore.toFixed(4),
               y: result.gScore + jitterY,

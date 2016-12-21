@@ -56,7 +56,7 @@ function (
     $scope.setSelectedTab = function (tab) {
       $scope.selectedTab = tab;
       if (tab === 'network') {
-        if (previousResults === null || previousResults !== results){
+        if (previousResults === null || previousResults !== results) {
           $scope.updateNetworkChart();
           previousResults = results;
         }
@@ -142,7 +142,8 @@ function (
         degree = 1;
       }
       $timeout(function() {
-        geneDrugNetworkChart.updateChart(results, degree).then(function(){ $scope.networkChartLoading = false;});
+        geneDrugNetworkChart.updateChart(results, degree)
+          .then(function() { $scope.networkChartLoading = false; });
       }, 500);
     };
 
@@ -153,16 +154,16 @@ function (
       results.forEach(function(row) {
 
         csv.push('\"'+row.gene+'\"'+
-          ','+'\"'+row['show-drug-name']+'\"'+
+          ','+'\"'+row.showDrugName+'\"'+
           ','+'\"'+row.family.join('|')+'\"'+
           ','+'\"'+row.source.map(function(elem){ return elem.name;}).join(', ')+'\"'+
-          ','+'\"'+row['status-description']+'\"'+
+          ','+'\"'+row.statusDescription+'\"'+
           ','+'\"'+(row.therapy?row.therapy:'')+'\"'+
           ','+'\"'+row.getBestInteraction()+'\"'+
           ','+'\"'+(Math.round(row.dScore*10000)/10000)+'\"'+
           ','+'\"'+(Math.round(row.gScore*10000)/10000)+'\"');
 
-          row['gene-drug-info'].forEach(
+          row.geneDrugInfo.forEach(
             function(genedrug) {
               csv.push('\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",'+
                 '\"'+genedrug.drugStatusInfo+'\"'+','+
@@ -187,7 +188,7 @@ function (
 
     var results;
     function manageResults(result) {
-      results = result['gene-drug-group'];
+      results = result.geneDrugGroup;
 
       $scope.results = results.filter(function(elem) {
         if (elem.status === 'EXPERIMENTAL' || elem.status === 'CLINICAL_TRIALS') {
@@ -209,18 +210,17 @@ function (
         }
       });
 
-      //$scope.results = result['gene-drug-group'];
       for (var i = 0; i < $scope.results.length; i++) {
         var resulti = $scope.results[i];
         resulti.getBestInteraction = function() {
           var best = 'target-indirect';
 
-          for (var i = 0; i < this['gene-drug-info'].length; i++) {
-            if (this['gene-drug-info'][i].target === 'marker') {
+          for (var i = 0; i < this.geneDrugInfo.length; i++) {
+            if (this.geneDrugInfo[i].target === 'marker') {
               if (best === 'target-indirect') {
                 best = 'marker';
               }
-            } else if (this['gene-drug-info'][i].indirect === null) {
+            } else if (this.geneDrugInfo[i].indirect === null) {
               best = 'target-direct';
               break;
             }

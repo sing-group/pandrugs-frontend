@@ -107,7 +107,7 @@ angular.module('pandrugsdbFrontendApp')
 
           results.forEach(function(group) {
             if (group.gScore > 0.6 && group.dScore > 0.7) {
-              group['gene-drug-info'].forEach(function(genedruginfo) {
+              group.geneDrugInfo.forEach(function(genedruginfo) {
 
                 var drug = {drugname: genedruginfo.drug.substring(0, Math.min(genedruginfo.drug.length, 30))};
                 if (genedruginfo.indirect !== null) {
@@ -147,14 +147,14 @@ angular.module('pandrugsdbFrontendApp')
             results.forEach(function(geneInteractionInfo) {
               createGeneNode(geneNodes, geneInteractionInfo.geneSymbol, false);
 
-              geneInteractionInfo['gene-interaction'].forEach(function(interactingGene){
+              geneInteractionInfo.geneInteraction.forEach(function(interactingGene){
               //  geneNodes.push(createGeneNode(interactingGene));
                 createGeneToGeneInteractionNode(edges, geneInteractionInfo.geneSymbol, interactingGene);
               });
 
-              geneInteractionInfo['drug-interaction'].forEach(function(interactingDrug){
-                if (drugAdded(interactingDrug['show-drug-name'])){
-                  createDrugGeneInteraction(edges, interactingDrug['show-drug-name'], geneInteractionInfo.geneSymbol, 0.0, interactingDrug.target === 'target', interactingDrug['indirect-gene']===null);
+              geneInteractionInfo.drugInteraction.forEach(function(interactingDrug){
+                if (drugAdded(interactingDrug.showDrugName)){
+                  createDrugGeneInteraction(edges, interactingDrug.showDrugName, geneInteractionInfo.geneSymbol, 0.0, interactingDrug.target === 'target', interactingDrug.indirectGene === null);
                 }
               });
 

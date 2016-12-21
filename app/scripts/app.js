@@ -22,6 +22,21 @@ angular
     'smartArea',
     'angular-loading-bar'
   ])
+  .constant('BACKEND', (function() {
+    // Service logic
+    // ...
+    var server = 'http://sing.ei.uvigo.es';
+    //var server = 'http://mrjato.sing-group.org:8080'; // development: test server
+    //var server = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
+    //var server = ''; // the server is in this machine (e.g.: docker distribution)
+    var app = server + '/pandrugsdb-backend/';
+
+    return {
+      SERVER: server,
+      APP: app,
+      API: app + 'api/'
+    };
+  })())
   .config(['databaseProvider', '$routeProvider', '$compileProvider', function (databaseProvider, $routeProvider, $compileProvider) {
     databaseProvider.useMock(false);
     $routeProvider

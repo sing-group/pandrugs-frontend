@@ -175,128 +175,129 @@
     ng-disabled="(selectedTab == 'genes' && genes.length == 0) || (selectedTab == 'drugs' && drugs.length == 0) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
   </div>
 </form>
-  <div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
-    <div class="row">
-      <h3>PanDrugs Candidate Therapies</h3>
-    </div>
-    <div class="row">
 
-      <div class="panel panel-default">
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="active" role="presentation" ng-click="setSelectedTab('charts')">
-            <a href="/query#charts" aria-controls="charts" data-toggle="tab" role="tab">Charts</a>
-          </li>
-          <li role="presentation" ng-click="setSelectedTab('network')">
-            <a href="/query#network" aria-controls="network" data-toggle="tab" role="tab">Network</a>
-          </li>
-        </ul>
+<div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
+  <div class="row">
+    <h3>PanDrugs Candidate Therapies</h3>
+  </div>
 
-        <div class="tab-content panel-body">
-          <div id="charts" class="tab-pane active">
-            <div class="row">
-              <div class="col-lg-7">
-                <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
-              </div>
-              <div class="col-lg-5">
-                <highchart id="therapyByStatusChart" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>
-                <highchart id="therapyByFamilyChart" config="highchartsTherapyByFamily" style="margin-top:20px"></highchart>
-              </div>
+  <div class="row">
+    <div class="panel panel-default">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active" role="presentation" ng-click="setSelectedTab('charts')">
+          <a href="/query#charts" aria-controls="charts" data-toggle="tab" role="tab">Charts</a>
+        </li>
+        <li role="presentation" ng-click="setSelectedTab('network')">
+          <a href="/query#network" aria-controls="network" data-toggle="tab" role="tab">Network</a>
+        </li>
+      </ul>
+
+      <div class="tab-content panel-body">
+        <div id="charts" class="tab-pane active">
+          <div class="row">
+            <div class="col-lg-7">
+              <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
+            </div>
+            <div class="col-lg-5">
+              <highchart id="therapyByStatusChart" config="highchartsTherapyByStatus" style="margin-top:20px"></highchart>
+              <highchart id="therapyByFamilyChart" config="highchartsTherapyByFamily" style="margin-top:20px"></highchart>
             </div>
           </div>
-          <div id="network" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
-            <div class="row">
-              <div>
-                <h4>Network Graph of best candidates</h4>
-                <form>
-                <input type="checkbox" ng-model="networkparams.showInteractions" ng-change="updateNetworkChart()">show interactions
-              </form>
-                <a ng-click="exportnetwork()" download="network.png" href="{{pngcontent}}">Download image</a>
-                <div id="chartarea">
-                  <div ng-hide="networkChartLoading" id="genedrugnetworkgraph"></div>
-                  <div ng-show="networkChartLoading" id="loading-banner"><img src="images/spinner.gif"></div>
-                </div>
+        </div>
+        <div id="network" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
+          <div class="row">
+            <div>
+              <h4>Network Graph of best candidates</h4>
+              <form>
+              <input type="checkbox" ng-model="networkparams.showInteractions" ng-change="updateNetworkChart()">show interactions
+            </form>
+              <a ng-click="exportnetwork()" download="network.png" href="{{pngcontent}}">Download image</a>
+              <div id="chartarea">
+                <div ng-hide="networkChartLoading" id="genedrugnetworkgraph"></div>
+                <div ng-show="networkChartLoading" id="loading-banner"><img src="images/spinner.gif"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <a href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
-      <table id="results" st-table="results" st-pipe="query" class="table table-striped">
-        <thead>
-          <tr>
-            <th>Actions</th>
-            <th><span class="gene">Gene(s)</span> </span> <span class="help_icon" title="gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
-            <th><span class="drug">Drug</span> </span> <span class="help_icon" title="compound name"></span></th>
-            <th>Family <span class="help_icon" title="drug family based on the KEGG target-based classification of drugs"/></th>
-            <th>Source(s) <span class="help_icon" title="source(s) where the drug-gene interaction came from"/></th>
-            <th>Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
-            <th st-sort="therapy">Type of therapy <span class="help_icon" title="type of therapy for the approved drugs in cancer"/></th>
-            <th>Interaction <span class="help_icon" title="type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
-            <th st-sort="dScore">DScore <span class="help_icon" title="score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
-            <th st-sort="gScore">GScore <span class="help_icon" title="score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
-          </tr>
-        </thead>
-
-        <tbody ng-hide="isLoading" ng-repeat="row in results">
-          <tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
-            <td>
-              <button class="btn btn-default" ng-click="row.moreinfo=!row.moreinfo">
-                <span ng-if="row.moreinfo" class="glyphicon glyphicon-minus"></span>
-                <span ng-if="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
-              </button></td>
-              <td ng-bind-html="row.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
-              <td>
-                <span ng-if="row.pubchemId.length == 0">{{row['show-drug-name']}}</span>
-                <span ng-if="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row['show-drug-name']}}</a></span>
-              </td>
-              <td>{{row.family | enumeration }}</td>
-              <td>
-                <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row['curated-source'].indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
-              </td>
-              <td>{{row['status-description']}}</td>
-              <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
-              <td>
-                <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
-                <img ng-if="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
-                <img ng-if="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
-              </td>
-              <td>{{row.dScore | number: 4}}</td>
-              <td>{{row.gScore | number: 4}}</td>
-            </tr>
-            <tr ng-repeat="genedrug in row['gene-drug-info']" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
-              <td>&nbsp;</td>
-              <td colspan="2">
-                <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
-                <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
-                Sensitivity: {{genedrug.sensitivity == "BOTH" ? "SENSITIVITY / RESISTANCE" : genedrug.sensitivity}} <br>
-                Alteration: {{genedrug.alteration}}<br>
-                Find more info for &quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot; in:
-                [<a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>PubMed</a>]
-                [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>ClinicalTrials.gov</a>]
-                <br>
-              </td>
-              <td >{{genedrug.family}}</td>
-              <td >{{genedrug.source.join(', ')}}</td>
-              <td colspan="2">&nbsp;</td>
-              <td>
-                <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
-                <img ng-if="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
-                <img ng-if="genedrug.target == 'target' && genedrug.indirect != null" src="images/query/indirect-interaction.png"/>
-              </td>
-              <td>{{genedrug.dScore | number: 4}}</td>
-              <td>{{genedrug.gScore | number: 4}}</td>
-            </tr>
-          </tbody>
-
-          <tbody ng-hide="!isLoading">
-            <tr>
-              <td colspan="10">Loading...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
+
+  <div class="row">
+    <a href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
+    <table id="results" st-table="results" st-pipe="query" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Actions</th>
+          <th><span class="gene">Gene(s)</span> </span> <span class="help_icon" title="gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
+          <th><span class="drug">Drug</span> </span> <span class="help_icon" title="compound name"></span></th>
+          <th>Family <span class="help_icon" title="drug family based on the KEGG target-based classification of drugs"/></th>
+          <th>Source(s) <span class="help_icon" title="source(s) where the drug-gene interaction came from"/></th>
+          <th>Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
+          <th st-sort="therapy">Type of therapy <span class="help_icon" title="type of therapy for the approved drugs in cancer"/></th>
+          <th>Interaction <span class="help_icon" title="type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
+          <th st-sort="dScore">DScore <span class="help_icon" title="score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
+          <th st-sort="gScore">GScore <span class="help_icon" title="score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
+        </tr>
+      </thead>
+
+      <tbody ng-hide="isLoading" ng-repeat="row in results">
+        <tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
+          <td>
+            <button class="btn btn-default" ng-click="row.moreinfo = !row.moreinfo">
+              <span ng-if="row.moreinfo" class="glyphicon glyphicon-minus"></span>
+              <span ng-if="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
+            </button>
+          </td>
+          <td ng-bind-html="row.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
+          <td>
+            <span ng-if="row.pubchemId.length == 0">{{row.showDrugName}}</span>
+            <span ng-if="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row.showDrugName}}</a></span>
+          </td>
+          <td>{{row.family | enumeration }}</td>
+          <td>
+            <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row.curatedSource.indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
+          </td>
+          <td>{{row.statusDescription}}</td>
+          <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
+          <td>
+            <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
+            <img ng-if="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
+            <img ng-if="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
+          </td>
+          <td>{{row.dScore | number: 4}}</td>
+          <td>{{row.gScore | number: 4}}</td>
+        </tr>
+        <tr ng-repeat="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
+          <td>&nbsp;</td>
+          <td colspan="2">
+            <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
+            <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
+            Sensitivity: {{genedrug.sensitivity == "BOTH" ? "SENSITIVITY / RESISTANCE" : genedrug.sensitivity}} <br>
+            Alteration: {{genedrug.alteration}}<br>
+            Find more info for &quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot; in:
+            [<a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>PubMed</a>]
+            [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>ClinicalTrials.gov</a>]
+            <br>
+          </td>
+          <td >{{genedrug.family}}</td>
+          <td >{{genedrug.source.join(', ')}}</td>
+          <td colspan="2">&nbsp;</td>
+          <td>
+            <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
+            <img ng-if="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
+            <img ng-if="genedrug.target == 'target' && genedrug.indirect != null" src="images/query/indirect-interaction.png"/>
+          </td>
+          <td>{{genedrug.dScore | number: 4}}</td>
+          <td>{{genedrug.gScore | number: 4}}</td>
+        </tr>
+      </tbody>
+
+      <tbody ng-hide="!isLoading">
+        <tr>
+          <td colspan="10">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
