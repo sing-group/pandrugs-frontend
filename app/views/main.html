@@ -3,18 +3,34 @@
   <h1>Welcome to</h1>
   <p class="lead">
     <img src="images/pandrugsdb-logo-big.png" class="img-responsive" alt="I'm Yeoman"><br>
-
-    A resource to study drug-gene interactions in a cancer disease context
+    A novel method for prioritizing therapies using individual genomic data
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/query">Query database!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <p><a class="btn btn-lg btn-success" ng-href="#/query">Query database!
+    <span class="glyphicon glyphicon-ok"></span></a></p>
 </div>
 
 <div class="row marketing">
 
   <h4>What is PanDrugs?</h4>
 
-  <p class="db_desc"><strong>PanDrugs</strong> database provides a resource for the drug-gene interactions exploration mainly oriented to cancer disease. This database groups relations between compounds and their respective <strong>targets</strong> stored in public databases and <strong>potential biomarkers</strong> identified in cancer cell lines drug response studies.<br><br>It also provides extra manual curated information about the drug status and their usage in cancer therapies or clinical studies in this field. All this completed with a ranking score reflecting the strength or evidence level of the association.<br><br>The database contains 55880 drug-gene relations of which 51908 are unique, corresponding to 3886 genes and 6048 drugs in different stages.</p>
-  <p><strong>PanDrugs</strong> is supported by the <em>Spanish National Cancer Research Centre (CNIO)</em>.</p>
+  <p class="db_desc"><strong>PanDrugs</strong> provides a platform <strong>to
+  guide the selection of therapies from the results of genome-wide studies
+  in cancer disease.</strong></p>
+  <p class="db_desc">Using 4 alternative inputs (e.g. standard VCF files, RNK
+  files, gene list and drug query), <strong>PanDrugs identify actionable
+  molecular alterations and prioritize drugs by calculating gene-drug
+  scores</strong> which takes into account: i) genomic feature evidence by
+  mutation impact score; ii) target pathway context; iii) drug approval status
+  (FDA, clinical trial or experimental small molecule inhibitors) and iv)
+  manually-curated pharmacological information retrieved from the
+  literature.</p>
+  <p class="db_desc"><strong>PanDrugs scores combines biological and clinical
+  relevance of the genes and their susceptibility to be targeted </strong>
+  reflecting the strength or evidence level of the gene-drug association in order
+  to assist the clinical decision making.</p> <p class="db_desc">PanDrugs current
+  version integrates data from 18 primary sources and supports ~50,000 drug-target
+  associations obtained from ~6,000 genes and ~11,000 unique compounds.</p>
+
 <img src="images/wordle.png" class="img-responsive" alt="I'm Yeoman"><br>
 </div>
 </div>

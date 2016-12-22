@@ -4,6 +4,10 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 @import "compass/css3/border-radius";
 
+.db_desc {
+  text-align: justify;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
