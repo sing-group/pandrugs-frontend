@@ -1,36 +1,71 @@
-<div class="container">
-<div class="jumbotron">
-  <h1>Welcome to</h1>
-  <p class="lead">
-    <img src="images/pandrugsdb-logo-big.png" class="img-responsive" alt="I'm Yeoman"><br>
-    A novel method for prioritizing therapies using individual genomic data
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = (obj.contentWindow.document.body.scrollHeight + 100) + 'px';
+  }
+</script>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+  <div class="jumbotron">
+
+    <h1>Welcome to</h1>
+    <p class="lead">
+      <img id="logo-big" src="images/pandrugsdb-logo-big.png" class="img-responsive"><br>
+      A novel method for prioritizing therapies using individual genomic data
+    </p>
+    <p><a class="btn btn-lg btn-success" ng-href="#/query">Query database!
+      <span class="glyphicon glyphicon-ok"></span></a></p>
+
+  </div>
+</div>
+<div class="col-lg-6">
+
+    <h3>What is PanDrugs?</h3>
+
+    <p class="db_desc"><strong>PanDrugs</strong> provides a platform <strong>to
+    guide the selection of therapies from the results of genome-wide studies
+    in cancer disease.</strong></p>
+    <p class="db_desc">Using 4 alternative inputs (e.g. standard VCF files, RNK
+    files, gene list and drug query), <strong>PanDrugs identify actionable
+    molecular alterations and prioritize drugs by calculating gene-drug
+    scores</strong> which takes into account: i) genomic feature evidence by
+    mutation impact score; ii) target pathway context; iii) drug approval status
+    (FDA, clinical trial or experimental small molecule inhibitors) and iv)
+    manually-curated pharmacological information retrieved from the
+    literature.</p>
+    <p class="db_desc"><strong>PanDrugs scores combines biological and clinical
+    relevance of the genes and their susceptibility to be targeted </strong>
+    reflecting the strength or evidence level of the gene-drug association in order
+    to assist the clinical decision making.</p> <p class="db_desc">PanDrugs current
+    version integrates data from 18 primary sources and supports ~50,000 drug-target
+    associations obtained from ~6,000 genes and ~11,000 unique compounds.</p>
+</div>
+</div>
+
+
+  <h3>PanDrugs across TCGA tumoral landscape (by <form id="d3viewform" class="form-horizontal" ng-init="d3view = 'drugs'">
+    <input type="radio" class = "toggle toggle-left" ng-model="d3view" value="drugs" id="d3view-drugs"><label for="d3view-drugs">Drugs</label><input type="radio" class = "toggle toggle-right" ng-model="d3view" value="genes" id="d3view-genes"><label for="d3view-genes">Genes</label>
+  </form>)
+  </h3>
+  <p class="tcga_desc" ng-if="d3view == 'genes'">
+    This plot shows the percentage of patients in different tumor types from TCGA
+    study with druggable alterations according to the suggestions by PanDrugs based
+    on punctual genetic alterations. Each bubble represents a druggable alteration
+    and the gene score is the highest one among the computed for the altered gene in
+    each patient. For each gene, the highest availability of the treatment is
+    selected to establish the status label druggability of the gene (e.g. Approved
+    in same tumor type is preferable before approved in other tumor types).
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/query">Query database!
-    <span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+  <p class="tcga_desc" ng-if="d3view == 'drugs'">
+    This plot shows the percentage of patients in different tumor types from TCGA
+    study that would be treated according to PanDrugs suggestions based on punctual
+    genetic alterations. Each bubble represents a treatment with a particular drug
+    and the drug score is the highest one among the computed for each patient that
+    could be treated with that compound. Only alterations with a gene score greater
+    or equal than 0.6 are considered.
+  </p>
+</div><!-- end of the container -->
 
-<div class="row marketing">
-
-  <h4>What is PanDrugs?</h4>
-
-  <p class="db_desc"><strong>PanDrugs</strong> provides a platform <strong>to
-  guide the selection of therapies from the results of genome-wide studies
-  in cancer disease.</strong></p>
-  <p class="db_desc">Using 4 alternative inputs (e.g. standard VCF files, RNK
-  files, gene list and drug query), <strong>PanDrugs identify actionable
-  molecular alterations and prioritize drugs by calculating gene-drug
-  scores</strong> which takes into account: i) genomic feature evidence by
-  mutation impact score; ii) target pathway context; iii) drug approval status
-  (FDA, clinical trial or experimental small molecule inhibitors) and iv)
-  manually-curated pharmacological information retrieved from the
-  literature.</p>
-  <p class="db_desc"><strong>PanDrugs scores combines biological and clinical
-  relevance of the genes and their susceptibility to be targeted </strong>
-  reflecting the strength or evidence level of the gene-drug association in order
-  to assist the clinical decision making.</p> <p class="db_desc">PanDrugs current
-  version integrates data from 18 primary sources and supports ~50,000 drug-target
-  associations obtained from ~6,000 genes and ~11,000 unique compounds.</p>
-
-<img src="images/wordle.png" class="img-responsive" alt="I'm Yeoman"><br>
-</div>
-</div>
+<iframe ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>
+<iframe ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>

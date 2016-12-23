@@ -9,6 +9,5 @@
  */
 angular.module('pandrugsdbFrontendApp')
   .controller('MainCtrl', function () {
-
-
+  //  $scope.d3view = 'genes';
   });

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- METADATA -->
+<title>PanDrugs vision across TCGA tumoral landscape</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="robots" content="noarchive">
+<meta name="hdl" content="PanDrugs vision across TCGA tumoral landscape">
+<meta name="lp" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations.">
+<meta name="dat" content="Dec 22, 2016">
+<meta name="DISPLAYDATE" content="Dec 22, 2016">
+<meta name="pdate" content="20161222">
+<meta name="col" content="">
+<meta name="cre" content="By INB, CANCER BIOINFORMATICS UNIT, and CNIO">
+<meta name="tom" content="interactive_feature">
+<meta name="display-text" content="Interactive Feature">
+<meta name="display-name" content="interactive">
+<meta name="url_thumb" content="http://sing.ei.uvigo.es/~lipido/pandrugs/images/pandrugsdb-logo.d9aabfec.png">
+<meta name="url_thumb_wide" content="http://sing.ei.uvigo.es/~lipido/pandrugs/images/pandrugsdb-logo.d9aabfec.png">
+<meta name="ttl" content="">
+<meta name="des" content="">
+<meta name="per" content="">
+<meta name="org" content="">
+<meta name="geo" content="Spain">
+<meta name="misspelling" content="">
+<meta name="keywords" content="PanDrugs, CNIO">
+<meta name="description" content="A resource to study drug-gene interactions in a cancer disease context">
+<meta name="CG" content="">
+<meta name="SCG" content="">
+<meta name="PT" content="">
+<meta name="PST" content="">
+<meta property="og:type" content="graph">
+<meta property="og:title" content="PanDrugs vision across TCGA tumoral landscape">
+<meta property="og:description" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations.">
+<meta property="og:image" content="https://static01.nyt.com/images/icons/t_logo_2048_black.png">
+<meta property="fb:app_id" content="">
+<meta name="twitter:card" value="">
+<meta name="twitter:site" value="@pandrugs">
+<meta name="twitter:title" content="PanDrugs">
+<meta name="twitter:description" content="A resource to study drug-gene interactions in a cancer disease context">
+<meta name="twitter:image" content="http://sing.ei.uvigo.es/~lipido/pandrugs/images/pandrugsdb-logo.d9aabfec.png">
+<link rel="image_src" href="http://sing.ei.uvigo.es/~lipido/pandrugs/images/pandrugsdb-logo.d9aabfec.png">
+
+<!-- CSS -->
+<link href="pandrugs.css" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body id="pandrugs_d3" class="pandrugs_d3">
+
+<div id="page" class="tabContent active">
+
+<div id="main">
+<div id="interactiveShell">
+<div class="columnGroup firstColumnGroup">
+<div class="ledeStory">
+<div class="module insetHFullWidth">
+<div class="storyHeader">
+<h6 class="dateline">
+<h1></h1>
+</div><!--close .storyHeader -->
+<div class="storySummary">
+<span class="summary">
+</span>
+</div><!--close .storySummary -->
+</div><!--end .module insetHFullWidth -->
+<div id="interactiveFreeFormMain">
+
+<div class="g-content">
+<div class="g-annotations">
+  <div class="g-annotations-overall" style="opacity: 1; display: block;">
+    <div class="g-annotation" style="left:620px;">
+      <button class="g-button" data-view="tumor" style="margin-top:70px;">Show Tumors</button>
+    </div>
+  </div>
+</div>
+<div class="g-graphic">
+  <div class="g-search">
+    <input placeholder="Find a tumor…" type="text">
+    <button style="display:none;" class="g-search-clear">X</button>
+  </div>
+  <div class="g-buttons">
+    <button class="g-button g-active" data-view="overall">The Overall Picture</button>
+    <button class="g-button" data-view="tumor">The View by Tumor</button>
+    <button class="g-button-annot" data-view="overall" style="display: none; left: 620px; position: absolute;">Show Overall</button>
+  </div>
+</div>
+<div class="g-tumor-notes" style="opacity: 0; display: none;">
+</div>
+<div class="g-tip" style="width: 230px; height: 105px; display: none;">
+  <div class="g-tip-shadow"></div>
+  <svg class="g-tip-box" width="230" height="112">
+    <path transform="translate(105,87)" d="M0.5,22.4l5,-5H133.8v-103H-103.8v103H-5Z"></path>
+  </svg>
+  <div class="g-tip-content">
+    <div class="g-tip-title">Tumor</div>
+      <div class="g-tip-metric" data-name="score">
+      <span class="g-tip-metric-name"></span>
+      <span class="g-tip-metric-value"></span>
+    </div>
+    <div class="g-tip-metric" data-name="nphit">
+      <span class="g-tip-metric-name"></span>
+      <span class="g-tip-metric-value"></span>
+    </div>
+    <div class="g-tip-metric" data-name="nptumor">
+      <span class="g-tip-metric-name"></span>
+      <span class="g-tip-metric-value"></span>
+    </div>
+    <div class="g-tip-metric" data-name="name">
+      <span class="g-tip-metric-name"></span>
+      <span class="g-tip-metric-value"></span>
+    </div>
+  </div>
+</div> <!-- end .g-tip -->
+</div> <!-- .end g-content -->
+
+
+<!-- D3 SECTION!! -->
+<script src="d3.lib.js"></script>
+
+<script type="text/javascript">
+
+// Vars for drugs
+// var consRadius = 20,
+//     dataFile = "data/pre_drugs.tsv",
+//     pageTitle = "PanDrugs across TCGA tumoral landscape (Drugs view)",
+//     pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations. Each bubble represents a treatment with a particular drug and the drug score is the highest one among the computed for each patient that could be treated with that compound. Only alterations with a gene score greater or equal than 0.6 are considered.",
+//     scoreName = "DScore",
+//     scoreDesc = "Measure of the suitability of the drug according to the genomic profile",
+//     metricNameNPhit = "Patients with drug assignment",
+//     // metricNameNPhit = "Treatable patients",
+//     metricNameNPtumor = "Patients in tumor",
+//     metricNameNPname = "Drug",
+//     legendSizeDomain = [1, 5, 10, 15, 20],
+//     legendSizeTitle = "Drug / Tumor";
+
+// Vars for genes
+var consRadius = 60,
+    dataFile = "data/pre_genes.tsv",
+    pageTitle = "PanDrugs across TCGA tumoral landscape (Genes view)",
+    pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study with druggable alterations according to the suggestions by PanDrugs based on punctual genetic alterations. Each bubble represents a druggable alteration and the gene score is the highest one among the computed for the altered gene in each patient. For each gene, the highest availability of the treatment is selected to establish the status label druggability of the gene (e.g. Approved in same tumor type is preferable before approved in other tumor types).",
+    scoreName = "GScore",
+    scoreDesc = "Measure of the biological relevance of the gene in the tumoral process",
+    metricNameNPhit = "Patients with gene affected",
+    // metricNameNPhit = "Affected patients",
+    metricNameNPtumor = "Patients in tumor",
+    metricNameNPname = "Gene",
+    legendSizeDomain = [1, 10, 30],
+    legendSizeTitle = "Gene / Tumor";
+
+function replaceWords() {
+  /*d3.select(".storyHeader h1")
+      .text(pageTitle);*/
+  d3.select(".storySummary .summary")
+      .text(pageDesc);
+  d3.select("div[data-name='score'] span.g-tip-metric-name")
+      .text(scoreName);
+  d3.select("div[data-name='nphit'] span.g-tip-metric-name")
+      .text(metricNameNPhit);
+  d3.select("div[data-name='nptumor'] span.g-tip-metric-name")
+      .text(metricNameNPtumor);
+  d3.select("div[data-name='name'] span.g-tip-metric-name")
+      .text(metricNameNPname);
+
+} // end replaceWords
+
+// replace 'gene' 'drugs' words
+replaceWords();
+
+</script>
+
+<script>(function() {
+
+
+// DECLARE MAIN VARS
+var margin = {top: 20, right: 95, bottom: 10, left: 125},
+    // width = 1100 - margin.left - margin.right,
+    width = 1200,
+    height,
+    tickExtension = 20; // extend grid lines beyond scale range
+
+var formatPercent = d3.format(".0%"),
+    formatTenthPercent = d3.format(".1%"),
+    formatNumber = d3.format(",.3s"),
+    formatDollars = function(d) { return (d < 0 ? "-" : "") + "$" + formatNumber(Math.abs(d)).replace(/G$/, "B"); };
+
+var nameAll = "";
+
+var x = d3.scale.linear()
+    .domain([0, 1])
+    .rangeRound([200, width - 100])
+    .clamp(true)
+    .nice();
+
+var y = d3.scale.ordinal();
+
+var y0 = d3.scale.ordinal()
+    .domain([nameAll])
+    .range([175]);
+
+var r = d3.scale.sqrt()
+    .domain([0, 1e9])
+    .range([0, 1]);
+
+var z = d3.scale.ordinal()
+    // light colors
+    // Approved in cancer: #c6d7a0    198,215,160 (RGB)
+    // Approved in other pathologies: #eaadc0    234,173,192    (RGB)
+    // Approved in other pathologies and in clinical trials in cancer: #beb7e9    190,183,233 (RGB)
+    // Approved in same tumor type: #9adabe    154,218,190 (RGB)
+    // Clinical trials: #e1ca9b    225,202,155     (RGB)
+    // Clinical trials in cancer: #e8b293    232,178,147 (RGB)
+    // Experimental: #77d1e5    119,209,229 (RGB)
+    // .range(["#c6d7a0", "#eaadc0", "#beb7e9", "#9adabe", "#e1ca9b", "#e8b293", "#77d1e5"]); // light colors
+
+    // dark colors
+    // Approved in cancer: #93b44b
+    // Approved in other pathologies: #da7192
+    // Approved in other pathologies and in clinical trials in cancer: #8376d5
+    // Approved in same tumor type: #3ea87a
+    // Clinical trials: #d0ab62
+    // Clinical trials in cancer: #e0966c
+    // Experimental: #2192ab
+    .range(["#93b44b", "#da7192", "#8376d5", "#3ea87a", "#d0ab62", "#e0966c",  "#2192ab"]); // dark colors
+
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("top");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickSize(-width + 60 - tickExtension * 2, 0)
+    .tickPadding(6);
+
+var quadtree = d3.geom.quadtree()
+    .x(function(d) { return d.x; })
+    .y(function(d) { return d.y; });
+
+var svg = d3.select(".g-graphic").append("svg")
+    .attr("height", 420 + margin.top + margin.bottom)
+    .attr("width", width + margin.left + margin.right)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var chartKey = d3.select(".g-graphic").append("svg")
+    .attr("height", 430)
+    .attr("width", width + margin.left + margin.right)
+  .append("g")
+    .attr("class", "g-legend")
+    .attr("transform", "translate(50,10)");
+
+var gx = svg.append("g")
+    .attr("class", "g-x g-axis")
+    .call(xAxis);
+
+var titleX = gx.append("text")
+    .attr("class", "g-title")
+    .attr("y", -9)
+    .style("text-anchor", "end");
+
+titleX.append("tspan")
+    .attr("x", 20)
+    .style("font-weight", "bold")
+    .text(scoreName);
+
+d3.tsv(dataFile, type, function(error, pandrugs) {
+  // Hash with tumor keys
+  var tumors = d3.nest()
+      .key(function(d) { return d.tumor; })
+      .entries(pandrugs);
+
+  // Compute the overall score for all data.
+  var overallScore = d3.mean(pandrugs, score);
+
+  // Compute the overall score by tumor.
+  tumors.forEach(function(d) {
+    d.score = d3.mean(d.values, score);
+  });
+
+  // // Sort tumors by ascending overall score.
+  // tumors.sort(function(a, b) {
+  //   return b.score - a.score;
+  // });
+
+  // Sort alphabetically
+  tumors.sort(function(a, b) {
+    if(a.key < b.key) return -1;
+    if(a.key > b.key) return 1;
+    return 0;
+  });
+
+  height = 150 * tumors.length;
+
+  y
+      .domain(tumors.map(function(d) { return d.key; }))
+      .rangePoints([10, height], 1);
+
+  // Hash with status keys
+  var status = d3.nest()
+      .key(function(d) { return d.status; })
+      .entries(pandrugs);
+
+  // Sort alphabetically
+  status.sort(function(a, b) {
+    if(a.key < b.key) return -1;
+    if(a.key > b.key) return 1;
+    return 0;
+  });
+
+  z
+    .domain(status.map(function(d) { return d.key; }))
+
+  // Create SVG
+
+  chartKey.call(renderChartKey);
+
+  svg.append("g")
+      .attr("class", "g-y g-axis g-y-axis-tumor")
+      .attr("transform", "translate(-" + tickExtension + ",0)")
+      .call(yAxis.scale(y))
+      .call(yAxisWrap)
+      .style("stroke-opacity", 0)
+      .style("fill-opacity", 0)
+    .selectAll(".tick text,.tick tspan")
+      .attr("x", -95)
+      .style("text-anchor", "start");
+
+  svg.append("g")
+      .attr("class", "g-y g-axis g-y-axis-overall")
+      .attr("transform", "translate(-" + tickExtension + ",0)")
+      .call(yAxis.scale(y0))
+      .call(yAxisWrap);
+
+  var companyClip = svg.append("defs").selectAll("clipPath")
+      .data(pandrugs)
+    .enter().append("clipPath")
+      .attr("id", function(d, i) { return "g-clip-company-" + i; })
+    .append("circle")
+      .attr("cx", function(d) { return d.cx; })
+      .attr("cy", function(d) { return d.cy - y0(nameAll); })
+      .attr("r", function(d) { return (d.nphit/d.nptumor) * consRadius; });
+
+  var gVoronoi = svg.append("g")
+      .attr("class", "g-voronoi")
+
+  gVoronoi.selectAll("path")
+      .data(pandrugs)
+    .enter().append("path")
+      .attr("clip-path", function(d, i) { return "url(#g-clip-company-" + i + ")"; })
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
+
+  gVoronoi.call(updateVoronoi,
+      function(d) { return d.cx; },
+      function(d) { return d.cy + y0(nameAll); },
+      420);
+
+  var tumor = svg.append("g")
+      .attr("class", "g-tumor")
+    .selectAll("g")
+      .data(tumors)
+    .enter().append("g")
+      .attr("transform", function(d) { return "translate(0," + y(d.key) + ")"; });
+
+  var tumorNote = d3.select(".g-tumor-notes")
+      .style("opacity", 0)
+      .style("display", "none")
+    .selectAll("div")
+      .data(tumors)
+    .enter().append("div")
+      .attr("class", "g-tumor-note")
+      .style("top", function(d) { return y(d.key) + "px"; })
+      .html(function(d) { return tumorNoteByName[d.key]; });
+
+  var tumorCompany = tumor.append("g")
+      .attr("class", "g-tumor-company")
+    .selectAll("circle")
+      .data(function(d) { return d.values; })
+    .enter().append("circle")
+      .attr("cx", function(d) { return d.cx; })
+      .attr("cy", function(d) { return d.cy - y(d.tumor) + y0(nameAll); })
+      .attr("r", function(d) { return (d.nphit/d.nptumor) * consRadius; })
+      .style("fill", function(d) { return z(d.status); })
+      .on("mouseover", mouseover)
+      .on("mouseout", mouseout);
+
+  var tumorOverall = tumor.append("g")
+      .attr("class", "g-overall")
+      .attr("transform", function(d) { return "translate(" + x(d.score) + "," + (y0(nameAll) - y(d.key)) + ")"; })
+      .style("stroke-opacity", 0)
+      .style("fill-opacity", 0);
+
+  tumorOverall.append("line")
+      .attr("y1", -100)
+      .attr("y2", +127);
+
+  var tumorOverallText = tumorOverall.append("text")
+      .attr("y", -106);
+
+  tumorOverallText.append("tspan")
+      .attr("x", 0)
+      .text(function(d) { return formatNumber(d.score); });
+
+  tumorOverallText.filter(function(d, i) { return !i; }).append("tspan")
+      .attr("x", 0)
+      .attr("dy", "-11")
+      .style("font-size", "8px")
+      .text("MEAN");
+
+  var overall = svg.append("g")
+      .attr("class", "g-overall g-overall-all")
+      .attr("transform", "translate(" + x(overallScore) + "," + y0(nameAll) + ")");
+
+  overall.append("line")
+      .attr("y1", -100)
+      .attr("y2", +127);
+
+  var overallText = overall.append("text")
+      .attr("y", -106)
+      .style("font-weight", "bold");
+
+  overallText.append("tspan")
+      .attr("x", 0)
+      .style("font-size", "13px")
+      .text(formatNumber(overallScore));
+
+  overallText.append("tspan")
+      .attr("x", 0)
+      .attr("dy", "-14")
+      .style("font-size", "8px")
+      .text("MEAN");
+
+  var currentView = "overall";
+
+  d3.selectAll(".g-content button[data-view]")
+      .datum(function(d) { return this.getAttribute("data-view"); })
+      .on("click", transitionView);
+
+  var searchInput = d3.select(".g-search input")
+      .on("keyup", keyuped);
+
+  var searchClear = d3.select(".g-search .g-search-clear")
+      .on("click", function() {
+        searchInput.property("value", "").node().blur();
+        search();
+      });
+
+  var tip = d3.select(".g-tip");
+
+  var tipMetric = tip.selectAll(".g-tip-metric")
+      .datum(function() { return this.getAttribute("data-name"); });
+
+  d3.selectAll(".g-annotations b,.g-tumor-notes b")
+      .datum(function() { return new RegExp("\\b" + d3.requote(this.textContent), "i"); })
+      .on("mouseover", mouseoverAnnotation)
+      .on("mouseout", mouseout);
+
+  // LOCAL FUNCTIONS (d3.tsv)
+
+  function keyuped() {
+    if (d3.event.keyCode === 27) {
+      this.value = "";
+      this.blur();
+    }
+    search(this.value.trim());
+  } // end keyuped
+
+  function search(value) {
+    if (value) {
+      var re = new RegExp("\\b" + d3.requote(value), "i");
+      svg.classed("g-searching", true);
+      tumorCompany.classed("g-match", function(d) { return re.test(d.name) || re.test(d.tumor) || (d.symbol && re.test(d.symbol)) || (d.alias && re.test(d.alias)); });
+      var matches = d3.selectAll(".g-match");
+      if (matches[0].length === 1) mouseover(matches.datum());
+      else mouseout();
+      searchClear.style("display", null);
+    } else {
+      mouseout();
+      svg.classed("g-searching", false);
+      tumorCompany.classed("g-match", false);
+      searchClear.style("display", "none");
+    }
+  } // end search
+
+  function transitionView(view) {
+    if (currentView === view) view = view === "overall" ? "tumor" : "overall";
+    d3.selectAll(".g-buttons button[data-view]").classed("g-active", function(v) { return v === view; })
+    switch (currentView = view) {
+      case "overall": return void transitionOverall();
+      case "tumor": return void transitiontumor();
+    }
+  } // end transitionView
+
+  function transitionOverall() {
+    gVoronoi.style("display", "none");
+
+    var transition = d3.transition()
+        .duration(750);
+
+    transition.select("svg")
+        .delay(720)
+        .attr("height", 420 + margin.top + margin.bottom)
+        .each("end", function() {
+          gVoronoi.call(updateVoronoi,
+            function(d) { return d.cx; },
+            function(d) { return d.cy + y0(nameAll); },
+            420);
+        });
+
+    transition.select(".g-annotations-overall")
+        .each("start", function() { this.style.display = "block"; })
+        .style("opacity", 1);
+
+    transition.select(".g-tumor-notes")
+        .style("opacity", 0)
+        .each("end", function() { this.style.display = "none"; });
+
+    transition.select(".g-button-annot")
+        .style("opacity", 0)
+        .each("end", function() { this.style.display = "none"; });
+
+    transition.select(".g-legend")
+        .attr("transform", "translate(50,15)");
+
+    transition.selectAll(".g-y-axis-tumor")
+        .style("stroke-opacity", 0)
+        .style("fill-opacity", 0);
+
+    transition.selectAll(".g-y-axis-overall")
+        .style("stroke-opacity", 1)
+        .style("fill-opacity", 1);
+
+    var transitionOverall = transition.select(".g-overall-all")
+        .delay(x(overallScore))
+        .style("stroke-opacity", 1)
+        .style("fill-opacity", 1);
+
+    transitionOverall.select("line")
+        .attr("y2", +127);
+
+    transitionOverall.select("text")
+        .attr("y", -106);
+
+    var transitiontumorOverall = transition.selectAll(".g-tumor .g-overall")
+        .delay(function(d) { return x(d.score); })
+        .attr("transform", function(d) { return "translate(" + x(d.score) + "," + (y0(nameAll) - y(d.key)) + ")"; })
+        .style("stroke-opacity", 0)
+        .style("fill-opacity", 0);
+
+    transitiontumorOverall.select("line")
+        .attr("y1", -100)
+        .attr("y2", +127);
+
+    transitiontumorOverall.select("text")
+        .attr("y", -106);
+
+    transition.selectAll(".g-tumor-company circle")
+        .delay(function(d) { return d.cx; })
+        .attr("cx", function(d) { return d.cx; })
+        .attr("cy", function(d) { return d.cy - y(d.tumor) + y0(nameAll); });
+  } // end transitionOverall
+
+  function transitiontumor() {
+    gVoronoi.style("display", "none");
+
+    var transition = d3.transition()
+        .duration(750);
+
+    transition.select("svg")
+        .attr("height", height + margin.top + margin.bottom)
+      .transition()
+        .delay(720)
+        .each("end", function() {
+          gVoronoi.call(updateVoronoi,
+            function(d) { return d.x; },
+            function(d) { return y(d.tumor) + d.y; },
+            height);
+        });
+
+    transition.select(".g-annotations-overall")
+        .style("opacity", 0)
+        .each("end", function() { this.style.display = "none"; });
+
+    transition.select(".g-tumor-notes")
+        .delay(250)
+        .each("start", function() { this.style.display = "block"; })
+        .style("opacity", 1);
+
+    transition.select(".g-button-annot")
+        .delay(250)
+        .each("start", function() { this.style.display = "block"; })
+        .style("opacity", 1)
+        .style("top", (height+100) + "px");
+
+    transition.select(".g-legend")
+        .attr("transform", "translate(50,95)");
+
+    transition.selectAll(".g-y-axis-tumor,.g-tumor-note")
+        .delay(250)
+        .style("stroke-opacity", 1)
+        .style("fill-opacity", 1);
+
+    transition.selectAll(".g-y-axis-overall")
+        .style("stroke-opacity", 0)
+        .style("fill-opacity", 0);
+
+    var transitionOverall = transition.select(".g-overall-all")
+        .delay(x(overallScore))
+        .style("stroke-opacity", 0)
+        .style("fill-opacity", 0);
+
+    transitionOverall.select("line")
+        .attr("y2", height - y0(nameAll));
+
+    var transitiontumorOverall = transition.selectAll(".g-tumor .g-overall")
+        .delay(function(d) { return x(d.score); })
+        .attr("transform", function(d) { return "translate(" + x(d.score) + ",0)"; })
+        .style("stroke-opacity", 1)
+        .style("fill-opacity", 1);
+
+    transitiontumorOverall.select("line")
+        .attr("y1", -25)
+        .attr("y2", +25);
+
+    transitiontumorOverall.select("text")
+        .attr("y", -31);
+
+    transition.selectAll(".g-tumor-company circle")
+        .delay(function(d) { return d.x; })
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
+  } // end transitiontumor
+
+  function updateVoronoi(gVoronoi, x, y, height) {
+    companyClip
+        .attr("cx", x)
+        .attr("cy", y);
+
+    gVoronoi
+        .style("display", null)
+      .selectAll("path")
+        .data(d3.geom.voronoi().x(x).y(y)(pandrugs))
+        .attr("d", function(d) { return "M" + d.join("L") + "Z"; })
+        .datum(function(d) { return d.point; });
+  } // end updateVoronoi
+
+  function mouseoverAnnotation(re) {
+    var matches = tumorCompany.filter(function(d) { return re.test(d.name) || re.test(d.alias); }).classed("g-active", true);
+    if (d3.sum(matches, function(d) { return d.length; }) === 1) mouseover(matches.datum());
+    else tip.style("display", "none");
+  } // end mouseoverAnnotation
+
+  function mouseover(d) {
+    tumorCompany.filter(function(c) { return c === d; }).classed("g-active", true);
+
+    var dx, dy;
+    if (currentView === "overall") dx = d.cx, dy = d.cy + y0(nameAll);
+    else dx = d.x, dy = d.y + y(d.tumor);
+    // dy -= 19, dx += 50; // margin fudge factors
+    dy -= 40, dx += 20; // margin fudge factors
+
+    tip.style("display", null)
+        .style("top", (dy - r(d.score)) + "px")
+        // .style("top", "60px")
+        .style("left", dx + "px");
+
+    tip.select(".g-tip-title")
+        .text(d.alias || d.tumor);
+
+    tipMetric.select(".g-tip-metric-value").text(function(name) {
+      switch (name) {
+        case "score": return d.score;
+        case "nphit": return d.nphit;
+        case "nptumor": return d.nptumor;
+        case "tumor": return d.tumor;
+        case "name": return d.name.substring(0,10);;
+        case "status": return d.status;
+      }
+    });
+  } // end mouseover
+
+  function mouseout() {
+    tip.style("display", "none");
+    tumorCompany.filter(".g-active").classed("g-active", false);
+  } // end mouseout
+
+}); // end d3.tsv
+
+
+// GLOBAL FUNCTIONS
+
+function renderChartKey(g) {
+  var formatPercent = d3.format(".0%"),
+      formatNumber = d3.format(".0f"),
+      formatScore  = d3.format(",.3s");
+
+  // A position encoding for the key only.
+  var x = d3.scale.linear()
+      .domain([0, .6])
+      .range([0, 240]);
+
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom")
+      .tickSize(13)
+      .tickValues(z.domain())
+      .tickFormat(function(d) { return d === .5 ? formatPercent(d) : formatNumber(100 * d); });
+
+  g.append("text")
+      .attr("x", 670)
+      .style("text-anchor", "end")
+      .style("font", "bold 13px sans-serif")
+      .text("LEGEND");
+
+  // Score legend
+  var gScoreText = g.append("text")
+      .attr("x", 405)
+      .attr("y", 40)
+      .style("text-anchor", "end");
+
+  gScoreText.append("tspan")
+      .style("font-weight", "bold")
+      .text(scoreName + ':');
+
+  gScoreText.append("tspan")
+      .style("fill", "#777")
+      .text(" " + scoreDesc);
+
+  // Color legend
+  var gColor = g.append("g")
+      .attr("class", "g-key-color")
+      .attr("transform", "translate(20,90)");
+
+  var gColorInstance = gColor.selectAll("g")
+      .data(z.range().map(function(d, i) {
+        return {
+          x0: 0,
+          y0: i*20,
+          z: d
+        };
+      }))
+    .enter().append("g")
+      .attr("class", "g-color");
+
+  gColorInstance.append("rect")
+      .attr("height", 13)
+      .attr("width", 40)
+      .style("fill", function(d) { return d.z; });
+
+  var gColorTxtInstance = gColorInstance.append("g")
+      .attr("class", "g-key-color-text")
+      .attr("transform", "translate(50,0)");
+
+  gColorTxtInstance.append("text")
+      .data(z.domain().map(function(d, i) {
+        return d + ': ' + statusNoteByName[d];
+      }))
+      .attr("x", 50)
+      .attr("y", 6)
+      .attr("dy", ".35em")
+      .text(function(d) { return d })
+      .call(wrap, 500);
+
+  var gColorY = 0;
+
+  gColorInstance.attr("transform", function() {
+    var t = "translate(0," + gColorY + ")";
+    gColorY += 35;
+    return t;
+  });
+
+  var gColorText = g.append("text")
+      .attr("x", 240 - 6)
+      .attr("y", 80)
+      .style("text-anchor", "end");
+
+  gColorText.append("tspan")
+      .style("font-weight", "bold")
+      .text("Color");
+
+  gColorText.append("tspan")
+      .style("fill", "#777")
+      .text(" Status");
+
+  // Size legend
+  var gSize = g.append("g")
+      .attr("class", "g-key-size")
+      .attr("transform", "translate(680,130)");
+
+  var gSizeInstance = gSize.selectAll("g")
+      .data(legendSizeDomain)
+    .enter().append("g")
+      .attr("class", "g-tumor");
+
+  gSizeInstance.append("circle")
+  .attr("r", function(d) { return d; });
+
+  gSizeInstance.append("text")
+      .attr("x", function(d) { return d + 4; })
+      .attr("dy", ".35em")
+      .text(function(d) { return formatPercent((d/consRadius)); });
+
+  var gSizeX = 0;
+
+  gSizeInstance.attr("transform", function() {
+    var t = "translate(" + gSizeX + ",3)";
+    gSizeX += this.getBBox().width + 25;
+    return t;
+  });
+
+  var gSizeText = g.append("text")
+      .attr("x", 850)
+      .attr("y", 80)
+      .style("text-anchor", "end");
+
+  gSizeText.append("tspan")
+      .style("font-weight", "bold")
+      .text("Size");
+
+  gSizeText.append("tspan")
+      .style("fill", "#777")
+      .text(" " +legendSizeTitle);
+
+} // end renderChartKey
+
+function yAxisWrap(g) {
+  g.selectAll(".tick text")
+    .filter(function(d) { return /[ ]/.test(d) && this.getComputedTextLength() > margin.left - tickExtension - 10; })
+      .attr("dy", null)
+      .each(function(d) {
+        d3.select(this).text(null).selectAll("tspan")
+            .data(d.split(" "))
+          .enter().append("tspan")
+            .attr("x", this.getAttribute("x"))
+            .attr("dy", function(d, i) { return (i * 1.35 - .35) + "em"; })
+            .text(function(d) { return d; });
+      });
+} // end yAxisWrap
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+} // end wrap
+
+function score(d) {
+  return d.score;
+}
+
+function nphit(d) {
+  return d.nphit;
+}
+
+function nptumor(d) {
+  return d.nptumor;
+}
+
+function type(d) {
+  d.x = +d.x;
+  d.y = +d.y;
+  d.cx = +d.cx;
+  d.cy = +d.cy;
+  return d;
+}
+
+var tumorNoteByName = {
+"BLCA": ""+
+  "Bladder Urothelial Carcinoma<br/>"+
+  "Primary Site: Bladder<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 153<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/UrothelialBladderCarcinoma' target='_blank'>BLCA</a> from TCGA<br/>",
+"BRCA": ""+
+  "Breast Invasive Carcinoma<br/>"+
+  "Primary Site: Breast<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 934<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/breastductal' target='_blank'>breast ductal</a> and <a href='https://cancergenome.nih.gov/cancersselected/breastlobular' target='_blank'>breast lobular carcinomas</a> from TCGA<br/>",
+"CESC": ""+
+  "Cervical Squamous Cell Carcinoma and Endocervical Adenocarcinoma<br/>"+
+  "Primary Site: Cervix<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 134<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/cervicalcancer' target='_blank'>CESC</a> from TCGA<br/>",
+"COAD": ""+
+  "Colon Adenocarcinoma<br/>"+
+  "Primary Site: Colorectal<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 423<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/colorectaladenocarcinoma' target='_blank'>COAD</a> from TCGA<br/>",
+"GBM": ""+
+  "Glioblastoma Multiforme<br/>"+
+  "Primary Site: Brain<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 599<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/glioblastomamultiforme' target='_blank'>GBM</a> from TCGA<br/>",
+"HNSC": ""+
+  "Head and Neck Squamous Cell Carcinoma<br/>"+
+  "Primary Site: Head and Neck<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 343<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/headandneck' target='_blank'>HNSC</a> from TCGA<br/>",
+"KIRC": ""+
+  "Kidney Renal Clear Cell Carcinoma<br/>"+
+  "Primary Site: Kidney<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 502<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/kidneyclearcell' target='_blank'>KIRC</a> from TCGA<br/>",
+"KIRP": ""+
+  "Kidney Renal Papillary Cell Carcinoma<br/>"+
+  "Primary Site: Kidney<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 117<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/kidneypapillary' target='_blank'>KIRP</a> from TCGA<br/>",
+"LAML": ""+
+  "Acute Myeloid Leukemia<br/>"+
+  "Primary Site: Bone Marrow<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 202<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/acutemyeloidleukemia' target='_blank'>LAML</a> from TCGA<br/>",
+"LGG": ""+
+  "Brain Lower Grade Glioma<br/>"+
+  "Primary Site: Brain<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 222<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/lowergradeglioma' target='_blank'>LGG</a> from TCGA<br/>",
+"LUAD": ""+
+  "Lung Adenocarcinoma<br/>"+
+  "Primary Site: Lung<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 543<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/lungadenocarcinoma' target='_blank'>LUAD</a> from TCGA<br/>",
+"LUSC": ""+
+  "Lung Squamous Cell Carcinoma<br/>"+
+  "Primary Site: Lung<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 389<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/lungsquamouscell' target='_blank'>LUSC</a> from TCGA<br/>",
+"OV": ""+
+  "Ovarian Serous Cystadenocarcinoma<br/>"+
+  "Primary Site: Ovary<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 599<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/ovarian' target='_blank'>OV</a> from TCGA<br/>",
+"PAAD": ""+
+  "Pancreatic Adenocarcinoma<br/>"+
+  "Primary Site: Pancreas<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 57<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/PancreaticDuctalAdenocarcinoma' target='_blank'>PAAD</a> from TCGA<br/>",
+"PRAD": ""+
+  "Prostate Adenocarcinoma<br/>"+
+  "Primary Site: Prostate<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 180<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/prostatecancer' target='_blank'>PRAD</a> from TCGA<br/>",
+"READ": ""+
+  "Rectum Adenocarcinoma<br/>"+
+  "Primary Site: Colorectal<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 169<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/colorectaladenocarcinoma' target='_blank'>READ</a> from TCGA<br/>",
+"SKCM": ""+
+  "Skin Cutaneous Melanoma<br/>"+
+  "Primary Site: Skin<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 264<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/melanoma' target='_blank'>SKCM</a> from TCGA<br/>",
+"STAD": ""+
+  "Stomach Adenocarcinoma<br/>"+
+  "Primary Site: Stomach<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 292<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/stomachcancer' target='_blank'>STAD</a> from TCGA<br/>",
+"THCA": ""+
+  "Thyroid Carcinoma<br/>"+
+  "Primary Site: Thyroid<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 435<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/thyroid' target='_blank'>THCA</a> from TCGA<br/>",
+"UCEC": ""+
+  "Uterine Corpus Endometrial Carcinoma<br/>"+
+  "Primary Site: Uterus<br/>"+
+  "Type of alteration: Simple Nucleotide Variation<br/>"+
+  "Total data cases: 512<br/>"+
+  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/endometrial' target='_blank'>UCEC</a> from TCGA<br/>",
+};
+
+var statusNoteByName = {
+  "Approved in cancer": "Drugs approved by the FDA used in cancer treatment.",
+  "Approved in other pathologies": "Drugs approved by the FDA for conditions or pathologies different from cancer.",
+  "Approved in other pathologies and in clinical trials in cancer": "Drugs approved by the FDA for conditions or pathologies different from cancer but in a cancer clinical trial.",
+  "Approved in same tumor type": "Drugs approved by the FDA for the same tumor type than the TCGA category.",
+  "Clinical trials": "Drugs in clinical trials used in conditions or pathologies different from cancer.",
+  "Clinical trials in cancer": "Drugs in clinical trials used in cancer treatment.",
+  "Experimental": "Compounds in pre-clinical phase."
+};
+
+})()</script>
+
+</div><!-- end page -->
+
+</body>
+
+</html>

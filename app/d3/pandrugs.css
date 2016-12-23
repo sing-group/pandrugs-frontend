@@ -1,0 +1,330 @@
+body {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333;
+}
+#interactiveFooter {
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+  padding-top: 12px;
+}
+
+.storyHeader,
+.storySummary {
+  margin: auto;
+  padding: 0;
+  position: relative;
+  /*width: 850px;*/
+  text-align: justify;
+  text-justify: inter-word;
+}
+.storyHeader, .storySummary {
+  display: none;
+}
+
+.storyHeader h1 {
+
+  font-size: 28px;
+  margin: 1em auto .3em auto;
+}
+
+.g-graphic {
+  width: 100%;
+  text-align: center;
+}
+.g-content {
+  position: relative;
+  font: 11px sans-serif;
+  /*width: 1230px;*/
+  height: 1600px;
+}
+
+.g-annotations {
+  font-size: 12px;
+  line-height: 1.2em;
+  position: absolute;
+  top: 350px;
+}
+
+.g-annotation {
+  color: #555;
+  position: absolute;
+  width: 140px;
+}
+
+.g-annotation .g-button, .g-button-annot {
+  background: #004276 !important;
+  color: #fff !important;
+  font-weight: bold;
+  width: 140px;
+}
+
+.g-annotation .g-button:hover, .g-button-annot:hover {
+  background: #064d84;
+}
+
+.g-annotation .g-button:active, .g-button-annot:active {
+  background: #002e5f;
+}
+
+.g-axis {
+  pointer-events: none;
+}
+
+.g-axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.g-axis path {
+  display: none;
+}
+
+.g-y.g-axis text {
+  font: bold 14px sans-serif;
+}
+
+.g-y.g-axis line {
+  stroke: #ccc;
+  stroke-dasharray: 1,1;
+}
+
+.g-overall {
+  pointer-events: none;
+}
+
+.g-overall line {
+  stroke: #000;
+  stroke-width: 2px;
+}
+
+.g-overall text {
+  text-anchor: middle;
+}
+
+.g-tumor circle {
+  fill: #ddd;
+  stroke: #000;
+  stroke-width: .5px;
+}
+
+.g-tumor circle.g-active {
+  stroke-width: 2px;
+}
+
+.g-searching .g-tumor .g-match {
+  stroke-width: 1px;
+}
+
+.g-searching .g-tumor circle:not(.g-match) {
+  fill-opacity: .2;
+}
+
+.g-voronoi {
+  fill: none;
+  pointer-events: all;
+}
+
+.g-buttons {
+  margin: 40px 0 20px 125px;
+}
+
+.g-buttons .g-button {
+  width: 13em;
+  border: solid 1px #ddd;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.g-buttons .g-button:hover {
+  border-color: #ccc;
+  border-bottom-color: #bbb;
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  color: #666;
+}
+
+.g-button, .g-button-annot {
+  background: #fff;
+  border: none;
+  border-radius: 3px;
+  border-bottom-color: #ccc;
+  color: #888;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0 -1px 0 0;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.g-buttons .g-button.g-active,
+.g-buttons .g-button:active {
+  background: #f0f0f0;
+  border-color: #ccc;
+  border-top-color: #bbb;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+  color: #222;
+  font-weight: 600;
+}
+
+.g-buttons .g-button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.g-buttons .g-button:last-child {
+  border-radius: 0 5px 5px 0;
+  margin-left: -5px;
+}
+
+.g-buttons .g-button:focus {
+  z-index: 3;
+}
+
+.g-buttons .g-button.g-active {
+  z-index: 2;
+}
+
+.g-search {
+  float: right;
+  position: relative;
+}
+
+.g-search input {
+  width: 240px;
+  height: 26px;
+  font: 12px sans-serif;
+  padding: 0 8px;
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.g-search .g-search-clear {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: #bbb;
+  border: none;
+  border-radius: 9px;
+  color: #fff;
+  font: 10px sans-serif;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.g-search .g-search-clear:hover {
+  background: #aaa;
+}
+
+.g-key-color path {
+  display: none;
+}
+
+.g-key-color line {
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.g-arrows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  height: 0;
+  width: 100%;
+}
+
+.g-arrow {
+  position: absolute;
+  bottom: 5px;
+}
+
+.g-arrow-vertical {
+  width: 0;
+  border-right: solid 1px #ccc;
+}
+
+.g-arrow-horizontal {
+  height: 0;
+  border-top: solid 1px #ccc;
+}
+
+.g-tip {
+  position: absolute;
+  pointer-events: none;
+}
+
+.g-tip-shadow {
+  position: absolute;
+  box-shadow: 0 4px 8px rgba(0,0,0,.2);
+  width: 100%;
+  height: 100%;
+}
+
+.g-tip-content {
+  position: absolute;
+  padding: 6px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.g-tip-box {
+  position: absolute;
+  fill: #fff;
+  stroke: #000;
+  stroke-opacity: .2;
+}
+
+.g-tip-title,
+.g-tip-metric-value {
+  font-weight: bold;
+}
+
+.g-tip-title {
+  margin-bottom: 4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.g-tip-metric {
+  clear: right;
+  padding: 2px 0;
+}
+
+.g-tip-metric + .g-tip-metric {
+  border-top: solid 1px #eee;
+}
+
+.g-tip-metric-value {
+  float: right;
+}
+
+.g-tip-metric-name {
+  color: #777;
+}
+
+.g-tumor-notes {
+  color: #777;
+  position: absolute;
+  font-size: 11px;
+  top: 20px;
+  left: 10px;
+  margin-top: 65px;
+  width: 240px;
+}
+
+.g-tumor-note {
+  position: absolute;
+}
+
+.g-annotation b,
+.g-tumor-note b {
+  color: #222;
+  cursor: default;
+}

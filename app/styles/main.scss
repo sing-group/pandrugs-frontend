@@ -4,8 +4,16 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 @import "compass/css3/border-radius";
 
-.db_desc {
+#logo-big {
+  display: inline-block;
+}
+
+.db_desc, .tcga_desc {
   text-align: justify;
+}
+
+.db_desc {
+  font-size: 1.2em;
 }
 
 .browsehappy {
@@ -273,6 +281,54 @@ a.disabled:hover {
   clear: both;
   margin-top: 25px;
 }
+
+#d3viewform {
+  font-size: 0.8em;
+  display: inline-block;
+}
+/* toggle radio buttons */
+input[type="radio"].toggle {
+  display: none;
+  margin: 0px;
+}
+
+input[type="radio"].toggle + label {
+  background-image: linear-gradient(to top,#ccc,#eee);
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+input[type="radio"].toggle:checked + label {
+  background-image: linear-gradient(to top,#969696,#727272);
+  box-shadow: inset 0 1px 6px rgba(41, 41, 41, 0.2),
+                    0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: default;
+  color: #E6E6E6;
+  border-color: transparent;
+  text-shadow: 0 1px 1px rgba(40, 40, 40, 0.75);
+}
+
+
+
+input[type="radio"].toggle:checked + label.btn:hover {
+  background-color: inherit;
+  background-position: 0 0;
+  transition: none;
+}
+
+input[type="radio"].toggle-left + label {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+input[type="radio"].toggle-right + label {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
 /* =========== RESPONSIVE ======================*/
 
 /* fix height on drug text area */
