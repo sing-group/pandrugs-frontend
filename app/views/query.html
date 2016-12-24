@@ -32,7 +32,8 @@
                 <textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20" spellcheck="false" smart-area="genesTextAreaConfig"></textarea>
               </div>
               <div id="drugs" class="tab-pane">
-                <textarea name="drugs" id="drugstextarea" class="form-control" placeholder="Standard drug names" ng-model="drugs" rows="20" spellcheck="false" smart-area="drugsTextAreaConfig"></textarea>
+                <input ng-model="drugQuery" class="form-control" placeholder="Enter a drug name" spellcheck="false"/>
+                <list-group items="drugItems" selected-items="drugs" selectable="true" template-url="drugTemplateUrl" ng-if="!loadingDrugs" />
               </div>
               <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
                 <label for="generankinput">Select a gene ranking file</label>
@@ -101,7 +102,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" ng-if="selectedTab != 'drugs'">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingOne">

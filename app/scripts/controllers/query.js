@@ -18,6 +18,7 @@ angular.module('pandrugsdbFrontendApp')
 'geneDrugNetworkChart',
 '$timeout',
 '$interval',
+'$q',
 function (
   $scope,
   user,
@@ -27,7 +28,8 @@ function (
   therapyByFamilyChart,
   geneDrugNetworkChart,
   $timeout,
-  $interval
+  $interval,
+  $q
 ) {
 
     $scope.$timeout = $timeout;
@@ -39,7 +41,10 @@ function (
 
     // ======== QUERY PARAMETERS ======
     $scope.genes = '';
-    $scope.drugs = '';
+    $scope.drugs = [];
+    $scope.drugQuery = '';
+    $scope.drugItems = [];
+    $scope.loadingDrugs = true;
     $scope.generank = '';
     $scope.computationId = '';
     $scope.queryCancerFda = true;
@@ -49,6 +54,8 @@ function (
     $scope.queryOtherExperimental = true;
     $scope.queryTarget = true;
     $scope.queryMarker = true;
+
+    $scope.drugTemplateUrl = 'views/partials/drugname-list-item.tpl.html';
 
 
     var previousResults = null; //do not redraw graph each time the network tab is selected
@@ -269,10 +276,24 @@ function (
           true,
           tableState
         ).then(manageResults);
-      } else if ($scope.selectedTab === 'genes' && $scope.genes !== '') {
-        searchBy('searchByGenes', 'genes', tableState);
-      } else if ($scope.selectedTab === 'drugs' && $scope.drugs !== '') {
-        searchBy('searchByDrugs', 'drugs', tableState);
+      } else if ($scope.selectedTab === 'genes' && $scope.genes) {
+        var uniqueUpperCaseGenes = unique($scope.genes.split('\n')
+          .map(function(item) {
+            return item.trim().toUpperCase();
+          })
+        );
+
+        $scope.genes = uniqueUpperCaseGenes.join('\n');
+
+        searchBy(db.searchByGenes, uniqueUpperCaseGenes, tableState);
+      } else if ($scope.selectedTab === 'drugs' && $scope.drugs) {
+        var standardDrugNames = unique($scope.drugs
+          .map(function(item) {
+            return item.standardName;
+          })
+        );
+
+        searchBy(db.searchByDrugs, standardDrugNames, tableState);
       }
     };
 
@@ -288,17 +309,9 @@ function (
       return uniqueElems;
     }
 
-    function searchBy(searchFunction, scopeValue, tableState) {
-      var uniqueUpperCaseValues = unique($scope[scopeValue].split('\n')
-        .map(function(item) {
-          return item.trim().toUpperCase();
-        })
-      );
-
-      $scope[scopeValue] = uniqueUpperCaseValues.join('\n');
-
+    function searchBy(searchFunction, value, tableState) {
       $scope.isLoading = true;
-      db[searchFunction](uniqueUpperCaseValues,
+      searchFunction(value,
         $scope.queryCancerFda,
         $scope.queryCancerClinical,
         $scope.queryOtherFda,
@@ -316,37 +329,51 @@ function (
       $scope.pngcontent = geneDrugNetworkChart.exportnetwork(3);
     };
 
-    function buildTextAreaConfig(searchFunction) {
-      return {
-        autocomplete: [{
-          words: [/([()-_A-Za-z0-9]+)/gi]
-        }],
-        dropdown: [{
-          trigger: /([()-_A-Za-z0-9]+)/gi,
-          list: function(match, callback) {
-            db[searchFunction](match[1])
-              .then(function(response) {
-                var data = response.data.map(function(queryValue) {
-                  return {
-                    display: queryValue,
-                    item: queryValue
-                  };
-                });
-
-                callback(data);
+    $scope.genesTextAreaConfig = {
+      autocomplete: [{
+        words: [/([()-_A-Za-z0-9]+)/gi]
+      }],
+      dropdown: [{
+        trigger: /([()-_A-Za-z0-9]+)/gi,
+        list: function(match, callback) {
+          db.listGeneSymbols(match[1])
+            .then(function(response) {
+              var data = response.data.map(function(queryValue) {
+                return {
+                  display: queryValue,
+                  item: queryValue
+                };
               });
-          },
-          onSelect: function(item) {
-            return item.item + '\n';
-          },
-          mode: 'replace'
-        }]
-      };
-    }
 
-    $scope.genesTextAreaConfig = buildTextAreaConfig('listGeneSymbols');
+              callback(data);
+            });
+        },
+        onSelect: function(item) {
+          return item.item + '\n';
+        },
+        mode: 'replace'
+      }]
+    };
 
-    $scope.drugsTextAreaConfig = buildTextAreaConfig('listStandardDrugNames');
+    $scope.$watch('drugQuery', function(newValue) {
+      $scope.loadingDrugs = true;
+
+      if (newValue) {
+        var query = $scope.drugQuery;
+        db.listDrugNames(newValue)
+          .then(function(response) {
+            $scope.drugItems = response.data.map(function(item) {
+              item.query = query;
+              return item;
+            });
+            $scope.loadingDrugs = false;
+          });
+      } else {
+        $scope.$apply(); // Forces UI update for loadingDrugs
+        $scope.drugItems = [];
+        $scope.loadingDrugs = false;
+      }
+    });
 
     $scope.getCurrentUser = function() {
       return user.getCurrentUser();
@@ -376,6 +403,10 @@ function (
           window.alert('ERROR: computation could not be deleted.');
         });
       }
+    };
+
+    $scope.highlight = function(text) {
+      return $sce.trustAsHtml(text.replace(new RegExp($scope.drugQuery, 'gi'), '<span class="highlightedText">$&</span>'));
     };
 
     //update computation status...

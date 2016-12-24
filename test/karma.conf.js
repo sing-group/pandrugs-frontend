@@ -36,6 +36,7 @@ module.exports = function(config) {
       'bower_components/cytoscape/dist/cytoscape.js',
       'bower_components/ng-storage/ngStorage.js',
       'bower_components/angular-loading-bar/build/loading-bar.js',
+      'bower_components/angular-list-group/dist/angular-list-group.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

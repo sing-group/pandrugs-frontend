@@ -20,6 +20,7 @@ angular
     'smart-table',
     'highcharts-ng',
     'smartArea',
+    'listGroup',
     'angular-loading-bar'
   ])
   .constant('BACKEND', (function() {

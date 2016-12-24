@@ -329,10 +329,36 @@ input[type="radio"].toggle-right + label {
   border-bottom-left-radius: 0;
 }
 
+.drug-item {
+  div:first-child {
+    margin-right: 10px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  li {
+    line-height: 0.8em;
+  }
+
+  span.drug-source {
+    font-weight: bold;
+  }
+
+  h6 {
+    font-style: italic;
+  }
+}
+
+.highlightedText {
+  text-decoration: underline;
+  background: #fcf8e3;
+  color: black;
+}
+
 /* =========== RESPONSIVE ======================*/
 
 /* fix height on drug text area */
-#drugs textarea, #genes textarea {
+#genes textarea {
     height: 400px;
     width: 100%;
 }

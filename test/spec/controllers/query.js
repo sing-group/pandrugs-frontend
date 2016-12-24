@@ -22,7 +22,7 @@ describe('Controller: QueryCtrl', function () {
     var cancerTypesDeferred;
     beforeEach(function() {
       service = {searchByGenes: function() {}, getCancerTypes: function() {},
-    listGeneSymbols: function() {return ['BRCA2']}, listStandardDrugNames: function() {return []}};
+    listGeneSymbols: function() {return ['BRCA2']}, listDrugs: function() {return []}};
       user = {getCurrentUser: function() {return "anonymous"}};
 
       deferred = $q.defer();
@@ -30,7 +30,7 @@ describe('Controller: QueryCtrl', function () {
       spyOn(service, 'getCancerTypes').and.returnValue(cancerTypesDeferred.promise);
       spyOn(service, 'searchByGenes').and.returnValue(deferred.promise);
       spyOn(service, 'listGeneSymbols').and.returnValue(['BRCA2']);
-      spyOn(service, 'listStandardDrugNames').and.returnValue([]);
+      spyOn(service, 'listDrugNames').and.returnValue([]);
       $controller('QueryCtrl', { $scope: $scope, user: user, database: service});
     });
 

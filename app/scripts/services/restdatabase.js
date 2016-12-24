@@ -305,7 +305,7 @@ angular.module('pandrugsdbFrontendApp')
         return validValues('genedrug/gene', query, maxResults);
       },
 
-      listStandardDrugNames: function(query, maxResults) {
+      listDrugNames: function(query, maxResults) {
         return validValues('genedrug/drug', query, maxResults);
       }
     };
