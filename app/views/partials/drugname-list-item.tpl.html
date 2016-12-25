@@ -2,8 +2,10 @@
   <div class="pull-left">
     <h4 class="list-group-item-heading" ng-bind-html="item.showName | highlight:item.query"/>
     <h6 ng-bind-html="item.standardName | highlight:item.query"/>
+    <ul>
     <li ng-if="item.sourceName" ng-repeat="sourceName in item.sourceName">
-      <ul><span class="drug-source">{{sourceName.name}}</span>: <span ng-bind-html="sourceName.drugName | highlight:item.query"/></ul>
+      <span class="drug-source">{{sourceName.name}}</span>: <span ng-bind-html="sourceName.drugName | highlight:item.query"/>
     </li>
+    </ul>
   </div>
 </div>
