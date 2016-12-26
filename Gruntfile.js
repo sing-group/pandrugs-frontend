@@ -426,7 +426,9 @@ module.exports = function (grunt) {
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'styles/fonts/{,*/}*.*',
-            'downloads/*.*'
+            'downloads/*.*',
+            'd3/*.*',
+            'd3/data/*.*'
           ]
         }, {
           expand: true,
@@ -477,7 +479,7 @@ module.exports = function (grunt) {
   grunt.registerTask('protractor-safari', ['protractor:safari']);
   grunt.registerTask('protractor-firefox', ['protractor:firefox']);
   grunt.registerTask('protractor-e2e', ['concurrent:protractorTest']);
-  
+
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -531,7 +533,7 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-  
-  
+
+
 
 };
