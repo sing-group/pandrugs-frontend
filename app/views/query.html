@@ -37,8 +37,11 @@
               </div>
               <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
                 <label for="generankinput">Select a gene ranking file</label>
-                <input name="generank" id="generankinput" class="form-control" type="file" file-model="generank"/>
+                <input name="generank" id="generankinput" class="file" type="file" file-model="generank"/>
                 Download <a href="downloads/sample-rank.rnk">sample RNK file</a>
+                <script>$(document).ready(function() {
+                  $("#generankinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
+                }); </script>
               </div>
               <div id="vcfranking" class="tab-pane form-group" role="tabpanel">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newComputationModal">
@@ -55,6 +58,9 @@
                         <fieldset class="form-group">
                           <label for="generankinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>)</label>
                           <input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
+                          <script>$(document).ready(function() {
+                            $("#vcfinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
+                          }); </script>
                           <label for="computationNameInput">Computation name</label>
                           <input name="computationName" id="computationNameInput" class="form-control" type="text" ng-model="computationName"/>
                           <!--<input type="button" class="btn btn-success" value="Submit VCF to analyze" ng-click="submitVCF()" />-->
