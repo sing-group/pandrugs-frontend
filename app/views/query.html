@@ -29,6 +29,23 @@
 
             <div class="tab-content panel-body">
               <div id="genes" class="tab-pane active">
+                <button class="btn btn-default" data-toggle="collapse" data-target="#examples-zone">Use an example</button>
+                <div id="examples-zone" class="collapse">
+                  <div id="sample-gene-list">
+                    <div id ="sample-1">
+                      <button class="btn btn-default" ng-click="pasteStomachCarcinomaExample()">Paste Example 1</button>
+                      <span class="cite">Genes significantly mutated in Stomach Adenocarcinoma (TCGA, Nature 2014)</span>
+                    </div>
+                    <div id ="sample-2">
+                      <button class="btn btn-default" ng-click="pasteAngiogenesisExample()">Paste Example 2</button>
+                      <span class="cite">Genes involved in Angiogenesis</span>
+                    </div>
+                    <div id ="sample-3">
+                      <button class="btn btn-default" ng-click="pasteSignalingPathwayExample()">Paste Example 3</button>
+                      <span class="cite">Genes involved in PI3K-AKT-mTOR signaling pathway</span>
+                    </div>
+                  </div>
+                </div>
                 <textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20" spellcheck="false" smart-area="genesTextAreaConfig"></textarea>
               </div>
               <div id="drugs" class="tab-pane">
@@ -38,7 +55,7 @@
               <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
                 <label for="generankinput">Select a gene ranking file</label>
                 <input name="generank" id="generankinput" class="file" type="file" file-model="generank"/>
-                Download <a href="downloads/sample-rank.rnk">sample RNK file</a>
+                <a href="downloads/TCGA-91-6847.rnk">Download a ranked list example</a> (Lung adenocarcinoma LUAD patient with EGFR mutation and amplification from TCGA)
                 <script>$(document).ready(function() {
                   $("#generankinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
                 }); </script>
@@ -57,10 +74,13 @@
                       <div class="modal-body">
                         <fieldset class="form-group">
                           <label for="generankinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>)</label>
-                          <input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
-                          <script>$(document).ready(function() {
-                            $("#vcfinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
-                          }); </script>
+                          <div>
+                            <input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
+                            <script>$(document).ready(function() {
+                              $("#vcfinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
+                            }); </script>
+                            <a href="downloads/TCGA-BF-A1PU-01A-11D-A19A-08.vcf">Download a VCF example file</a> (Melanoma patient BRAF mutant from TCGA)
+                          </div>
                           <label for="computationNameInput">Computation name</label>
                           <input name="computationName" id="computationNameInput" class="form-control" type="text" ng-model="computationName"/>
                           <!--<input type="button" class="btn btn-success" value="Submit VCF to analyze" ng-click="submitVCF()" />-->

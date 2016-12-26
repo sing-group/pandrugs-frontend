@@ -351,6 +351,18 @@ input[type="radio"].toggle-right + label {
   color: black;
 }
 
+#sample-gene-list {
+  display: table;
+  border-spacing: 5px;
+  div {
+    display: table-row;
+    vertical-align: middle;
+  }
+  button, span {
+    display: table-cell
+  }
+
+}
 /* =========== RESPONSIVE ======================*/
 
 /* fix height on drug text area */
