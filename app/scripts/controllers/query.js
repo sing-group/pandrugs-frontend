@@ -18,7 +18,7 @@ angular.module('pandrugsdbFrontendApp')
 'geneDrugNetworkChart',
 '$timeout',
 '$interval',
-'$q',
+'$sce',
 function (
   $scope,
   user,
@@ -29,7 +29,7 @@ function (
   geneDrugNetworkChart,
   $timeout,
   $interval,
-  $q
+  $sce
 ) {
 
     $scope.$timeout = $timeout;
@@ -236,25 +236,29 @@ function (
         };
       }
 
+      if ($scope.results.length === 1) {
+        $scope.results[0].moreinfo = true;
+      }
+
       $scope.csvcontent = 'data:text/csv;charset=utf-8,';
       $scope.csvcontent += generateCSV($scope.results);
       $scope.csvcontent = encodeURI($scope.csvcontent);
 
       updateCharts($scope.results);
-      $scope.isLoading=false;
+      $scope.isLoading = false;
     }
 
-    $scope.pasteStomachCarcinomaExample= function() {
+    $scope.pasteStomachCarcinomaExample = function() {
       $scope.genes = 'TP53\nARID1A\nB2M\nPIK3CA\nPTEN\nKRAS\nRHOA\nMXRA8';
-    }
+    };
 
     $scope.pasteAngiogenesisExample = function() {
       $scope.genes = 'VEGFA\nVEGFB\nKDR\nIL8\nCXCR1\nCXCR2\n';
-    }
+    };
 
     $scope.pasteSignalingPathwayExample = function() {
       $scope.genes = 'PIK3CA\nPIK3R1\nPIK3R2\nPTEN\nPDPK1\nAKT1\nAKT2\nFOXO1\nFOXO3\nMTOR\nRICTOR\nTSC1\nTSC2\nRHEB\nAKT1S1\nRPTOR\nMLST8\n';
-    }
+    };
 
     //  ========== QUERY ========
     $scope.query = function(tableState) {
@@ -372,7 +376,7 @@ function (
 
       if (newValue) {
         var query = $scope.drugQuery;
-        db.listDrugNames(newValue)
+        db.listDrugNames(newValue, 10)
           .then(function(response) {
             $scope.drugItems = response.data.map(function(item) {
               item.query = query;

@@ -208,7 +208,7 @@
     <h3>PanDrugs Candidate Therapies</h3>
   </div>
 
-  <div class="row">
+  <div class="row" ng-if="selectedTab !== 'drugs'">
     <!--<div class="panel panel-default">
       <ul class="nav nav-tabs" role="tablist">
         <li class="active" role="presentation" ng-click="setSelectedTab('charts')">
@@ -252,10 +252,10 @@
 
   <div class="row">
     <a href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
-    <table id="results" st-table="results" st-pipe="query" class="table table-striped">
+    <table id="results" st-table="results" st-pipe="query" class="table table-striped query-table">
       <thead>
         <tr>
-          <th>Actions</th>
+          <th ng-if="selectedTab !== 'drugs'">Actions</th>
           <th><span class="gene">Gene(s)</span> </span> <span class="help_icon" title="gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
           <th><span class="drug">Drug</span> </span> <span class="help_icon" title="compound name"></span></th>
           <th>Family <span class="help_icon" title="drug family based on the KEGG target-based classification of drugs"/></th>
@@ -269,8 +269,8 @@
       </thead>
 
       <tbody ng-hide="isLoading" ng-repeat="row in results">
-        <tr ng-class="{highlightedResult: row.dScore > 0.7 && row.gScore > 0.6}" >
-          <td>
+        <tr ng-class="{highlightedGroup: row.dScore > 0.7 && row.gScore > 0.6}" >
+          <td ng-if="selectedTab !== 'drugs'">
             <button class="btn btn-default" ng-click="row.moreinfo = !row.moreinfo">
               <span ng-if="row.moreinfo" class="glyphicon glyphicon-minus"></span>
               <span ng-if="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
@@ -295,8 +295,8 @@
           <td>{{row.dScore | number: 4}}</td>
           <td>{{row.gScore | number: 4}}</td>
         </tr>
-        <tr ng-repeat="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedResult: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
-          <td>&nbsp;</td>
+        <tr ng-repeat="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
+          <td ng-if="selectedTab !== 'drugs'">&nbsp;</td>
           <td colspan="2">
             <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
             <strong ng-bind-html="genedrug.gene | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>

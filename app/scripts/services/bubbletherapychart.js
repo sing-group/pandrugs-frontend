@@ -61,7 +61,7 @@ angular.module('pandrugsdbFrontendApp')
 
               // add rectangle for best candidates
               drawRectFromCoordinates(0.7, 1, 1, 0.6, 20).attr({
-                fill: '#DCFCEF',
+                fill: '#EEFAEE',
                 stroke: 'black',
                 'stroke-width': 0
 

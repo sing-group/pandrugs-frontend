@@ -4,6 +4,25 @@ $icon-font-path: "../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 // endbower
 @import "compass/css3/border-radius";
 
+$light-green: #EEFAEE;
+$medium-green: #DFF0D8;
+$medium-dark-green: #4CAE4C;
+$dark-green: #297856;
+
+$medium-red: #D43F3A;
+
+$light-blue: #EEEEFA;
+$dark-blue: #295678;
+
+$light-gray: #F9F9F9;
+$medium-light-gray: #E5E5E5;
+$medium-gray: #CCCCCC;
+$medium-dark-gray: #C2C2C2;
+$dark-gray: #777777;
+
+$light-black: #333333;
+
+
 #logo-big {
   display: inline-block;
 }
@@ -18,8 +37,8 @@ $icon-font-path: "../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 
 .browsehappy {
   margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
+  background: $medium-gray;
+  color: black;
   padding: 0.2em 0;
 }
 
@@ -51,8 +70,8 @@ body {
 /* Custom page footer */
 .footer {
   padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+  color: $dark-gray;
+  border-top: 1px solid $medium-light-gray;
   margin-top: 10px;
 }
 
@@ -63,7 +82,7 @@ body {
 /* Main marketing message and sign up button */
 .jumbotron {
   text-align: center;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid $medium-light-gray;
 
   .btn {
     font-size: 21px;
@@ -84,8 +103,6 @@ body {
   margin: 10px;
 }
 
-
-
 .st-sort-ascent:before{
   content: '\25B2';
 }
@@ -97,7 +114,7 @@ body {
   background-color: white;
 }
 .table-striped > tbody:nth-of-type(2n+1) > tr {
-  background-color: #f9f9f9;
+  background-color: $light-gray;
 }
 .table-striped > tbody:nth-of-type(2n) > tr {
   background-color: white;
@@ -160,27 +177,27 @@ tr.moreinfo {
 
 a.curated_source {
   @extend .curated;
-  border-color: #297856;
-  color: #297856;
-  background-color: #EEFAEE;
+  border-color: $dark-green !important;
+  color: $dark-green !important;
+  background-color: $light-green !important;
 
   &:hover {
-    border-color: #EEFAEE;
-    color: #EEFAEE;
-    background-color: #297856;
+    border-color: $light-green !important;
+    color: $light-green !important;
+    background-color: $dark-green !important;
   }
 }
 
 a.non_curated_source {
   @extend .curated;
-  border-color: #295678;
-  color: #295678;
-  background-color: #EEEEFA;
+  border-color: $dark-blue !important;
+  color: $dark-blue !important;
+  background-color: $light-blue !important;
 
   &:hover {
-    border-color: #EEEEFA;
-    color: #EEEEFA;
-    background-color: #295678;
+    border-color: $light-blue !important;
+    color: $light-blue !important;
+    background-color: $dark-blue !important;
   }
 }
 
@@ -189,23 +206,33 @@ a.non_curated_source {
 }
 .cancer_type_checkbox label {
   @extend .curated;
-  border-color: #EEFAEE;
+  border-color: $light-green !important;
   cursor: pointer;
-  color: #c2c2c2;
+  color: $medium-dark-gray !important;
 }
 
 .cancer_type_checkbox input:hover + label:hover {
-  border-color: #cccccc;
-  color: #333;
+  border-color: $medium-gray;
+  color: $light-black;
 }
 .cancer_type_checkbox input:checked + label {
-  border-color: #cccccc;
-  background-color: #f5f5f5;
-  color: #333;
+  border-color: $medium-gray;
+  background-color: $light-gray;
+  color: $light-black;
 }
 
-.highlightedResult {
-  background-color: #DCFCEF !important;
+.highlightedGroup {
+  background-color: $medium-green !important;
+}
+
+.highlightedGeneDrug {
+  background-color: $light-green !important;
+}
+
+.query-table {
+  a {
+    color: $dark-green;
+  }
 }
 
 #therapiesChart {
@@ -254,23 +281,23 @@ div#chartarea #loading-banner {
   color: gray;
 }
 a.disabled:hover {
-  color:gray;
+  color: gray;
 }
 
 .progress-bar.error {
-  background-color: #d43f3a;
+  background-color: $medium-red;
 }
 
 .progress-bar.success {
-  background-color: #4cae4c;
+  background-color: $medium-dark-green;
 }
 
 .affectedGenes {
-  color: #4cae4c;
+  color: $medium-dark-green;
 }
 
 .error {
-  color: #d43f3a;
+  color: $medium-red;
 }
 
 #computationSubmit .deleteButton {
@@ -293,24 +320,22 @@ input[type="radio"].toggle {
 }
 
 input[type="radio"].toggle + label {
-  background-image: linear-gradient(to top,#ccc,#eee);
+  background-image: linear-gradient(to top,$medium-gray,#eee);
   cursor: pointer;
   border-radius: 5px;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid $medium-gray;
 }
 
 input[type="radio"].toggle:checked + label {
-  background-image: linear-gradient(to top,#969696,#727272);
+  background-image: linear-gradient(to top, #969696, #727272);
   box-shadow: inset 0 1px 6px rgba(41, 41, 41, 0.2),
                     0 1px 2px rgba(0, 0, 0, 0.05);
   cursor: default;
-  color: #E6E6E6;
+  color: $medium-light-gray;
   border-color: transparent;
   text-shadow: 0 1px 1px rgba(40, 40, 40, 0.75);
 }
-
-
 
 input[type="radio"].toggle:checked + label.btn:hover {
   background-color: inherit;
@@ -347,7 +372,7 @@ input[type="radio"].toggle-right + label {
 
 .highlightedText {
   text-decoration: underline;
-  background: #fcf8e3;
+  background: $light-blue;
   color: black;
 }
 
