@@ -25,7 +25,7 @@ angular.module('pandrugsdbFrontendApp')
         $scope.login,
         $scope.password,
         function() { $location.path('/'); },
-        function() { window.alert('error'); }
+        function() { window.alert('Your login/password was not correct. Please make sure that you have been registered with this login/password'); }
       );
     };
 
