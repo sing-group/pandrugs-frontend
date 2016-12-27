@@ -19,6 +19,7 @@ angular.module('pandrugsdbFrontendApp')
 '$timeout',
 '$interval',
 '$sce',
+'$location',
 function (
   $scope,
   user,
@@ -29,7 +30,8 @@ function (
   geneDrugNetworkChart,
   $timeout,
   $interval,
-  $sce
+  $sce,
+  $location
 ) {
 
     $scope.$timeout = $timeout;
@@ -69,6 +71,16 @@ function (
         }
       }
     };
+
+
+    $scope.computationIdQuery = $location.search().computationId;
+
+    if ($scope.computationIdQuery !== undefined) {
+      $scope.setSelectedTab('vcfranking');
+      /*$scope.computationIdQuery.each(function(item){
+        window.alert(item);
+      });*/
+    }
 
     // cancer types
     $scope.cancerTypes = [];
@@ -398,8 +410,16 @@ function (
     $scope.submitVCF = function() {
       $scope.largeProcess = 'Uploading VCF File, please wait';
       user.submitComputation($scope.vcffile, $scope.computationName,
-        function() {
-          window.alert('Computation submitted successfully. We will start to analyze it as soon as we can.');
+        function(newId) {
+          if (user.getCurrentUser() === 'anonymous') {
+
+            var followUrl = $location.absUrl().substring(0, $location.absUrl().indexOf('#'))+'#/query?computationId='+newId;
+            window.alert('Computation submitted successfully. Please keep this link in a SAFE PLACE in order to get back and follow the computation progress:\n'+followUrl);
+            document.location.href = followUrl;
+
+          } else {
+            window.alert('Computation submitted successfully. We will start to analyze it as soon as we can.');
+          }
           $scope.largeProcess = null;
         },
         function() {
@@ -430,6 +450,15 @@ function (
       if (user.getCurrentUser() !== 'anonymous') {
         user.getComputations(function(computations) {
           $scope.computations = computations;
+        }, null);
+      } else if($scope.computationIdQuery !== undefined) {
+        user.getComputation('guest', $scope.computationIdQuery, function(computation){
+          $scope.computations[$scope.computationIdQuery] = computation;
+          if (!computation.finished || computation.failed || computation.affectedGenes == 0) {
+            $scope.computationId = '';
+          } else {
+            $scope.computationId = $scope.computationIdQuery;
+          }
         }, null);
       }
     }

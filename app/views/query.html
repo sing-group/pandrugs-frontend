@@ -2,7 +2,6 @@
   <button type="submit" class="btn btn-success btn-lg" ng-show="results != null" ng-click="newQuery()" style="float:right">New Query</button>
   <h2>Query Pandrugs</h2>
 </div>
-
 <form role="query form">
   <div class="container-fluid">
     <div class="row"  id="genequeryform" ng-show="results==null">
@@ -10,7 +9,7 @@
         <div class="form-group">
           <div class="panel panel-default">
             <ul class="nav nav-tabs" role="tablist">
-              <li class="active" role="presentation" ng-click="setSelectedTab('genes')">
+              <li ng-class="{active:computationIdQuery==undefined}" role="presentation" ng-click="setSelectedTab('genes')">
                 <a href="/query#genes" aria-controls="genes" data-toggle="tab" role="tab">Genes</a>
               </li>
               <li role="presentation" ng-click="setSelectedTab('drugs')">
@@ -19,16 +18,13 @@
               <li role="presentation" ng-click="setSelectedTab('generank')">
                 <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Ranking</a>
               </li>
-              <li ng-if="getCurrentUser() ==='anonymous'" >
-                <a class="disabled" aria-controls="vcf-rank" role="tab">VCF (Genomic Variants, requires login)</a>
-              </li>
-              <li ng-if="getCurrentUser() !=='anonymous'" role="presentation" ng-click="setSelectedTab('vcfranking')">
+              <li ng-class="{active:computationIdQuery!=undefined}" role="presentation" ng-click="setSelectedTab('vcfranking')">
                 <a href="/query#vcfranking" aria-controls="vcf-rank" data-toggle="tab" role="tab">Genomic Variants</a>
               </li>
             </ul>
 
             <div class="tab-content panel-body">
-              <div id="genes" class="tab-pane active">
+              <div id="genes" class="tab-pane"  ng-class="{active:computationIdQuery==undefined}">
                 <button class="btn btn-default" data-toggle="collapse" data-target="#examples-zone">Use an example</button>
                 <div id="examples-zone" class="collapse">
                   <div id="sample-gene-list">
@@ -60,7 +56,7 @@
                   $("#generankinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
                 }); </script>
               </div>
-              <div id="vcfranking" class="tab-pane form-group" role="tabpanel">
+              <div id="vcfranking" class="tab-pane form-group" ng-class="{active:computationIdQuery!=undefined}" role="tabpanel">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newComputationModal">
                   New variants analysis...
                 </button>
@@ -93,7 +89,7 @@
                     </div><!-- /.modal-content -->
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-                <div class="panel panel-default" ng-show="keys(computations).length > 0">
+                <div class="panel panel-default" ng-show="keys(computations).length > 0 && getCurrentUser() !== 'anonymous'">
                   <div class="panel-heading" role="tab" id="headingVCFSubmit">
                     <h4 class="panel-title">
                       <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="computationselect">
@@ -108,7 +104,7 @@
                         <div class="radio">
                           <label>
                             <input ng-disabled="!status.finished || status.failed || status.affectedGenes == 0" type="radio" name = "computationid" ng-model="$parent.computationId" ng-value="id"/>
-                            {{status.name}} (id: {{id}})
+                            {{status.name}}
                           </label>
                           <span class="affectedGenes" ng-show="status.affectedGenes != null" ng-class="{error: status.affectedGenes == 0}">[{{status.affectedGenes}} affected genes]</span>
                           <input ng-show="status.finished" type="button" class="deleteButton btn btn-danger" ng-click="deleteComputation(id)" value="Delete"/>
@@ -123,6 +119,23 @@
                     </div>
                   </div>
                 </div>
+
+                <div ng-show="keys(computations).length > 0 && getCurrentUser() === 'anonymous'">
+                  <div ng-repeat="(id, status) in computations" >
+                    <div class="radio">
+                      <img ng-show="!status.finished" src="images/spinner.gif" width = "20px">{{status.name}} (id: {{id}})<br>
+                      <span class="affectedGenes" ng-show="status.affectedGenes != null" ng-class="{error: status.affectedGenes == 0}">[{{status.affectedGenes}} affected genes]</span>
+
+                    </div>
+                    <div class="progress">
+                      <div ng-class="{'progress-bar': true, error: status.failed, success: status.finished && !status.failed}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:{{status.overallProgress | percentage: 0}}">
+                          {{status.taskName}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
             </div>
           </div>

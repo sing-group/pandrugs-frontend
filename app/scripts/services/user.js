@@ -56,13 +56,36 @@ angular.module('pandrugsdbFrontendApp')
       }
     }
 
+    function getComputation(userName, computationId, onSuccess, onError) {
+      var headers = {};
+      if (userName === 'guest') {
+        headers.Authorization = 'Basic ' + btoa('guest:guest');
+      }
+
+      $http.get(BACKEND.API + 'variantsanalysis/' + userName + '/' + computationId, {headers:headers})
+      .success(function(data) { if (onSuccess !== null) { onSuccess(data); } })
+      .error(function() { if (onError !== null) { onError(); } });
+
+    }
+
     function submitComputation(vcfFile, computationName, onSuccess, onError) {
       var fd = new FormData();
       fd.append('vcf', vcfFile);
-      $http.post(BACKEND.API + 'variantsanalysis/' + currentUser +'?name=' + computationName, fd, {
+
+      var headers = {'Content-Type': undefined};
+
+      var requestUser = currentUser;
+      if (currentUser === 'anonymous') {
+        headers.Authorization = 'Basic ' + btoa('guest:guest');
+        requestUser = 'guest';
+      }
+      $http.post(BACKEND.API + 'variantsanalysis/' + requestUser +'?name=' + computationName, fd, {
           transformRequest: angular.identity,
-          headers: {'Content-Type': undefined}
-      }).success(onSuccess).error(onError);
+          headers: headers
+      }).success(function(data, status, headers, config) {
+        var newId = headers('Location').substring(headers('Location').lastIndexOf('/') + 1 );
+        onSuccess(newId);
+      }).error(onError);
 
     }
 
@@ -87,6 +110,7 @@ angular.module('pandrugsdbFrontendApp')
       logout: doLogout,
       confirm: doConfirm,
       getComputations: getComputations,
+      getComputation: getComputation,
       submitComputation: submitComputation,
       deleteComputation: deleteComputation
     };
