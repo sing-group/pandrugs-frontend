@@ -16,6 +16,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/smart-area-fixed.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/help.css">
     <!-- endbuild -->
   </head>
   <body ng-app="pandrugsdbFrontendApp">
@@ -47,6 +48,7 @@
               <!--<li ng-class="{ active: isActive('/about') }"><a ng-href="#/about">About</a></li>-->
               <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
               <li ng-show="getCurrentUser() !== 'anonymous'"><a style="cursor: pointer" ng-click="logout()">Logout ({{getCurrentUser()}})</a></li>
+              <li ng-class="{ active: isActive('/help/') }"><a ng-href="#/help/">Help</a></li>
             </ul>
           </div>
         </div>
@@ -96,6 +98,8 @@
     <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
     <script src="bower_components/angular-list-group/dist/angular-list-group.min.js"></script>
     <script src="bower_components/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script src="bower_components/pagedown/Markdown.Converter.js"></script>
+    <script src="bower_components/pagedown/Markdown.Sanitizer.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -119,6 +123,7 @@
         <script src="scripts/controllers/header.js"></script>
         <script src="scripts/controllers/user.js"></script>
         <script src="scripts/controllers/querymenu.js"></script>
+        <script src="scripts/controllers/help.js"></script>
         <script src="scripts/filters/enumeration.js"></script>
         <script src="scripts/filters/enumerationWithLink.js"></script>
         <script src="scripts/filters/titlecase.js"></script>

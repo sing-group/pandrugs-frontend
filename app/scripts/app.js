@@ -21,7 +21,8 @@ angular
     'highcharts-ng',
     'smartArea',
     'listGroup',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'ngSanitize'
   ])
   .constant('BACKEND', (function() {
     // Service logic
@@ -49,6 +50,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/help/', {
+        templateUrl: 'views/help.html',
+        controller: 'HelpCtrl'
+      })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'UserCtrl'
@@ -67,6 +72,11 @@ angular
       $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
 
   }])
-  .run(function($rootScope){
+  .run(function($rootScope, $location, $anchorScroll){
     $rootScope.keys = Object.keys;
+
+    //when the route is changed scroll to the proper element.
+    $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+      if($location.hash()) $anchorScroll();
+    });
   });

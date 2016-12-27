@@ -1,0 +1,14 @@
+#helpcontents > ol:first-of-type {
+  background-color: #eee;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+#helpcontents ol:first-of-type p {
+  margin:0px;
+}
+
+#helpcontents > ol:first-of-type > li {
+  margin-top: 10px;
+  margin-down: 10px;
+}

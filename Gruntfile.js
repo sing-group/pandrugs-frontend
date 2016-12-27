@@ -428,7 +428,8 @@ module.exports = function (grunt) {
             'styles/fonts/{,*/}*.*',
             'downloads/*.*',
             'd3/*.*',
-            'd3/data/*.*'
+            'd3/data/*.*',
+            'help/*.*'
           ]
         }, {
           expand: true,
@@ -438,7 +439,7 @@ module.exports = function (grunt) {
         }, {
           expand: true,
           cwd: '.',
-          src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
+          src: 'bower_components/bootstrap-sass/assets/fonts/bootstrap/*',
           dest: '<%= yeoman.dist %>'
         }]
       },
