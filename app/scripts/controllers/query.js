@@ -207,6 +207,12 @@ function (
       $scope.chartIsShowing = true;
     };
 
+    $scope.allCancerSelected = function() {
+      return $scope.cancerTypes.every(function (cancerType) {
+        return cancerType.selected;
+      });
+    }
+
     var results;
     function manageResults(result) {
       results = result.geneDrugGroup;
@@ -217,11 +223,7 @@ function (
         }
 
         if (elem.cancer.length === 0) {
-          var allCancerSelected = $scope.cancerTypes.every(function (cancerType) {
-            return cancerType.selected;
-          });
-
-          return allCancerSelected;
+          return $scope.allCancerSelected();
         } else {
           var interesting = elem.cancer.find(function(cancerType) {
             return $scope.selectedCancerTypes.indexOf(cancerType.toUpperCase()) !== -1;
@@ -278,6 +280,12 @@ function (
     $scope.query = function(tableState) {
       if ($scope.selectedTab === 'generank' && $scope.generank !== '') {
         $scope.isLoading = true;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $scope.generank.numberOflines = reader.result.split('\n').length;
+        }
+
+        reader.readAsText($scope.generank);
 
         db.rankedSearch($scope.generank,
           $scope.queryCancerFda,
@@ -308,13 +316,16 @@ function (
         ).then(manageResults);
       } else if ($scope.selectedTab === 'genes' && $scope.genes) {
         var uniqueUpperCaseGenes = unique($scope.genes.split('\n')
+          .filter(function(item){
+            return item.trim().length > 0;
+          })
           .map(function(item) {
             return item.trim().toUpperCase();
           })
         );
 
         $scope.genes = uniqueUpperCaseGenes.join('\n');
-
+        $scope.parsedInputGenes = uniqueUpperCaseGenes;
         searchBy(db.searchByGenes, uniqueUpperCaseGenes, tableState);
       } else if ($scope.selectedTab === 'drugs' && $scope.drugs) {
         var standardDrugNames = unique($scope.drugs

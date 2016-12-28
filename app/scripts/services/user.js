@@ -93,9 +93,6 @@ angular.module('pandrugsdbFrontendApp')
         }).error(onError);
       }
       reader.readAsText(vcfFile);
-
-
-
     }
 
     function deleteComputation(computationId, onSuccess, onError) {

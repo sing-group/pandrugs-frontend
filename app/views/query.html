@@ -141,7 +141,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6" ng-if="selectedTab != 'drugs'">
+      <div class="col-md-6" ng-show="selectedTab != 'drugs'">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
           <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingOne">
@@ -215,12 +215,78 @@
     ng-disabled="(selectedTab == 'genes' && genes.length == 0) || (selectedTab == 'drugs' && drugs.length == 0) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
   </div>
 </form>
-
 <div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
   <div class="row">
     <h3>PanDrugs Candidate Therapies</h3>
-  </div>
 
+  </div>
+  <div class="row">
+    <div class="col-md-10 col-lg-8 col-md-push-1 col-lg-push-2" id="results-summary" ng-show="selectedTab !== 'drugs'">
+
+      <div class="row">
+        <div class="col-md-4" ng-show="selectedTab === 'genes'">
+          <h4 class="row">GENES</h4>
+          <table>
+            <tr>
+              <th>No. input genes</th><td>{{parsedInputGenes.length}}</td>
+            </tr>
+          </table>
+
+        </div>
+        <div class="col-md-4" ng-show="selectedTab === 'generank'">
+          <h4 class="row">GENE Rank</h4>
+          <table>
+            <tr>
+              <th>Input file</th><td>{{generank.name}}</td>
+            </tr>
+            <tr>
+              <th>No. input genes</th><td>{{generank.numberOflines}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-4" ng-show="selectedTab === 'vcfranking'">
+          <h4 class="row">Genomic variants</h4>
+          <table>
+            <tr>
+              <th>Name</th><td>{{computations[getComputationIdQuery()].name}}</td>
+            </tr>
+            <tr>
+              <th>No. variants</th><td>{{computations[getComputationIdQuery()].variantsInInput}}</td>
+            </tr>
+            <tr>
+              <th>No. affected genes</th><td>{{computations[getComputationIdQuery()].affectedGenes}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+              <h5>SELECTED OPTIONS</h5>
+              <div class="col-md-6">
+                  <h6>Drug status level</h6>
+                  <p ng-if="queryCancerFda">FDA approved cancer</p>
+                  <p ng-if="queryCancerClinical">Clinical trials cancer</p>
+                  <p ng-if="queryOtherFda">FDA approved other patologies</p>
+                  <p ng-if="queryOtherClinical">Clinical trials other pathologies</p>
+                  <p ng-if="queryOtherExperimental">Experimental</p>
+
+              </div>
+              <div class="col-md-6">
+                  <h6>Interaction evidence level</h6>
+                  <p ng-if="queryTarget">Target</p>
+                  <p ng-if="queryMarker">Marker</p>
+                  <h6>Selected cancer types</h6>
+                  <ul ng-if="!allCancerSelected()">
+                  <li class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
+                    {{cancerType.name | replace:'_':' ' | titlecase}}
+                  </li>
+                  </ul>
+                  <p ng-if="allCancerSelected()">All</p>
+              </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
   <div class="row" ng-if="selectedTab !== 'drugs'">
     <!--<div class="panel panel-default">
       <ul class="nav nav-tabs" role="tablist">
