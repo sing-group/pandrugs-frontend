@@ -69,8 +69,9 @@ angular.module('pandrugsdbFrontendApp')
     }
 
     function submitComputation(vcfFile, computationName, onSuccess, onError) {
-      var fd = new FormData();
-      fd.append('vcf', vcfFile);
+      //var fd = new FormData();
+      //fd.append('vcf', vcfFile);
+
 
       var headers = {'Content-Type': undefined};
 
@@ -79,13 +80,21 @@ angular.module('pandrugsdbFrontendApp')
         headers.Authorization = 'Basic ' + btoa('guest:guest');
         requestUser = 'guest';
       }
-      $http.post(BACKEND.API + 'variantsanalysis/' + requestUser +'?name=' + computationName, fd, {
-          transformRequest: angular.identity,
-          headers: headers
-      }).success(function(data, status, headers, config) {
-        var newId = headers('Location').substring(headers('Location').lastIndexOf('/') + 1 );
-        onSuccess(newId);
-      }).error(onError);
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var fileContents = reader.result;
+        $http.post(BACKEND.API + 'variantsanalysis/' + requestUser +'?name=' + computationName, fileContents, {
+            transformRequest: angular.identity,
+            headers: headers
+        }).success(function(data, status, headers, config) {
+          var newId = headers('Location').substring(headers('Location').lastIndexOf('/') + 1 );
+          onSuccess(newId);
+        }).error(onError);
+      }
+      reader.readAsText(vcfFile);
+
+
 
     }
 
