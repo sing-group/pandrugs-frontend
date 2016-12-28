@@ -73,9 +73,11 @@ function (
     };
 
 
-    $scope.computationIdQuery = $location.search().computationId;
+    $scope.getComputationIdQuery = function() {
+      return $location.search().computationId;
+     }
 
-    if ($scope.computationIdQuery !== undefined) {
+    if ($scope.getComputationIdQuery() !== undefined) {
       $scope.setSelectedTab('vcfranking');
       /*$scope.computationIdQuery.each(function(item){
         window.alert(item);
@@ -447,21 +449,31 @@ function (
 
     //update computation status...
     function reloadComputations() {
-      if (user.getCurrentUser() !== 'anonymous') {
-        user.getComputations(function(computations) {
-          $scope.computations = computations;
-        }, null);
-      } else if($scope.computationIdQuery !== undefined) {
-        user.getComputation('guest', $scope.computationIdQuery, function(computation){
-          $scope.computations[$scope.computationIdQuery] = computation;
-          if (!computation.finished || computation.failed || computation.affectedGenes == 0) {
-            $scope.computationId = '';
-          } else {
-            $scope.computationId = $scope.computationIdQuery;
-          }
-        }, null);
+      if ($scope.selectedTab === 'vcfranking') {
+        console.log('reloading');
+        if (user.getCurrentUser() !== 'anonymous') {
+          user.getComputations(function(computations) {
+            $scope.computations = computations;
+          }, null);
+        } else if($scope.getComputationIdQuery() !== undefined) {
+          user.getComputation('guest', $scope.getComputationIdQuery(), function(computation){
+            $scope.computations[$scope.getComputationIdQuery()] = computation;
+            if (!computation.finished || computation.failed || computation.affectedGenes == 0) {
+              $scope.computationId = '';
+            } else {
+              $scope.computationId = $scope.getComputationIdQuery();
+            }
+          }, null);
+        }
       }
     }
     reloadComputations();
-    $interval(reloadComputations, 5000);
+    $scope.reloadComputationsTask = $interval(reloadComputations, 5000);
+
+    $scope.$on('$routeChangeStart', function() {
+      if ($scope.reloadComputationsTask !== undefined) {
+        console.log('stopping');
+        $interval.cancel($scope.reloadComputationsTask);
+      }
+    });
   }]);

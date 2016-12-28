@@ -9,7 +9,7 @@
         <div class="form-group">
           <div class="panel panel-default">
             <ul class="nav nav-tabs" role="tablist">
-              <li ng-class="{active:computationIdQuery==undefined}" role="presentation" ng-click="setSelectedTab('genes')">
+              <li ng-class="{active:getComputationIdQuery()==undefined}" role="presentation" ng-click="setSelectedTab('genes')">
                 <a href="/query#genes" aria-controls="genes" data-toggle="tab" role="tab">Genes</a>
               </li>
               <li role="presentation" ng-click="setSelectedTab('drugs')">
@@ -18,13 +18,13 @@
               <li role="presentation" ng-click="setSelectedTab('generank')">
                 <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Ranking</a>
               </li>
-              <li ng-class="{active:computationIdQuery!=undefined}" role="presentation" ng-click="setSelectedTab('vcfranking')">
+              <li ng-class="{active:getComputationIdQuery()!=undefined}" role="presentation" ng-click="setSelectedTab('vcfranking')">
                 <a href="/query#vcfranking" aria-controls="vcf-rank" data-toggle="tab" role="tab">Genomic Variants</a>
               </li>
             </ul>
 
             <div class="tab-content panel-body">
-              <div id="genes" class="tab-pane"  ng-class="{active:computationIdQuery==undefined}">
+              <div id="genes" class="tab-pane"  ng-class="{active:getComputationIdQuery()==undefined}">
                 <button class="btn btn-default" data-toggle="collapse" data-target="#examples-zone">Use an example</button>
                 <div id="examples-zone" class="collapse">
                   <div id="sample-gene-list">
@@ -56,7 +56,7 @@
                   $("#generankinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
                 }); </script>
               </div>
-              <div id="vcfranking" class="tab-pane form-group" ng-class="{active:computationIdQuery!=undefined}" role="tabpanel">
+              <div id="vcfranking" class="tab-pane form-group" ng-class="{active:getComputationIdQuery()!=undefined}" role="tabpanel">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newComputationModal">
                   New variants analysis...
                 </button>
