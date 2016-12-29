@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pandrugsdbFrontendApp.controller:HelpCtrl
+ * @name pandrugsFrontendApp.controller:HelpCtrl
  * @description
  * # HelpCtrl
- * Controller of the pandrugsdbFrontendApp
+ * Controller of the pandrugsFrontendApp
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .controller('HelpCtrl', ['$scope', '$location', '$http', '$sce', '$timeout', '$anchorScroll',
     function ($scope, $location, $http, $sce, $timeout, $anchorScroll) {
 

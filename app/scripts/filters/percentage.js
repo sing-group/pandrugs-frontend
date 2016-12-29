@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name pandrugsdbFrontendApp.filter:percentage
+ * @name pandrugsFrontendApp.filter:percentage
  * @function
  * @description
  * # percentage
- * Filter in the pandrugsdbFrontendApp.
+ * Filter in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .filter('percentage', ['$filter', function ($filter) {
     return function (input, decimals) {
       return $filter('number')(input * 100, decimals) + '%';

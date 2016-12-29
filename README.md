@@ -1,5 +1,5 @@
-# pandrugsdb-frontend
-An AngularJS/Bootstrap frontend for the PanDrugsDB.
+# pandrugs-frontend
+An AngularJS/Bootstrap frontend for the PanDrugs.
 
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
 version 0.11.1.

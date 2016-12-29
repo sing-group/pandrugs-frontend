@@ -1,5 +1,5 @@
 'use strict';
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .directive('fileModel', ['$parse', function ($parse) {
   return {
     restrict: 'A',

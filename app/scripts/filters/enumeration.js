@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name pandrugsdbFrontendApp.filter:enumeration
+ * @name pandrugsFrontendApp.filter:enumeration
  * @function
  * @description
  * # enumeration
- * Filter in the pandrugsdbFrontendApp.
+ * Filter in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .filter('enumeration', function () {
     return function (input) {
       var joined = input.join(', ');

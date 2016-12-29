@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pandrugsdbFrontendApp.controller:HeaderCtrl
+ * @name pandrugsFrontendApp.controller:HeaderCtrl
  * @description
  * # HeaderCtrl
- * Controller of the pandrugsdbFrontendApp
+ * Controller of the pandrugsFrontendApp
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .controller('HeaderCtrl', ['user', '$scope', '$location', function (user, $scope, $location) {
 
     $scope.isActive = function (viewLocation) {

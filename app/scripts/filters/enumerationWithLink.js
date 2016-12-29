@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name pandrugsdbFrontendApp.filter:enumerationWithLink
+ * @name pandrugsFrontendApp.filter:enumerationWithLink
  * @function
  * @description
  * # enumeration
- * Filter in the pandrugsdbFrontendApp.
+ * Filter in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .filter('enumerationWithLink', function (enumerationFilter) {
     return function (input, url, openInBlank, urlToken) {
       var wrapped = input.map(function(value) {

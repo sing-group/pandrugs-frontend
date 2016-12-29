@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pandrugsdbFrontendApp.controller:QuerymenuCtrl
+ * @name pandrugsFrontendApp.controller:QuerymenuCtrl
  * @description
  * # QuerymenuCtrl
- * Controller of the pandrugsdbFrontendApp
+ * Controller of the pandrugsFrontendApp
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .controller('QuerymenuCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',

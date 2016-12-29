@@ -2,12 +2,12 @@
 
 /**
 * @ngdoc service
-* @name pandrugsdbFrontendApp.RestDatabase
+* @name pandrugsFrontendApp.RestDatabase
 * @description
 * # RestDatabase
-* Factory in the pandrugsdbFrontendApp.
+* Factory in the pandrugsFrontendApp.
 */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .factory('restDatabase', ['$q', '$timeout', '$filter', '$http', 'BACKEND',
   function restDatabaseFactory($q, $timeout, $filter, $http, BACKEND) {
     function constructQueryString(

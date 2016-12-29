@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name pandrugsdbFrontendApp
+ * @name pandrugsFrontendApp
  * @description
- * # pandrugsdbFrontendApp
+ * # pandrugsFrontendApp
  *
  * Main module of the application.
  */
 angular
-  .module('pandrugsdbFrontendApp', [
+  .module('pandrugsFrontendApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -31,7 +31,7 @@ angular
     //var server = 'http://mrjato.sing-group.org:8080'; // development: test server
     //var server = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
     var server = ''; // the server is in this machine (e.g.: docker distribution)
-    var app = server + '/pandrugsdb-backend/';
+    var app = server + '/pandrugs-backend/';
 
     return {
       SERVER: server,

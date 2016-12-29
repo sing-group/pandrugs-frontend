@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name pandrugsdbFrontendApp.geneDrugNetworkChart
+ * @name pandrugsFrontendApp.geneDrugNetworkChart
  * @description
  * # geneDrugNetworkChart
- * Factory in the pandrugsdbFrontendApp.
+ * Factory in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .factory('geneDrugNetworkChart', ['$q', 'database', 'utilities', function ($q, db, util) {
 
     var elementID = 'genedrugnetworkgraph';

@@ -2,12 +2,12 @@
 
 /**
 * @ngdoc service
-* @name pandrugsdbFrontendApp.database
+* @name pandrugsFrontendApp.database
 * @description
 * # database
-* Provider in the pandrugsdbFrontendApp.
+* Provider in the pandrugsFrontendApp.
 */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .provider('database', function databaseProvider() {
   var useMock = false;
   this.useMock = function(value) {

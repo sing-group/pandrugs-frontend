@@ -2,12 +2,12 @@
 
 /**
 * @ngdoc service
-* @name pandrugsdbFrontendApp.therapyByFamilyChart
+* @name pandrugsFrontendApp.therapyByFamilyChart
 * @description
 * # therapyByFamilyChart
-* Factory in the pandrugsdbFrontendApp.
+* Factory in the pandrugsFrontendApp.
 */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .factory('therapyByFamilyChart', function () {
   // Public API here
   return {

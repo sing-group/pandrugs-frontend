@@ -1,6 +1,6 @@
 <div>
   <button type="submit" class="btn btn-success btn-lg" ng-show="results != null" ng-click="newQuery()" style="float:right">New Query</button>
-  <h2>Query Pandrugs</h2>
+  <h2>Query PanDrugs</h2>
 </div>
 <form role="query form">
   <div class="container-fluid">
@@ -9,7 +9,7 @@
         <div class="form-group">
           <div class="panel panel-default">
             <ul class="nav nav-tabs" role="tablist">
-              <li ng-class="{active:getComputationIdQuery()==undefined}" role="presentation" ng-click="setSelectedTab('genes')">
+              <li ng-class="{active:getComputationIdQuery() === undefined}" role="presentation" ng-click="setSelectedTab('genes')">
                 <a href="/query#genes" aria-controls="genes" data-toggle="tab" role="tab">Genes</a>
               </li>
               <li role="presentation" ng-click="setSelectedTab('drugs')">
@@ -18,7 +18,7 @@
               <li role="presentation" ng-click="setSelectedTab('generank')">
                 <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Ranking</a>
               </li>
-              <li ng-class="{active:getComputationIdQuery()!=undefined}" role="presentation" ng-click="setSelectedTab('vcfranking')">
+              <li ng-class="{active:getComputationIdQuery() !== undefined}" role="presentation" ng-click="setSelectedTab('vcfranking')">
                 <a href="/query#vcfranking" aria-controls="vcf-rank" data-toggle="tab" role="tab">Genomic Variants</a>
               </li>
             </ul>
@@ -134,8 +134,6 @@
                     </div>
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>

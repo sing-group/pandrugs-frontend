@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pandrugsdbFrontendApp.controller:AboutCtrl
+ * @name pandrugsFrontendApp.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the pandrugsdbFrontendApp
+ * Controller of the pandrugsFrontendApp
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .controller('AboutCtrl', function () {
 
 

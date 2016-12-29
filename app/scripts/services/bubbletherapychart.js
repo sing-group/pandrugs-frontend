@@ -2,12 +2,12 @@
 
 /**
 * @ngdoc service
-* @name pandrugsdbFrontendApp.bubbleTherapyChart
+* @name pandrugsFrontendApp.bubbleTherapyChart
 * @description
 * # bubbleTherapyChart
-* Factory in the pandrugsdbFrontendApp.
+* Factory in the pandrugsFrontendApp.
 */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .factory('bubbleTherapyChart', function () {
 
   // Public API here

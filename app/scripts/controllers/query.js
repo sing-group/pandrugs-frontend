@@ -2,12 +2,12 @@
 
 /**
 * @ngdoc function
-* @name pandrugsdbFrontendApp.controller:QueryCtrl
+* @name pandrugsFrontendApp.controller:QueryCtrl
 * @description
 * # QueryCtrl
-* Controller of the pandrugsdbFrontendApp
+* Controller of the pandrugsFrontendApp
 */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .controller('QueryCtrl',
 ['$scope',
 'user',

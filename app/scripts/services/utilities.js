@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name pandrugsdbFrontendApp.utilities
+ * @name pandrugsFrontendApp.utilities
  * @description
  * # utilities
- * Value in the pandrugsdbFrontendApp.
+ * Value in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .value('utilities', {
     unique: function(array) {
       var result = [];

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name pandrugsdbFrontendApp.filter:titlecase
+ * @name pandrugsFrontendApp.filter:titlecase
  * @function
  * @description
  * # titlecase
- * Filter in the pandrugsdbFrontendApp.
+ * Filter in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .filter('titlecase', function () {
     return function (input) {      
       var lowercase = input.toLowerCase();

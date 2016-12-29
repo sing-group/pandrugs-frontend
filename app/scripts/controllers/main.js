@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pandrugsdbFrontendApp.controller:MainCtrl
+ * @name pandrugsFrontendApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the pandrugsdbFrontendApp
+ * Controller of the pandrugsFrontendApp
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .controller('MainCtrl', function () {
   //  $scope.d3view = 'genes';
   });

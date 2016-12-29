@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name pandrugsdbFrontendApp.controller:HeaderCtrl
+ * @name pandrugsFrontendApp.controller:HeaderCtrl
  * @description
  * # HeaderCtrl
- * Controller of the pandrugsdbFrontendApp
+ * Controller of the pandrugsFrontendApp
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .controller('UserCtrl', ['user', '$scope', '$location',
     function (user, $scope, $location) {
     if ($location.search().confirmuuid) {

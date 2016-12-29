@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name pandrugsdbFrontendApp.filter:replace
+ * @name pandrugsFrontendApp.filter:replace
  * @function
  * @description
  * # replace
- * Filter in the pandrugsdbFrontendApp.
+ * Filter in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .filter('replace', function () {
     return function (input, from, to) {
       return input.split(from).join(to);

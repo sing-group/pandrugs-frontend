@@ -2,12 +2,12 @@
 
 /**
 * @ngdoc service
-* @name pandrugsdbFrontendApp.RestDatabase
+* @name pandrugsFrontendApp.RestDatabase
 * @description
 * # RestDatabase
-* Factory in the pandrugsdbFrontendApp.
+* Factory in the pandrugsFrontendApp.
 */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
 .factory('user', ['$q', '$timeout', '$filter', '$http', '$sessionStorage', '$location', 'BACKEND',
   function restDatabaseFactory($q, $timeout, $filter, $http, $sessionStorage, $location, BACKEND) {
     var currentUser = 'anonymous';

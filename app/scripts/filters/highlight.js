@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name pandrugsdbFrontendApp.filter:highlight
+ * @name pandrugsFrontendApp.filter:highlight
  * @function
  * @description
  * # highlight
- * Filter in the pandrugsdbFrontendApp.
+ * Filter in the pandrugsFrontendApp.
  */
-angular.module('pandrugsdbFrontendApp')
+angular.module('pandrugsFrontendApp')
   .filter('highlight', function ($sce) {
     return function(text, phrase) {
       if (phrase) text = text.replace(
