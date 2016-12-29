@@ -168,6 +168,20 @@ function (
       }, 500);
     };
 
+    function parseGenes(genes) {
+      return unique(genes.split('\n')
+        .filter(function(item){
+          return item.trim().length > 0;
+        })
+        .map(function(item){
+          return item.replace(/\s.*/, "");
+        })
+        .map(function(item) {
+          return item.trim().toUpperCase();
+        })
+      );
+    }
+
     function generateCSV(results) {
       var csv = [];
       csv.push('Gene(s),Drug,Family,Source(s),Drug status,Type of therapy,Interaction,DScore,GScore,Info,Gene,Sensitivity,Alteration,Family,Source(s),DScore,GScore');
@@ -282,7 +296,10 @@ function (
         $scope.isLoading = true;
         var reader = new FileReader();
         reader.onload = function(e) {
-            $scope.generank.numberOflines = reader.result.split('\n').length;
+            $scope.parsedInputGenes = parseGenes(reader.result);
+            db.genesPresence($scope.parsedInputGenes).then(function(presence){
+              $scope.genespresence = presence;
+            });
         }
 
         reader.readAsText($scope.generank);
@@ -302,6 +319,10 @@ function (
       } else if ($scope.selectedTab === 'vcfranking' && $scope.computationId !== '') {
         $scope.isLoading = true;
 
+        db.genesPresence($scope.computations[$scope.computationId].affectedGenes).then(function(presence){
+          $scope.genespresence = presence;
+        });
+
         db.computationIdSearch($scope.computationId,
           $scope.queryCancerFda,
           $scope.queryCancerClinical,
@@ -315,17 +336,16 @@ function (
           tableState
         ).then(manageResults);
       } else if ($scope.selectedTab === 'genes' && $scope.genes) {
-        var uniqueUpperCaseGenes = unique($scope.genes.split('\n')
-          .filter(function(item){
-            return item.trim().length > 0;
-          })
-          .map(function(item) {
-            return item.trim().toUpperCase();
-          })
-        );
+
+        var uniqueUpperCaseGenes = parseGenes($scope.genes);
 
         $scope.genes = uniqueUpperCaseGenes.join('\n');
         $scope.parsedInputGenes = uniqueUpperCaseGenes;
+
+        db.genesPresence($scope.parsedInputGenes).then(function(presence){
+          $scope.genespresence = presence;
+        });
+
         searchBy(db.searchByGenes, uniqueUpperCaseGenes, tableState);
       } else if ($scope.selectedTab === 'drugs' && $scope.drugs) {
         var standardDrugNames = unique($scope.drugs
@@ -410,7 +430,7 @@ function (
             $scope.loadingDrugs = false;
           });
       } else {
-        $scope.$apply(); // Forces UI update for loadingDrugs
+      //  $scope.$apply(); // Forces UI update for loadingDrugs
         $scope.drugItems = [];
         $scope.loadingDrugs = false;
       }
@@ -428,7 +448,11 @@ function (
 
             var followUrl = $location.absUrl().substring(0, $location.absUrl().indexOf('#'))+'#/query?computationId='+newId;
             window.alert('Computation submitted successfully. Please keep this link in a SAFE PLACE in order to get back and follow the computation progress:\n'+followUrl);
-            document.location.href = followUrl;
+
+            $timeout(function() {
+                //do redirection asynchronously, since in chrome the modal vcf dialog black background does not disappear ...
+              document.location.href = followUrl;
+            });
 
           } else {
             window.alert('Computation submitted successfully. We will start to analyze it as soon as we can.');
@@ -461,7 +485,6 @@ function (
     //update computation status...
     function reloadComputations() {
       if ($scope.selectedTab === 'vcfranking') {
-        console.log('reloading');
         if (user.getCurrentUser() !== 'anonymous') {
           user.getComputations(function(computations) {
             $scope.computations = computations;
@@ -469,7 +492,7 @@ function (
         } else if($scope.getComputationIdQuery() !== undefined) {
           user.getComputation('guest', $scope.getComputationIdQuery(), function(computation){
             $scope.computations[$scope.getComputationIdQuery()] = computation;
-            if (!computation.finished || computation.failed || computation.affectedGenes == 0) {
+            if (!computation.finished || computation.failed || computation.affectedGenes.length == 0) {
               $scope.computationId = '';
             } else {
               $scope.computationId = $scope.getComputationIdQuery();
@@ -483,7 +506,6 @@ function (
 
     $scope.$on('$routeChangeStart', function() {
       if ($scope.reloadComputationsTask !== undefined) {
-        console.log('stopping');
         $interval.cancel($scope.reloadComputationsTask);
       }
     });

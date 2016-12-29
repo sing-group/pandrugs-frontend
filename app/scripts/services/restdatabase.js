@@ -307,6 +307,56 @@ angular.module('pandrugsdbFrontendApp')
 
       listDrugNames: function(query, maxResults) {
         return validValues('genedrug/drug', query, maxResults);
+      },
+
+      genesPresence: function(genes) {
+        var promise = null;
+        var presence = {present:[], absent:[]};
+        var split = 50;
+
+        function createQuery(queryUrl) {
+          return function() {
+              console.log('starting '+queryUrl);
+              return $http.get(BACKEND.API + 'genedrug/gene/presence'+queryUrl);
+          }
+        }
+
+
+        var iterations = Math.ceil(genes.length / split);
+        var queries = [];
+        for (var i = 0; i < iterations; i++) {
+
+          var query = '?';
+          for (var j = i * split; j < Math.min(i * split + split, genes.length); j++) {
+            query += 'gene='+genes[j]+'&';
+          }
+          queries.push(createQuery(query));
+        }
+
+        var currentPromise = null;
+
+        //chain promises
+        queries.forEach(function(query){
+
+          if (currentPromise === null) {
+            currentPromise = query();
+          } else {
+            currentPromise = currentPromise.then(function(results) {
+              console.log(results);
+              presence.present = presence.present.concat(results.data.present);
+              presence.absent = presence.absent.concat(results.data.absent);
+
+              return query();
+            });
+          }
+
+        });
+
+        return currentPromise.then(function(results) {
+          presence.present = presence.present.concat(results.data.present);
+          presence.absent = presence.absent.concat(results.data.absent);
+          return presence;
+        });
       }
     };
   }
