@@ -106,7 +106,7 @@
                             <input ng-disabled="!status.finished || status.failed || status.affectedGenes.length == 0" type="radio" name = "computationid" ng-model="$parent.computationId" ng-value="id"/>
                             {{status.name}}
                           </label>
-                          <span class="affectedGenes" ng-show="status.affectedGenes != null" ng-class="{error: status.affectedGenes.length == 0}">[{{status.affectedGenes}} affected genes]</span>
+                          <span class="affectedGenes" ng-show="status.affectedGenes != null" ng-class="{error: status.affectedGenes.length == 0}">[{{status.affectedGenes.length}} affected genes]</span>
                           <input ng-show="status.finished" type="button" class="deleteButton btn btn-danger" ng-click="deleteComputation(id)" value="Delete"/>
                           <img ng-show="!status.finished" src="images/spinner.gif" width = "20px">
                         </div>
