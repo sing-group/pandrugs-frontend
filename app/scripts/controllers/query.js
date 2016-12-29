@@ -318,7 +318,6 @@ function (
         ).then(manageResults);
       } else if ($scope.selectedTab === 'vcfranking' && $scope.computationId !== '') {
         $scope.isLoading = true;
-
         db.genesPresence($scope.computations[$scope.computationId].affectedGenes).then(function(presence){
           $scope.genespresence = presence;
         });
@@ -484,6 +483,7 @@ function (
 
     //update computation status...
     function reloadComputations() {
+
       if ($scope.selectedTab === 'vcfranking') {
         if (user.getCurrentUser() !== 'anonymous') {
           user.getComputations(function(computations) {
@@ -504,9 +504,43 @@ function (
     reloadComputations();
     $scope.reloadComputationsTask = $interval(reloadComputations, 5000);
 
+    // stop reloading computations
     $scope.$on('$routeChangeStart', function() {
       if ($scope.reloadComputationsTask !== undefined) {
         $interval.cancel($scope.reloadComputationsTask);
       }
     });
+
+
+    // automatic examples
+    if ($location.search().example != undefined) {
+      switch ($location.search().example) {
+        case 'genes':
+          $scope.pasteSignalingPathwayExample();
+          $timeout(function(){
+            $scope.query();
+          });
+
+        break;
+        case 'vcf':
+          $location.search().computationId = 'example';
+          $scope.computationId = 'example';
+          user.getComputation('guest', 'example', function(computation){
+            $scope.computations['example'] = computation;
+            $scope.setSelectedTab('vcfranking');
+            $timeout(function(){
+              $scope.query();
+            });
+          });
+
+        break;
+        case 'drugs':
+          $scope.setSelectedTab('drugs');
+          $scope.drugs = [{standardName: 'Palbociclib'}];
+          $timeout(function(){
+            $scope.query();
+          });
+        break;
+      }
+    }
   }]);
