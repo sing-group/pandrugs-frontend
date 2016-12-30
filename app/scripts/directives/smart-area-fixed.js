@@ -129,9 +129,13 @@ angular.module('smartArea', [])
                 scope.fakeAreaElement.height(textArea.height());
             });
 
+            textArea.bind('dragover', scope.dragEvents);
+            textArea.bind('dragenter', scope.dragEvents);
+            textArea.bind('drop', scope.dropEvents);
+
             return mainWrap;
         },
-        controller: ['$scope', '$element', '$timeout', '$sce', function($scope, $element, $timeout, $sce){
+        controller: ['$scope', '$element', '$timeout', '$sce', 'utilities', function($scope, $element, $timeout, $sce, utilities){
             /* +----------------------------------------------------+
              * +                     Scope Data                     +
              * +----------------------------------------------------+ */
@@ -385,7 +389,7 @@ angular.module('smartArea', [])
                         // I need to get the index of the last match
                         var searchable = text.substr(0, position),
                             match, found = false, lastPosition = -1;
-      element.trigger.lastIndex = 0;
+                        element.trigger.lastIndex = 0;
                         while ((match = element.trigger.exec(searchable)) !== null){
                             if(match.index === lastPosition){
                                 break;
@@ -482,20 +486,87 @@ angular.module('smartArea', [])
               }
           }
 
-            /* +----------------------------------------------------+
-             * +                   Event Binding                    +
-             * +----------------------------------------------------+ */
+          /* +----------------------------------------------------+
+           * +                   Event Binding                    +
+           * +----------------------------------------------------+ */
 
-            $element.bind('keyup click focus', function () {
-                $timeout(function(){
-                    $scope.trackCaret();
-                }, 0);
-            });
+          $element.bind('keyup click focus', function () {
+              $timeout(function(){
+                  $scope.trackCaret();
+              }, 0);
+          });
 
-            $element.bind('keydown', function(event){
+          $element.bind('keydown', function(event){
+            resetScroll();
+            $scope.keyboardEvents(event);
+          });
+
+
+          /* +----------------------------------------------------+
+           * +                   File Drop Events                 +
+           * +----------------------------------------------------+ */
+          $scope.dragEvents = function (event) {
+            if (event !== null) {
+              event.preventDefault();
+            }
+
+            if (event.dataTransfer !== undefined) {
+              event.dataTransfer.effectAllowed = 'copy';
+            }
+
+            return false;
+          };
+
+          $scope.dropEvents = function (event) {
+            if (event !== null) {
+              event.preventDefault();
+            }
+
+            var readFiles = function(reader, files, fileCallback, finalCallback) {
+              var readFile = function(index) {
+                if (index >= files.length) {
+                  if (finalCallback !== undefined)
+                    finalCallback();
+                  return;
+                }
+
+                reader.onload = function(file) {
+                  if (fileCallback !== undefined)
+                    fileCallback(file);
+
+                  readFile(index + 1);
+                };
+
+                var file = files[index];
+                if (file.type.startsWith('text/')) {
+                  reader.readAsText(file);
+                } else {
+                  alert('File ' + file.name + ' is not a valid text file.');
+                }
+              };
+
+              readFile(0);
+            };
+
+            var reader = new FileReader();
+            var callback = function insertText(loadedFile) {
+              var areaLines = $scope.areaData.split('\n');
+              var fileLines = loadedFile.target.result.split('\n');
+
+              var lines = utilities.removeEmptyValues(areaLines.concat(fileLines));
+              $scope.areaData = '';
+              for (var i = 0; i < lines.length; i++) {
+                $scope.areaData += lines[i].trim() + '\n';
+              }
+            };
+            var files = event.originalEvent.dataTransfer.files;
+
+            readFiles(reader, files, callback, function() {
               resetScroll();
-              $scope.keyboardEvents(event);
+              $scope.$apply();
+              resetScroll();
             });
+          };
         }]
     };
 }]);

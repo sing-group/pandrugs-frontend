@@ -17,7 +17,13 @@ angular.module('pandrugsFrontendApp')
           result.push(elem);
         }
       });
+
       return result;
+    },
+    removeEmptyValues: function(array) {
+      return array.filter(function(item) {
+        return item !== undefined && item !== null && (typeof item !== 'string' || item.trim() !== '');
+      });
     }
   }
 );
