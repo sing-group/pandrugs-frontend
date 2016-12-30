@@ -8,7 +8,9 @@
  * Controller of the pandrugsFrontendApp
  */
 angular.module('pandrugsFrontendApp')
-  .controller('HeaderCtrl', ['user', '$scope', '$location', function (user, $scope, $location) {
+  .controller('HeaderCtrl', ['user', '$scope', '$location', 'BACKEND', function (user, $scope, $location, BACKEND) {
+
+    $scope.BACKEND = BACKEND;
 
     $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
