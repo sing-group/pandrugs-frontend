@@ -67,7 +67,7 @@ To create a new analysis click on New variants analysis... button, select a vcf 
 
 ![New VCF Analysis](vcf-query-02.png "Create a new variant analysis in PanDrugs")
 
-A message indicating that computations has been successfully submitted appears and a new analysis with an associated progress bar appears in the variant analysis box.
+A message indicating that computations has been successfully submitted appears, a link to follow the computation progress is provided and a new analysis with an associated progress bar is loaded in the variant analysis box.
 
 ![Variant analysis submitted](vcf-query-03.png "Variant analysis submission message")
 
@@ -150,7 +150,7 @@ In the case one drug has a sensitivity response due to one gene, but a resistanc
 
 ## 4. Output for genes, gene rank and VCF (Genomic Variants)<a name="output-for-genes-gene-rank-and-vcf"></a>
 
-Once the query has been launched, some summary charts and a table with the results for the therapeutic assignations appear.
+Once the query has been launched, a summary box with the execution details, some summary charts and a table with the results for the therapeutic assignations appear.
 
 ## 4.1 Charts<a name="drugs-status-level"></a>
 
@@ -291,7 +291,7 @@ Tamoxifen is another possible indirect therapy based on the inhibition of PRKCA 
 
 ## 6.2. Gene ranking query <a name="examples-gene-ranking-query"></a>
 
-[Load example for Melanoma patient BRAF mutant from TCGA](#)
+[Load example for lung adenocarcinoma patient EGFR mutant from TCGA](#)
 
 ![Gene ranking query](gene-ranking-query-input.png "Gene ranking query example input")
 
@@ -330,6 +330,10 @@ In the results page a section with the different graphs and the summary table ap
 [See output of a Drugs Query](#/query?example=drugs)
 
 Genes in three different levels of association are returned as a result for this query. Genes that are targeted by this drug are ABL1, FGFR3, FGFR2 or RET. Other genes are biomarkers of response, as for example BRAF which mutations are associated with sensitivity to Ponatinib or CCND2, which mutations are associated with resistance to Ponatinib according to GDSC studies. Also, some genes are with this drug in an indirect way, as happens with KDR. Ponatinib targets SRC, that is a gene downstream KDR. If some alterations occur in KDR, this drug could be used to block this pathway, targeting SRC.
+
+![Drugs query](drug-query-output-01.png "Drug query example output table 1")
+
+![Drugs query](drug-query-output-02.png "Drug query example output table 2")
 
 ## 6.4. VCF (Genomic Variant)<a name="examples-vcf"></a>
 
