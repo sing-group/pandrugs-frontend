@@ -45,6 +45,7 @@
                 <textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20" spellcheck="false" smart-area="genesTextAreaConfig"></textarea>
               </div>
               <div id="drugs" class="tab-pane">
+                Example: Palbociclib
                 <input ng-model="drugQuery" class="form-control" placeholder="Enter a drug name" spellcheck="false"/>
                 <list-group items="drugItems" selected-items="drugs" selectable="true" template-url="drugTemplateUrl" ng-if="!loadingDrugs" />
               </div>
