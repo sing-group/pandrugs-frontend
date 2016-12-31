@@ -64,12 +64,13 @@ module.exports = function(config) {
     // - IE (only Windows)
     browsers: [
       //'PhantomJS'
-      'Firefox'
+      'Chrome'
     ],
 
     // Which plugins to enable
     plugins: [
       'karma-firefox-launcher',
+      'karma-chrome-launcher',
       'karma-phantomjs-launcher',
       'karma-jasmine'
     ],
@@ -90,5 +91,11 @@ module.exports = function(config) {
     // },
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
+    client: {
+      captureConsole: true,
+      mocha: {
+        bail: true
+      }
+    }
   });
 };

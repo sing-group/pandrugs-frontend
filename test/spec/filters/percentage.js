@@ -3,7 +3,7 @@
 describe('Filter: percentage', function () {
 
   // load the filter's module
-  beforeEach(module('pandrugsdbFrontendApp'));
+  beforeEach(module('pandrugsFrontendApp'));
 
   // initialize a new instance of the filter before each test
   var percentage;

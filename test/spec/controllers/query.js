@@ -3,7 +3,7 @@
 describe('Controller: QueryCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('pandrugsdbFrontendApp'));
+  beforeEach(module('pandrugsFrontendApp'));
 
   var $controller;
   var $q;
@@ -20,18 +20,39 @@ describe('Controller: QueryCtrl', function () {
     var deferred;
     var user;
     var cancerTypesDeferred;
+    var genesPresenceDefer;
+
     beforeEach(function() {
-      service = {searchByGenes: function() {}, getCancerTypes: function() {},
-    listGeneSymbols: function() {return ['BRCA2']}, listDrugs: function() {return []}};
+      service = {
+        searchByGenes: function() {},
+        getCancerTypes: function() {},
+        listGeneSymbols: function() {
+          return ['BRCA2']
+        },
+        listDrugs: function() {
+          return []
+        },
+        listDrugNames: function() {},
+        genesPresence: function() {}
+      };
+
       user = {getCurrentUser: function() {return "anonymous"}};
 
       deferred = $q.defer();
       cancerTypesDeferred = $q.defer();
+
+      genesPresenceDefer = $q.defer();
+      genesPresenceDefer.resolve({present:['BRCA2'], absent:[]});
+
       spyOn(service, 'getCancerTypes').and.returnValue(cancerTypesDeferred.promise);
+
       spyOn(service, 'searchByGenes').and.returnValue(deferred.promise);
+
       spyOn(service, 'listGeneSymbols').and.returnValue(['BRCA2']);
+      spyOn(service, 'genesPresence').and.returnValue(genesPresenceDefer.promise);
       spyOn(service, 'listDrugNames').and.returnValue([]);
       $controller('QueryCtrl', { $scope: $scope, user: user, database: service});
+
     });
 
     it('should call search function on the service', function() {
@@ -40,7 +61,7 @@ describe('Controller: QueryCtrl', function () {
 
       $scope.query(tableState);
 
-      deferred.resolve({'gene-drug-group':[]});
+      deferred.resolve({geneDrugGroup:[]});
 
       $scope.$digest(); // force then method in promise to run
 
@@ -55,15 +76,15 @@ describe('Controller: QueryCtrl', function () {
 
       $scope.query(tableState);
 
-      deferred.resolve({'gene-drug-group':[
+      deferred.resolve({geneDrugGroup:[
         {
           status: 'EXPERIMENTAL',
           cancer: ['breast'],
           gene:'BRCA2',
           family: [],
           source: [],
-          'status-description': 'description',
-          'gene-drug-info':[]
+          statusDescription: 'description',
+          geneDrugInfo:[]
         },
         {
           status: 'EXPERIMENTAL',
@@ -71,8 +92,8 @@ describe('Controller: QueryCtrl', function () {
           gene:'BRCA2',
           family: [],
           source: [],
-          'status-description': 'description',
-          'gene-drug-info':[]
+          statusDescription: 'description',
+          geneDrugInfo:[]
 
         }]});
       $scope.$digest(); // force then method in promise to run

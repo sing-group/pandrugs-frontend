@@ -134,7 +134,7 @@ module.exports = function (grunt) {
                 connect.static('./app/styles')
               ),
               connect.static(appConfig.app),
-        proxySnippet
+              proxySnippet
             ];
           }
         }
@@ -142,6 +142,7 @@ module.exports = function (grunt) {
       test: {
         options: {
           port: 9001,
+          open: true,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
@@ -150,7 +151,8 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
+              proxySnippet
             ];
           }
         }
@@ -506,6 +508,7 @@ module.exports = function (grunt) {
     'clean:server',
     'wiredep',
     'concurrent:test',
+    'configureProxies:server',
     'autoprefixer',
     'connect:test',
     'karma',

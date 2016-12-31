@@ -3,7 +3,7 @@
 describe('Controller: QuerymenuCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('pandrugsdbFrontendApp'));
+  beforeEach(module('pandrugsFrontendApp'));
 
   var QuerymenuCtrl,
     scope;

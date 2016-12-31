@@ -3,7 +3,7 @@
 describe('Service: utilities', function () {
 
   // load the service's module
-  beforeEach(module('pandrugsdbFrontendApp'));
+  beforeEach(module('pandrugsFrontendApp'));
 
   // instantiate service
   var utilities;
