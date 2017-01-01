@@ -115,7 +115,26 @@ module.exports = function (grunt) {
           context: '/',
           host: 'localhost',
           changeOrigin: true,
-    port:8080
+          port:8080
+        }
+       ]
+      },
+      serverE2ETest: {
+        proxies: [
+         {
+          context: '/pandrugs-backend',
+          changeOrigin: true,
+
+          // local-backend for e2e tests
+          // host: 'localhost',
+          // port:8080
+
+          // remote backend for e2e tests
+          host: 'pandrugs.bioinfo.cnio.es',
+          headers: {
+            'host': 'pandrugs.bioinfo.cnio.es'
+          },
+          port:80
         }
        ]
       },
@@ -142,7 +161,7 @@ module.exports = function (grunt) {
       test: {
         options: {
           port: 9001,
-          open: true,
+          open: false,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
@@ -508,7 +527,8 @@ module.exports = function (grunt) {
     'clean:server',
     'wiredep',
     'concurrent:test',
-    'configureProxies:server',
+    'configureProxies:serverE2ETest', // remote backend
+    //'configureProxies:server',  // local backend
     'autoprefixer',
     'connect:test',
     'karma',
