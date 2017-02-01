@@ -3,15 +3,5 @@
 <div id="helpcontents">
   <ng-bind-html
     ng-bind-html="helpcontents">
-    <img width="100px"src="images/spinner.gif">
   </ng-bind-html>
 </div>
-
-<script>
-$(document).ready(function() {
-  var converter = new Markdown.Converter();
-  $.get("help/help.md", function( markdown ) {
-//    $('#helpcontents').html(converter.makeHtml(markdown));
-  });
-});
-</script>
