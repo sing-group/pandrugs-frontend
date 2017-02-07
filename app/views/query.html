@@ -357,14 +357,14 @@
           <th>Family <span class="help_icon" title="drug family based on the KEGG target-based classification of drugs"/></th>
           <th>Source(s) <span class="help_icon" title="source(s) where the drug-gene interaction came from"/></th>
           <th>Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
-          <th st-sort="therapy">Type of therapy <span class="help_icon" title="type of therapy for the approved drugs in cancer"/></th>
+          <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="help_icon" title="type of therapy for the approved drugs in cancer"/></th>
           <th>Interaction <span class="help_icon" title="type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
-          <th st-sort="dScore">DScore <span class="help_icon" title="score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
-          <th st-sort="gScore">GScore <span class="help_icon" title="score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
+          <th st-sort="dScore" style="cursor: pointer" st-sort-default="reverse">DScore <span class="help_icon" title="score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
+          <th st-sort="gScore" style="cursor: pointer">GScore <span class="help_icon" title="score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
         </tr>
       </thead>
 
-      <tbody ng-hide="isLoading" ng-repeat="row in results">
+      <tbody ng-hide="isLoading" ng-repeat="row in resultsPaginated">
         <tr ng-class="{highlightedGroup: row.dScore > 0.7 && row.gScore > 0.6}" >
           <td ng-if="selectedTab !== 'drugs'">
             <button class="btn btn-default" ng-click="row.moreinfo = !row.moreinfo">
@@ -415,6 +415,22 @@
           <td>{{genedrug.gScore | number: 4}}</td>
         </tr>
       </tbody>
+      <tfoot ng-hide="isLoading">
+			<tr id="pagination-footer">
+				<td colspan="10" class="text-center">
+          <div class="form-group row">
+            <label class="col-xs-push-5 col-xs-1 control-label">items per page</label>
+            <div class="col-xs-push-5 col-xs-1">
+              <select ng-model="itemsperpage" class="form-control" ng-init="itemsperpage = paginationOptions[1]" ng-options="option for option in paginationOptions">
+
+              </select>
+            </div>
+          </div>
+          </div>
+  					<div st-pagination="" st-items-by-page="itemsperpage" st-displayed-pages="4"></div>
+  				</td>
+			</tr>
+		</tfoot>
 
       <tbody ng-hide="!isLoading">
         <tr>

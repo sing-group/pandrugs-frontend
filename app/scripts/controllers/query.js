@@ -20,6 +20,7 @@ angular.module('pandrugsFrontendApp')
 '$interval',
 '$sce',
 '$location',
+'$filter',
 function (
   $scope,
   user,
@@ -31,7 +32,8 @@ function (
   $timeout,
   $interval,
   $sce,
-  $location
+  $location,
+  $filter
 ) {
 
     $scope.$timeout = $timeout;
@@ -40,6 +42,8 @@ function (
     $scope.computationName = 'My Computation';
 
     $scope.computations = {};
+
+    $scope.paginationOptions= [5, 20, 100, 'all'];
 
     // ======== QUERY PARAMETERS ======
     $scope.genes = '';
@@ -58,7 +62,6 @@ function (
     $scope.queryMarker = true;
 
     $scope.drugTemplateUrl = 'views/partials/drugname-list-item.tpl.html';
-
 
     var previousResults = null; //do not redraw graph each time the network tab is selected
     $scope.selectedTab = 'genes';
@@ -228,54 +231,81 @@ function (
     }
 
     var results;
-    function manageResults(result) {
-      results = result.geneDrugGroup;
 
-      $scope.results = results.filter(function(elem) {
-        if (elem.status === 'EXPERIMENTAL' || elem.status === 'CLINICAL_TRIALS') {
-          return true;
+    function manageResults(tableState) {
+      function sort(results) {
+        return $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
+      }
+
+
+      function paginate(results) {
+        if (tableState.pagination.number == $scope.paginationOptions[$scope.paginationOptions.length - 1]) {
+          tableState.pagination.start = 0;
+          tableState.pagination.number = results.length;
         }
+        tableState.pagination.numberOfPages = Math.ceil(results.length / tableState.pagination.number);
+        // show only current page
 
-        if (elem.cancer.length === 0) {
-          return $scope.allCancerSelected();
-        } else {
-          var interesting = elem.cancer.find(function(cancerType) {
-            return $scope.selectedCancerTypes.indexOf(cancerType.toUpperCase()) !== -1;
-          });
+        return results.slice(tableState.pagination.start, tableState.pagination.start+tableState.pagination.number);
+      }
 
-          return interesting;
-        }
-      });
+      return function(result) {
+        results = result.geneDrugGroup;
 
-      for (var i = 0; i < $scope.results.length; i++) {
-        var resulti = $scope.results[i];
-        resulti.getBestInteraction = function() {
-          var best = 'target-indirect';
-
-          for (var i = 0; i < this.geneDrugInfo.length; i++) {
-            if (this.geneDrugInfo[i].target === 'marker') {
-              if (best === 'target-indirect') {
-                best = 'marker';
-              }
-            } else if (this.geneDrugInfo[i].indirect === null) {
-              best = 'target-direct';
-              break;
-            }
+        $scope.results = results.filter(function(elem) {
+          if (elem.status === 'EXPERIMENTAL' || elem.status === 'CLINICAL_TRIALS') {
+            return true;
           }
-          return best;
-        };
-      }
 
-      if ($scope.results.length === 1) {
-        $scope.results[0].moreinfo = true;
-      }
+          if (elem.cancer.length === 0) {
+            return $scope.allCancerSelected();
+          } else {
+            var interesting = elem.cancer.find(function(cancerType) {
+              return $scope.selectedCancerTypes.indexOf(cancerType.toUpperCase()) !== -1;
+            });
 
-      $scope.csvcontent = 'data:text/csv;charset=utf-8,';
-      $scope.csvcontent += generateCSV($scope.results);
-      $scope.csvcontent = encodeURI($scope.csvcontent);
+            return interesting;
+          }
+        });
 
-      updateCharts($scope.results);
-      $scope.isLoading = false;
+        for (var i = 0; i < $scope.results.length; i++) {
+          var resulti = $scope.results[i];
+          resulti.getBestInteraction = function() {
+            var best = 'target-indirect';
+
+            for (var i = 0; i < this.geneDrugInfo.length; i++) {
+              if (this.geneDrugInfo[i].target === 'marker') {
+                if (best === 'target-indirect') {
+                  best = 'marker';
+                }
+              } else if (this.geneDrugInfo[i].indirect === null) {
+                best = 'target-direct';
+                break;
+              }
+            }
+            return best;
+          };
+        }
+
+        if ($scope.results.length === 1) {
+          $scope.results[0].moreinfo = true;
+        }
+
+        $scope.csvcontent = 'data:text/csv;charset=utf-8,';
+        $scope.csvcontent += generateCSV($scope.results);
+        $scope.csvcontent = encodeURI($scope.csvcontent);
+
+        updateCharts($scope.results);
+
+        if (!angular.isUndefined(tableState)) {
+          if (tableState.sort.predicate) {
+            $scope.results = sort($scope.results);
+          }
+          $scope.resultsPaginated = paginate($scope.results);
+        }
+
+        $scope.isLoading = false;
+      };
     }
 
     $scope.pasteStomachCarcinomaExample = function() {
@@ -313,9 +343,8 @@ function (
           $scope.queryTarget,
           $scope.queryMarker,
           true,
-          true,
-          tableState
-        ).then(manageResults);
+          true
+        ).then(manageResults(tableState));
       } else if ($scope.selectedTab === 'vcfranking' && $scope.computationId !== '') {
         $scope.isLoading = true;
         db.genesPresence($scope.computations[$scope.computationId].affectedGenes).then(function(presence){
@@ -331,9 +360,8 @@ function (
           $scope.queryTarget,
           $scope.queryMarker,
           true,
-          true,
-          tableState
-        ).then(manageResults);
+          true
+        ).then(manageResults(tableState));
       } else if ($scope.selectedTab === 'genes' && $scope.genes) {
 
         var uniqueUpperCaseGenes = parseGenes($scope.genes);
@@ -382,7 +410,7 @@ function (
         true,
         true,
         tableState
-      ).then(manageResults);
+      ).then(manageResults(tableState));
     }
 
     $scope.exportnetwork = function() {

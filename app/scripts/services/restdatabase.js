@@ -79,8 +79,7 @@ angular.module('pandrugsFrontendApp')
       queryTarget,
       queryMarker,
       queryDirect,
-      queryIndirect,
-      tableState
+      queryIndirect
     ) {
         var deferred = $q.defer();
 
@@ -110,17 +109,14 @@ angular.module('pandrugsFrontendApp')
         $http.get(BACKEND.API + 'genedrug?' + queryString)
         .success(function(results) {
 
-          if (!angular.isUndefined(tableState)) {
-            if (tableState.sort.predicate) {
-              results = $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
-            }
-          }
+
           deferred.resolve(results);
         }
       );
 
       return deferred.promise;
     }
+
 
     function validValues(resource, query, maxResults) {
       return $http.get(BACKEND.API + resource, {
@@ -143,8 +139,7 @@ angular.module('pandrugsFrontendApp')
         queryTarget,
         queryMarker,
         queryDirect,
-        queryIndirect,
-        tableState
+        queryIndirect
       ) {
         var deferred = $q.defer();
 
@@ -168,11 +163,6 @@ angular.module('pandrugsFrontendApp')
             headers: {'Content-Type': undefined}
         })
         .success(function(results) {
-            if (!angular.isUndefined(tableState)) {
-              if (tableState.sort.predicate) {
-                results = $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
-              }
-            }
             deferred.resolve(results);
           }
         );
@@ -190,8 +180,8 @@ angular.module('pandrugsFrontendApp')
         queryTarget,
         queryMarker,
         queryDirect,
-        queryIndirect,
-        tableState
+        queryIndirect
+
       ) {
         return searchBy(
           'gene',
@@ -204,8 +194,7 @@ angular.module('pandrugsFrontendApp')
           queryTarget,
           queryMarker,
           queryDirect,
-          queryIndirect,
-          tableState);
+          queryIndirect);
       },
 
       searchByDrugs: function (
@@ -218,9 +207,7 @@ angular.module('pandrugsFrontendApp')
         queryTarget,
         queryMarker,
         queryDirect,
-        queryIndirect,
-        tableState
-      ) {
+        queryIndirect) {
         return searchBy(
           'drug',
           drugsArray,
@@ -232,8 +219,7 @@ angular.module('pandrugsFrontendApp')
           queryTarget,
           queryMarker,
           queryDirect,
-          queryIndirect,
-          tableState);
+          queryIndirect);
       },
 
       computationIdSearch: function (
@@ -246,8 +232,7 @@ angular.module('pandrugsFrontendApp')
         queryTarget,
         queryMarker,
         queryDirect,
-        queryIndirect,
-        tableState
+        queryIndirect
       ) {
           var deferred = $q.defer();
 
@@ -266,12 +251,6 @@ angular.module('pandrugsFrontendApp')
 
           $http.get(BACKEND.API + 'genedrug/fromComputationId?computationId=' + computationId + '&' + queryString)
           .success(function(results) {
-
-            if (!angular.isUndefined(tableState)) {
-              if (tableState.sort.predicate) {
-                results = $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
-              }
-            }
             deferred.resolve(results);
           }
         );

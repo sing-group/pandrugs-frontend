@@ -149,9 +149,15 @@ table#results th {
   white-space: nowrap;
 }
 
+/* pagination footer*/
+table#results tfoot a {
+  cursor: pointer;
+}
+
 tr.moreinfo {
   font-size: 0.9em;
 }
+
 #team {
   div {
     margin-top: 10px;
