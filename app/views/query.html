@@ -70,7 +70,8 @@
                       </div>
                       <div class="modal-body">
                         <fieldset class="form-group">
-                          <label for="generankinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>)</label>
+                          <label for="generankinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). <strong>Note:</strong>
+                          The genome positions must be accordiyng to the GRCh37/hg19 human genome assembly</label>
                           <div>
                             <input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
                             <script>$(document).ready(function() {
@@ -214,7 +215,7 @@
     ng-disabled="(selectedTab == 'genes' && genes.length == 0) || (selectedTab == 'drugs' && drugs.length == 0) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
   </div>
 </form>
-<div id="resultsContainer" class="container-fluid" ng-if="results!=null && results.length != 0">
+<div id="resultsContainer" class="container-fluid" ng-if="results!=null">
   <div class="row">
     <h3>PanDrugs Candidate Therapies</h3>
 
@@ -302,7 +303,10 @@
           </div>
         </div>
       </div>
-
+    </div>
+  </div>
+  <div class="row" ng-if="results!=null && results.length==0">
+    Sorry, no results for your query have been found.
   </div>
   <div class="row" ng-if="selectedTab !== 'drugs'">
     <!--<div class="panel panel-default">
@@ -317,7 +321,7 @@
 
       <div class="tab-content panel-body">
         <div id="charts" class="tab-pane active">-->
-          <div class="row">
+          <div class="row" ng-if="results!=null && results.length>0">
             <div class="col-lg-7">
               <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
             </div>
@@ -346,7 +350,7 @@
     </div>-->
   </div>
 
-  <div class="row">
+  <div class="row"  ng-if="results!=null && results.length>0">
     <a href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
     <table id="results" st-table="results" st-pipe="query" class="table table-striped query-table">
       <thead>
