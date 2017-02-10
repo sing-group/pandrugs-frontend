@@ -37,14 +37,14 @@ angular.module('pandrugsFrontendApp')
                 radius);
               }
 
-              function drawPath(fromX, fromY, toX, toY) {
-                return hchart.renderer.path(['M',
-                toXPixel(fromX),
-                toYPixel(fromY),
-                'L',
-                toXPixel(toX),
-                toYPixel(toY)]);
-              }
+            function drawPath(fromX, fromY, toX, toY) {
+              return hchart.renderer.path(['M',
+              toXPixel(fromX),
+              toYPixel(fromY),
+              'L',
+              toXPixel(toX),
+              toYPixel(toY)]);
+            }
 
               function drawText(atX, atY, text) {
                 return hchart.renderer.text(text, toXPixel(atX), toYPixel(atY));
@@ -52,7 +52,7 @@ angular.module('pandrugsFrontendApp')
 
               //clearing rectangle
 
-              drawRectFromCoordinates(-1.5, 1.05, 1.5, -0.5, 0).attr({
+              drawRectFromCoordinates(-1.5, 1.0, 1.5, -0.5, 0).attr({
                 fill: '#ffffff',
                 stroke: 'black',
                 'stroke-width': 0
@@ -98,8 +98,8 @@ angular.module('pandrugsFrontendApp')
               }).add();
 
 
-              drawText(0.72, 1.01, 'BEST CANDIDATES')
-              .css({color: '#888', fontWeight:'bold'})
+              drawText(0.72, 0.97, 'BEST CANDIDATES')
+              .css({color: '#888', fontWeight:'bold', opacity: 0.5})
               .add();
 
               drawText(-0.45, -0.115, 'RESISTANCE')
@@ -114,7 +114,7 @@ angular.module('pandrugsFrontendApp')
           }
         },
         legend: {
-          verticalAlign: 'top'
+          verticalAlign: 'bottom'
         },
         xAxis: {
           title: {
@@ -149,7 +149,7 @@ angular.module('pandrugsFrontendApp')
           ]
         },
         title: {
-          text: '',
+          text: 'Gene and Drugs score chart (click and drag to make zoom)'
         },
         plotOptions: {
           bubble: {
@@ -157,7 +157,7 @@ angular.module('pandrugsFrontendApp')
             maxSize: 20,
             tooltip: {
               headerFormat: '',
-              pointFormat: 'Status: {series.name}<br>DScore: {point.xRound}<br>GScore: {point.yRound}<br>Genes: {point.genes}<br>Drug: {point.drug}<br>Jitter: {point.jitter}',
+              pointFormat: 'Status: {series.name}<br>DScore: {point.xRound}<br>GScore: {point.yRound}<br>Genes: {point.genes}<br>Drug: {point.drug}',
               style: { wrap: 'hard'}
 
             }
