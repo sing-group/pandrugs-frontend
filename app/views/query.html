@@ -351,7 +351,7 @@
   </div>
 
   <div class="row"  ng-if="results!=null && results.length>0">
-    <a href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
+    <a id="download-csv-link" href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
     <table id="results" st-table="results" st-pipe="query" class="table table-striped query-table">
       <thead>
         <tr>
@@ -388,9 +388,24 @@
           <td>{{row.statusDescription}}</td>
           <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
           <td>
-            <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
-            <img ng-if="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
-            <img ng-if="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
+            <div class="tooltipCSS">
+              <img  ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
+              <img ng-if="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
+              <img ng-if="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
+              <span ng-if="row.getBestInteraction() == 'marker'" class="tooltiptext">
+                <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
+                is a <strong>biomarker</strong> of the response to drug <strong><span style="color:blue">D</span></strong>
+              </span>
+              <span ng-if="row.getBestInteraction() == 'target-direct'" class="tooltiptext">
+                <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
+                is the <strong>target</strong> of the drug <strong><span style="color:blue">D</span></strong>
+              </span>
+              <span ng-if="row.getBestInteraction() == 'target-indirect'" class="tooltiptext">
+                <strong>Indirect</strong> association in which the drug <strong><span style="color:blue">D</span></strong>
+                has as a <strong>target</strong> a gene <strong><span style="color:gray">T</span></strong> related to the altered one
+                <strong><span style="color:red">G</span></strong>
+              </span>
+            </div>
           </td>
           <td>{{row.dScore | number: 4}}</td>
           <td>{{row.gScore | number: 4}}</td>

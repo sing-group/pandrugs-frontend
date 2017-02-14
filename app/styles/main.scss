@@ -22,6 +22,17 @@ $dark-gray: #777777;
 
 $light-black: #333333;
 
+$medium-orange: #e36c0a;
+
+$light-yellow: #ffffe6;
+$medium-yellow: yellow;
+$dark-yellow: #e6e600;
+
+$light-red: #ffebe6;
+$dark-red: #800000;
+$medium-red: #ff3300;
+
+
 
 #logo-big {
   display: inline-block;
@@ -158,6 +169,10 @@ tr.moreinfo {
   font-size: 0.9em;
 }
 
+#download-csv-link {
+  float: right;
+}
+
 #team {
   div {
     margin-top: 10px;
@@ -225,6 +240,44 @@ a.non_curated_source {
     color: $light-blue !important;
     background-color: $dark-blue !important;
   }
+}
+a.curated_source[title="moAb"] {
+  color: $medium-orange !important;
+  background-color: $light-red !important;
+  border-color: $medium-orange !important;
+}
+a.curated_source[title="TARGET-CGA"] {
+  color: $dark-yellow !important;
+  background-color: $light-yellow !important;
+  border-color: $dark-yellow !important;
+}
+a.non_curated_source[title="CTRP"] {
+  color: $dark-red !important;
+  background-color: $light-red !important;
+  border-color: $dark-red !important;
+}
+a.non_curated_source[title="GDSC"] {
+  color: $dark-blue !important;
+  background-color: $light-blue !important;
+  border-color: $dark-blue !important;
+}
+a.non_curated_source[title="DrugBank"] {
+  @extend .curated;
+  border-color: $dark-green !important;
+  color: $dark-green !important;
+  background-color: $light-green !important;
+}
+a.non_curated_source[title="TTD"] {
+  @extend .curated;
+  border-color: $dark-green !important;
+  color: $dark-green !important;
+  background-color: $light-green !important;
+}
+a.non_curated_source[title="PharmGKB"] {
+  @extend .curated;
+  border-color: $dark-green !important;
+  color: $dark-green !important;
+  background-color: $light-green !important;
 }
 
 .cancer_type_checkbox input {
@@ -414,6 +467,54 @@ input[type="radio"].toggle-right + label {
   }
 
 }
+
+/* =========== TOOLTIP =========================*/
+/* Tooltip container */
+.tooltipCSS {
+   position: relative;
+   display: inline-block;
+}
+
+/* Tooltip text */
+.tooltipCSS .tooltiptext {
+   visibility: hidden;
+   width: 120px;
+   background-color: #555;
+   color: #fff;
+   text-align: center;
+   padding: 5px 0;
+   border-radius: 6px;
+
+   /* Position the tooltip text */
+   position: absolute;
+   z-index: 1;
+   bottom: 125%;
+   left: 50%;
+   margin-left: -60px;
+
+   /* Fade in tooltip */
+   opacity: 0;
+   transition: opacity 1s;
+}
+
+/* Tooltip arrow */
+.tooltipCSS .tooltiptext::after {
+   content: "";
+   position: absolute;
+   top: 100%;
+   left: 50%;
+   margin-left: -5px;
+   border-width: 5px;
+   border-style: solid;
+   border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltipCSS:hover .tooltiptext {
+   visibility: visible;
+   opacity: 1;
+}
+
 /* =========== RESPONSIVE ======================*/
 
 /* fix height on drug text area */
