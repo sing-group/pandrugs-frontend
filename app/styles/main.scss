@@ -216,69 +216,46 @@ tr.moreinfo {
   display: inline-block;
 }
 
-a.curated_source {
-  @extend .curated;
-  border-color: $dark-green !important;
-  color: $dark-green !important;
-  background-color: $light-green !important;
+@mixin sourcedb-box($color, $background) {
+  border-color: $color !important;
+  color: $color !important;
+  background-color: $background !important;
 
   &:hover {
-    border-color: $light-green !important;
-    color: $light-green !important;
-    background-color: $dark-green !important;
+    border-color: $background !important;
+    color: $background !important;
+    background-color: $color !important;
   }
+}
+
+a.curated_source {
+  @extend .curated;
+  @include sourcedb-box($dark-green, $light-green);
 }
 
 a.non_curated_source {
   @extend .curated;
-  border-color: $dark-blue !important;
-  color: $dark-blue !important;
-  background-color: $light-blue !important;
-
-  &:hover {
-    border-color: $light-blue !important;
-    color: $light-blue !important;
-    background-color: $dark-blue !important;
-  }
+  @include sourcedb-box($dark-blue, $light-blue);
 }
+
 a.curated_source[title="moAb"] {
-  color: $medium-orange !important;
-  background-color: $light-red !important;
-  border-color: $medium-orange !important;
+  @include sourcedb-box($medium-orange, $light-red);
 }
 a.curated_source[title="TARGET-CGA"] {
-  color: $dark-yellow !important;
-  background-color: $light-yellow !important;
-  border-color: $dark-yellow !important;
+  @include sourcedb-box($dark-yellow, $light-yellow);
 }
 a.non_curated_source[title="CTRP"] {
-  color: $dark-red !important;
-  background-color: $light-red !important;
-  border-color: $dark-red !important;
+  @include sourcedb-box($dark-red, $light-red);
 }
 a.non_curated_source[title="GDSC"] {
-  color: $dark-blue !important;
-  background-color: $light-blue !important;
-  border-color: $dark-blue !important;
+  @include sourcedb-box($dark-blue, $light-blue);
 }
-a.non_curated_source[title="DrugBank"] {
-  @extend .curated;
-  border-color: $dark-green !important;
-  color: $dark-green !important;
-  background-color: $light-green !important;
-}
-a.non_curated_source[title="TTD"] {
-  @extend .curated;
-  border-color: $dark-green !important;
-  color: $dark-green !important;
-  background-color: $light-green !important;
-}
+a.non_curated_source[title="DrugBank"],
+a.non_curated_source[title="TTD"],
 a.non_curated_source[title="PharmGKB"] {
-  @extend .curated;
-  border-color: $dark-green !important;
-  color: $dark-green !important;
-  background-color: $light-green !important;
+  @include sourcedb-box($dark-green, $light-green);
 }
+
 
 .cancer_type_checkbox input {
   display:none;
@@ -513,6 +490,56 @@ input[type="radio"].toggle-right + label {
 .tooltipCSS:hover .tooltiptext {
    visibility: visible;
    opacity: 1;
+}
+
+/* variant info */
+
+.variant-info {
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.effect-prediction {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  width: 22px;
+  height: 22px;
+  border: 1px solid black;
+  border-radius: 50%;
+  color: $dark-red;
+  font-weight: bold;
+  border-color: $dark-red;
+  background-color: white;
+}
+
+
+@mixin squarebox($color) {
+  display: inline-block;
+  height: 20px;
+  border: 1px solid $color;
+  color: $color;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.variant-consequence {
+  @include squarebox($medium-orange);
+}
+
+.cosmic-prediction, .clinvar-prediction {
+  @include squarebox($dark-red);
+}
+
+.gmaf-value, .exac-value {
+  @include squarebox($dark-green);
+}
+
+.affected-domain {
+  @include squarebox($dark-blue);
 }
 
 /* =========== RESPONSIVE ======================*/

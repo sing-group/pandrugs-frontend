@@ -389,7 +389,7 @@
           <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
           <td>
             <div class="tooltipCSS">
-              <img  ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
+              <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
               <img ng-if="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
               <img ng-if="row.getBestInteraction() == 'target-indirect'" src="images/query/indirect-interaction.png"/>
               <span ng-if="row.getBestInteraction() == 'marker'" class="tooltiptext">
@@ -410,7 +410,7 @@
           <td>{{row.dScore | number: 4}}</td>
           <td>{{row.gScore | number: 4}}</td>
         </tr>
-        <tr ng-repeat="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
+        <tr ng-repeat-start="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
           <td ng-if="selectedTab !== 'drugs'">&nbsp;</td>
           <td colspan="2">
             <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
@@ -426,13 +426,52 @@
           <td >{{genedrug.source.join(', ')}}</td>
           <td colspan="2">&nbsp;</td>
           <td>
-            <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
-            <img ng-if="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
-            <img ng-if="genedrug.target == 'target' && genedrug.indirect != null" src="images/query/indirect-interaction.png"/>
+            <div class="tooltipCSS">
+              <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
+              <img ng-if="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
+              <img ng-if="genedrug.target == 'target' && genedrug.indirect != null" src="images/query/indirect-interaction.png"/>
+              <span ng-if="genedrug.target == 'marker'" class="tooltiptext">
+                <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
+                is a <strong>biomarker</strong> of the response to drug <strong><span style="color:blue">D</span></strong>
+              </span>
+              <span ng-if="genedrug.target == 'target' && genedrug.indirect == null" class="tooltiptext">
+                <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
+                is the <strong>target</strong> of the drug <strong><span style="color:blue">D</span></strong>
+              </span>
+              <span ng-if="genedrug.target == 'target' && genedrug.indirect != null" class="tooltiptext">
+                <strong>Indirect</strong> association in which the drug <strong><span style="color:blue">D</span></strong>
+                has as a <strong>target</strong> a gene <strong><span style="color:gray">T</span></strong> related to the altered one
+                <strong><span style="color:red">G</span></strong>
+              </span>
+            </div>
           </td>
           <td>{{genedrug.dScore | number: 4}}</td>
           <td>{{genedrug.gScore | number: 4}}</td>
         </tr>
+        <tr ng-repeat-end ng-if="row.moreinfo && selectedTab === 'vcfranking'" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}">
+          <td>&nbsp;</td>
+          <td colspan="9">
+            <div ng-repeat="gene in genedrug.gene">
+              <span class="variant-info">Variant information in gene {{gene}}: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].HGVS_cDNA}} / {{computations[getComputationIdQuery()].affectedGenesInfo[gene].HGVS_protein}}</span>
+              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
+              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'frameshift_variant'" title="consequence of the variant in gene sequence">frameshift variant</span>
+              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'missense_variant'" title="consequence of the variant in gene sequence">missense variant</span>
+              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'inframe_insertion'" title="consequence of the variant in gene sequence">inframe insertion</span>
+              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'inframe_deletion'" title="consequence of the variant in gene sequence">inframe deletion</span>
+
+              <span class="effect-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].sift_effect.includes('deleterious') || computations[getComputationIdQuery()].affectedGenesInfo[gene].sift_effect == 'inferred'" title="Sift prediction: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].sift_effect}}">S</span>
+              <span class="effect-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect == 'probably_damaging' || computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect == 'possibly_damaging'  || computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect == 'inferred'" title="Polyphen prediction: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect}}">P</span>
+              <span class="effect-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].condel_effect == 'deleterious' || computations[getComputationIdQuery()].affectedGenesInfo[gene].condel_effect == 'inferred'" title="Condel prediction: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].condel_effect}}">C</span>
+
+              <span class="cosmic-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].cosmic_id.includes('PATHOGENIC')" title="Pathogenic variant according to COSMIC">COSMIC</span>
+              <span class="clinvar-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
+              <span class="gmaf-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq < 0.01" title="Low GMAF frequency: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq}}">LOW GMAF</span>
+              <span class="exac-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC < 0.01" title = "Low ExAC: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC}}">LOW ExAC</span>
+              <span class="affected-domain" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].interpro != ''" title="Interpro affected domain">{{computations[getComputationIdQuery()].affectedGenesInfo[gene].interpro}}</span>
+            </div>
+          </td>
+        </tr>
+
       </tbody>
       <tfoot ng-hide="isLoading">
 			<tr id="pagination-footer">
