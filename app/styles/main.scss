@@ -273,8 +273,9 @@ a.non_curated_source[title="PharmGKB"] {
 }
 .cancer_type_checkbox input:checked + label {
   border-color: $medium-gray;
-  background-color: $light-gray;
-  color: $light-black;
+  background-color: $medium-gray;
+  color: white !important;
+
 }
 
 .highlightedGroup {

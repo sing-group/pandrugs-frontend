@@ -118,7 +118,7 @@ angular.module('pandrugsFrontendApp')
         },
         xAxis: {
           title: {
-            text: '<span class=\"help_icon\" title=\"Measure of the biological relevance of the gene in the tumoral process\"></span>Drug Score',
+            text: '<span class=\"help_icon\" title=\"Measure of the suitability of the drug according to the genomic profile\"></span>Gene Score',
             useHTML: true
           },
           min: -1,
@@ -134,7 +134,7 @@ angular.module('pandrugsFrontendApp')
         },
         yAxis: {
           title: {
-            text: '<span class=\"help_icon\" title=\"measure of the suitability of the drug according to the genomic profile\"></span>Gene Score',
+            text: '<span class=\"help_icon\" title=\"Measure of the biological relevance of the gene in the tumoral process\"></span>Drug Score',
             useHTML: true
           },
           min: 0,
