@@ -199,7 +199,8 @@ function (
           ','+'\"'+(row.therapy?row.therapy:'')+'\"'+
           ','+'\"'+row.getBestInteraction()+'\"'+
           ','+'\"'+(Math.round(row.dScore*10000)/10000)+'\"'+
-          ','+'\"'+(Math.round(row.gScore*10000)/10000)+'\"');
+          ','+'\"'+(Math.round(row.gScore*10000)/10000)+'\"' +
+          ',\"-\",\"-\",\"-\",\"-\",\"-\",\"-\",\"-\",\"-\"');
 
           row.geneDrugInfo.forEach(
             function(genedrug) {
