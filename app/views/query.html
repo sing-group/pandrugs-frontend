@@ -465,8 +465,8 @@
 
               <span class="cosmic-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].cosmic_id.includes('PATHOGENIC')" title="Pathogenic variant according to COSMIC">COSMIC</span>
               <span class="clinvar-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
-              <span class="gmaf-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq < 0.01" title="Low GMAF frequency: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq}}">LOW GMAF</span>
-              <span class="exac-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC < 0.01" title = "Low ExAC: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC}}">LOW ExAC</span>
+              <span class="gmaf-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq < 1" title="Low GMAF frequency: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq}}%">GMAF &lt; 1%</span>
+              <span class="exac-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC < 1" title = "Low ExAC: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC}}%">ExAC &lt; 1%</span>
               <span class="affected-domain" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].interpro != ''" title="Interpro affected domain">{{computations[getComputationIdQuery()].affectedGenesInfo[gene].interpro}}</span>
             </div>
           </td>
