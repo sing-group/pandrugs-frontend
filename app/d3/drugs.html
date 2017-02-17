@@ -74,7 +74,7 @@
 <div class="g-annotations">
   <div class="g-annotations-overall" style="opacity: 1; display: block;">
     <div class="g-annotation" style="left:620px;">
-      <button class="g-button" data-view="tumor" style="margin-top:70px;">Show Tumors</button>
+      <button class="g-button" data-view="tumor" style="margin-top:70px;" onclick="window.top.postMessage('show-by-tumor', '*')">Show Tumors</button>
     </div>
   </div>
 </div>
@@ -84,9 +84,9 @@
     <button style="display:none;" class="g-search-clear">X</button>
   </div>
   <div class="g-buttons">
-    <button class="g-button g-active" data-view="overall">The Overall Picture</button>
-    <button class="g-button" data-view="tumor">The View by Tumor</button>
-    <button class="g-button-annot" data-view="overall" style="display: none; left: 620px; position: absolute;">Show Overall</button>
+    <button class="g-button g-active" data-view="overall" onclick="window.top.postMessage('show-overall', '*')">The Overall Picture</button>
+    <button class="g-button" data-view="tumor" onclick="window.top.postMessage('show-by-tumor', '*')">The View by Tumor</button>
+    <button class="g-button-annot" data-view="overall" style="display: none; left: 620px; position: absolute;" onclick="window.top.postMessage('show-by-overall', '*')">Show Overall</button>
   </div>
 </div>
 <div class="g-tumor-notes" style="opacity: 0; display: none;">

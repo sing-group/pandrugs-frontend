@@ -36,8 +36,9 @@ body {
 .g-content {
   position: relative;
   font: 11px sans-serif;
-  /*width: 1230px;*/
-  height: 1600px;
+  width: 1230px;
+  margin:auto;
+  /*height: 1600px;*/
 }
 
 .g-annotations {

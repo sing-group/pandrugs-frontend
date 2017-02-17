@@ -1,7 +1,27 @@
 <script>
+
+  // fixes, to resize the height of the iframe dinamically, avoiding inner
+  // vertical scroll
+
   function resizeIframe(obj) {
     obj.style.height = (obj.contentWindow.document.body.scrollHeight + 100) + 'px';
   }
+
+  // messages received from iframes, when clicking on buttons that implies
+  // that the iframe height changes
+  window.onmessage = function() {
+    setTimeout(function(){
+      resizeIframe(document.getElementById('d3drugsiframe'))},
+      1000
+
+    );
+    setTimeout(function(){
+      resizeIframe(document.getElementById('d3genesiframe'))},
+      1000
+    );
+  }
+
+
 </script>
 
 <div class="container-fluid">
@@ -67,5 +87,5 @@
   </p>
 </div><!-- end of the container -->
 
-<iframe ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>
-<iframe ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>
+<iframe id="d3genesiframe" ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>
+<iframe id="d3drugsiframe" ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>
