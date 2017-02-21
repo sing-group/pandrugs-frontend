@@ -294,8 +294,8 @@
                   <p ng-if="queryMarker">Marker</p>
                   <h6>Selected cancer types</h6>
                   <ul ng-if="!allCancerSelected()">
-                  <li class="cancer_type_checkbox" ng-repeat="cancerType in cancerTypes">
-                    {{cancerType.name | replace:'_':' ' | titlecase}}
+                  <li class="cancer_type_checkbox" ng-repeat="cancerType in selectedCancerTypes">
+                    {{cancerType | replace:'_':' ' | titlecase}}
                   </li>
                   </ul>
                   <p ng-if="allCancerSelected()">All</p>
