@@ -12,12 +12,12 @@
   window.onmessage = function() {
     setTimeout(function(){
       resizeIframe(document.getElementById('d3drugsiframe'))},
-      1000
+      3000
 
     );
     setTimeout(function(){
       resizeIframe(document.getElementById('d3genesiframe'))},
-      1000
+      3000
     );
   }
 
@@ -87,5 +87,5 @@
   </p>
 </div><!-- end of the container -->
 
-<iframe id="d3genesiframe" ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>
-<iframe id="d3drugsiframe" ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="auto" onload="resizeIframe(this)"></iframe>
+<iframe id="d3genesiframe" ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
+<iframe id="d3drugsiframe" ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
