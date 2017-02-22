@@ -231,6 +231,9 @@ function (
       });
     }
 
+    $scope.getGeneSymbols = function(genesArray) {
+      return genesArray.map(function(e) {return e.geneSymbol;});
+    }
     var results;
 
     function manageResults(tableState) {

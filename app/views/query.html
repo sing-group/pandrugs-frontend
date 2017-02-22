@@ -417,9 +417,9 @@
             <strong ng-bind-html="genedrug.gene | mapAttribute : 'geneSymbol' | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
             Sensitivity: {{genedrug.sensitivity == "BOTH" ? "SENSITIVITY / RESISTANCE" : genedrug.sensitivity}} <br>
             Alteration: {{genedrug.alteration}}<br>
-            Find more info for &quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot; in:
-            [<a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>PubMed</a>]
-            [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+genedrug.gene.join())}}&quot;'>ClinicalTrials.gov</a>]
+            Find more info for &quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot; in:
+            [<a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot;'>PubMed</a>]
+            [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot;'>ClinicalTrials.gov</a>]
             <br>
           </td>
           <td >{{genedrug.family}}</td>
@@ -443,31 +443,30 @@
                 has as a <strong>target</strong> a gene <strong><span style="color:gray">T</span></strong> related to the altered one
                 <strong><span style="color:red">G</span></strong>
               </span>
-              <div ng-if="genedrug.target == 'target' && genedrug.indirect != null">
-                <button type="button" class="btn btn-sm btn-default seepathways" data-toggle="modal" data-target="#pathways-{{row.showDrugName|replace:' ':'-'}}-{{genedrug.indirect.geneInfo.geneSymbol}}">
-                  See pathways
-                </button>
-                <div id = "pathways-{{row.showDrugName|replace:' ':'-'}}-{{genedrug.indirect.geneInfo.geneSymbol}}" class="modal fade">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Involved pathways in indirect relation</h4>
-                      </div>
-                      <div class="modal-body">
-                        The following Kegg pathways are those where the target gene of the drug ({{genedrug.indirect.geneInfo.geneSymbol}}) is related
-                        to at least one of the altered genes ( <span ng-repeat="alteredGene in genedrug.gene">{{alteredGene.geneSymbol}} </span>)
-                        <ul>
-                          <li ng-repeat="pathway in genedrug.indirect.pathway">
-                            <a target='_blank' href="{{pathway|kegglink:genedrug.indirect.geneInfo}}">{{pathway.name}}</a>
-                            ( <span ng-repeat="alteredGene in pathway.gene">{{alteredGene.geneSymbol}} </span>)
-                          </li>
-                        </ul>
-                      </div>
+            </div>
+            <div ng-if="genedrug.target == 'target' && genedrug.indirect != null">
+              <button type="button" class="btn btn-sm btn-default seepathways" data-toggle="modal" data-target="#pathways-{{row.showDrugName|replace:' ':'-'}}-{{genedrug.indirect.geneInfo.geneSymbol}}">
+                See pathways
+              </button>
+              <div id = "pathways-{{row.showDrugName|replace:' ':'-'}}-{{genedrug.indirect.geneInfo.geneSymbol}}" class="modal fade">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Involved pathways in indirect relation</h4>
+                    </div>
+                    <div class="modal-body">
+                      The following Kegg pathways are those where the target gene of the drug ({{genedrug.indirect.geneInfo.geneSymbol}}) is related
+                      to at least one of the altered genes ( <span ng-repeat="alteredGene in genedrug.gene">{{alteredGene.geneSymbol}} </span>)
+                      <ul>
+                        <li ng-repeat="pathway in genedrug.indirect.pathway">
+                          <a target='_blank' href="{{pathway|kegglink:genedrug.indirect.geneInfo}}">{{pathway.name}}</a>
+                          ( <span ng-repeat="alteredGene in pathway.gene">{{alteredGene.geneSymbol}} </span>)
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </td>
