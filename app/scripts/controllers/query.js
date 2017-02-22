@@ -272,16 +272,19 @@ function (
         for (var i = 0; i < $scope.results.length; i++) {
           var resulti = $scope.results[i];
           resulti.getBestInteraction = function() {
-            var best = 'target-indirect';
+            var bestdscore = -1;
+            var best = '';
 
             for (var i = 0; i < this.geneDrugInfo.length; i++) {
-              if (this.geneDrugInfo[i].target === 'marker') {
-                if (best === 'target-indirect') {
+              if (this.geneDrugInfo[i].dScore > bestdscore) {
+                bestdscore = this.geneDrugInfo[i].dScore;
+                if (this.geneDrugInfo[i].target === 'marker') {
                   best = 'marker';
+                } else if (this.geneDrugInfo[i].target == 'target' && this.geneDrugInfo[i].indirect == null) {
+                  best = 'target-direct';
+                } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect != null){
+                  best = 'target-indirect';
                 }
-              } else if (this.geneDrugInfo[i].indirect === null) {
-                best = 'target-direct';
-                break;
               }
             }
             return best;
