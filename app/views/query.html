@@ -422,7 +422,7 @@
             [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot;'>ClinicalTrials.gov</a>]
             <br>
           </td>
-          <td >{{genedrug.family}}</td>
+          <td >{{genedrug.family | enumeration }}</td>
           <td >{{genedrug.source.join(', ')}}</td>
           <td colspan="2">&nbsp;</td>
           <td>
