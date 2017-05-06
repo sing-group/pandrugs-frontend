@@ -78,7 +78,7 @@ function (
 
     $scope.getComputationIdQuery = function() {
       return $location.search().computationId;
-     }
+    };
 
     if ($scope.getComputationIdQuery() !== undefined) {
       $scope.setSelectedTab('vcfranking');
@@ -177,7 +177,7 @@ function (
           return item.trim().length > 0;
         })
         .map(function(item){
-          return item.replace(/\s.*/, "");
+          return item.replace(/\s.*/, '');
         })
         .map(function(item) {
           return item.trim().toUpperCase();
@@ -229,11 +229,13 @@ function (
       return $scope.cancerTypes.every(function (cancerType) {
         return cancerType.selected;
       });
-    }
+    };
 
     $scope.getGeneSymbols = function(genesArray) {
       return genesArray.map(function(e) {return e.geneSymbol;});
-    }
+    };
+
+
     var results;
 
     function manageResults(tableState) {
@@ -241,12 +243,12 @@ function (
         return $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
       }
 
-
       function paginate(results) {
-        if (tableState.pagination.number == $scope.paginationOptions[$scope.paginationOptions.length - 1]) {
+        if (tableState.pagination.number === $scope.paginationOptions[$scope.paginationOptions.length - 1]) {
           tableState.pagination.start = 0;
           tableState.pagination.number = results.length;
         }
+
         tableState.pagination.numberOfPages = Math.ceil(results.length / tableState.pagination.number);
         // show only current page
 
@@ -283,14 +285,34 @@ function (
                 bestdscore = this.geneDrugInfo[i].dScore;
                 if (this.geneDrugInfo[i].target === 'marker') {
                   best = 'marker';
-                } else if (this.geneDrugInfo[i].target == 'target' && this.geneDrugInfo[i].indirect == null) {
+                } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect === null) {
                   best = 'target-direct';
-                } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect != null){
+                } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect !== null){
                   best = 'target-indirect';
                 }
               }
             }
             return best;
+          };
+
+          resulti.getSensitivity = function() {
+            var sensitivity;
+
+            for (var i = 0; i < this.geneDrugInfo.length; i++) {
+              var gdi = this.geneDrugInfo[i];
+
+              if (gdi.sensitivity === 'BOTH') {
+                return 'BOTH';
+              } else if (sensitivity) {
+                if (sensitivity !== gdi.sensitivity) {
+                  return 'BOTH';
+                }
+              } else {
+                sensitivity = gdi.sensitivity;
+              }
+            }
+
+            return sensitivity;
           };
         }
 
@@ -332,12 +354,12 @@ function (
       if ($scope.selectedTab === 'generank' && $scope.generank !== '') {
         $scope.isLoading = true;
         var reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function() {
             $scope.parsedInputGenes = parseGenes(reader.result);
             db.genesPresence($scope.parsedInputGenes).then(function(presence){
               $scope.genespresence = presence;
             });
-        }
+        };
 
         reader.readAsText($scope.generank);
 
@@ -527,7 +549,7 @@ function (
         } else if($scope.getComputationIdQuery() !== undefined) {
           user.getComputation('guest', $scope.getComputationIdQuery(), function(computation){
             $scope.computations[$scope.getComputationIdQuery()] = computation;
-            if (!computation.finished || computation.failed || computation.affectedGenes.length == 0) {
+            if (!computation.finished || computation.failed || computation.affectedGenes.length === 0) {
               $scope.computationId = '';
             } else {
               $scope.computationId = $scope.getComputationIdQuery();
@@ -548,7 +570,7 @@ function (
 
 
     // automatic examples
-    if ($location.search().example != undefined) {
+    if ($location.search().example !== undefined) {
       switch ($location.search().example) {
         case 'genes':
           $scope.pasteSignalingPathwayExample();
@@ -561,7 +583,7 @@ function (
           $location.search().computationId = 'example';
           $scope.computationId = 'example';
           user.getComputation('guest', 'example', function(computation){
-            $scope.computations['example'] = computation;
+            $scope.computations.example = computation;
             $scope.setSelectedTab('vcfranking');
             $timeout(function(){
               $scope.query();

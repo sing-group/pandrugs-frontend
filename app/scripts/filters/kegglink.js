@@ -17,5 +17,5 @@ angular.module('pandrugsFrontendApp')
       });
 
       return link;
-    }
-    });
+    };
+  });

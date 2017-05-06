@@ -358,11 +358,12 @@
           <th ng-if="selectedTab !== 'drugs'">Actions</th>
           <th><span class="gene">Gene(s)</span> </span> <span class="help_icon" title="gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
           <th><span class="drug">Drug</span> </span> <span class="help_icon" title="compound name"></span></th>
-          <th>Family <span class="help_icon" title="drug family based on the KEGG target-based classification of drugs"/></th>
-          <th>Source(s) <span class="help_icon" title="source(s) where the drug-gene interaction came from"/></th>
           <th>Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
           <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="help_icon" title="type of therapy for the approved drugs in cancer"/></th>
+          <th>R/S <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
           <th>Interaction <span class="help_icon" title="type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
+          <th>Family <span class="help_icon" title="drug family based on the KEGG target-based classification of drugs"/></th>
+          <th>Source(s) <span class="help_icon" title="source(s) where the drug-gene interaction came from"/></th>
           <th st-sort="dScore" style="cursor: pointer" st-sort-default="reverse">DScore <span class="help_icon" title="score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
           <th st-sort="gScore" style="cursor: pointer">GScore <span class="help_icon" title="score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
         </tr>
@@ -381,12 +382,9 @@
             <span ng-if="row.pubchemId.length == 0">{{row.showDrugName}}</span>
             <span ng-if="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row.showDrugName}}</a></span>
           </td>
-          <td>{{row.family | enumeration }}</td>
-          <td>
-            <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row.curatedSource.indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
-          </td>
           <td>{{row.statusDescription}}</td>
           <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
+          <td>{{row.getSensitivity() | titlecase}}</td>
           <td>
             <div class="tooltipCSS">
               <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
@@ -407,24 +405,24 @@
               </span>
             </div>
           </td>
+          <td>{{row.family | enumeration}}</td>
+          <td>
+            <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row.curatedSource.indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
+          </td>
           <td>{{row.dScore | number: 4}}</td>
           <td>{{row.gScore | number: 4}}</td>
         </tr>
         <tr ng-repeat-start="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
           <td ng-if="selectedTab !== 'drugs'">&nbsp;</td>
-          <td colspan="2">
+          <td colspan="4">
             <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
-            <strong ng-bind-html="genedrug.gene | mapAttribute : 'geneSymbol' | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></strong><br>
-            Sensitivity: {{genedrug.sensitivity == "BOTH" ? "SENSITIVITY / RESISTANCE" : genedrug.sensitivity}} <br>
-            Alteration: {{genedrug.alteration}}<br>
-            Find more info for &quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot; in:
+            <span ng-if="genedrug.alteration">Alteration: {{genedrug.alteration}}<br></span>
+            Find more info for {{genedrug.indirect!=null?(genedrug.drug+" and "+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+" and "+getGeneSymbols(genedrug.gene).join())}} in:
             [<a target="_blank" href='http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot;'>PubMed</a>]
             [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot;'>ClinicalTrials.gov</a>]
             <br>
           </td>
-          <td >{{genedrug.family | enumeration }}</td>
-          <td >{{genedrug.source.join(', ')}}</td>
-          <td colspan="2">&nbsp;</td>
+          <td>{{genedrug.sensitivity | titlecase}}</td>
           <td>
             <div class="tooltipCSS">
               <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
@@ -456,7 +454,7 @@
                       <h4 class="modal-title">Involved pathways in indirect relation</h4>
                     </div>
                     <div class="modal-body">
-                      The following Kegg pathways are those where the target gene of the drug ({{genedrug.indirect.geneInfo.geneSymbol}}) is related
+                      The following KEGG pathways are those where the target gene of the drug ({{genedrug.indirect.geneInfo.geneSymbol}}) is related
                       to at least one of the altered genes ( <span ng-repeat="alteredGene in genedrug.gene">{{alteredGene.geneSymbol}} </span>)
                       <ul>
                         <li ng-repeat="pathway in genedrug.indirect.pathway">
@@ -470,6 +468,8 @@
               </div>
             </div>
           </td>
+          <td >{{genedrug.family | enumeration}}</td>
+          <td >{{genedrug.source | enumeration}}</td>
           <td>{{genedrug.dScore | number: 4}}</td>
           <td>{{genedrug.gScore | number: 4}}</td>
         </tr>
@@ -499,21 +499,21 @@
 
       </tbody>
       <tfoot ng-hide="isLoading">
-			<tr id="pagination-footer">
-				<td colspan="10" class="text-center">
-          <div class="form-group row">
-            <label class="col-xs-push-5 col-xs-1 control-label">items per page</label>
-            <div class="col-xs-push-5 col-xs-1">
-              <select ng-model="itemsperpage" class="form-control" ng-init="itemsperpage = paginationOptions[1]" ng-options="option for option in paginationOptions">
+        <tr id="pagination-footer">
+          <td colspan="10" class="text-center">
+            <div class="form-group row">
+              <label class="col-xs-push-5 col-xs-1 control-label">items per page</label>
+              <div class="col-xs-push-5 col-xs-1">
+                <select ng-model="itemsperpage" class="form-control" ng-init="itemsperpage = paginationOptions[1]" ng-options="option for option in paginationOptions">
 
-              </select>
+                </select>
+              </div>
             </div>
-          </div>
 
-  					<div st-pagination="" st-items-by-page="itemsperpage" st-displayed-pages="4"></div>
-  				</td>
-			</tr>
-		</tfoot>
+              <div st-pagination="" st-items-by-page="itemsperpage" st-displayed-pages="4"></div>
+            </td>
+        </tr>
+      </tfoot>
 
       <tbody ng-hide="!isLoading">
         <tr>
