@@ -295,7 +295,6 @@ angular.module('pandrugsFrontendApp')
 
         function createQuery(queryUrl) {
           return function() {
-              console.log('starting '+queryUrl);
               return $http.get(BACKEND.API + 'genedrug/gene/presence'+queryUrl);
           }
         }
@@ -321,7 +320,6 @@ angular.module('pandrugsFrontendApp')
             currentPromise = query();
           } else {
             currentPromise = currentPromise.then(function(results) {
-              console.log(results);
               presence.present = presence.present.concat(results.data.present);
               presence.absent = presence.absent.concat(results.data.absent);
 

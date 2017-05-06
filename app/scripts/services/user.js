@@ -87,8 +87,9 @@ angular.module('pandrugsFrontendApp')
         $http.post(BACKEND.API + 'variantsanalysis/' + requestUser +'?name=' + computationName, fileContents, {
             transformRequest: angular.identity,
             headers: headers
-        }).success(function(data, status, headers, config) {
-          var newId = headers('Location').substring(headers('Location').lastIndexOf('/') + 1 );
+        }).success(function(data, status, rheaders, config) {
+          console.log(rheaders('Date'));
+          var newId = rheaders('Location').substring(rheaders('Location').lastIndexOf('/') + 1 );
           onSuccess(newId);
         }).error(onError);
       }

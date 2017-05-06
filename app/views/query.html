@@ -260,13 +260,13 @@
           <h4 class="row">Genomic variants</h4>
           <table>
             <tr>
-              <th>Name</th><td>{{computations[getComputationIdQuery()].name}}</td>
+              <th>Name</th><td>{{computations[computationId].name}}</td>
             </tr>
             <tr>
-              <th>No. variants</th><td>{{computations[getComputationIdQuery()].variantsInInput}}</td>
+              <th>No. variants</th><td>{{computations[computationId].variantsInInput}}</td>
             </tr>
             <tr>
-              <th>No. affected genes</th><td>{{computations[getComputationIdQuery()].affectedGenes.length}}</td>
+              <th>No. affected genes</th><td>{{computations[computationId].affectedGenes.length}}</td>
             </tr>
             <tr>
               <th>No. genes in PanDrugs</th><td>{{genespresence.present.length}}</td>
@@ -477,22 +477,22 @@
           <td>&nbsp;</td>
           <td colspan="9">
             <div ng-repeat="gene in genedrug.gene">
-              <span class="variant-info">Variant information in gene {{gene}}: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].HGVS_cDNA}} / {{computations[getComputationIdQuery()].affectedGenesInfo[gene].HGVS_protein}}</span>
-              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
-              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'frameshift_variant'" title="consequence of the variant in gene sequence">frameshift variant</span>
-              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'missense_variant'" title="consequence of the variant in gene sequence">missense variant</span>
-              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'inframe_insertion'" title="consequence of the variant in gene sequence">inframe insertion</span>
-              <span class="variant-consequence" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].consequence == 'inframe_deletion'" title="consequence of the variant in gene sequence">inframe deletion</span>
+              <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].HGVS_cDNA}} / {{computations[computationId].affectedGenesInfo[gene.geneSymbol].HGVS_protein}}</span>
+              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
+              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'frameshift_variant'" title="consequence of the variant in gene sequence">frameshift variant</span>
+              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'missense_variant'" title="consequence of the variant in gene sequence">missense variant</span>
+              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'inframe_insertion'" title="consequence of the variant in gene sequence">inframe insertion</span>
+              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'inframe_deletion'" title="consequence of the variant in gene sequence">inframe deletion</span>
 
-              <span class="effect-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].sift_effect.includes('deleterious') || computations[getComputationIdQuery()].affectedGenesInfo[gene].sift_effect == 'inferred'" title="Sift prediction: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].sift_effect}}">S</span>
-              <span class="effect-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect == 'probably_damaging' || computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect == 'possibly_damaging'  || computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect == 'inferred'" title="Polyphen prediction: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].poly_effect}}">P</span>
-              <span class="effect-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].condel_effect == 'deleterious' || computations[getComputationIdQuery()].affectedGenesInfo[gene].condel_effect == 'inferred'" title="Condel prediction: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].condel_effect}}">C</span>
+              <span class="effect-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].sift_effect.includes('deleterious') || computations[computationId].affectedGenesInfo[gene.geneSymbol].sift_effect == 'inferred'" title="Sift prediction: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].sift_effect}}">S</span>
+              <span class="effect-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect == 'probably_damaging' || computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect == 'possibly_damaging'  || computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect == 'inferred'" title="Polyphen prediction: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect}}">P</span>
+              <span class="effect-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].condel_effect == 'deleterious' || computations[computationId].affectedGenesInfo[gene.geneSymbol].condel_effect == 'inferred'" title="Condel prediction: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].condel_effect}}">C</span>
 
-              <span class="cosmic-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].cosmic_id.includes('PATHOGENIC')" title="Pathogenic variant according to COSMIC">COSMIC</span>
-              <span class="clinvar-prediction" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
-              <span class="gmaf-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq < 1" title="Low GMAF frequency: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].GMAF_freq}}%">GMAF &lt; 1%</span>
-              <span class="exac-value" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC !== '' && computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC < 1" title = "Low ExAC: {{computations[getComputationIdQuery()].affectedGenesInfo[gene].ExAC}}%">ExAC &lt; 1%</span>
-              <span class="affected-domain" ng-if="computations[getComputationIdQuery()].affectedGenesInfo[gene].interpro != ''" title="Interpro affected domain">{{computations[getComputationIdQuery()].affectedGenesInfo[gene].interpro}}</span>
+              <span class="cosmic-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].cosmic_id.includes('PATHOGENIC')" title="Pathogenic variant according to COSMIC">COSMIC</span>
+              <span class="clinvar-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
+              <span class="gmaf-value" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].GMAF_freq !== '' && computations[computationId].affectedGenesInfo[gene.geneSymbol].GMAF_freq < 1" title="Low GMAF frequency: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].GMAF_freq}}%">GMAF &lt; 1%</span>
+              <span class="exac-value" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].ExAC !== '' && computations[computationId].affectedGenesInfo[gene.geneSymbol].ExAC < 1" title = "Low ExAC: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].ExAC}}%">ExAC &lt; 1%</span>
+              <span class="affected-domain" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].interpro != ''" title="Interpro affected domain">{{computations[computationId].affectedGenesInfo[gene.geneSymbol].interpro}}</span>
             </div>
           </td>
         </tr>

@@ -544,7 +544,15 @@ function (
       if ($scope.selectedTab === 'vcfranking') {
         if (user.getCurrentUser() !== 'anonymous') {
           user.getComputations(function(computations) {
+            if ($scope.computations.example !== undefined) {
+              var savedExample = $scope.computations['example'];
+            }
             $scope.computations = computations;
+
+            if (savedExample) {
+              $scope.computations.example = savedExample;
+            }
+
           }, null);
         } else if($scope.getComputationIdQuery() !== undefined) {
           user.getComputation('guest', $scope.getComputationIdQuery(), function(computation){
