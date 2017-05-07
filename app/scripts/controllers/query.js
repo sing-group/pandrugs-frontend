@@ -274,46 +274,67 @@ function (
           }
         });
 
-        for (var i = 0; i < $scope.results.length; i++) {
-          var resulti = $scope.results[i];
-          resulti.getBestInteraction = function() {
-            var bestdscore = -1;
-            var best = '';
+        var getBestIteration = function() {
+          var bestdscore = -1;
+          var best = '';
 
-            for (var i = 0; i < this.geneDrugInfo.length; i++) {
-              if (this.geneDrugInfo[i].dScore > bestdscore) {
-                bestdscore = this.geneDrugInfo[i].dScore;
-                if (this.geneDrugInfo[i].target === 'marker') {
-                  best = 'marker';
-                } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect === null) {
-                  best = 'target-direct';
-                } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect !== null){
-                  best = 'target-indirect';
-                }
+          for (var i = 0; i < this.geneDrugInfo.length; i++) {
+            if (this.geneDrugInfo[i].dScore > bestdscore) {
+              bestdscore = this.geneDrugInfo[i].dScore;
+              if (this.geneDrugInfo[i].target === 'marker') {
+                best = 'marker';
+              } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect === null) {
+                best = 'target-direct';
+              } else if (this.geneDrugInfo[i].target === 'target' && this.geneDrugInfo[i].indirect !== null){
+                best = 'target-indirect';
               }
             }
-            return best;
-          };
+          }
+          return best;
+        };
 
-          resulti.getSensitivity = function() {
-            var sensitivity;
+        var getSensitivity = function() {
+          var sensitivity;
 
-            for (var i = 0; i < this.geneDrugInfo.length; i++) {
-              var gdi = this.geneDrugInfo[i];
+          for (var i = 0; i < this.geneDrugInfo.length; i++) {
+            var gdi = this.geneDrugInfo[i];
 
-              if (gdi.sensitivity === 'BOTH') {
+            if (gdi.sensitivity === 'BOTH') {
+              return 'BOTH';
+            } else if (sensitivity) {
+              if (sensitivity !== gdi.sensitivity) {
                 return 'BOTH';
-              } else if (sensitivity) {
-                if (sensitivity !== gdi.sensitivity) {
-                  return 'BOTH';
-                }
-              } else {
-                sensitivity = gdi.sensitivity;
               }
+            } else {
+              sensitivity = gdi.sensitivity;
             }
+          }
 
-            return sensitivity;
-          };
+          return sensitivity;
+        };
+
+        var getWarnings = function() {
+          var warnings;
+
+          this.geneDrugInfo.forEach(function(gdi) {
+            gdi.warning.forEach(function(warning) {
+              if (warnings) {
+                warnings += '\n' + warning;
+              } else {
+                warnings = warning;
+              }
+            });
+          });
+
+          return warnings;
+        };
+
+        for (var i = 0; i < $scope.results.length; i++) {
+          var geneDrugGroup = $scope.results[i];
+
+          geneDrugGroup.getBestInteraction = getBestIteration;
+          geneDrugGroup.getSensitivity = getSensitivity;
+          geneDrugGroup.getWarnings = getWarnings;
         }
 
         if ($scope.results.length === 1) {
@@ -544,8 +565,10 @@ function (
       if ($scope.selectedTab === 'vcfranking') {
         if (user.getCurrentUser() !== 'anonymous') {
           user.getComputations(function(computations) {
+            var savedExample;
+
             if ($scope.computations.example !== undefined) {
-              var savedExample = $scope.computations['example'];
+              savedExample = $scope.computations.example;
             }
             $scope.computations = computations;
 

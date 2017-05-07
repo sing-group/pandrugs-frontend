@@ -366,12 +366,13 @@
           <th>Source(s) <span class="help_icon" title="source(s) where the drug-gene interaction came from"/></th>
           <th st-sort="dScore" style="cursor: pointer" st-sort-default="reverse">DScore <span class="help_icon" title="score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
           <th st-sort="gScore" style="cursor: pointer">GScore <span class="help_icon" title="score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody ng-hide="isLoading" ng-repeat="row in resultsPaginated">
-        <tr ng-class="{highlightedGroup: row.dScore > 0.7 && row.gScore > 0.6}" >
-          <td ng-if="selectedTab !== 'drugs'">
+        <tr>
+          <td>
             <button class="btn btn-default" ng-click="row.moreinfo = !row.moreinfo">
               <span ng-if="row.moreinfo" class="glyphicon glyphicon-minus"></span>
               <span ng-if="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
@@ -411,9 +412,17 @@
           </td>
           <td>{{row.dScore | number: 4}}</td>
           <td>{{row.gScore | number: 4}}</td>
+          <td>
+            <div ng-if="row.dScore > 0.7 && row.gScore > 0.6" class="best-icon">
+              <span class="glyphicon glyphicon-star" aria-hidden="true"></span><br/>
+            </div>
+            <div ng-if="row.getWarnings()" class="warning-icon">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{row.getWarnings()}}"></span>
+            </div>
+          </td>
         </tr>
-        <tr ng-repeat-start="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}" >
-          <td ng-if="selectedTab !== 'drugs'">&nbsp;</td>
+        <tr ng-repeat-start="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo">
+          <td>&nbsp;</td>
           <td colspan="4">
             <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
             <span ng-if="genedrug.alteration">Alteration: {{genedrug.alteration}}<br></span>
@@ -472,6 +481,11 @@
           <td >{{genedrug.source | enumeration}}</td>
           <td>{{genedrug.dScore | number: 4}}</td>
           <td>{{genedrug.gScore | number: 4}}</td>
+          <td>
+            <div ng-if="genedrug.warning.length > 0" class="warning-icon">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{genedrug.warning.join('\n')}}"></span>
+            </div>
+          </td>
         </tr>
         <tr ng-repeat-end ng-if="row.moreinfo && selectedTab === 'vcfranking'" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}">
           <td>&nbsp;</td>
