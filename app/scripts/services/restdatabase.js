@@ -108,8 +108,6 @@ angular.module('pandrugsFrontendApp')
 
         $http.get(BACKEND.API + 'genedrug?' + queryString)
         .success(function(results) {
-
-
           deferred.resolve(results);
         }
       );

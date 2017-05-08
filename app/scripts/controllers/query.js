@@ -10,31 +10,31 @@
 angular.module('pandrugsFrontendApp')
 .controller('QueryCtrl',
 ['$scope',
-'user',
-'database',
-'bubbleTherapyChart',
-'therapyByStatusChart',
-'therapyByFamilyChart',
-'geneDrugNetworkChart',
-'$timeout',
-'$interval',
-'$sce',
-'$location',
-'$filter',
-function (
-  $scope,
-  user,
-  db,
-  bubbleChart,
-  therapyByStatusChart,
-  therapyByFamilyChart,
-  geneDrugNetworkChart,
-  $timeout,
-  $interval,
-  $sce,
-  $location,
-  $filter
-) {
+  'user',
+  'database',
+  'bubbleTherapyChart',
+  'therapyByStatusChart',
+  'therapyByFamilyChart',
+  'geneDrugNetworkChart',
+  '$timeout',
+  '$interval',
+  '$sce',
+  '$location',
+  '$filter',
+  function (
+    $scope,
+    user,
+    db,
+    bubbleChart,
+    therapyByStatusChart,
+    therapyByFamilyChart,
+    geneDrugNetworkChart,
+    $timeout,
+    $interval,
+    $sce,
+    $location,
+    $filter
+  ) {
 
     $scope.$timeout = $timeout;
 
@@ -83,8 +83,8 @@ function (
     if ($scope.getComputationIdQuery() !== undefined) {
       $scope.setSelectedTab('vcfranking');
       /*$scope.computationIdQuery.each(function(item){
-        window.alert(item);
-      });*/
+       window.alert(item);
+       });*/
     }
 
     // cancer types
@@ -202,20 +202,20 @@ function (
           ','+'\"'+(Math.round(row.gScore*10000)/10000)+'\"' +
           ',\"-\",\"-\",\"-\",\"-\",\"-\",\"-\",\"-\",\"-\"');
 
-          row.geneDrugInfo.forEach(
-            function(genedrug) {
-              csv.push('\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",'+
-                '\"'+genedrug.drugStatusInfo+'\"'+','+
-                '\"'+genedrug.gene+'\"'+','+
-                '\"'+(genedrug.sensitivity==='BOTH'?'SENSITIVITY / RESISTANCE':genedrug.sensitivity)+'\"'+','+
-                '\"'+genedrug.alteration+'\"'+','+
-                '\"'+genedrug.family+'\"'+','+
-                '\"'+genedrug.source.join(', ')+'\"'+','+
-                '\"'+(Math.round(genedrug.dScore*10000)/10000)+'\"'+','+
-                '\"'+(Math.round(genedrug.gScore*10000)/10000)+'\"'
-              );
-            }
-          );
+        row.geneDrugInfo.forEach(
+          function(genedrug) {
+            csv.push('\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",'+
+              '\"'+genedrug.drugStatusInfo+'\"'+','+
+              '\"'+genedrug.gene+'\"'+','+
+              '\"'+(genedrug.sensitivity==='BOTH'?'SENSITIVITY / RESISTANCE':genedrug.sensitivity)+'\"'+','+
+              '\"'+genedrug.alteration+'\"'+','+
+              '\"'+genedrug.family+'\"'+','+
+              '\"'+genedrug.source.join(', ')+'\"'+','+
+              '\"'+(Math.round(genedrug.dScore*10000)/10000)+'\"'+','+
+              '\"'+(Math.round(genedrug.gScore*10000)/10000)+'\"'
+            );
+          }
+        );
       });
       return csv.join('\n');
     }
@@ -240,7 +240,13 @@ function (
 
     function manageResults(tableState) {
       function sort(results) {
-        return $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
+        if (tableState.sort.predicate === 'dScore') {
+          return $filter('orderBy')(results, function(gd) {
+            return Math.abs(gd.dScore);
+          }, tableState.sort.reverse);
+        } else {
+          return $filter('orderBy')(results, tableState.sort.predicate, tableState.sort.reverse);
+        }
       }
 
       function paginate(results) {
@@ -376,10 +382,10 @@ function (
         $scope.isLoading = true;
         var reader = new FileReader();
         reader.onload = function() {
-            $scope.parsedInputGenes = parseGenes(reader.result);
-            db.genesPresence($scope.parsedInputGenes).then(function(presence){
-              $scope.genespresence = presence;
-            });
+          $scope.parsedInputGenes = parseGenes(reader.result);
+          db.genesPresence($scope.parsedInputGenes).then(function(presence){
+            $scope.genespresence = presence;
+          });
         };
 
         reader.readAsText($scope.generank);
@@ -458,8 +464,7 @@ function (
         $scope.queryTarget,
         $scope.queryMarker,
         true,
-        true,
-        tableState
+        true
       ).then(manageResults(tableState));
     }
 
@@ -507,7 +512,7 @@ function (
             $scope.loadingDrugs = false;
           });
       } else {
-      //  $scope.$apply(); // Forces UI update for loadingDrugs
+        //  $scope.$apply(); // Forces UI update for loadingDrugs
         $scope.drugItems = [];
         $scope.loadingDrugs = false;
       }
@@ -527,7 +532,7 @@ function (
             window.alert('Computation submitted successfully. Please keep this link in a SAFE PLACE in order to get back and follow the computation progress:\n'+followUrl);
 
             $timeout(function() {
-                //do redirection asynchronously, since in chrome the modal vcf dialog black background does not disappear ...
+              //do redirection asynchronously, since in chrome the modal vcf dialog black background does not disappear ...
               document.location.href = followUrl;
             });
 
@@ -546,12 +551,12 @@ function (
     $scope.deleteComputation = function(computationId) {
       if (window.confirm('Are you sure?')) {
         user.deleteComputation(computationId,
-        function() {
-          window.alert('Computation deleted successfully.');
-        },
-        function() {
-          window.alert('ERROR: computation could not be deleted.');
-        });
+          function() {
+            window.alert('Computation deleted successfully.');
+          },
+          function() {
+            window.alert('ERROR: computation could not be deleted.');
+          });
       }
     };
 
@@ -609,7 +614,7 @@ function (
             $scope.query();
           });
 
-        break;
+          break;
         case 'vcf':
           $location.search().computationId = 'example';
           $scope.computationId = 'example';
@@ -621,14 +626,14 @@ function (
             });
           });
 
-        break;
+          break;
         case 'drugs':
           $scope.setSelectedTab('drugs');
           $scope.drugs = [{standardName: 'Palbociclib'}];
           $timeout(function(){
             $scope.query();
           });
-        break;
+          break;
       }
     }
   }]);
