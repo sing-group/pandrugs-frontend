@@ -14,6 +14,8 @@ angular.module('pandrugsFrontendApp')
 
     function doLogin(login, password, onSuccess, onError) {
       $http.defaults.headers.common.Authorization = 'Basic ' + btoa(login + ':' + password);
+       // signals the backend to send a WWW-Authenticate: xBasic avoiding the browser login dialog to appear
+      $http.defaults.headers.common["x-requested-with"] = 'xmlhttprequest';
       $http.get(BACKEND.API + 'user/' + login)
       .success(function() {
         $sessionStorage.user = login;
