@@ -532,7 +532,7 @@
         </tr>
         <tr ng-repeat-end ng-if="row.moreinfo && selectedTab === 'vcfranking'" class="moreinfo" ng-class="{highlightedGeneDrug: genedrug.dScore > 0.7 && genedrug.gScore > 0.6}">
           <td>&nbsp;</td>
-          <td colspan="9">
+          <td colspan="10">
             <div ng-repeat="gene in genedrug.gene">
               <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].HGVS_cDNA}} / {{computations[computationId].affectedGenesInfo[gene.geneSymbol].HGVS_protein}}</span>
               <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
