@@ -459,6 +459,10 @@ input[type="radio"].toggle-right + label {
   color: orangered;
 }
 
+.twitter-color {
+  color: #1da1f2;
+}
+
 /* =========== TOOLTIP =========================*/
 /* Tooltip container */
 .tooltipCSS {
@@ -572,11 +576,17 @@ input[type="radio"].toggle-right + label {
 
   /* Remove the padding we set earlier */
   .header,
-  .marketing,
-  .footer {
+  .marketing {
     padding-left: 0;
     padding-right: 0;
   }
+
+  footer {
+    text-align: center;
+    line-height: 50px;
+    vertical-align: bottom;
+  }
+
   /* Space out the masthead */
   .header {
     margin-bottom: 30px;

@@ -1,16 +1,52 @@
-<div class="row">
-<form name="loginForm" ng-show="currentUser() === 'anonymous'" class="col-md-6">
-  <h2>Login</h2>
-  <label for="loginfield">Login</label><input name="loginfield" ng-model="login" type="text" class="form-control" required autofocus>
-  <label for="passwordfield">Password</label><input name="passwordfield" ng-model="password" type="password" class="form-control" required></label>
-  <input ng-disabled="!loginForm.$valid" class="btn btn-default" type="submit" value="Login" ng-click="doLogin()">
-</form>
 
-<form name="registerForm" ng-show="currentUser() === 'anonymous'" class="col-md-6">
-  <h2>New User? Register!</h2>
-  <label for="newloginfield">Login</label><input name="newloginfield" ng-model="newlogin" type="text" class="form-control" required>
-  <label for="newemailfield">Email</label><input name="newemailfield" ng-model="newemail" type="email" class="form-control" required>
-  <label for="newpasswordfield">Password</label><input id="newpasswordfield" ng-model="newpassword" type="password" class="form-control" required>
-  <input ng-disabled="!registerForm.$valid" class="btn btn-default" type="submit" value="Register" ng-click="register()">
-</form>
+<div class="container">
+  <h1>User Access</h1>
+
+  <div class="row">
+    <div class="well">
+      Create an account in PanDrugs to store your VCF analysis results.
+    </div>
+  </div>
+
+  <div class="row" ng-hide="newUser">
+    <h3>Registered user</h3>
+
+    <form name="loginForm" ng-show="currentUser() === 'anonymous'">
+      <div class="form-group">
+        <label for="loginfield">Login</label>
+        <input id="loginfield" ng-model="login" type="text" class="form-control" required autofocus/>
+      </div>
+      <div class="form-group">
+        <label for="passwordfield">Password</label>
+        <input id="passwordfield" ng-model="password" type="password" class="form-control" required/>
+      </div>
+      <div class="form-group">
+        <input class="btn btn-default pull-left" type="button" value="I am a new user" ng-click="showRegistration()"/>
+        <input ng-disabled="!loginForm.$valid" class="btn btn-primary pull-right" type="submit" value="Login" ng-click="doLogin()"/>
+      </div>
+    </form>
+  </div>
+
+  <div class="row" ng-show="newUser">
+    <h3>Create account</h3>
+
+    <form name="registerForm" ng-show="currentUser() === 'anonymous'">
+      <div class="form-group">
+        <label for="newloginfield">Login</label>
+        <input id="newloginfield" ng-model="newlogin" type="text" class="form-control" required/>
+      </div>
+      <div class="form-group">
+        <label for="newemailfield">Email</label>
+        <input id="newemailfield" ng-model="newemail" type="email" class="form-control" required/>
+      </div>
+      <div class="form-group">
+        <label for="newpasswordfield">Password</label>
+        <input id="newpasswordfield" ng-model="newpassword" type="password" class="form-control" required/>
+      </div>
+      <div class="form-group">
+        <input class="btn btn-default pull-left" type="button" value="I already have an account" ng-click="showLogin()"/>
+        <input ng-disabled="!registerForm.$valid" class="btn btn-success pull-right" type="submit" value="Register" ng-click="register()"/>
+      </div>
+    </form>
+  </div>
 </div>

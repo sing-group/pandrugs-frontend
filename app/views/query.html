@@ -1,5 +1,5 @@
 <div>
-  <button type="submit" class="btn btn-success btn-lg" ng-show="results != null" ng-click="newQuery()" style="float:right">New Query</button>
+  <button type="submit" class="btn btn-primary btn-lg" ng-show="results != null" ng-click="newQuery()" style="float:right">New Query</button>
   <h2>Query PanDrugs</h2>
 </div>
 <form role="query form">
@@ -25,6 +25,11 @@
 
             <div class="tab-content panel-body">
               <div id="genes" class="tab-pane"  ng-class="{active:getComputationIdQuery()==undefined}">
+                <div class="alert alert-info">
+                  Provide a gene list (HUGO Gene Symbols) to retrieve PanDrugs therapeutic candidates. Supply one gene
+                  symbol per each line.
+                </div>
+
                 <button class="btn btn-default" data-toggle="collapse" data-target="#examples-zone">Use an example</button>
                 <div id="examples-zone" class="collapse">
                   <div id="sample-gene-list">
@@ -42,23 +47,61 @@
                     </div>
                   </div>
                 </div>
-                <textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols" ng-model="genes" rows="20" spellcheck="false" smart-area="genesTextAreaConfig"></textarea>
+
+                <textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols"
+                          ng-model="genes" rows="20" spellcheck="false" smart-area="genesTextAreaConfig"></textarea>
               </div>
+
               <div id="drugs" class="tab-pane">
-                Example: Palbociclib
+                <div class="alert alert-info">
+                  <p>
+                    This query allows to explore the drug-gene relationships available in PanDrugs database.
+                  </p>
+                  <p>
+                    <strong>Example: </strong>Palbociclib
+                  </p>
+                </div>
+
                 <input ng-model="drugQuery" class="form-control" placeholder="Enter a drug name" spellcheck="false"/>
                 <list-group items="drugItems" selected-items="drugs" selectable="true" template-url="drugTemplateUrl" ng-if="!loadingDrugs" />
               </div>
+
               <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
+                <div class="alert alert-info">
+                  <p>
+                    Upload a ranked list of genes in the <strong><a
+                    href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29"
+                    target="_blank">RNK file format</a></strong>
+                    to execute this query.
+                  </p>
+                  <p>
+                    You can download a ranked list example (Lung adenocarcinoma LUAD patient with EGFR mutation and
+                    amplification from TCGA) from <strong><a href="downloads/TCGA-91-6847.rnk" target="_blank">here</a></strong>.
+                  </p>
+                </div>
+
                 <label for="generankinput">Select a gene ranking file</label>
                 <input name="generank" id="generankinput" class="file" type="file" file-model="generank"/>
-                <a href="downloads/TCGA-91-6847.rnk">Download a ranked list example</a> (Lung adenocarcinoma LUAD patient with EGFR mutation and amplification from TCGA)
+
                 <script>$(document).ready(function() {
                   $("#generankinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
                 }); </script>
               </div>
+
               <div id="vcfranking" class="tab-pane form-group" ng-class="{active:getComputationIdQuery()!=undefined}" role="tabpanel">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newComputationModal">
+                <div class="alert alert-info">
+                  <p>
+                    Upload a <strong><a href="https://en.wikipedia.org/wiki/Variant_Call_Format" target="_blank">VCF
+                    file</a></strong>
+                    to execute this query.
+                  </p>
+                  <p>
+                    <strong>WARNING</strong>: genomic coordinates <strong>MUST BE</strong> expressed in the human genome
+                    HG19 assembly.
+                  </p>
+                </div>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newComputationModal">
                   New variants analysis...
                 </button>
                 <div id = "newComputationModal" class="modal fade" tabindex="-1" role="dialog">
@@ -86,7 +129,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button ng-disabled="vcffile == '' || computationName.length == 0" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="submitVCF()">Submit VCF</button>
+                        <button ng-disabled="vcffile == '' || computationName.length == 0" type="button" class="btn btn-success" data-dismiss="modal" ng-click="submitVCF()">Submit VCF</button>
                       </div>
                     </div><!-- /.modal-content -->
                   </div><!-- /.modal-dialog -->
@@ -211,7 +254,7 @@
         </div>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-lg" ng-show="results == null" ng-click="query()"
+    <button type="submit" class="btn btn-success btn-lg" ng-show="results == null" ng-click="query()"
     ng-disabled="(selectedTab == 'genes' && genes.length == 0) || (selectedTab == 'drugs' && drugs.length == 0) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (!queryCancerFda && !queryCancerClinical && !queryOtherClinical && !queryOtherExperimental && !queryOtherFda) || (!queryTarget && !queryMarker) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
   </div>
 </form>

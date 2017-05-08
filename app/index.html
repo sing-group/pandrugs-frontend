@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/angular-list-group/dist/angular-list-group.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-fileinput/css/fileinput.min.css" />
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -26,10 +27,9 @@
 
     <!-- Add your site or application content here -->
     <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid" ng-controller="HeaderCtrl">
           <div class="navbar-header">
-
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
@@ -40,8 +40,7 @@
             <a ng-href="#/"><img class="navbar-brand" src="images/pandrugs-logo.png"></a>
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse" ng-controller="HeaderCtrl">
-
+          <div id="js-navbar-collapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
               <li ng-class="{ active: isActive('/') }"><a href="#/">Home</a></li>
               <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/query">Query</a></li>
@@ -53,18 +52,28 @@
             </ul>
           </div>
         </div>
-      </div>
+      </nav>
     </div>
 
     <div class="container-fluid">
     <div ng-view=""></div>
     </div>
 
-    <div class="footer">
-      <div class="container">
-        <p>A collaboration between <a href="http://www.cnio.es/ES/grupos/plantillas/presentacion.asp?grupo=50008762">Traslational Bioinformatics Unit</a> (<a href="http://www.cnio.es">CNIO</a>) &amp; <a href="http://sing.ei.uvigo.es">SING</a> (<a href="http://www.uvigo.es">U. Vigo</a>)</p>
-      </div>
-    </div>
+    <footer>
+        A collaboration between <a href="http://www.cnio.es/ing/grupos/plantillas/presentacion.asp?grupo=50004300">Bioinformatics Unit</a> (<a href="http://www.cnio.es">CNIO</a>) &amp; <a href="http://www.sing-group.org">SING</a> (<a href="http://www.uvigo.es">U. Vigo</a>)
+        - Follow us:
+        <a href="https://twitter.com/pandrugs_cnio" target="_blank">
+          <span class="fa fa-twitter twitter-color"></span> PanDrugs
+        </a>
+
+        <a href="https://twitter.com/bu_cnio" target="_blank">
+          <span class="fa fa-twitter twitter-color"></span> BU@CNIO
+        </a>
+
+        <a href="https://twitter.com/SINGgroup" target="_blank">
+          <span class="fa fa-twitter twitter-color"></span> SING
+        </a>
+    </footer>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
