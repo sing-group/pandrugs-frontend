@@ -525,14 +525,16 @@ angular.module('smartArea', [])
             var readFiles = function(reader, files, fileCallback, finalCallback) {
               var readFile = function(index) {
                 if (index >= files.length) {
-                  if (finalCallback !== undefined)
+                  if (finalCallback !== undefined) {
                     finalCallback();
+                  }
                   return;
                 }
 
                 reader.onload = function(file) {
-                  if (fileCallback !== undefined)
+                  if (fileCallback !== undefined) {
                     fileCallback(file);
+                  }
 
                   readFile(index + 1);
                 };
@@ -541,7 +543,7 @@ angular.module('smartArea', [])
                 if (file.type.startsWith('text/')) {
                   reader.readAsText(file);
                 } else {
-                  alert('File ' + file.name + ' is not a valid text file.');
+                  window.alert('File ' + file.name + ' is not a valid text file.');
                 }
               };
 

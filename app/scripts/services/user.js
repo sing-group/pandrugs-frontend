@@ -1,122 +1,173 @@
 'use strict';
 
 /**
-* @ngdoc service
-* @name pandrugsFrontendApp.RestDatabase
-* @description
-* # RestDatabase
-* Factory in the pandrugsFrontendApp.
-*/
+ * @ngdoc service
+ * @name pandrugsFrontendApp.RestDatabase
+ * @description
+ * # RestDatabase
+ * Factory in the pandrugsFrontendApp.
+ */
 angular.module('pandrugsFrontendApp')
-.factory('user', ['$q', '$timeout', '$filter', '$http', '$sessionStorage', '$location', 'BACKEND',
-  function restDatabaseFactory($q, $timeout, $filter, $http, $sessionStorage, $location, BACKEND) {
-    var currentUser = 'anonymous';
+  .factory('user', ['$q', '$timeout', '$filter', '$http', '$sessionStorage', '$location', 'BACKEND',
+    function restDatabaseFactory($q, $timeout, $filter, $http, $sessionStorage, $location, BACKEND) {
+      var currentUser = 'anonymous';
 
-    function doLogin(login, password, onSuccess, onError) {
-      $http.defaults.headers.common.Authorization = 'Basic ' + btoa(login + ':' + password);
-       // signals the backend to send a WWW-Authenticate: xBasic avoiding the browser login dialog to appear
-      $http.defaults.headers.common['x-requested-with'] = 'xmlhttprequest';
-      $http.get(BACKEND.API + 'user/' + login)
-      .success(function() {
-        $sessionStorage.user = login;
-        $sessionStorage.password = password;
-        currentUser = login;
-        if (onSuccess !== null) {
-          onSuccess();
+      function doLogin(login, password, onSuccess, onError) {
+        $http.defaults.headers.common.Authorization = 'Basic ' + btoa(login + ':' + password);
+        // signals the backend to send a WWW-Authenticate: xBasic avoiding the browser login dialog to appear
+        $http.defaults.headers.common['x-requested-with'] = 'xmlhttprequest';
+
+        $http.get(BACKEND.API + 'user/' + login)
+          .then(function () {
+            $sessionStorage.user = login;
+            $sessionStorage.password = password;
+            currentUser = login;
+
+            if (onSuccess) {
+              onSuccess();
+            }
+          }, function () {
+            doLogout();
+
+            if (onError) {
+              onError();
+            }
+          });
+      }
+
+      function doLogout() {
+        currentUser = 'anonymous';
+        delete $sessionStorage.user;
+        delete $sessionStorage.password;
+      }
+
+      function doConfirm(token, onSuccess, onError) {
+        $http.get(BACKEND.API + 'registration/' + token)
+        .then(function (response) {
+          if (onSuccess) {
+            onSuccess(response.data);
+          }
+        }, function () {
+          if (onError) {
+            onError();
+          }
+        });
+      }
+
+      function doRegister(login, email, password, onSuccess, onError) {
+        var absUrl = $location.absUrl();
+        var encodedTemplate = encodeURIComponent(absUrl.substring(0, absUrl.indexOf('#')) + '#/login?confirmuuid=%s');
+
+        $http.post(BACKEND.API + 'registration/?confirmurltemplate=' + encodedTemplate,
+          {
+            'login': login,
+            'email': email,
+            'password': password
+          }
+        ).then(function (response) {
+          if (onSuccess) {
+            onSuccess(response.data);
+          }
+        }, function () {
+          if (onError) {
+            onError();
+          }
+        });
+      }
+
+      function getComputations(onSuccess, onError) {
+        if (currentUser !== 'anonymous') {
+          $http.get(BACKEND.API + 'variantsanalysis/' + currentUser)
+            .then(function (response) {
+              if (onSuccess) {
+                onSuccess(response.data);
+              }
+            }, function () {
+              if (onError) {
+                onError();
+              }
+            });
         }
-      }).error(function() {
-        doLogout();
-        if (onError !== null) {
-          onError();
+      }
+
+      function getComputation(userName, computationId, onSuccess, onError) {
+        var headers = {};
+        if (userName === 'guest') {
+          headers.Authorization = 'Basic ' + btoa('guest:guest');
         }
-      });
-    }
 
-    function doLogout() {
-      currentUser = 'anonymous';
-      delete $sessionStorage.user;
-      delete $sessionStorage.password;
-    }
+        $http.get(BACKEND.API + 'variantsanalysis/' + userName + '/' + computationId, {headers: headers})
+          .then(function (response) {
+            if (onSuccess) {
+              onSuccess(response.data);
+            }
+          }, function () {
+            if (onError) {
+              onError();
+            }
+          });
 
-    function doConfirm(token, onSuccess, onError) {
-      $http.get(BACKEND.API + 'registration/' + token)
-      .success(onSuccess).error(onError);
-    }
-
-    function doRegister(login, email, password, onSuccess, onError) {
-      var encodedTemplate = encodeURIComponent($location.absUrl().substring(0, $location.absUrl().indexOf('#')) + '#/login?confirmuuid=%s');
-      $http.post(BACKEND.API + 'registration/?confirmurltemplate=' + encodedTemplate,
-        {'login': login, 'email': email, 'password': password})
-        .success(onSuccess).error(onError);
-    }
-
-    function getComputations(onSuccess, onError) {
-      if (currentUser !== 'anonymous') {
-        $http.get(BACKEND.API + 'variantsanalysis/' + currentUser)
-        .success(function(data) { if (onSuccess !== null) { onSuccess(data); } })
-        .error(function() { if (onError !== null) { onError(); } });
-      }
-    }
-
-    function getComputation(userName, computationId, onSuccess, onError) {
-      var headers = {};
-      if (userName === 'guest') {
-        headers.Authorization = 'Basic ' + btoa('guest:guest');
       }
 
-      $http.get(BACKEND.API + 'variantsanalysis/' + userName + '/' + computationId, {headers:headers})
-      .success(function(data) { if (onSuccess !== null) { onSuccess(data); } })
-      .error(function() { if (onError !== null) { onError(); } });
+      function submitComputation(vcfFile, computationName, onSuccess, onError) {
+        var headers = {'Content-Type': undefined};
 
-    }
+        var requestUser = currentUser;
+        if (currentUser === 'anonymous') {
+          headers.Authorization = 'Basic ' + btoa('guest:guest');
+          requestUser = 'guest';
+        }
 
-    function submitComputation(vcfFile, computationName, onSuccess, onError) {
-      var headers = {'Content-Type': undefined};
-
-      var requestUser = currentUser;
-      if (currentUser === 'anonymous') {
-        headers.Authorization = 'Basic ' + btoa('guest:guest');
-        requestUser = 'guest';
-      }
-
-      var reader = new FileReader();
-      reader.onload = function() {
-        var fileContents = reader.result;
-        $http.post(BACKEND.API + 'variantsanalysis/' + requestUser +'?name=' + computationName, fileContents, {
+        var reader = new FileReader();
+        reader.onload = function () {
+          var fileContents = reader.result;
+          $http.post(BACKEND.API + 'variantsanalysis/' + requestUser + '?name=' + computationName, fileContents, {
             transformRequest: angular.identity,
             headers: headers
-        }).success(function(data, status, rheaders) {
-          var newId = rheaders('Location').substring(rheaders('Location').lastIndexOf('/') + 1 );
-          onSuccess(newId);
-        }).error(onError);
+          }).then(function (response) {
+            if (onSuccess) {
+              var location = response.headers('Location');
+              var newId = location.substring(location.lastIndexOf('/') + 1);
+
+              onSuccess(newId);
+            }
+          }, onError);
+        };
+        reader.readAsText(vcfFile);
+      }
+
+      function deleteComputation(computationId, onSuccess, onError) {
+        $http.delete(
+          BACKEND.API + 'variantsanalysis/' + currentUser + '/' + computationId)
+          .then(function (response) {
+            if (onSuccess) {
+              onSuccess(response.data);
+            }
+          }, function () {
+            if (onError) {
+              onError();
+            }
+          });
+      }
+
+      if ('user' in $sessionStorage) {
+        doLogin($sessionStorage.user, $sessionStorage.password);
+      }
+
+
+      // Public API here
+      return {
+        getCurrentUser: function () {
+          return currentUser;
+        },
+        register: doRegister,
+        login: doLogin,
+        logout: doLogout,
+        confirm: doConfirm,
+        getComputations: getComputations,
+        getComputation: getComputation,
+        submitComputation: submitComputation,
+        deleteComputation: deleteComputation
       };
-      reader.readAsText(vcfFile);
     }
-
-    function deleteComputation(computationId, onSuccess, onError) {
-      $http.delete(
-        BACKEND.API + 'variantsanalysis/' + currentUser + '/' + computationId)
-      .success(onSuccess).error(onError);
-    }
-
-    if ('user' in $sessionStorage) {
-      doLogin($sessionStorage.user, $sessionStorage.password, null, null);
-    }
-
-
-    // Public API here
-    return {
-      getCurrentUser: function() {
-        return currentUser;
-      },
-      register: doRegister,
-      login: doLogin,
-      logout: doLogout,
-      confirm: doConfirm,
-      getComputations: getComputations,
-      getComputation: getComputation,
-      submitComputation: submitComputation,
-      deleteComputation: deleteComputation
-    };
-  }
-]);
+  ]);

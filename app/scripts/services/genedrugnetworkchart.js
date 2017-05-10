@@ -15,10 +15,11 @@ angular.module('pandrugsFrontendApp')
     var graph;
     return {
 
-      updateChart: function(results, degree) {
+      updateChart: function (results, degree) {
         var deferred = $q.defer();
 
         var idsCache = [];
+
         function createGeneNode(nodes, geneName, isRootGene) {
 
           var id = geneName;
@@ -30,21 +31,21 @@ angular.module('pandrugsFrontendApp')
                 genename: geneName,
                 type: 'gene'
               },
-              classes: 'gene'+((isRootGene)?' rootGene':'')
+              classes: 'gene' + ((isRootGene) ? ' rootGene' : '')
             });
           }
         }
 
         function drugAdded(drugName) {
-          var id = 'drug-'+drugName;
-          if (idsCache[id]){
+          var id = 'drug-' + drugName;
+          if (idsCache[id]) {
             return true;
           }
           return false;
         }
 
         function createDrugNode(nodes, drugName, status) {
-          var id = 'drug-'+drugName;
+          var id = 'drug-' + drugName;
           if (!idsCache[id]) {
             idsCache[id] = true;
             nodes.push({
@@ -53,7 +54,7 @@ angular.module('pandrugsFrontendApp')
                 drug: drugName,
                 type: 'drug'
               },
-              classes: 'drugs '+status.toLowerCase()
+              classes: 'drugs ' + status.toLowerCase()
             });
           }
         }
@@ -63,37 +64,37 @@ angular.module('pandrugsFrontendApp')
           var gene1 = [geneA, geneB].sort()[0];
           var gene2 = [geneA, geneB].sort()[1];
 
-          var id = 'gene-'+gene1+'-'+'gene-'+gene2;
+          var id = 'gene-' + gene1 + '-' + 'gene-' + gene2;
           if (!idsCache[id]) {
             idsCache[id] = true;
 
             edges.push({
               data: {
-                  id: id,
-                  source: gene1,
-                  target: gene2,
-                  type: 'protein-interaction'
-                },
+                id: id,
+                source: gene1,
+                target: gene2,
+                type: 'protein-interaction'
+              },
               classes: 'protein-interaction '
             });
           }
         }
 
         function createDrugGeneInteraction(edges, drug, gene, dScore, isTarget, isDirect) {
-          var classes = (isTarget?'target':'marker')+' '+(isDirect?'direct':'indirect');
-          var id = gene+'-'+drug+'-'+classes.replace(' ', '_');
+          var classes = (isTarget ? 'target' : 'marker') + ' ' + (isDirect ? 'direct' : 'indirect');
+          var id = gene + '-' + drug + '-' + classes.replace(' ', '_');
           if (!idsCache[id]) {
             idsCache[id] = true;
 
             edges.push({
               data: {
-                  id: id,
-                  source: gene,
-                  target: 'drug-'+drug,
-                  weight: 0.5 + (Math.pow(dScore, 6.0))*5.0,
-                  type: 'interaction'
-                },
-              classes: 'interaction '+classes
+                id: id,
+                source: gene,
+                target: 'drug-' + drug,
+                weight: 0.5 + (Math.pow(dScore, 6.0)) * 5.0,
+                type: 'interaction'
+              },
+              classes: 'interaction ' + classes
             });
           }
         }
@@ -105,9 +106,9 @@ angular.module('pandrugsFrontendApp')
 
         if (results) {
 
-          results.forEach(function(group) {
+          results.forEach(function (group) {
             if (group.gScore > 0.6 && group.dScore > 0.7) {
-              group.geneDrugInfo.forEach(function(genedruginfo) {
+              group.geneDrugInfo.forEach(function (genedruginfo) {
 
                 var drug = {drugname: genedruginfo.drug.substring(0, Math.min(genedruginfo.drug.length, 30))};
                 if (genedruginfo.indirect !== null) {
@@ -116,7 +117,7 @@ angular.module('pandrugsFrontendApp')
 
                 createDrugNode(drugNodes, drug.drugname, genedruginfo.status);
 
-                genedruginfo.gene.forEach(function(gene){
+                genedruginfo.gene.forEach(function (gene) {
                   createGeneNode(geneNodes, gene, true);
 
                   var isDirect = true;
@@ -136,24 +137,23 @@ angular.module('pandrugsFrontendApp')
           });
 
 
-
           // gene interaction
-          var genesToQuery = util.unique(geneNodes.map(function(node){
-              return node.data.genename;
+          var genesToQuery = util.unique(geneNodes.map(function (node) {
+            return node.data.genename;
           }));
 
-          db.getInteractingGenes(genesToQuery, degree).then(function(results){
+          db.getInteractingGenes(genesToQuery, degree).then(function (results) {
 
-            results.forEach(function(geneInteractionInfo) {
+            results.forEach(function (geneInteractionInfo) {
               createGeneNode(geneNodes, geneInteractionInfo.geneSymbol, false);
 
-              geneInteractionInfo.geneInteraction.forEach(function(interactingGene){
-              //  geneNodes.push(createGeneNode(interactingGene));
+              geneInteractionInfo.geneInteraction.forEach(function (interactingGene) {
+                //  geneNodes.push(createGeneNode(interactingGene));
                 createGeneToGeneInteractionNode(edges, geneInteractionInfo.geneSymbol, interactingGene);
               });
 
-              geneInteractionInfo.drugInteraction.forEach(function(interactingDrug){
-                if (drugAdded(interactingDrug.showDrugName)){
+              geneInteractionInfo.drugInteraction.forEach(function (interactingDrug) {
+                if (drugAdded(interactingDrug.showDrugName)) {
                   createDrugGeneInteraction(edges, interactingDrug.showDrugName, geneInteractionInfo.geneSymbol, 0.0, interactingDrug.target === 'target', interactingDrug.indirectGene === null);
                 }
               });
@@ -169,19 +169,19 @@ angular.module('pandrugsFrontendApp')
         }
 
         function createGraph(geneNodes, drugNodes, edges) {
-          graph = cytoscape({
+          graph = cytoscape({ // jshint ignore:line
 
             container: document.getElementById(elementID),
 
             //layout 1
             layout: {
               name: 'concentric',
-              concentric: function(node) {
+              concentric: function (node) {
 
-                if(node.id() === 'root') {
+                if (node.id() === 'root') {
                   return 1000;
                 }
-                if(node.data().genename) { //is gene
+                if (node.data().genename) { //is gene
                   return 10;
                 } else {
                   return 1000;
@@ -193,48 +193,48 @@ angular.module('pandrugsFrontendApp')
 
             // layout 2
             /*layout: {
-              name: 'grid',
-              position: function(node) { //for grid
-              //  alert(JSON.stringify(node));
-                return {row:node.position.row,col:(node.data('type')==='gene')?0:1};
-              },
-              cols: 2
-            },*/
+             name: 'grid',
+             position: function(node) { //for grid
+             //  alert(JSON.stringify(node));
+             return {row:node.position.row,col:(node.data('type')==='gene')?0:1};
+             },
+             cols: 2
+             },*/
 
             // layout 3
             /*layout: {
-              name: 'cose',
-              edgeElasticity: function(edge){
-                if (edge.data('type') === 'protein-interaction') {
-                  return 5;
-                } else {
-                  return 100;
-                }
-              },
-              idealEdgeLength: function(edge) {
-                return 100;
-              }
-            },*/
+             name: 'cose',
+             edgeElasticity: function(edge){
+             if (edge.data('type') === 'protein-interaction') {
+             return 5;
+             } else {
+             return 100;
+             }
+             },
+             idealEdgeLength: function(edge) {
+             return 100;
+             }
+             },*/
             style: [
               {
                 selector: 'node',
                 style: {
                   'color': 'white',
-                  'text-valign':'center',
-                  'text-halign':'center',
+                  'text-valign': 'center',
+                  'text-halign': 'center',
                   'cursor': 'pointer'
                 }
               },
               {
                 selector: '.highlight',
                 style: {
-                  'opacity' : 1
+                  'opacity': 1
                 }
               },
               {
                 selector: '.lowlight',
                 style: {
-                  'opacity' : 0
+                  'opacity': 0
                 }
               },
               {
@@ -258,8 +258,8 @@ angular.module('pandrugsFrontendApp')
                 selector: '.drugs',
                 style: {
                   'content': 'data(drug)',
-                  'text-valign':'center',
-                  'text-halign':'center',
+                  'text-valign': 'center',
+                  'text-halign': 'center',
                   'width': 'label',
                   'height': 'label',
                   'shape': 'rectangle',
@@ -314,13 +314,13 @@ angular.module('pandrugsFrontendApp')
               {
                 selector: '.interaction.target',
                 style: {
-                  'line-style' : 'solid'
+                  'line-style': 'solid'
                 }
               },
               {
                 selector: '.protein-interaction',
                 style: {
-                  'line-color' : 'blue',
+                  'line-color': 'blue',
                   'curve-style': 'unbundled-bezier',
                   'control-point-distances': 120,
                   'control-point-weights': 0.1
@@ -337,26 +337,26 @@ angular.module('pandrugsFrontendApp')
                 }
               }
             ],
-            elements: { nodes: geneNodes.concat(drugNodes), edges: edges }
+            elements: {nodes: geneNodes.concat(drugNodes), edges: edges}
           });
-          graph.on('mouseover', 'node', function(event) {
+          graph.on('mouseover', 'node', function (event) {
             graph.$('node').addClass('lowlight');
             graph.$('edge').addClass('lowlight');
 
             event.cyTarget.addClass('highlight');
             event.cyTarget.removeClass('lowlight');
 
-            event.cyTarget.connectedEdges().forEach(function(edge){
+            event.cyTarget.connectedEdges().forEach(function (edge) {
               edge.addClass('highlight');
               edge.removeClass('lowlight');
-              edge.connectedNodes().forEach(function(node){
+              edge.connectedNodes().forEach(function (node) {
                 node.addClass('highlight');
                 node.removeClass('lowlight');
               });
             });
           });
 
-          graph.on('mouseout', 'node', function( ) {
+          graph.on('mouseout', 'node', function () {
             graph.$('node').removeClass('lowlight');
             graph.$('node').removeClass('highlight');
             graph.$('edge').removeClass('lowlight');
@@ -365,10 +365,11 @@ angular.module('pandrugsFrontendApp')
           });
           return graph;
         }
+
         return deferred.promise;
       },
 
-      exportnetwork: function(scale) {
+      exportnetwork: function (scale) {
         return graph.png({scale: scale});
       }
 

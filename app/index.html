@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>PanDrugs</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -37,19 +37,20 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a ng-href="#/"><img class="navbar-brand" src="images/pandrugs-logo.png"></a>
+            <a ng-href="#!/"><img class="navbar-brand" src="images/pandrugs-logo.png"></a>
           </div>
 
           <div id="js-navbar-collapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li ng-class="{ active: isActive('/') }"><a href="#/">Home</a></li>
-              <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#/query">Query</a></li>
+              <li ng-class="{ active: isActive('/') }"><a href="#!/">Home</a></li>
+              <li ng-class="{ active: isActive('/queryMenu') || isActive('/query') }"><a ng-href="#!/query">Query</a></li>
               <!--<li ng-class="{ active: isActive('/about') }"><a ng-href="#/about">About</a></li>-->
-              <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#/login">Login</a></li>
-              <li ng-show="getCurrentUser() !== 'anonymous'"><a style="cursor: pointer" ng-click="logout()">Logout ({{getCurrentUser()}})</a></li>
-              <li ng-class="{ active: isActive('/help/') }"><a ng-href="#/help/">Help</a></li>
+              <li ng-class="{ active: isActive('/help/') }"><a ng-href="#!/help">Help</a></li>
               <li><a ng-href="{{BACKEND.APP}}">API</a></li>
-            </ul>
+
+              <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#!/login">Login</a></li>
+              <li ng-show="getCurrentUser() !== 'anonymous'"><a style="cursor: pointer" ng-click="logout()">Logout ({{getCurrentUser()}})</a></li>
+            </div>
           </div>
         </div>
       </nav>
@@ -143,6 +144,7 @@
         <script src="scripts/filters/percentage.js"></script>
         <script src="scripts/filters/highlight.js"></script>
         <script src="scripts/filters/mapattribute.js"></script>
+        <script src="scripts/components/advanced-query-options/advanced-query-options.component.js"></script>
         <!-- endbuild -->
 </body>
 </html>

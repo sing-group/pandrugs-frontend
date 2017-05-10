@@ -11,22 +11,18 @@ angular.module('pandrugsFrontendApp')
 .factory('restDatabase', ['$q', '$timeout', '$filter', '$http', 'BACKEND',
   function restDatabaseFactory($q, $timeout, $filter, $http, BACKEND) {
     function constructQueryString(
-      queryCancerFda,
-      queryCancerClinical,
-      queryOtherFda,
-      queryOtherClinical,
-      queryOtherExperimental,
-      queryTarget,
-      queryMarker,
+      advancedQueryOptions,
       queryDirect,
       queryIndirect
     ) {
+      console.log(advancedQueryOptions);
+
       // query server
       var cancerDrugStatus = '';
-      if (queryCancerFda) {
+      if (advancedQueryOptions.cancerFda) {
         cancerDrugStatus += 'cancerDrugStatus=APPROVED&';
       }
-      if (queryCancerClinical) {
+      if (advancedQueryOptions.cancerClinical) {
         cancerDrugStatus += 'cancerDrugStatus=CLINICAL_TRIALS&';
       }
       if (cancerDrugStatus === '') {
@@ -34,13 +30,13 @@ angular.module('pandrugsFrontendApp')
       }
 
       var nonCancerDrugStatus = '';
-      if (queryOtherClinical) {
+      if (advancedQueryOptions.otherClinical) {
         nonCancerDrugStatus += 'nonCancerDrugStatus=CLINICAL_TRIALS&';
       }
-      if (queryOtherExperimental) {
+      if (advancedQueryOptions.otherExperimental) {
         nonCancerDrugStatus += 'nonCancerDrugStatus=EXPERIMENTAL&';
       }
-      if (queryOtherFda) {
+      if (advancedQueryOptions.otherFda) {
         nonCancerDrugStatus += 'nonCancerDrugStatus=APPROVED&';
       }
       if (nonCancerDrugStatus === '') {
@@ -48,11 +44,11 @@ angular.module('pandrugsFrontendApp')
       }
 
       var target = '';
-      if (queryTarget && queryMarker) {
+      if (advancedQueryOptions.target && advancedQueryOptions.marker) {
         target = 'target=BOTH&';
-      } else if (queryTarget) {
+      } else if (advancedQueryOptions.target) {
         target = 'target=TARGET&';
-      } else if (queryMarker) {
+      } else if (advancedQueryOptions.marker) {
         target = 'target=MARKER&';
       }
 
@@ -71,46 +67,33 @@ angular.module('pandrugsFrontendApp')
     function searchBy (
       queryType,
       queryValues,
-      queryCancerFda,
-      queryCancerClinical,
-      queryOtherFda,
-      queryOtherClinical,
-      queryOtherExperimental,
-      queryTarget,
-      queryMarker,
+      advancedQueryOptions,
       queryDirect,
       queryIndirect
     ) {
-        var deferred = $q.defer();
+      var deferred = $q.defer();
 
-        // build query string
-        var queryString = '';
-        for (var i = 0; i < queryValues.length; i++) {
-          if (!angular.isUndefined(queryValues[i])) {
-            queryValues[i] = queryValues[i].trim().toUpperCase();
-            if (queryValues[i].length > 0) {
-              queryString += queryType + '=' + queryValues[i] + '&';
-            }
+      // build query string
+      var queryString = '';
+      for (var i = 0; i < queryValues.length; i++) {
+        if (!angular.isUndefined(queryValues[i])) {
+          queryValues[i] = queryValues[i].trim().toUpperCase();
+          if (queryValues[i].length > 0) {
+            queryString += queryType + '=' + queryValues[i] + '&';
           }
         }
+      }
 
-        queryString += constructQueryString(
-          queryCancerFda,
-          queryCancerClinical,
-          queryOtherFda,
-          queryOtherClinical,
-          queryOtherExperimental,
-          queryTarget,
-          queryMarker,
-          queryDirect,
-          queryIndirect
-        );
-
-        $http.get(BACKEND.API + 'genedrug?' + queryString)
-        .success(function(results) {
-          deferred.resolve(results);
-        }
+      queryString += constructQueryString(
+        advancedQueryOptions,
+        queryDirect,
+        queryIndirect
       );
+
+      $http.get(BACKEND.API + 'genedrug?' + queryString)
+      .then(function(results) {
+        deferred.resolve(results.data);
+      });
 
       return deferred.promise;
     }
@@ -129,26 +112,14 @@ angular.module('pandrugsFrontendApp')
     return {
       rankedSearch: function(
         geneRankFile,
-        queryCancerFda,
-        queryCancerClinical,
-        queryOtherFda,
-        queryOtherClinical,
-        queryOtherExperimental,
-        queryTarget,
-        queryMarker,
+        advancedQueryOptions,
         queryDirect,
         queryIndirect
       ) {
         var deferred = $q.defer();
 
         var queryString = constructQueryString(
-          queryCancerFda,
-          queryCancerClinical,
-          queryOtherFda,
-          queryOtherClinical,
-          queryOtherExperimental,
-          queryTarget,
-          queryMarker,
+          advancedQueryOptions,
           queryDirect,
           queryIndirect
         );
@@ -160,8 +131,8 @@ angular.module('pandrugsFrontendApp')
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })
-        .success(function(results) {
-            deferred.resolve(results);
+        .then(function(results) {
+            deferred.resolve(results.data);
           }
         );
 
@@ -170,13 +141,7 @@ angular.module('pandrugsFrontendApp')
 
       searchByGenes: function (
         genesArray,
-        queryCancerFda,
-        queryCancerClinical,
-        queryOtherFda,
-        queryOtherClinical,
-        queryOtherExperimental,
-        queryTarget,
-        queryMarker,
+        advancedQueryOptions,
         queryDirect,
         queryIndirect
 
@@ -184,51 +149,27 @@ angular.module('pandrugsFrontendApp')
         return searchBy(
           'gene',
           genesArray,
-          queryCancerFda,
-          queryCancerClinical,
-          queryOtherFda,
-          queryOtherClinical,
-          queryOtherExperimental,
-          queryTarget,
-          queryMarker,
+          advancedQueryOptions,
           queryDirect,
           queryIndirect);
       },
 
       searchByDrugs: function (
         drugsArray,
-        queryCancerFda,
-        queryCancerClinical,
-        queryOtherFda,
-        queryOtherClinical,
-        queryOtherExperimental,
-        queryTarget,
-        queryMarker,
+        advancedQueryOptions,
         queryDirect,
         queryIndirect) {
         return searchBy(
           'drug',
           drugsArray,
-          queryCancerFda,
-          queryCancerClinical,
-          queryOtherFda,
-          queryOtherClinical,
-          queryOtherExperimental,
-          queryTarget,
-          queryMarker,
+          advancedQueryOptions,
           queryDirect,
           queryIndirect);
       },
 
       computationIdSearch: function (
         computationId,
-        queryCancerFda,
-        queryCancerClinical,
-        queryOtherFda,
-        queryOtherClinical,
-        queryOtherExperimental,
-        queryTarget,
-        queryMarker,
+        advancedQueryOptions,
         queryDirect,
         queryIndirect
       ) {
@@ -236,20 +177,14 @@ angular.module('pandrugsFrontendApp')
 
           var queryString = '';
           queryString += constructQueryString(
-            queryCancerFda,
-            queryCancerClinical,
-            queryOtherFda,
-            queryOtherClinical,
-            queryOtherExperimental,
-            queryTarget,
-            queryMarker,
+            advancedQueryOptions,
             queryDirect,
             queryIndirect
           );
 
           $http.get(BACKEND.API + 'genedrug/fromComputationId?computationId=' + computationId + '&' + queryString)
-          .success(function(results) {
-            deferred.resolve(results);
+          .then(function(results) {
+            deferred.resolve(results.data);
           }
         );
 
@@ -257,13 +192,13 @@ angular.module('pandrugsFrontendApp')
       },
 
       getCancerTypes: function() {
-
         var deferred = $q.defer();
+
         $http.get(BACKEND.API + 'cancer')
-        .success(function(results) {
-          deferred.resolve(results.name);
-          }
-        );
+        .then(function(results) {
+          deferred.resolve(results.data.name);
+        });
+
         return deferred.promise;
       },
 
@@ -271,8 +206,8 @@ angular.module('pandrugsFrontendApp')
         var deferred = $q.defer();
 
         $http.get(BACKEND.API + 'gene/interactions', {params: {gene: genes, degree: degree}})
-        .success(function(results) {
-          deferred.resolve(results);
+        .then(function(results) {
+          deferred.resolve(results.data);
           }
         );
         return deferred.promise;

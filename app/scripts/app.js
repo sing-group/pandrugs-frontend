@@ -34,6 +34,7 @@ angular
     var server = ''; // the server is in this machine (e.g.: docker distribution)
     var app = server + '/pandrugs-backend/';
 
+    
     return {
       SERVER: server,
       APP: app,
@@ -51,7 +52,7 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
-      .when('/help/', {
+      .when('/help', {
         templateUrl: 'views/help.html',
         controller: 'HelpCtrl'
       })
@@ -77,7 +78,9 @@ angular
     $rootScope.keys = Object.keys;
 
     //when the route is changed scroll to the proper element.
-    $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
-      if($location.hash()) $anchorScroll();
+    $rootScope.$on('$routeChangeSuccess', function() {
+      if($location.hash()) {
+        $anchorScroll();
+      }
     });
   });

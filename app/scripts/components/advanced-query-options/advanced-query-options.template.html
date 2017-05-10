@@ -1,0 +1,68 @@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="advanced">
+          Advanced Options
+        </a>
+      </h4>
+    </div>
+    <div id="advanced" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <div class="row">
+          <!-- drug and status level-->
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Drug status level</div>
+              <div class="panel-body">
+                <h4>Cancer</h4>
+                <label><input type="checkbox" ng-model="$ctrl.cancerFda" ng-change="$ctrl.notifyChange()">FDA approved</label>
+                <label><input type="checkbox" ng-model="$ctrl.cancerClinical" ng-change="$ctrl.notifyChange()">Clinical trials</label>
+
+                <h4>Other pathologies</h4>
+                <label><input type="checkbox" ng-model="$ctrl.otherFda" ng-change="$ctrl.notifyChange()">FDA approved</label>
+                <label><input type="checkbox" ng-model="$ctrl.otherClinical" ng-change="$ctrl.notifyChange()">Clinical trials</label>
+                <label><input type="checkbox" ng-model="$ctrl.otherExperimental" ng-change="$ctrl.notifyChange()">Experimental</label>
+              </div><!-- end panel-body -->
+            </div><!-- end drug and status level -->
+          </div>
+
+          <!-- interaction evidence level -->
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">Interaction evidence level</div>
+              <div class="panel-body">
+                <label><input type="checkbox" ng-model="$ctrl.target" ng-change="$ctrl.notifyChange()">Target</label>
+                <label><input type="checkbox" ng-model="$ctrl.marker" ng-change="$ctrl.notifyChange()">Marker</label>
+              </div><!-- end panel-body -->
+            </div><!-- end  interaction evidence level -->
+          </div>
+
+          <!-- cancer types -->
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                Select Cancer Types
+                <input class="btn btn-default btn-xs pull-right" type="button" ng-click="$ctrl.clearCancerTypesSelection()" value="Clear all"/>
+                <input class="btn btn-default btn-xs pull-right" type="button" ng-click="$ctrl.selectAllCancerTypes()" value="Select all"/>
+              </div>
+              <div class="panel-body">
+                <span class="cancer_type_checkbox" ng-repeat="cancerType in $ctrl.cancerTypes">
+                  <input
+                    type="checkbox"
+                    name="cancerType_{{$index}}"
+                    id="cancerType_{{$index}}"
+                    value="{{cancerType.name}}"
+                    ng-model="cancerType.selected"
+                    ng-change="$ctrl.notifyChange()"
+                  />
+                  <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
+                </span>
+              </div>
+            </div><!-- end panel-body -->
+          </div>
+        </div><!-- end cancer types -->
+      </div>
+    </div>
+  </div>
+</div>

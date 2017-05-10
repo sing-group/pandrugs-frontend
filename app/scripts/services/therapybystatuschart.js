@@ -32,7 +32,7 @@ angular.module('pandrugsFrontendApp')
             enabled: true,
             format: '{point.name}',
             style: {
-              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black' // jshint ignore:line
             }
           }
         }
