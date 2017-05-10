@@ -118,7 +118,7 @@ angular.module('pandrugsFrontendApp')
         },
         xAxis: {
           title: {
-            text: '<span class=\"help_icon\" title=\"Measure of the suitability of the drug according to the genomic profile\"></span>Gene Score',
+            text: '<span class=\"help_icon\" title=\"Measure of the suitability of the drug according to the genomic profile\"></span>Drug Score',
             useHTML: true
           },
           min: -1,
@@ -134,7 +134,7 @@ angular.module('pandrugsFrontendApp')
         },
         yAxis: {
           title: {
-            text: '<span class=\"help_icon\" title=\"Measure of the biological relevance of the gene in the tumoral process\"></span>Drug Score',
+            text: '<span class=\"help_icon\" title=\"Measure of the biological relevance of the gene in the tumoral process\"></span>Gene Score',
             useHTML: true
           },
           min: 0,
@@ -178,30 +178,26 @@ angular.module('pandrugsFrontendApp')
         series[1].data = [];
         series[2].data = [];
         for (var i = 0; i < results.length; i++) {
-          var genedrugresults = results[i].geneDrugInfo;
-          for (var j = 0; j < genedrugresults.length; j++ ) {
-            var result = genedrugresults[j];
-            var jitterX = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
-            var jitterY = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
-            var datapoint = {
-              genes: result.gene.join(', '),
-              drug: results[i].showDrugName,
-              x: result.dScore + jitterX,
-              xRound: result.dScore.toFixed(4),
-              y: result.gScore + jitterY,
-              yRound: result.gScore.toFixed(4),
-              z: Math.pow(((Math.abs(result.dScore) + result.gScore)/2) * 10, 10),
-              jitter: 'x: '+jitterX.toExponential()+', y: '+jitterY.toExponential()
-            };
-            if (result.status === 'APPROVED') {
-              series[0].data.push(datapoint);
-            }
-            if (result.status === 'CLINICAL_TRIALS') {
-              series[1].data.push(datapoint);
-            }
-            if (result.status === 'EXPERIMENTAL') {
-              series[2].data.push(datapoint);
-            }
+          var jitterX = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
+          var jitterY = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
+          var datapoint = {
+            genes: results[i].gene.map(function(geneItem) { return geneItem.geneSymbol}).join(', '),
+            drug: results[i].showDrugName,
+            x: results[i].dScore + jitterX,
+            xRound: results[i].dScore.toFixed(4),
+            y: results[i].gScore + jitterY,
+            yRound: results[i].gScore.toFixed(4),
+            z: Math.pow(((Math.abs(results[i].dScore) + results[i].gScore)/2) * 10, 10),
+            jitter: 'x: '+jitterX.toExponential()+', y: '+jitterY.toExponential()
+          };
+          if (results[i].status === 'APPROVED') {
+            series[0].data.push(datapoint);
+          }
+          if (results[i].status === 'CLINICAL_TRIALS') {
+            series[1].data.push(datapoint);
+          }
+          if (results[i].status === 'EXPERIMENTAL') {
+            series[2].data.push(datapoint);
           }
         }
       }
