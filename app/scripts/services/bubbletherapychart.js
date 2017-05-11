@@ -181,7 +181,7 @@ angular.module('pandrugsFrontendApp')
           var jitterX = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
           var jitterY = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
           var datapoint = {
-            genes: results[i].gene.map(function(geneItem) { return geneItem.geneSymbol}).join(', '),
+            genes: results[i].gene.map(function(geneItem) { return geneItem.geneSymbol; }).join(', '),
             drug: results[i].showDrugName,
             x: results[i].dScore + jitterX,
             xRound: results[i].dScore.toFixed(4),

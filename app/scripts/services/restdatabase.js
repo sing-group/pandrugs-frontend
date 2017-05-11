@@ -15,8 +15,6 @@ angular.module('pandrugsFrontendApp')
       queryDirect,
       queryIndirect
     ) {
-      console.log(advancedQueryOptions);
-
       // query server
       var cancerDrugStatus = '';
       if (advancedQueryOptions.cancerFda) {

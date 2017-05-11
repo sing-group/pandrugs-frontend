@@ -4,7 +4,7 @@ angular.module('pandrugsFrontendApp')
     bindings: {
       onChange: '&'
     },
-    controller: ['database', function (database) {
+    controller: ['database', '$filter', function (database, $filter) {
       this.cancerFda = true;
       this.cancerClinical = true;
       this.otherFda = true;
@@ -36,6 +36,13 @@ angular.module('pandrugsFrontendApp')
           marker: this.marker,
           cancerTypes: this.cancerTypes,
 
+          getSelectedCancerTypes: function() {
+            return this.cancerTypes.filter(function (cancer) {
+              return cancer.selected;
+            }).map(function(cancer) {
+              return $filter('titlecase')($filter('replace')(cancer.name, '_', ' '));
+            });
+          }.bind(this),
           areAllCancerTypesSelected: function() {
             return this.cancerTypes.every(function(cancer) {
               return cancer.selected;

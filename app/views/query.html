@@ -258,24 +258,22 @@
               <h5>SELECTED OPTIONS</h5>
               <div class="col-md-6">
                   <h6>Drug status level</h6>
-                  <p ng-if="queryCancerFda">FDA approved cancer</p>
-                  <p ng-if="queryCancerClinical">Clinical trials cancer</p>
-                  <p ng-if="queryOtherFda">FDA approved other patologies</p>
-                  <p ng-if="queryOtherClinical">Clinical trials other pathologies</p>
-                  <p ng-if="queryOtherExperimental">Experimental</p>
+                  <p ng-if="advancedQueryOptions.cancerFda">FDA approved cancer</p>
+                  <p ng-if="advancedQueryOptions.cancerClinical">Clinical trials cancer</p>
+                  <p ng-if="advancedQueryOptions.otherFda">FDA approved other patologies</p>
+                  <p ng-if="advancedQueryOptions.otherClinical">Clinical trials other pathologies</p>
+                  <p ng-if="advancedQueryOptions.otherExperimental">Experimental</p>
 
               </div>
               <div class="col-md-6">
                   <h6>Interaction evidence level</h6>
-                  <p ng-if="queryTarget">Target</p>
-                  <p ng-if="queryMarker">Marker</p>
+                  <p ng-if="advancedQueryOptions.target">Target</p>
+                  <p ng-if="advancedQueryOptions.marker">Marker</p>
                   <h6>Selected cancer types</h6>
-                  <ul ng-if="!allCancerSelected()">
-                  <li class="cancer_type_checkbox" ng-repeat="cancerType in selectedCancerTypes">
-                    {{cancerType | replace:'_':' ' | titlecase}}
-                  </li>
-                  </ul>
-                  <p ng-if="allCancerSelected()">All</p>
+                  <p ng-if="!advancedQueryOptions.areAllCancerTypesSelected()">
+                    {{advancedQueryOptions.getSelectedCancerTypes() | enumeration}}
+                  </p>
+                  <p ng-if="advancedQueryOptions.areAllCancerTypesSelected()">All</p>
               </div>
           </div>
         </div>
@@ -357,7 +355,7 @@
             </button>
           </td>
           <td ng-bind-html="row.gene | mapAttribute : 'geneSymbol' | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
-          <td style="white-space: nowrap">
+          <td>
             <span ng-if="row.pubchemId.length == 0">{{row.showDrugName}}</span>
             <span ng-if="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row.showDrugName}}</a></span>
           </td>
@@ -454,8 +452,8 @@
               </div>
             </div>
           </td>
-          <td >{{genedrug.family | enumeration}}</td>
-          <td >{{genedrug.source | enumeration}}</td>
+          <td>{{genedrug.family | enumeration}}</td>
+          <td>{{genedrug.source | enumeration}}</td>
           <td>{{genedrug.dScore | number: 4}}</td>
           <td>{{genedrug.gScore | number: 4}}</td>
           <td style="text-align: center">
