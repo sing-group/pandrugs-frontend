@@ -55,7 +55,14 @@ $medium-red: #ff3300;
 
 body {
   padding: 0;
+
+  .container-fluid {
+    margin-left: 1%;
+    margin-right: 1%;
+  }
 }
+
+
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
