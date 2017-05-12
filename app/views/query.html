@@ -406,7 +406,7 @@
             [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot;'>ClinicalTrials.gov</a>]
             <br>
           </td>
-          <td>{{genedrug.sensitivity | titlecase}}</td>
+          <td style="white-space: nowrap">{{genedrug.sensitivity | titlecase}}&nbsp;<span ng-if="genedrug.hasIndirectResistance()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{genedrug.indirectResistance | enumeration}}"></span></td>
           <td>
             <div class="tooltipCSS">
               <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>

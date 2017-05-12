@@ -280,12 +280,20 @@ angular.module('pandrugsFrontendApp')
           return warnings;
         };
 
+        var gdiHasIndirectResistance = function() {
+          return this.indirectResistance.length > 0;
+        };
+
         for (var i = 0; i < $scope.results.length; i++) {
           var geneDrugGroup = $scope.results[i];
 
           geneDrugGroup.getBestInteraction = getBestIteration;
           geneDrugGroup.getSensitivity = getSensitivity;
           geneDrugGroup.getWarnings = getWarnings;
+
+          geneDrugGroup.geneDrugInfo.forEach(function(gdi) {
+            gdi.hasIndirectResistance = gdiHasIndirectResistance;
+          });
         }
 
         if ($scope.results.length === 1) {
