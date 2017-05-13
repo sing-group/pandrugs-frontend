@@ -20,6 +20,34 @@ angular.module('pandrugsFrontendApp')
 
       return result;
     },
+    uniqueIgnoreCase: function(array) {
+      var uniqueElems = [];
+      var upperElems = [];
+
+      array.forEach(function(elem){
+        var elemUpper = elem.toUpperCase();
+
+        if (upperElems.indexOf(elemUpper) === -1) {
+          uniqueElems.push(elem);
+          upperElems.push(elemUpper);
+        }
+      });
+
+      return uniqueElems;
+    },
+    parseGenes: function(genes) {
+      return this.uniqueIgnoreCase(genes.split('\n')
+        .filter(function(item){
+          return item.trim().length > 0;
+        })
+        .map(function(item){
+          return item.replace(/\s.*/, '');
+        })
+        .map(function(item) {
+          return item.trim().toUpperCase();
+        })
+      );
+    },
     removeEmptyValues: function(array) {
       return array.filter(function(item) {
         return item !== undefined && item !== null && (typeof item !== 'string' || item.trim() !== '');
