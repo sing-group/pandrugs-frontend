@@ -176,6 +176,15 @@ tr.moreinfo {
   font-size: 0.9em;
 }
 
+td.wrapped-column {
+  max-width: 220px;
+  word-wrap: break-word;
+}
+
+td.min-column {
+  width: 1%;
+}
+
 #download-csv-link {
   float: right;
 }

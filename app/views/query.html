@@ -331,24 +331,24 @@
     <table id="results" st-table="results" st-pipe="query" class="table table-striped query-table">
       <thead>
         <tr>
-          <th ng-if="selectedTab !== 'drugs'">Actions</th>
+          <th ng-if="selectedTab !== 'drugs'" class="min-column">Actions</th>
           <th><span class="gene">Gene(s)</span> </span> <span class="help_icon" title="Gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
           <th><span class="drug">Drug</span> </span> <span class="help_icon" title="Compound name"></span></th>
-          <th>Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
+          <th class="wrapped-column">Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
           <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="help_icon" title="Type of therapy for the approved drugs in cancer"/></th>
-          <th>R/S <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
-          <th>Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
-          <th>Family <span class="help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
-          <th>Source(s) <span class="help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
-          <th st-sort="dScore" style="cursor: pointer" st-sort-default="reverse">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
-          <th st-sort="gScore" style="cursor: pointer">GScore <span class="help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
-          <th>BTC <span class="help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/> </th>
+          <th class="min-column">R/S <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
+          <th class="min-column">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
+          <th class="wrapped-column">Family <span class="help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
+          <th class="wrapped-column">Source(s) <span class="help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
+          <th class="wrapped-column" st-sort="dScore" style="cursor: pointer" st-sort-default="reverse">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
+          <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
+          <th class="wrapped-column">BTC <span class="help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/> </th>
         </tr>
       </thead>
 
       <tbody ng-hide="isLoading" ng-repeat="row in resultsPaginated">
         <tr>
-          <td ng-if="selectedTab !== 'drugs'">
+          <td ng-if="selectedTab !== 'drugs'" class="min-column">
             <button class="btn btn-default" ng-click="row.moreinfo = !row.moreinfo">
               <span ng-if="row.moreinfo" class="glyphicon glyphicon-minus"></span>
               <span ng-if="!row.moreinfo" class="glyphicon glyphicon-plus"></span>
@@ -359,10 +359,10 @@
             <span ng-if="row.pubchemId.length == 0">{{row.showDrugName}}</span>
             <span ng-if="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row.showDrugName}}</a></span>
           </td>
-          <td>{{row.statusDescription}}</td>
+          <td class="wrapped-column">{{row.statusDescription}}</td>
           <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
-          <td>{{row.getSensitivity() | titlecase}}</td>
-          <td>
+          <td class="min-column">{{row.getSensitivity() | titlecase}}</td>
+          <td class="min-column">
             <div class="tooltipCSS">
               <img ng-if="row.getBestInteraction() == 'marker'" src="images/query/marker-interaction.png"/>
               <img ng-if="row.getBestInteraction() == 'target-direct'" src="images/query/direct-interaction.png"/>
@@ -382,13 +382,13 @@
               </span>
             </div>
           </td>
-          <td>{{row.family | enumeration}}</td>
-          <td>
+          <td class="wrapped-column">{{row.family | enumeration}}</td>
+          <td class="wrapped-column">
             <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row.curatedSource.indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
           </td>
-          <td>{{row.dScore | number: 4}}</td>
-          <td>{{row.gScore | number: 4}}</td>
-          <td style="text-align: center">
+          <td class="min-column">{{row.dScore | number: 4}}</td>
+          <td class="min-column">{{row.gScore | number: 4}}</td>
+          <td class="min-column" style="text-align: center">
             <div ng-if="row.dScore > 0.7 && row.gScore > 0.6" class="best-icon">
               <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
             </div>
@@ -397,6 +397,8 @@
             </div>
           </td>
         </tr>
+
+        <!-- Gene Drugs -->
         <tr ng-repeat-start="genedrug in row.geneDrugInfo" ng-if="row.moreinfo" class="moreinfo">
           <td colspan="{{selectedTab !== 'drugs' ? 5 : 4}}">
             <div ng-if="genedrug.drugStatusInfo.length > 0">{{genedrug.drugStatusInfo}}</div>
@@ -406,8 +408,8 @@
             [<a target="_blank" href='https://clinicaltrials.gov/ct2/results?term=&quot;{{genedrug.indirect!=null?(genedrug.drug+"\"+\""+genedrug.indirect.geneInfo.geneSymbol):(genedrug.drug+"\"+\""+getGeneSymbols(genedrug.gene).join())}}&quot;'>ClinicalTrials.gov</a>]
             <br>
           </td>
-          <td style="white-space: nowrap">{{genedrug.sensitivity | titlecase}}&nbsp;<span ng-if="genedrug.hasIndirectResistance()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{genedrug.indirectResistance | enumeration}}"></span></td>
-          <td>
+          <td class="min-column" style="white-space: nowrap">{{genedrug.sensitivity | titlecase}}&nbsp;<span ng-if="genedrug.hasIndirectResistance()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{genedrug.indirectResistance | enumeration}}"></span></td>
+          <td class="min-column">
             <div class="tooltipCSS">
               <img ng-if="genedrug.target == 'marker'" src="images/query/marker-interaction.png"/>
               <img ng-if="genedrug.target == 'target' && genedrug.indirect == null" src="images/query/direct-interaction.png"/>
@@ -452,11 +454,11 @@
               </div>
             </div>
           </td>
-          <td>{{genedrug.family | enumeration}}</td>
-          <td>{{genedrug.source | enumeration}}</td>
-          <td>{{genedrug.dScore | number: 4}}</td>
-          <td>{{genedrug.gScore | number: 4}}</td>
-          <td style="text-align: center">
+          <td class="wrapped-column">{{genedrug.family | enumeration}}</td>
+          <td class="wrapped-column">{{genedrug.source | enumeration}}</td>
+          <td class="min-column">{{genedrug.dScore | number: 4}}</td>
+          <td class="min-column">{{genedrug.gScore | number: 4}}</td>
+          <td class="min-column" style="text-align: center" >
             <div ng-if="genedrug.warning.length > 0" class="warning-icon">
               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{genedrug.warning.join('\n')}}"></span>
             </div>
