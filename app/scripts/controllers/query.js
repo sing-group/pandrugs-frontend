@@ -61,6 +61,7 @@ angular.module('pandrugsFrontendApp')
     $scope.selectedDrug = null;
 
     $scope.generank = '';
+
     $scope.computationId = '';
     $scope.advancedQueryOptions = [];
 
@@ -88,6 +89,10 @@ angular.module('pandrugsFrontendApp')
       if ($scope.selectedDrug) {
         $scope.drugQuery = $scope.selectedDrug;
       }
+    };
+
+    $scope.updateGenerank = function(generank) {
+      $scope.generank = generank;
     };
 
     $scope.updateAdvancedQueryOptions = function(options) {
@@ -160,10 +165,9 @@ angular.module('pandrugsFrontendApp')
     $scope.query = function(tableState) {
       if ($scope.selectedTab === 'generank' && $scope.generank) {
         var reader = new FileReader();
-        reader.onload = function() {
-          $scope.parsedInputGenes = utilities.parseGenes(reader.result);
 
-          db.genesPresence($scope.parsedInputGenes)
+        reader.onload = function() {
+          db.genesPresence(utilities.parseGenes(reader.result))
             .then(function(presence){
               $scope.genespresence = presence;
             });

@@ -1,0 +1,18 @@
+<div class="form-group">
+  <div class="alert alert-info">
+    <p>
+      Upload a ranked list of genes in the <strong><a
+      href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29"
+      target="_blank">RNK file format</a></strong> to execute this query.
+    </p>
+    <p>
+      You can download a ranked list example (Lung adenocarcinoma LUAD patient with EGFR mutation and
+      amplification from TCGA) from <strong><a href="downloads/TCGA-91-6847.rnk" target="_blank">here</a></strong>.
+    </p>
+  </div>
+
+  <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file' }}">Select a gene ranking file</label>
+  <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
+         ng-attr-name="{{ $ctrl.idPrefix + '-input-file' }}"
+         class="file" type="file" file-model on-file-change="$ctrl.changeFile(file)"/>
+</div>

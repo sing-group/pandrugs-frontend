@@ -3,13 +3,15 @@ angular.module('pandrugsFrontendApp')
 .directive('fileModel', ['$parse', function ($parse) {
   return {
     restrict: 'A',
+    scope: {
+      fileModel: '=',
+      onFileChange: '&'
+    },
     link: function(scope, element, attrs) {
-      var model = $parse(attrs.fileModel);
-      var modelSetter = model.assign;
-
-      element.bind('change', function () {
+      element.bind('change', function (changeEvent) {
         scope.$apply(function () {
-          modelSetter(scope, element[0].files[0]);
+          scope.fileModel = changeEvent.target.files[0];
+          scope.onFileChange({ file: scope.fileModel });
         });
       });
     }

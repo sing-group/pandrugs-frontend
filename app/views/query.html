@@ -32,26 +32,8 @@
                 <drug-query-panel drug="drugQuery" on-change="updateDrug(drugQuery, selectedDrug)"/>
               </div>
 
-              <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
-                <div class="alert alert-info">
-                  <p>
-                    Upload a ranked list of genes in the <strong><a
-                    href="http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#RNK:_Ranked_list_file_format_.28.2A.rnk.29"
-                    target="_blank">RNK file format</a></strong>
-                    to execute this query.
-                  </p>
-                  <p>
-                    You can download a ranked list example (Lung adenocarcinoma LUAD patient with EGFR mutation and
-                    amplification from TCGA) from <strong><a href="downloads/TCGA-91-6847.rnk" target="_blank">here</a></strong>.
-                  </p>
-                </div>
-
-                <label for="generankinput">Select a gene ranking file</label>
-                <input name="generank" id="generankinput" class="file" type="file" file-model="generank"/>
-
-                <script>$(document).ready(function() {
-                  $("#generankinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
-                }); </script>
+              <div id="generanking" class="tab-pane" role="tabpanel">
+                <gene-rank-query-panel input-id="generankinput" on-change="updateGenerank(generank)"/>
               </div>
 
               <div id="vcfranking" class="tab-pane form-group" ng-class="{active:getComputationIdQuery()!=undefined}" role="tabpanel">
@@ -79,7 +61,7 @@
                       </div>
                       <div class="modal-body">
                         <fieldset class="form-group">
-                          <label for="generankinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). <strong>Note:</strong>
+                          <label for="vcfinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). <strong>Note:</strong>
                           The genome positions must be accordiyng to the GRCh37/hg19 human genome assembly</label>
                           <div>
                             <input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
@@ -155,7 +137,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-success btn-lg" ng-show="results == null" ng-click="query()"
-      ng-disabled="(selectedTab == 'genes' && !genes) || (selectedTab == 'drugs' && !selectedDrug) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (selectedTab !== 'drugs' && !advancedQueryOptions.isValid()) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
+      ng-disabled="(selectedTab == 'genes' && !genes) || (selectedTab == 'drugs' && !selectedDrug) || (selectedTab == 'generank' && !generank) || isLoading || (selectedTab !== 'drugs' && !advancedQueryOptions.isValid()) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
   </div>
 </form>
 <div id="resultsContainer" class="container-fluid" ng-if="results!=null">
