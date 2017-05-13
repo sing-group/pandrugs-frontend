@@ -55,6 +55,8 @@ angular.module('pandrugsFrontendApp')
 
     // ======== QUERY PARAMETERS ========
     $scope.genes = '';
+    $scope.geneList = [];
+
     $scope.drugs = [];
     $scope.drugQuery = '';
     $scope.drugItems = [];
@@ -63,31 +65,6 @@ angular.module('pandrugsFrontendApp')
     $scope.generank = '';
     $scope.computationId = '';
     $scope.advancedQueryOptions = [];
-    $scope.genesTextAreaConfig = {
-      autocomplete: [{
-        words: [/([()-_A-Za-z0-9]+)/gi]
-      }],
-      dropdown: [{
-        trigger: /([()-_A-Za-z0-9]+)/gi,
-        list: function(match, callback) {
-          db.listGeneSymbols(match[1])
-            .then(function(response) {
-              var data = response.data.map(function(queryValue) {
-                return {
-                  display: queryValue,
-                  item: queryValue
-                };
-              });
-
-              callback(data);
-            });
-        },
-        onSelect: function(item) {
-          return item.item + '\n';
-        },
-        mode: 'replace'
-      }]
-    };
 
     // ======== RESULTS ========
     $scope.results = null;
@@ -100,6 +77,11 @@ angular.module('pandrugsFrontendApp')
 
     $scope.newQuery = function() {
       $scope.results = null;
+    };
+
+    $scope.updateGenes = function(genes, geneList) {
+      $scope.genes = genes;
+      $scope.geneList = geneList;
     };
 
     $scope.updateAdvancedQueryOptions = function(options) {
@@ -168,18 +150,6 @@ angular.module('pandrugsFrontendApp')
       };
     }
 
-    $scope.pasteStomachCarcinomaExample = function() {
-      $scope.genes = 'TP53\nARID1A\nB2M\nPIK3CA\nPTEN\nKRAS\nRHOA\nMXRA8';
-    };
-
-    $scope.pasteAngiogenesisExample = function() {
-      $scope.genes = 'VEGFA\nVEGFB\nKDR\nIL8\nCXCR1\nCXCR2\n';
-    };
-
-    $scope.pasteSignalingPathwayExample = function() {
-      $scope.genes = 'PIK3CA\nPIK3R1\nPIK3R2\nPTEN\nPDPK1\nAKT1\nAKT2\nFOXO1\nFOXO3\nMTOR\nRICTOR\nTSC1\nTSC2\nRHEB\nAKT1S1\nRPTOR\nMLST8\n';
-    };
-
     //  ========== QUERY ========
     $scope.query = function(tableState) {
       if ($scope.selectedTab === 'generank' && $scope.generank) {
@@ -203,16 +173,11 @@ angular.module('pandrugsFrontendApp')
 
         searchBy(db.computationIdSearch, $scope.computationId, tableState);
       } else if ($scope.selectedTab === 'genes' && $scope.genes) {
-        var uniqueUpperCaseGenes = utilities.parseGenes($scope.genes);
-
-        $scope.genes = uniqueUpperCaseGenes.join('\n');
-        $scope.parsedInputGenes = uniqueUpperCaseGenes;
-
-        db.genesPresence($scope.parsedInputGenes).then(function(presence){
+        db.genesPresence($scope.geneList).then(function(presence){
           $scope.genespresence = presence;
         });
 
-        searchBy(db.searchByGenes, uniqueUpperCaseGenes, tableState);
+        searchBy(db.searchByGenes, $scope.geneList, tableState);
       } else if ($scope.selectedTab === 'drugs' && $scope.drugs) {
         var standardDrugNames = utilities.uniqueIgnoreCase($scope.drugs
           .map(function(item) {

@@ -1,0 +1,29 @@
+<div>
+  <div class="alert alert-info">
+    Provide a gene list (HUGO Gene Symbols) to retrieve PanDrugs therapeutic candidates. Supply one gene
+    symbol per each line.
+  </div>
+
+  <button class="btn btn-default" data-toggle="collapse" data-target="#examples-zone">Use an example</button>
+
+  <div id="examples-zone" class="collapse">
+    <div id="sample-gene-list">
+      <div id="genes-sample-1">
+        <button class="btn btn-default" ng-click="$ctrl.pasteStomachCarcinomaExample()">Load Example 1</button>
+        <span class="cite">Genes significantly mutated in Stomach Adenocarcinoma (TCGA, Nature 2014)</span>
+      </div>
+      <div id="genes-sample-2">
+        <button class="btn btn-default" ng-click="$ctrl.pasteAngiogenesisExample()">Load Example 2</button>
+        <span class="cite">Genes involved in Angiogenesis</span>
+      </div>
+      <div id="genes-sample-3">
+        <button class="btn btn-default" ng-click="$ctrl.pasteSignalingPathwayExample()">Load Example 3</button>
+        <span class="cite">Genes involved in PI3K-AKT-mTOR signaling pathway</span>
+      </div>
+    </div>
+  </div>
+
+  <textarea id="genestextarea" name="genes" class="form-control"
+            placeholder="Enter HUGO Gene symbols" rows="20" spellcheck="false"
+            ng-model="$ctrl.genes" ng-change="$ctrl.notifyChange()" smart-area="$ctrl.genesTextAreaConfig"/>
+</div>

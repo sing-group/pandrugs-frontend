@@ -25,31 +25,7 @@
 
             <div class="tab-content panel-body">
               <div id="genes" class="tab-pane"  ng-class="{active:getComputationIdQuery()==undefined}">
-                <div class="alert alert-info">
-                  Provide a gene list (HUGO Gene Symbols) to retrieve PanDrugs therapeutic candidates. Supply one gene
-                  symbol per each line.
-                </div>
-
-                <button class="btn btn-default" data-toggle="collapse" data-target="#examples-zone">Use an example</button>
-                <div id="examples-zone" class="collapse">
-                  <div id="sample-gene-list">
-                    <div id ="sample-1">
-                      <button class="btn btn-default" ng-click="pasteStomachCarcinomaExample()">Load Example 1</button>
-                      <span class="cite">Genes significantly mutated in Stomach Adenocarcinoma (TCGA, Nature 2014)</span>
-                    </div>
-                    <div id ="sample-2">
-                      <button class="btn btn-default" ng-click="pasteAngiogenesisExample()">Load Example 2</button>
-                      <span class="cite">Genes involved in Angiogenesis</span>
-                    </div>
-                    <div id ="sample-3">
-                      <button class="btn btn-default" ng-click="pasteSignalingPathwayExample()">Load Example 3</button>
-                      <span class="cite">Genes involved in PI3K-AKT-mTOR signaling pathway</span>
-                    </div>
-                  </div>
-                </div>
-
-                <textarea name="genes" id="genestextarea" class="form-control" placeholder="Enter HUGO Gene symbols"
-                          ng-model="genes" rows="20" spellcheck="false" smart-area="genesTextAreaConfig"></textarea>
+                <gene-query-panel genes="genes" on-change="updateGenes(genes, geneList)"/>
               </div>
 
               <div id="drugs" class="tab-pane">
