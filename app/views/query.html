@@ -29,17 +29,7 @@
               </div>
 
               <div id="drugs" class="tab-pane">
-                <div class="alert alert-info">
-                  <p>
-                    This query allows to explore the drug-gene relationships available in PanDrugs database.
-                  </p>
-                  <p>
-                    <strong>Example: </strong>Palbociclib
-                  </p>
-                </div>
-
-                <input ng-model="drugQuery" class="form-control" placeholder="Enter a drug name" spellcheck="false"/>
-                <list-group items="drugItems" selected-items="drugs" selectable="true" template-url="drugTemplateUrl" ng-if="!loadingDrugs" />
+                <drug-query-panel drug="drugQuery" on-change="updateDrug(drugQuery, selectedDrug)"/>
               </div>
 
               <div id="generanking" class="tab-pane form-group" role="tabpanel" onselect="alert('tab2')">
@@ -165,7 +155,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-success btn-lg" ng-show="results == null" ng-click="query()"
-    ng-disabled="(selectedTab == 'genes' && genes.length == 0) || (selectedTab == 'drugs' && drugs.length == 0) || (selectedTab == 'generank' && generank.length == 0) || isLoading || !advancedQueryOptions.isValid() || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
+      ng-disabled="(selectedTab == 'genes' && !genes) || (selectedTab == 'drugs' && !selectedDrug) || (selectedTab == 'generank' && generank.length == 0) || isLoading || (selectedTab !== 'drugs' && !advancedQueryOptions.isValid()) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
   </div>
 </form>
 <div id="resultsContainer" class="container-fluid" ng-if="results!=null">

@@ -4,7 +4,7 @@ angular.module('pandrugsFrontendApp')
     bindings: {
       onChange: '&'
     },
-    controller: ['database', '$filter', function (database, $filter) {
+    controller: ['database', 'AdvancedQueryOptionsFactory', function (database, AdvancedQueryOptionsFactory) {
       this.cancerFda = true;
       this.cancerClinical = true;
       this.otherFda = true;
@@ -26,40 +26,7 @@ angular.module('pandrugsFrontendApp')
       }.bind(this));
 
       this.notifyChange = function () {
-        var options = {
-          cancerFda: this.cancerFda,
-          cancerClinical: this.cancerClinical,
-          otherFda: this.otherFda,
-          otherClinical: this.otherClinical,
-          otherExperimental: this.otherExperimental,
-          target: this.target,
-          marker: this.marker,
-          cancerTypes: this.cancerTypes,
-
-          getSelectedCancerTypes: function() {
-            return this.cancerTypes.filter(function (cancer) {
-              return cancer.selected;
-            }).map(function(cancer) {
-              return $filter('titlecase')($filter('replace')(cancer.name, '_', ' '));
-            });
-          }.bind(this),
-          areAllCancerTypesSelected: function() {
-            return this.cancerTypes.every(function(cancer) {
-              return cancer.selected;
-            });
-          }.bind(this),
-          isCancerSelected: function (cancerType) {
-            return this.cancerTypes.find(function(cancer) {
-              return cancer.name.toUpperCase() === cancerType.toUpperCase();
-            });
-          }.bind(this),
-          isValid: function() {
-            return (this.cancerFda || this.cancerClinical || this.otherClinical || this.otherExperimental || this.otherFda)
-              && (this.target || this.marker);
-          }.bind(this)
-        };
-
-        this.onChange({options: options});
+        this.onChange({options: AdvancedQueryOptionsFactory.createAdvancedQueryOptions(this)});
       }.bind(this);
 
       this.selectAllCancerTypes = function () {

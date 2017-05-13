@@ -1,0 +1,17 @@
+<div>
+  <div class="alert alert-info">
+    <p>
+      This query allows to explore the drug-gene relationships available in PanDrugs database.
+    </p>
+    <p>
+      <strong>Example: </strong><a href ng-click="$ctrl.pastePalbociclib()">Palbociclib</a>
+    </p>
+  </div>
+
+  <input class="form-control" placeholder="Enter a drug name" spellcheck="false"
+         ng-model="$ctrl.drug" ng-change="$ctrl.updateDrugList()"/>
+
+  <list-group items="$ctrl.drugItems" selected-items="$ctrl.selectedDrugItems"
+              selectable="true" template-url="$ctrl.drugTemplateUrl" ng-if="$ctrl.showDrugList()"
+              after-selection-change="$ctrl.notifyChange()"/>
+</div>

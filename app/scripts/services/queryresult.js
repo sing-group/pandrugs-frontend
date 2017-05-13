@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc service
- * @name pandrugsFrontendApp.QueryResult
+ * @name pandrugsFrontendApp.QueryResultFactory
  * @description
- * # QueryResult
+ * # QueryResultFactory
  * Factory in the pandrugsFrontendApp.
  */
 angular.module('pandrugsFrontendApp')
-  .factory('QueryResult', function () {
+  .factory('QueryResultFactory', function () {
     function GeneDrug(geneDrug) {
       /*this.drug = geneDrug.drug;
       this.status = geneDrug.status;
@@ -71,11 +71,13 @@ angular.module('pandrugsFrontendApp')
         }
 
         if (geneDrugGroup.cancer.length === 0) {
-          return this.advancedQueryOptions.areAllCancerTypesSelected();
+          return advancedQueryOptions.areAllCancerTypesSelected();
         } else {
-          return geneDrugGroup.cancer.find(this.advancedQueryOptions.isCancerSelected);
+          return geneDrugGroup.cancer.find(function(cancer) {
+            return advancedQueryOptions.isCancerSelected(cancer);
+          });
         }
-      }.bind(this));
+      });
 
       if (this.filteredGeneDrugGroups.length === 1) {
         this.filteredGeneDrugGroups[0].moreinfo = true;

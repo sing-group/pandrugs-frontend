@@ -1,0 +1,11 @@
+<div class="row drug-item" style="cursor: pointer;">
+  <div class="pull-left">
+    <h4 class="list-group-item-heading" ng-bind-html="item.showNameHtml"/>
+    <h6 ng-bind-html="item.standardNameHtml"/>
+    <ul>
+      <li ng-if="item.sourceName" ng-repeat="sourceName in item.sourceName">
+        <span class="drug-source">{{sourceName.name}}</span>: <span ng-bind-html="sourceName.drugNameHtml"/>
+      </li>
+    </ul>
+  </div>
+</div>

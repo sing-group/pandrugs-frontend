@@ -16,10 +16,10 @@ angular.module('pandrugsFrontendApp')
   'bubbleTherapyChart',
   'therapyByStatusChart',
   'therapyByFamilyChart',
-  'QueryResult',
+  'QueryResultFactory',
+  'AdvancedQueryOptionsFactory',
   '$timeout',
   '$interval',
-  '$sce',
   '$location',
   '$filter',
   function (
@@ -30,10 +30,10 @@ angular.module('pandrugsFrontendApp')
     bubbleChart,
     therapyByStatusChart,
     therapyByFamilyChart,
-    QueryResult,
+    QueryResultFactory,
+    AdvancedQueryOptionsFactory,
     $timeout,
     $interval,
-    $sce,
     $location,
     $filter
   ) {
@@ -57,11 +57,9 @@ angular.module('pandrugsFrontendApp')
     $scope.genes = '';
     $scope.geneList = [];
 
-    $scope.drugs = [];
     $scope.drugQuery = '';
-    $scope.drugItems = [];
-    $scope.drugTemplateUrl = 'views/partials/drugname-list-item.tpl.html';
-    $scope.loadingDrugs = true;
+    $scope.selectedDrug = null;
+
     $scope.generank = '';
     $scope.computationId = '';
     $scope.advancedQueryOptions = [];
@@ -82,6 +80,14 @@ angular.module('pandrugsFrontendApp')
     $scope.updateGenes = function(genes, geneList) {
       $scope.genes = genes;
       $scope.geneList = geneList;
+    };
+
+    $scope.updateDrug = function(drugQuery, selectedDrug) {
+      $scope.selectedDrug = selectedDrug ? selectedDrug.standardName : null;
+
+      if ($scope.selectedDrug) {
+        $scope.drugQuery = $scope.selectedDrug;
+      }
     };
 
     $scope.updateAdvancedQueryOptions = function(options) {
@@ -131,7 +137,7 @@ angular.module('pandrugsFrontendApp')
       }
 
       return function(result) {
-        var results = QueryResult.createQueryResult(result.geneDrugGroup, $scope.advancedQueryOptions);
+        var results = QueryResultFactory.createQueryResult(result.geneDrugGroup, $scope.advancedQueryOptions);
 
         $scope.results = results.getFilteredGroups();
 
@@ -178,43 +184,17 @@ angular.module('pandrugsFrontendApp')
         });
 
         searchBy(db.searchByGenes, $scope.geneList, tableState);
-      } else if ($scope.selectedTab === 'drugs' && $scope.drugs) {
-        var standardDrugNames = utilities.uniqueIgnoreCase($scope.drugs
-          .map(function(item) {
-            return item.standardName;
-          })
-        );
-
-        searchBy(db.searchByDrugs, standardDrugNames, tableState);
+      } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
+        searchBy(db.searchByDrugs, [ $scope.selectedDrug ], tableState, AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
       }
     };
 
-    function searchBy(searchFunction, value, tableState) {
+    function searchBy(searchFunction, value, tableState, advancedQueryOptions) {
       $scope.isLoading = true;
 
-      searchFunction(value, $scope.advancedQueryOptions, true, true)
+      searchFunction(value, advancedQueryOptions || $scope.advancedQueryOptions, true, true)
         .then(manageResults(tableState));
     }
-
-    $scope.$watch('drugQuery', function(newValue) {
-      $scope.loadingDrugs = true;
-
-      if (newValue) {
-        var query = $scope.drugQuery;
-
-        db.listDrugNames(newValue, 10)
-          .then(function(response) {
-            $scope.drugItems = response.data.map(function(item) {
-              item.query = query;
-              return item;
-            });
-            $scope.loadingDrugs = false;
-          });
-      } else {
-        $scope.drugItems = [];
-        $scope.loadingDrugs = false;
-      }
-    });
 
     $scope.getCurrentUser = function() {
       return user.getCurrentUser();
@@ -256,10 +236,6 @@ angular.module('pandrugsFrontendApp')
             window.alert('ERROR: computation could not be deleted.');
           });
       }
-    };
-
-    $scope.highlight = function(text) {
-      return $sce.trustAsHtml(text.replace(new RegExp($scope.drugQuery, 'gi'), '<span class="highlightedText">$&</span>'));
     };
 
     //update computation status...
