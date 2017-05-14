@@ -376,11 +376,11 @@ a.disabled:hover {
   color: $medium-red;
 }
 
-#computationSubmit .deleteButton {
+.computationSubmit .deleteButton {
   float: right;
 }
 
-#computationSubmit .progress {
+.computationSubmit .progress {
   clear: both;
   margin-top: 25px;
 }

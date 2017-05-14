@@ -1,0 +1,120 @@
+<div>
+  <div class="alert alert-info">
+    <p>
+      Upload a <strong><a href="https://en.wikipedia.org/wiki/Variant_Call_Format" target="_blank">VCF
+      file</a></strong> to execute this query.
+    </p>
+    <p>
+      <strong>WARNING</strong>: genomic coordinates <strong>MUST BE</strong> expressed in the human genome
+      HG19 assembly.
+    </p>
+  </div>
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" ng-attr-data-target="{{ '#' + $ctrl.idPrefix + '-new-modal' }}">
+    New variants analysis...
+  </button>
+
+  <div id="{{ $ctrl.idPrefix + '-new-modal' }}" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+          <h4 class="modal-title">New variants analysis</h4>
+        </div>
+
+        <div class="modal-body">
+          <fieldset class="form-group">
+            <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file' }}">Select a variants file (in <a
+              href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). <strong>Note:</strong>
+              The genome positions must be accordiyng to the GRCh37/hg19 human genome assembly</label>
+            <div>
+              <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
+                     ng-attr-name="{{ $ctrl.idPrefix + '-input-file' }}"
+                     class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file)"/>
+
+              <a href="downloads/TCGA-BF-A1PU-01A-11D-A19A-08.vcf">Download a VCF example file</a> (Melanoma patient
+              BRAF mutant from TCGA)
+            </div>
+
+            <label ng-attr-for="{{ $ctrl.idPrefix + '-input-name' }}">Computation name</label>
+            <input ng-attr-id="{{ $ctrl.idPrefix + '-input-name' }}"
+                   ng-attr-name="{{ $ctrl.idPrefix + '-input-name' }}"
+                   class="form-control" type="text"
+                   ng-model="$ctrl.computationName"/>
+          </fieldset>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button ng-disabled="!$ctrl.vcfFile || !$ctrl.computationName" type="button" class="btn btn-success"
+                  data-dismiss="modal" ng-click="$ctrl.submitVCF()">
+            Submit VCF
+          </button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div class="panel panel-default" ng-show="$ctrl.computations && !$ctrl.isAnonymous()">
+    <div class="panel-heading" role="tab">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="computationselect">
+          Your variant analyses
+        </a>
+      </h4>
+    </div>
+
+    <div class="panel-collapse collapse in" role="tabpanel" aria-labelledby="computationselect">
+      <div class="panel-body">
+        Select one of your analysis to do the Query
+        <div ng-repeat="(id, status) in $ctrl.computations" class="computationSubmit">
+          <div class="radio">
+            <label>
+              <input ng-disabled="!status.canBeQueried()" type="radio"
+                     name="computationid" ng-model="$ctrl.computationId" ng-value="id"
+                     ng-change="$ctrl.notifyComputationIdChange()"/>
+              {{status.name}}
+            </label>
+
+            <span class="affectedGenes" ng-show="status.affectedGenes != null"
+                  ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
+
+            <input ng-show="status.finished" type="button" class="deleteButton btn btn-danger"
+                   ng-click="$ctrl.deleteComputation(id)" value="Delete"/>
+
+            <img ng-show="!status.finished" src="images/spinner.gif" width="20px">
+          </div>
+
+          <div class="progress">
+            <div ng-class="{'progress-bar': true, error: status.isFailed(), success: status.isSuccess()}"
+                 role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+                 style="width:{{status.overallProgress | percentage: 0}}">
+              {{status.taskName}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="$ctrl.computations && $ctrl.isAnonymous()">
+    <div ng-repeat="(id, status) in $ctrl.computations">
+      <div class="radio">
+        <img ng-show="!status.finished" src="images/spinner.gif" width="20px">{{status.name}} (id: {{id}})<br>
+        <span class="affectedGenes" ng-show="status.affectedGenes != null"
+              ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
+
+      </div>
+      <div class="progress">
+        <div ng-class="{'progress-bar': true, error: status.isFailed(), success: status.isSuccess()}"
+             role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+             style="width:{{status.overallProgress | percentage: 0}}">
+          {{status.taskName}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

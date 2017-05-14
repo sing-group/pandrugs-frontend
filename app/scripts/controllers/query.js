@@ -19,7 +19,6 @@ angular.module('pandrugsFrontendApp')
   'QueryResultFactory',
   'AdvancedQueryOptionsFactory',
   '$timeout',
-  '$interval',
   '$location',
   '$filter',
   function (
@@ -33,7 +32,6 @@ angular.module('pandrugsFrontendApp')
     QueryResultFactory,
     AdvancedQueryOptionsFactory,
     $timeout,
-    $interval,
     $location,
     $filter
   ) {
@@ -41,11 +39,6 @@ angular.module('pandrugsFrontendApp')
     $scope.$timeout = $timeout;
 
     $scope.selectedTab = 'genes';
-
-    // ======== VCF ========
-    $scope.vcffile = '';
-    $scope.computationName = 'My Computation';
-    $scope.computations = {};
 
     // ======== CHARTS ========
     $scope.highchartsBubble = bubbleChart;
@@ -62,7 +55,9 @@ angular.module('pandrugsFrontendApp')
 
     $scope.generank = '';
 
-    $scope.computationId = '';
+    $scope.computationId = undefined;
+    $scope.computation = undefined;
+
     $scope.advancedQueryOptions = [];
 
     // ======== RESULTS ========
@@ -95,12 +90,17 @@ angular.module('pandrugsFrontendApp')
       $scope.generank = generank;
     };
 
-    $scope.updateAdvancedQueryOptions = function(options) {
-      this.advancedQueryOptions = options;
+    $scope.updateComputation = function(computationId, computation) {
+      $scope.computationId = computationId;
+      $scope.computation = computation;
+
+      if ($scope.computationId && $scope.computation && this.selectedTab !== 'vcfranking') {
+        this.setSelectedTab('vcfranking');
+      }
     };
 
-    $scope.getComputationIdQuery = function() {
-      return $location.search().computationId;
+    $scope.updateAdvancedQueryOptions = function(options) {
+      this.advancedQueryOptions = options;
     };
 
     function updateCharts(results) {
@@ -176,8 +176,8 @@ angular.module('pandrugsFrontendApp')
         reader.readAsText($scope.generank);
 
         searchBy(db.rankedSearch, $scope.generank, tableState);
-      } else if ($scope.selectedTab === 'vcfranking' && $scope.computationId) {
-        db.genesPresence($scope.computations[$scope.computationId].affectedGenes).then(function(presence){
+      } else if ($scope.selectedTab === 'vcfranking' && $scope.computation) {
+        db.genesPresence($scope.computation.affectedGenes).then(function(presence){
           $scope.genespresence = presence;
         });
 
@@ -199,92 +199,6 @@ angular.module('pandrugsFrontendApp')
       searchFunction(value, advancedQueryOptions || $scope.advancedQueryOptions, true, true)
         .then(manageResults(tableState));
     }
-
-    $scope.getCurrentUser = function() {
-      return user.getCurrentUser();
-    };
-
-    $scope.submitVCF = function() {
-      $scope.largeProcess = 'Uploading VCF File, please wait';
-      user.submitComputation($scope.vcffile, $scope.computationName,
-        function(newId) {
-          if (user.getCurrentUser() === 'anonymous') {
-
-            var followUrl = $location.absUrl().substring(0, $location.absUrl().indexOf('#'))+'#/query?computationId='+newId;
-            window.alert('Computation submitted successfully. Please keep this link in a SAFE PLACE in order to get back and follow the computation progress:\n'+followUrl);
-
-            $timeout(function() {
-              //do redirection asynchronously, since in chrome the modal vcf dialog black background does not disappear ...
-              document.location.href = followUrl;
-            });
-
-          } else {
-            window.alert('Computation submitted successfully. We will start to analyze it as soon as we can.');
-          }
-          $scope.largeProcess = null;
-        },
-        function() {
-          window.alert('ERROR: computation could not be submitted.');
-          $scope.largeProcess = null;
-        }
-      );
-    };
-
-    $scope.deleteComputation = function(computationId) {
-      if (window.confirm('Are you sure?')) {
-        user.deleteComputation(computationId,
-          function() {
-            window.alert('Computation deleted successfully.');
-          },
-          function() {
-            window.alert('ERROR: computation could not be deleted.');
-          });
-      }
-    };
-
-    //update computation status...
-    function reloadComputations() {
-
-      if ($scope.selectedTab === 'vcfranking') {
-        if (user.getCurrentUser() !== 'anonymous') {
-          user.getComputations(function(computations) {
-            var savedExample;
-
-            if ($scope.computations.example !== undefined) {
-              savedExample = $scope.computations.example;
-            }
-            $scope.computations = computations;
-
-            if (savedExample) {
-              $scope.computations.example = savedExample;
-            }
-
-          }, null);
-        } else if($scope.getComputationIdQuery() !== undefined) {
-          user.getComputation('guest', $scope.getComputationIdQuery(), function(computation){
-            $scope.computations[$scope.getComputationIdQuery()] = computation;
-            if (!computation.finished || computation.failed || computation.affectedGenes.length === 0) {
-              $scope.computationId = '';
-            } else {
-              $scope.computationId = $scope.getComputationIdQuery();
-            }
-          }, null);
-        }
-      }
-    }
-    reloadComputations();
-
-    // stop reloading computations
-    $scope.$on('$routeChangeStart', function() {
-      if ($scope.reloadComputationsTask !== undefined) {
-        $interval.cancel($scope.reloadComputationsTask);
-      }
-    });
-
-    if ($scope.getComputationIdQuery()) {
-      $scope.setSelectedTab('vcfranking');
-    }
-    $scope.reloadComputationsTask = $interval(reloadComputations, 5000);
 
     // automatic examples
     if ($location.search().example !== undefined) {

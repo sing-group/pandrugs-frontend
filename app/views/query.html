@@ -9,7 +9,7 @@
         <div class="form-group">
           <div class="panel panel-default">
             <ul class="nav nav-tabs" role="tablist">
-              <li ng-class="{active:getComputationIdQuery() === undefined}" role="presentation" ng-click="setSelectedTab('genes')">
+              <li ng-class="{active:!computationId}" role="presentation" ng-click="setSelectedTab('genes')">
                 <a href="/query#genes" aria-controls="genes" data-toggle="tab" role="tab">Genes</a>
               </li>
               <li role="presentation" ng-click="setSelectedTab('drugs')">
@@ -18,13 +18,13 @@
               <li role="presentation" ng-click="setSelectedTab('generank')">
                 <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Ranking</a>
               </li>
-              <li ng-class="{active:getComputationIdQuery() !== undefined}" role="presentation" ng-click="setSelectedTab('vcfranking')">
+              <li ng-class="{active:computationId}" role="presentation" ng-click="setSelectedTab('vcfranking')">
                 <a href="/query#vcfranking" aria-controls="vcf-rank" data-toggle="tab" role="tab">Genomic Variants</a>
               </li>
             </ul>
 
             <div class="tab-content panel-body">
-              <div id="genes" class="tab-pane"  ng-class="{active:getComputationIdQuery()==undefined}">
+              <div id="genes" class="tab-pane"  ng-class="{active:!computationId}">
                 <gene-query-panel genes="genes" on-change="updateGenes(genes, geneList)"/>
               </div>
 
@@ -33,100 +33,11 @@
               </div>
 
               <div id="generanking" class="tab-pane" role="tabpanel">
-                <gene-rank-query-panel input-id="generankinput" on-change="updateGenerank(generank)"/>
+                <gene-rank-query-panel id-prefix="generankpanel" on-change="updateGenerank(generank)"/>
               </div>
 
-              <div id="vcfranking" class="tab-pane form-group" ng-class="{active:getComputationIdQuery()!=undefined}" role="tabpanel">
-                <div class="alert alert-info">
-                  <p>
-                    Upload a <strong><a href="https://en.wikipedia.org/wiki/Variant_Call_Format" target="_blank">VCF
-                    file</a></strong>
-                    to execute this query.
-                  </p>
-                  <p>
-                    <strong>WARNING</strong>: genomic coordinates <strong>MUST BE</strong> expressed in the human genome
-                    HG19 assembly.
-                  </p>
-                </div>
-
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newComputationModal">
-                  New variants analysis...
-                </button>
-                <div id = "newComputationModal" class="modal fade" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">New variants analysis</h4>
-                      </div>
-                      <div class="modal-body">
-                        <fieldset class="form-group">
-                          <label for="vcfinput">Select a variants file (in <a href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). <strong>Note:</strong>
-                          The genome positions must be accordiyng to the GRCh37/hg19 human genome assembly</label>
-                          <div>
-                            <input name="vcffile" id="vcfinput" class="form-control" type="file" file-model="vcffile"/>
-                            <script>$(document).ready(function() {
-                              $("#vcfinput").fileinput({'showUpload':false, 'showRemove': false, 'previewFileType':'any', 'multiple':false});
-                            }); </script>
-                            <a href="downloads/TCGA-BF-A1PU-01A-11D-A19A-08.vcf">Download a VCF example file</a> (Melanoma patient BRAF mutant from TCGA)
-                          </div>
-                          <label for="computationNameInput">Computation name</label>
-                          <input name="computationName" id="computationNameInput" class="form-control" type="text" ng-model="computationName"/>
-                          <!--<input type="button" class="btn btn-success" value="Submit VCF to analyze" ng-click="submitVCF()" />-->
-                        </fieldset>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button ng-disabled="vcffile == '' || computationName.length == 0" type="button" class="btn btn-success" data-dismiss="modal" ng-click="submitVCF()">Submit VCF</button>
-                      </div>
-                    </div><!-- /.modal-content -->
-                  </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-                <div class="panel panel-default" ng-show="keys(computations).length > 0 && getCurrentUser() !== 'anonymous'">
-                  <div class="panel-heading" role="tab" id="headingVCFSubmit">
-                    <h4 class="panel-title">
-                      <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="computationselect">
-                        Your variant analyses
-                      </a>
-                    </h4>
-                  </div>
-                  <div id="computationSubmit" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="computationselect">
-                    <div class="panel-body">
-                      Select one of your analysis to do the Query
-                      <div ng-repeat="(id, status) in computations" >
-                        <div class="radio">
-                          <label>
-                            <input ng-disabled="!status.finished || status.failed || status.affectedGenes.length == 0" type="radio" name = "computationid" ng-model="$parent.computationId" ng-value="id"/>
-                            {{status.name}}
-                          </label>
-                          <span class="affectedGenes" ng-show="status.affectedGenes != null" ng-class="{error: status.affectedGenes.length == 0}">[{{status.affectedGenes.length}} affected genes]</span>
-                          <input ng-show="status.finished" type="button" class="deleteButton btn btn-danger" ng-click="deleteComputation(id)" value="Delete"/>
-                          <img ng-show="!status.finished" src="images/spinner.gif" width = "20px">
-                        </div>
-                        <div class="progress">
-                          <div ng-class="{'progress-bar': true, error: status.failed, success: status.finished && !status.failed}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:{{status.overallProgress | percentage: 0}}">
-                              {{status.taskName}}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div ng-show="keys(computations).length > 0 && getCurrentUser() === 'anonymous'">
-                  <div ng-repeat="(id, status) in computations" >
-                    <div class="radio">
-                      <img ng-show="!status.finished" src="images/spinner.gif" width = "20px">{{status.name}} (id: {{id}})<br>
-                      <span class="affectedGenes" ng-show="status.affectedGenes != null" ng-class="{error: status.affectedGenes.length == 0}">[{{status.affectedGenes.length}} affected genes]</span>
-
-                    </div>
-                    <div class="progress">
-                      <div ng-class="{'progress-bar': true, error: status.failed, success: status.finished && !status.failed}" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width:{{status.overallProgress | percentage: 0}}">
-                          {{status.taskName}}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div id="vcfranking" class="tab-pane form-group" ng-class="{active:computationId}" role="tabpanel">
+                <vcf-query-panel id-prefix="vcfquerypanel" autoreload="selectedTab === 'vcfranking'" on-change="updateComputation(computationId, computation)"/>
               </div>
             </div>
           </div>
@@ -137,7 +48,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-success btn-lg" ng-show="results == null" ng-click="query()"
-      ng-disabled="(selectedTab == 'genes' && !genes) || (selectedTab == 'drugs' && !selectedDrug) || (selectedTab == 'generank' && !generank) || isLoading || (selectedTab !== 'drugs' && !advancedQueryOptions.isValid()) || (selectedTab =='vcfranking' && computationId=='')" >Query</button>
+      ng-disabled="(selectedTab == 'genes' && !genes) || (selectedTab == 'drugs' && !selectedDrug) || (selectedTab == 'generank' && !generank) || isLoading || (selectedTab !== 'drugs' && !advancedQueryOptions.isValid()) || (selectedTab =='vcfranking' && (!computationId || !computation || !computation.canBeQueried()))" >Query</button>
   </div>
 </form>
 <div id="resultsContainer" class="container-fluid" ng-if="results!=null">
@@ -185,13 +96,13 @@
           <h4 class="row">Genomic variants</h4>
           <table>
             <tr>
-              <th>Name</th><td>{{computations[computationId].name}}</td>
+              <th>Name</th><td>{{computation.name}}</td>
             </tr>
             <tr>
-              <th>No. variants</th><td>{{computations[computationId].variantsInInput}}</td>
+              <th>No. variants</th><td>{{computation.variantsInInput}}</td>
             </tr>
             <tr>
-              <th>No. affected genes</th><td>{{computations[computationId].affectedGenes.length}}</td>
+              <th>No. affected genes</th><td>{{computation.affectedGenes.length}}</td>
             </tr>
             <tr>
               <th>No. genes in PanDrugs</th><td>{{genespresence.present.length}}</td>
@@ -302,7 +213,11 @@
           </td>
           <td class="wrapped-column">{{row.family | enumeration}}</td>
           <td class="wrapped-column">
-            <span ng-repeat="source in row.source"><a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row.curatedSource.indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">{{source.shortName}}</a></span>&nbsp;
+            <span ng-repeat="source in row.source">
+              <a href="{{source.link}}" target="_blank" title="{{source.name}}" ng-class="row.curatedSource.indexOf(source.name) != -1 ? 'curated_source' : 'non_curated_source'">
+                {{source.shortName}}
+              </a>
+            </span>&nbsp;
           </td>
           <td class="min-column">{{row.dScore | number: 4}}</td>
           <td class="min-column">{{row.gScore | number: 4}}</td>
@@ -315,6 +230,7 @@
             </div>
           </td>
         </tr>
+
         <!-- Gene Drugs -->
         <tr ng-repeat-start="geneDrug in row.geneDrugs" ng-if="row.moreinfo" class="moreinfo">
           <td colspan="{{selectedTab !== 'drugs' ? 5 : 4}}">
@@ -382,26 +298,25 @@
             </div>
           </td>
         </tr>
-        <tr ng-repeat-end ng-if="row.moreinfo && selectedTab === 'vcfranking'" class="moreinfo" ng-class="{highlightedGeneDrug: geneDrug.dScore > 0.7 && geneDrug.gScore > 0.6}">
-          <td>&nbsp;</td>
-          <td colspan="10">
+        <tr ng-repeat-end ng-if="row.moreinfo && selectedTab === 'vcfranking'" class="moreinfo">
+          <td colspan="12" style="border-top: 0px">
             <div ng-repeat="gene in geneDrug.gene">
-              <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].HGVS_cDNA}} / {{computations[computationId].affectedGenesInfo[gene.geneSymbol].HGVS_protein}}</span>
-              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
-              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'frameshift_variant'" title="consequence of the variant in gene sequence">frameshift variant</span>
-              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'missense_variant'" title="consequence of the variant in gene sequence">missense variant</span>
-              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'inframe_insertion'" title="consequence of the variant in gene sequence">inframe insertion</span>
-              <span class="variant-consequence" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].consequence == 'inframe_deletion'" title="consequence of the variant in gene sequence">inframe deletion</span>
+              <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{computation.affectedGenesInfo[gene.geneSymbol].HGVS_cDNA}} / {{computation.affectedGenesInfo[gene.geneSymbol].HGVS_protein}}</span>
+              <span class="variant-consequence" ng-if="computation.affectedGenesInfo[gene.geneSymbol].consequence == 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
+              <span class="variant-consequence" ng-if="computation.affectedGenesInfo[gene.geneSymbol].consequence == 'frameshift_variant'" title="consequence of the variant in gene sequence">frameshift variant</span>
+              <span class="variant-consequence" ng-if="computation.affectedGenesInfo[gene.geneSymbol].consequence == 'missense_variant'" title="consequence of the variant in gene sequence">missense variant</span>
+              <span class="variant-consequence" ng-if="computation.affectedGenesInfo[gene.geneSymbol].consequence == 'inframe_insertion'" title="consequence of the variant in gene sequence">inframe insertion</span>
+              <span class="variant-consequence" ng-if="computation.affectedGenesInfo[gene.geneSymbol].consequence == 'inframe_deletion'" title="consequence of the variant in gene sequence">inframe deletion</span>
 
-              <span class="effect-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].sift_effect.includes('deleterious') || computations[computationId].affectedGenesInfo[gene.geneSymbol].sift_effect == 'inferred'" title="Sift prediction: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].sift_effect}}">S</span>
-              <span class="effect-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect == 'probably_damaging' || computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect == 'possibly_damaging'  || computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect == 'inferred'" title="Polyphen prediction: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].poly_effect}}">P</span>
-              <span class="effect-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].condel_effect == 'deleterious' || computations[computationId].affectedGenesInfo[gene.geneSymbol].condel_effect == 'inferred'" title="Condel prediction: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].condel_effect}}">C</span>
+              <span class="effect-prediction" ng-if="computation.affectedGenesInfo[gene.geneSymbol].sift_effect.includes('deleterious') || computation.affectedGenesInfo[gene.geneSymbol].sift_effect == 'inferred'" title="Sift prediction: {{computation.affectedGenesInfo[gene.geneSymbol].sift_effect}}">S</span>
+              <span class="effect-prediction" ng-if="computation.affectedGenesInfo[gene.geneSymbol].poly_effect == 'probably_damaging' || computation.affectedGenesInfo[gene.geneSymbol].poly_effect == 'possibly_damaging'  || computation.affectedGenesInfo[gene.geneSymbol].poly_effect == 'inferred'" title="Polyphen prediction: {{computation.affectedGenesInfo[gene.geneSymbol].poly_effect}}">P</span>
+              <span class="effect-prediction" ng-if="computation.affectedGenesInfo[gene.geneSymbol].condel_effect == 'deleterious' || computation.affectedGenesInfo[gene.geneSymbol].condel_effect == 'inferred'" title="Condel prediction: {{computation.affectedGenesInfo[gene.geneSymbol].condel_effect}}">C</span>
 
-              <span class="cosmic-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].cosmic_id.includes('PATHOGENIC')" title="Pathogenic variant according to COSMIC">COSMIC</span>
-              <span class="clinvar-prediction" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
-              <span class="gmaf-value" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].GMAF_freq !== '' && computations[computationId].affectedGenesInfo[gene.geneSymbol].GMAF_freq < 1" title="Low GMAF frequency: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].GMAF_freq}}%">GMAF &lt; 1%</span>
-              <span class="exac-value" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].ExAC !== '' && computations[computationId].affectedGenesInfo[gene.geneSymbol].ExAC < 1" title = "Low ExAC: {{computations[computationId].affectedGenesInfo[gene.geneSymbol].ExAC}}%">ExAC &lt; 1%</span>
-              <span class="affected-domain" ng-if="computations[computationId].affectedGenesInfo[gene.geneSymbol].interpro != ''" title="Interpro affected domain">{{computations[computationId].affectedGenesInfo[gene.geneSymbol].interpro}}</span>
+              <span class="cosmic-prediction" ng-if="computation.affectedGenesInfo[gene.geneSymbol].cosmic_id.includes('PATHOGENIC')" title="Pathogenic variant according to COSMIC">COSMIC</span>
+              <span class="clinvar-prediction" ng-if="computation.affectedGenesInfo[gene.geneSymbol].clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
+              <span class="gmaf-value" ng-if="computation.affectedGenesInfo[gene.geneSymbol].GMAF_freq !== '' && computation.affectedGenesInfo[gene.geneSymbol].GMAF_freq < 1" title="Low GMAF frequency: {{computation.affectedGenesInfo[gene.geneSymbol].GMAF_freq}}%">GMAF &lt; 1%</span>
+              <span class="exac-value" ng-if="computation.affectedGenesInfo[gene.geneSymbol].ExAC !== '' && computation.affectedGenesInfo[gene.geneSymbol].ExAC < 1" title = "Low ExAC: {{computation.affectedGenesInfo[gene.geneSymbol].ExAC}}%">ExAC &lt; 1%</span>
+              <span class="affected-domain" ng-if="computation.affectedGenesInfo[gene.geneSymbol].interpro != ''" title="Interpro affected domain">{{computation.affectedGenesInfo[gene.geneSymbol].interpro}}</span>
             </div>
           </td>
         </tr>

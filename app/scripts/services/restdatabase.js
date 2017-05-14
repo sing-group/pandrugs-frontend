@@ -171,20 +171,18 @@ angular.module('pandrugsFrontendApp')
         queryDirect,
         queryIndirect
       ) {
-          var deferred = $q.defer();
+        var deferred = $q.defer();
 
-          var queryString = '';
-          queryString += constructQueryString(
-            advancedQueryOptions,
-            queryDirect,
-            queryIndirect
-          );
-
-          $http.get(BACKEND.API + 'genedrug/fromComputationId?computationId=' + computationId + '&' + queryString)
-          .then(function(results) {
-            deferred.resolve(results.data);
-          }
+        var queryString = constructQueryString(
+          advancedQueryOptions,
+          queryDirect,
+          queryIndirect
         );
+
+        $http.get(BACKEND.API + 'genedrug/fromComputationId?computationId=' + computationId + '&' + queryString)
+        .then(function(results) {
+          deferred.resolve(results.data);
+        });
 
         return deferred.promise;
       },
