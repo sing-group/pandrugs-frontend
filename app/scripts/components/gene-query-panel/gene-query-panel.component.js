@@ -40,26 +40,31 @@ angular.module('pandrugsFrontendApp')
         this.notifyChange();
       }.bind(this);
 
-      this.notifyChange = function () {
-        var parsedGenes = utilities.parseGenes(this.genes);
-        var genes = parsedGenes.join('\n');
+      this.notifyChange = function (genes) {
+        var parsedGenes;
 
-        this.onChange({ genes: this.genes, geneList: parsedGenes });
+        if (genes === undefined) {
+          parsedGenes = utilities.parseGenes(this.genes, false);
+          genes = parsedGenes.join('\n').trim();
+        } else {
+          parsedGenes = utilities.parseGenes(genes, false);
+        }
+
+        var parsedGenesUnique = utilities.uniqueIgnoreCase(parsedGenes);
+
+        this.onChange({ genes: genes, geneList: parsedGenes, uniqueGeneList: parsedGenesUnique });
       }.bind(this);
 
       this.pasteStomachCarcinomaExample = function() {
-        this.genes = 'TP53\nARID1A\nB2M\nPIK3CA\nPTEN\nKRAS\nRHOA\nMXRA8\n';
-        this.notifyChange();
+        this.notifyChange('TP53\nARID1A\nB2M\nPIK3CA\nPTEN\nKRAS\nRHOA\nMXRA8\n');
       }.bind(this);
 
       this.pasteAngiogenesisExample = function() {
-        this.genes = 'VEGFA\nVEGFB\nKDR\nIL8\nCXCR1\nCXCR2\n';
-        this.notifyChange();
+        this.notifyChange('VEGFA\nVEGFB\nKDR\nIL8\nCXCR1\nCXCR2\n');
       }.bind(this);
 
       this.pasteSignalingPathwayExample = function() {
-        this.genes = 'PIK3CA\nPIK3R1\nPIK3R2\nPTEN\nPDPK1\nAKT1\nAKT2\nFOXO1\nFOXO3\nMTOR\nRICTOR\nTSC1\nTSC2\nRHEB\nAKT1S1\nRPTOR\nMLST8\n';
-        this.notifyChange();
+        this.notifyChange('PIK3CA\nPIK3R1\nPIK3R2\nPTEN\nPDPK1\nAKT1\nAKT2\nFOXO1\nFOXO3\nMTOR\nRICTOR\nTSC1\nTSC2\nRHEB\nAKT1S1\nRPTOR\nMLST8\n');
       }.bind(this);
     }]
   });

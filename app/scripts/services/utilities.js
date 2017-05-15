@@ -35,8 +35,8 @@ angular.module('pandrugsFrontendApp')
 
       return uniqueElems;
     },
-    parseGenes: function(genes) {
-      return this.uniqueIgnoreCase(genes.split('\n')
+    parseGenes: function(genes, unique) {
+      genes = genes.split('\n')
         .filter(function(item){
           return item.trim().length > 0;
         })
@@ -45,8 +45,9 @@ angular.module('pandrugsFrontendApp')
         })
         .map(function(item) {
           return item.trim().toUpperCase();
-        })
-      );
+        });
+
+      return unique === undefined || unique === true ? this.uniqueIgnoreCase(genes) : genes;
     },
     removeEmptyValues: function(array) {
       return array.filter(function(item) {

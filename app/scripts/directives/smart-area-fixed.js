@@ -10,7 +10,7 @@
  */
 
 angular.module('smartArea', [])
-    .directive('smartArea', ['$compile', function($compile) {
+    .directive('smartArea', ['$compile', '$parse', function($compile, $parse) {
     return {
         restrict: 'A',
         scope: {
@@ -18,7 +18,7 @@ angular.module('smartArea', [])
             areaData: '=ngModel'
         },
         replace: true,
-        link: function(scope, textArea){
+        link: function(scope, textArea, ngModelCtrl){
             if(textArea[0].tagName.toLowerCase() !== 'textarea'){
                 console.warn('smartArea can only be used on textareas');
                 return false;
@@ -82,6 +82,10 @@ angular.module('smartArea', [])
                 'wordBreak',
                 'wordWrap'
             ];
+
+            scope.notifyChange = function() {
+              $parse(ngModelCtrl.ngChange)();
+            };
 
             // Build the HTML structure
             var mainWrap = angular.element('<div class="sa-wrapper"></div>');
@@ -252,10 +256,10 @@ angular.module('smartArea', [])
                     var append = $scope.dropdown.mode === 'append';
                     addSelectedDropdownText($scope.dropdown.customSelect(item), append);
                 }else{
-                    addSelectedDropdownText(item.display);
+                  addSelectedDropdownText(item.display);
                 }
                 $scope.dropdown.content = [];
-            };
+            }.bind(this);
 
             /* +----------------------------------------------------+
              * +                Internal Functions                  +
@@ -270,7 +274,6 @@ angular.module('smartArea', [])
              * @param append Whether it should be appended or replace the last word
              */
             function addSelectedDropdownText(selectedWord, append){
-
                 $scope.dropdown.showFilter = false;
 
                 var text = $scope.areaData,
@@ -295,12 +298,15 @@ angular.module('smartArea', [])
                   position = position - $scope.dropdown.match.length + selectedWord.toString().length;
                 }
 
+                $scope.notifyChange();
+
                 // Now reset the caret position
                 if($element[0].selectionStart) {
                     $timeout(function(){
-                        $element[0].focus();
-                        $element[0].setSelectionRange(position - remove + selectedWord.toString().length, position - remove + selectedWord.toString().length);
-                        checkTriggers();
+                      var caretPosition = position - remove + selectedWord.toString().length;
+                      $element[0].focus();
+                      $element[0].setSelectionRange(caretPosition, caretPosition);
+                      checkTriggers();
                     }, 100);
                 }
 
@@ -327,15 +333,6 @@ angular.module('smartArea', [])
                         });
                     }
                   });
-                    /*for(var i=0; i<autoList.words.length; i++){
-                        if(typeof(autoList.words[i]) === 'string'){
-                            text = text.replace(new RegExp('([^\\w]|\\b)('+autoList.words[i]+')([^\\w]|\\b)', 'g'), '$1<span class="'+autoList.cssClass+'">$2</span>$3');
-                        }else{
-                            text = text.replace(autoList.words[i], function(match){
-                                return '<span class="'+autoList.cssClass+'">'+match+'</span>';
-                            });
-                        }
-                    }*/
                 });
                 // Add to the fakeArea
                 $scope.fakeArea = $sce.trustAsHtml(text);

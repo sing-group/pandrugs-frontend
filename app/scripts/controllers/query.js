@@ -90,9 +90,9 @@ angular.module('pandrugsFrontendApp')
         );
     };
 
-    $scope.updateGenes = function(genes, geneList) {
+    $scope.updateGenes = function(genes, uniqueGeneList) {
       $scope.genes = genes;
-      $scope.geneList = geneList;
+      $scope.geneList = uniqueGeneList;
 
       this.checkTriggerQuery();
     }.bind(this);
