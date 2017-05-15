@@ -18,24 +18,22 @@ angular.module('pandrugsFrontendApp')
         $http.get(helpSubdir + '/help.md').then(function (response) {
           var markdown = response.data;
 
-          /* jshint ignore:start */
-
-          var converter = new Markdown.Converter();
+          var converter = new Markdown.Converter(); // jshint ignore:line
           $scope.helpcontents = $sce.trustAsHtml(converter.makeHtml(markdown));
 
           // arrange images
 
           $timeout(function () {
-            $('#helpcontents img').each(function () {
-              if (!/^http.*/.test($(this).attr('src'))) {
+            $('#helpcontents img').each(function () { // jshint ignore:line
+              if (!/^http.*/.test($(this).attr('src'))) { // jshint ignore:line
                 // fix help images base url
-                $(this).attr('src', helpSubdir + '/' + $(this).attr('src'));
+                $(this).attr('src', helpSubdir + '/' + $(this).attr('src')); // jshint ignore:line
 
                 // images max-width
-                $(this).attr('style', 'max-width:600px');
+                $(this).attr('style', 'max-width:600px'); // jshint ignore:line
 
                 // add link to see image in original size
-                $(this).wrap('<a href=\"' + $(this).attr('src') + '\"></a>');
+                $(this).wrap('<a href=\"' + $(this).attr('src') + '\"></a>'); // jshint ignore:line
               }
             });
           });
@@ -46,8 +44,6 @@ angular.module('pandrugsFrontendApp')
               $anchorScroll();
             }
           });
-
-          /* jshint ignore:end */
         });
       }, 50);
     }]);

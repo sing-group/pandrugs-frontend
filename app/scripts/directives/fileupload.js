@@ -1,13 +1,13 @@
 'use strict';
 angular.module('pandrugsFrontendApp')
-.directive('fileModel', ['$parse', function ($parse) {
+.directive('fileModel', function () {
   return {
     restrict: 'A',
     scope: {
       fileModel: '=',
       onFileChange: '&'
     },
-    link: function(scope, element, attrs) {
+    link: function(scope, element) {
       element.bind('change', function (changeEvent) {
         scope.$apply(function () {
           scope.fileModel = changeEvent.target.files[0];
@@ -16,4 +16,4 @@ angular.module('pandrugsFrontendApp')
       });
     }
   };
-}]);
+});

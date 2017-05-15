@@ -27,16 +27,16 @@ describe('Controller: QueryCtrl', function () {
         searchByGenes: function() {},
         getCancerTypes: function() {},
         listGeneSymbols: function() {
-          return ['BRCA2']
+          return ['BRCA2'];
         },
         listDrugs: function() {
-          return []
+          return [];
         },
         listDrugNames: function() {},
         genesPresence: function() {}
       };
 
-      user = {getCurrentUser: function() {return "anonymous"}};
+      user = {getCurrentUser: function() {return 'anonymous';}};
 
       deferred = $q.defer();
       cancerTypesDeferred = $q.defer();

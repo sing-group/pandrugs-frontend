@@ -28,7 +28,7 @@ angular.module('pandrugsFrontendApp')
       this.source = geneDrug.source;*/
 
       angular.merge(this, geneDrug);
-    };
+    }
 
     function GeneDrugGroup(geneDrugGroup) {
       /*this.standardDrugName = geneDrugGroup.standardDrugName;
@@ -56,7 +56,7 @@ angular.module('pandrugsFrontendApp')
         return new GeneDrug(gdi);
       });
       delete this.geneDrugInfo;
-    };
+    }
 
 
     function QueryResult(geneDrugGroups, advancedQueryOptions) {
@@ -82,7 +82,7 @@ angular.module('pandrugsFrontendApp')
       if (this.filteredGeneDrugGroups.length === 1) {
         this.filteredGeneDrugGroups[0].moreinfo = true;
       }
-    };
+    }
 
     GeneDrug.prototype.hasIndirectResistance = function() {
       return this.indirectResistance.length > 0;

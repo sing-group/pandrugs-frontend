@@ -79,13 +79,13 @@ angular.module('pandrugsFrontendApp')
       $scope.results = null;
     };
 
-    $scope.canQuery = function() {
+    $scope.canQuery = function () {
       return !$scope.isLoading
         && ($scope.selectedTab === 'drugs' || ($scope.advancedQueryOptions && $scope.advancedQueryOptions.isValid()))
         && (
           ($scope.selectedTab === 'genes' && $scope.genes && $scope.geneList)
-          || ($scope.selectedTab == 'drugs' && $scope.selectedDrug)
-          || ($scope.selectedTab == 'generank' && $scope.generank)
+          || ($scope.selectedTab === 'drugs' && $scope.selectedDrug)
+          || ($scope.selectedTab === 'generank' && $scope.generank)
           || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
         );
     };
@@ -125,11 +125,6 @@ angular.module('pandrugsFrontendApp')
     $scope.updateAdvancedQueryOptions = function(options) {
       this.advancedQueryOptions = options;
     };
-
-    $scope.showChart = function() {
-      updateCharts($scope.results);
-      $scope.chartIsShowing = true;
-    }.bind(this);
 
     $scope.getGeneSymbols = function(genesArray) {
       return genesArray.map(function(e) { return e.geneSymbol; });

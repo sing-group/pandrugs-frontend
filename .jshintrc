@@ -17,6 +17,7 @@
   "strict": true,
   "trailing": true,
   "smarttabs": true,
+  "-W014": true, // Ignores line break before && or || warning
   "globals": {
     "angular": false
   }
