@@ -8,6 +8,9 @@ angular.module('pandrugsFrontendApp')
       onFileChange: '&'
     },
     link: function(scope, element) {
+      angular.element(element)
+        .fileinput({'showUpload': false, 'showRemove': false, 'previewFileType': 'any', 'multiple': false});
+
       element.bind('change', function (changeEvent) {
         scope.$apply(function () {
           scope.fileModel = changeEvent.target.files[0];

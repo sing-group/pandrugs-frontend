@@ -18,11 +18,6 @@ angular.module('pandrugsFrontendApp')
       }
 
       this.$onInit = function () {
-        angular.element(document).ready(function () {
-          angular.element(document.querySelector('#' + this.idPrefix + '-input-file'))
-            .fileinput({'showUpload': false, 'showRemove': false, 'previewFileType': 'any', 'multiple': false});
-        }.bind(this));
-
         if ($location.search().example === 'vcfrank') {
           this.computationId = 'example';
 
