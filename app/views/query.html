@@ -1,10 +1,11 @@
 <div>
-  <button type="submit" class="btn btn-primary btn-lg" ng-show="results != null" ng-click="newQuery()" style="float:right">New Query</button>
+  <button type="submit" class="btn btn-primary btn-lg" ng-show="hasResult()" ng-click="newQuery()" style="float:right">New Query</button>
   <h2>Query PanDrugs</h2>
 </div>
+
 <form role="query form">
   <div class="container-fluid">
-    <div class="row"  id="genequeryform" ng-show="results==null">
+    <div class="row"  id="genequeryform" ng-show="!hasResult()">
       <div class="col-md-6">
         <div class="form-group">
           <div class="panel panel-default">
@@ -47,33 +48,32 @@
         <advanced-query-options on-change="updateAdvancedQueryOptions(options)"/>
       </div>
     </div>
-    <button type="submit" class="btn btn-success btn-lg" ng-show="results == null" ng-click="query()"
+    <button type="submit" class="btn btn-success btn-lg" ng-show="!hasResult()" ng-click="query()"
       ng-disabled="!canQuery()" >Query</button>
   </div>
 </form>
-<div id="resultsContainer" class="container-fluid" ng-if="results!=null">
+
+<div id="resultsContainer" class="container-fluid" ng-if="hasResult()">
   <div class="row">
     <h3>PanDrugs Candidate Therapies</h3>
-
   </div>
+
   <div class="row">
     <div class="col-md-10 col-lg-8 col-md-push-1 col-lg-push-2" id="results-summary" ng-show="selectedTab !== 'drugs'">
-
       <div class="row">
         <div class="col-md-4" ng-show="selectedTab === 'genes'">
           <h4 class="row">GENES</h4>
           <table>
             <tr>
-              <th>No. input genes</th><td>{{parsedInputGenes.length}}</td>
+              <th>No. input genes</th><td>{{geneList.length}}</td>
             </tr>
             <tr>
-              <th>No. genes in PanDrugs</th><td>{{genespresence.present.length}}</td>
+              <th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td>
             </tr>
             <tr>
-              <th>No. genes not in PanDrugs</th><td>{{genespresence.absent.length}}</td>
+              <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
             </tr>
           </table>
-
         </div>
         <div class="col-md-4" ng-show="selectedTab === 'generank'">
           <h4 class="row">GENE Rank</h4>
@@ -82,13 +82,13 @@
               <th>Input file</th><td>{{generank.name}}</td>
             </tr>
             <tr>
-              <th>No. input genes</th><td>{{parsedInputGenes.length}}</td>
+              <th>No. input genes</th><td>{{geneList.length}}</td>
             </tr>
             <tr>
-              <th>No. genes in PanDrugs</th><td>{{genespresence.present.length}}</td>
+              <th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td>
             </tr>
             <tr>
-              <th>No. genes not in PanDrugs</th><td>{{genespresence.absent.length}}</td>
+              <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
             </tr>
           </table>
         </div>
@@ -105,10 +105,10 @@
               <th>No. affected genes</th><td>{{computation.affectedGenes.length}}</td>
             </tr>
             <tr>
-              <th>No. genes in PanDrugs</th><td>{{genespresence.present.length}}</td>
+              <th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td>
             </tr>
             <tr>
-              <th>No. genes not in PanDrugs</th><td>{{genespresence.absent.length}}</td>
+              <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
             </tr>
           </table>
         </div>
@@ -139,11 +139,13 @@
       </div>
     </div>
   </div>
-  <div class="row" ng-if="results!=null && results.length==0">
+
+  <div class="row" ng-if="hasZeroResults()">
     Sorry, no results for your query have been found.
   </div>
+
   <div class="row" ng-if="selectedTab !== 'drugs'">
-    <div class="row" ng-if="results!=null && results.length>0">
+    <div class="row" ng-if="hasAtLeastOneResult()">
       <div class="col-lg-7">
         <highchart id="therapiesChart" config="highchartsBubble" style="margin-top:20px"></highchart>
       </div>
@@ -154,10 +156,10 @@
     </div>
   </div>
 
-  <div class="row"  ng-if="results!=null && results.length>0">
+  <div class="row" ng-if="hasAtLeastOneResult()">
     <a id="download-csv-link" href="{{csvcontent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
 
-    <table id="results" st-table="results" st-pipe="query" class="table table-striped query-table">
+    <table id="results" st-table="resultsFiltered" st-pipe="populateTable" class="table table-striped query-table">
       <thead>
         <tr>
           <th ng-if="selectedTab !== 'drugs'" class="min-column">Actions</th>
