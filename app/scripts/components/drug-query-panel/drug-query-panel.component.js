@@ -17,13 +17,15 @@ angular.module('pandrugsFrontendApp')
       drug: '<',
       onChange: '&'
     },
-    controller: ['database', '$sce', '$scope', '$q', function (database, $sce, $scope, $q) {
+    controller: ['database', '$sce', '$scope', '$q', '$location', function (database, $sce, $scope, $q, $location) {
       this.drugItems = [];
       this.selectedDrugItems = [];
       this.drugTemplateUrl = 'scripts/components/drug-query-panel/drugname-list-item.tpl.html';
 
       this.$onInit = function () {
-        this.notifyChange();
+        if ($location.search().example === 'drugs') {
+          this.pastePalbociclib();
+        }
       }.bind(this);
 
       this.updateDrugList = function () {
@@ -31,12 +33,10 @@ angular.module('pandrugsFrontendApp')
         this.selectedDrugItems = [];
 
         if (this.drug) {
-          var query = this.drugQuery;
-
           database.listDrugNames(this.drug, 10)
             .then(function (response) {
               this.drugItems = response.data.map(function (item) {
-                return new DrugItem(item, query, highlight);
+                return new DrugItem(item, this.drug, highlight);
               });
 
               if (this.drug) {

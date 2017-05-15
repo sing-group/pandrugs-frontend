@@ -23,6 +23,16 @@ angular.module('pandrugsFrontendApp')
             .fileinput({'showUpload': false, 'showRemove': false, 'previewFileType': 'any', 'multiple': false});
         }.bind(this));
 
+        if ($location.search().example === 'vcfrank') {
+          this.computationId = 'example';
+
+          user.getComputation('guest', 'example', function(computation){
+            this.computationId = 'example';
+            this.computations.example = new Computation(computation);
+            this.notifyComputationIdChange();
+          }.bind(this));
+        }
+
         // User requires some time to load the actual user.
         // This delay wait for the current user to be set.
         $timeout(this.reloadComputations, 1000)

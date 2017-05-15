@@ -36,9 +36,13 @@ angular.module('pandrugsFrontendApp')
     $filter
   ) {
 
-    $scope.$timeout = $timeout;
+    this.isValidTab = function(tab) {
+      return tab === 'genes' || tab === 'drugs' || tab === 'generank' || tab === 'vcfrank';
+    };
 
-    $scope.selectedTab = 'genes';
+    var example = $location.search().example;
+    this.triggerQueryOnChange = this.isValidTab(example);
+    $scope.selectedTab = this.isValidTab(example) ? example : 'genes';
 
     // ======== CHARTS ========
     $scope.highchartsBubble = bubbleChart;
@@ -58,7 +62,7 @@ angular.module('pandrugsFrontendApp')
     $scope.computationId = undefined;
     $scope.computation = undefined;
 
-    $scope.advancedQueryOptions = [];
+    $scope.advancedQueryOptions = undefined;
 
     // ======== RESULTS ========
     $scope.results = null;
@@ -66,17 +70,32 @@ angular.module('pandrugsFrontendApp')
 
 
     $scope.setSelectedTab = function (tab) {
-      $scope.selectedTab = tab;
-    };
+      if (this.isValidTab(tab) && $scope.selectedTab !== tab) {
+        $scope.selectedTab = tab;
+      }
+    }.bind(this);
 
     $scope.newQuery = function() {
       $scope.results = null;
     };
 
+    $scope.canQuery = function() {
+      return !$scope.isLoading
+        && ($scope.selectedTab === 'drugs' || ($scope.advancedQueryOptions && $scope.advancedQueryOptions.isValid()))
+        && (
+          ($scope.selectedTab === 'genes' && $scope.genes && $scope.geneList)
+          || ($scope.selectedTab == 'drugs' && $scope.selectedDrug)
+          || ($scope.selectedTab == 'generank' && $scope.generank)
+          || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
+        );
+    };
+
     $scope.updateGenes = function(genes, geneList) {
       $scope.genes = genes;
       $scope.geneList = geneList;
-    };
+
+      this.checkTriggerQuery();
+    }.bind(this);
 
     $scope.updateDrug = function(drugQuery, selectedDrug) {
       $scope.selectedDrug = selectedDrug ? selectedDrug.standardName : null;
@@ -84,7 +103,9 @@ angular.module('pandrugsFrontendApp')
       if ($scope.selectedDrug) {
         $scope.drugQuery = $scope.selectedDrug;
       }
-    };
+
+      this.checkTriggerQuery();
+    }.bind(this);
 
     $scope.updateGenerank = function(generank) {
       $scope.generank = generank;
@@ -94,31 +115,59 @@ angular.module('pandrugsFrontendApp')
       $scope.computationId = computationId;
       $scope.computation = computation;
 
-      if ($scope.computationId && $scope.computation && this.selectedTab !== 'vcfranking') {
-        this.setSelectedTab('vcfranking');
+      if ($scope.computationId && $scope.computation) {
+        $scope.setSelectedTab('vcfrank');
       }
-    };
+
+      this.checkTriggerQuery();
+    }.bind(this);
 
     $scope.updateAdvancedQueryOptions = function(options) {
       this.advancedQueryOptions = options;
     };
 
-    function updateCharts(results) {
-      for (var i = 0; i < charts.length; i++) {
-        charts[i].updateChart(results);
-      }
-    }
-
     $scope.showChart = function() {
       updateCharts($scope.results);
       $scope.chartIsShowing = true;
-    };
+    }.bind(this);
 
     $scope.getGeneSymbols = function(genesArray) {
       return genesArray.map(function(e) { return e.geneSymbol; });
     };
 
-    function manageResults(tableState) {
+    //  ========== QUERY ========
+    $scope.query = function(tableState) {
+      if ($scope.selectedTab === 'generank' && $scope.generank) {
+        var reader = new FileReader();
+
+        reader.onload = function() {
+          db.genesPresence(utilities.parseGenes(reader.result))
+            .then(function(presence){
+              $scope.genespresence = presence;
+            });
+        };
+
+        reader.readAsText($scope.generank);
+
+        this.searchBy(db.rankedSearch, $scope.generank, tableState);
+      } else if ($scope.selectedTab === 'vcfrank' && $scope.computation) {
+        db.genesPresence($scope.computation.affectedGenes).then(function(presence){
+          $scope.genespresence = presence;
+        });
+
+        this.searchBy(db.computationIdSearch, $scope.computationId, tableState);
+      } else if ($scope.selectedTab === 'genes' && $scope.genes) {
+        db.genesPresence($scope.geneList).then(function(presence){
+          $scope.genespresence = presence;
+        });
+
+        this.searchBy(db.searchByGenes, $scope.geneList, tableState);
+      } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
+        this.searchBy(db.searchByDrugs, [ $scope.selectedDrug ], tableState, AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
+      }
+    }.bind(this);
+
+    this.manageResults = function(tableState) {
       function sort(groups) {
         if (tableState.sort.predicate === 'dScore') {
           return $filter('orderBy')(groups, function(gd) {
@@ -148,7 +197,7 @@ angular.module('pandrugsFrontendApp')
 
         $scope.csvcontent = encodeURI('data:text/csv;charset=utf-8,' + results.toCSV());
 
-        updateCharts($scope.results);
+        this.updateCharts($scope.results);
 
         if (!angular.isUndefined(tableState)) {
           if (tableState.sort.predicate) {
@@ -158,77 +207,27 @@ angular.module('pandrugsFrontendApp')
         }
 
         $scope.isLoading = false;
-      };
-    }
+      }.bind(this);
+    };
 
-    //  ========== QUERY ========
-    $scope.query = function(tableState) {
-      if ($scope.selectedTab === 'generank' && $scope.generank) {
-        var reader = new FileReader();
+    this.checkTriggerQuery = function() {
+      if (this.triggerQueryOnChange && $scope.canQuery()) {
+        this.triggerQueryOnChange = false;
 
-        reader.onload = function() {
-          db.genesPresence(utilities.parseGenes(reader.result))
-            .then(function(presence){
-              $scope.genespresence = presence;
-            });
-        };
-
-        reader.readAsText($scope.generank);
-
-        searchBy(db.rankedSearch, $scope.generank, tableState);
-      } else if ($scope.selectedTab === 'vcfranking' && $scope.computation) {
-        db.genesPresence($scope.computation.affectedGenes).then(function(presence){
-          $scope.genespresence = presence;
-        });
-
-        searchBy(db.computationIdSearch, $scope.computationId, tableState);
-      } else if ($scope.selectedTab === 'genes' && $scope.genes) {
-        db.genesPresence($scope.geneList).then(function(presence){
-          $scope.genespresence = presence;
-        });
-
-        searchBy(db.searchByGenes, $scope.geneList, tableState);
-      } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
-        searchBy(db.searchByDrugs, [ $scope.selectedDrug ], tableState, AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
+        $timeout($scope.query);
       }
     };
 
-    function searchBy(searchFunction, value, tableState, advancedQueryOptions) {
+    this.updateCharts = function(results) {
+      for (var i = 0; i < charts.length; i++) {
+        charts[i].updateChart(results);
+      }
+    };
+
+    this.searchBy = function(searchFunction, value, tableState, advancedQueryOptions) {
       $scope.isLoading = true;
 
       searchFunction(value, advancedQueryOptions || $scope.advancedQueryOptions, true, true)
-        .then(manageResults(tableState));
-    }
-
-    // automatic examples
-    if ($location.search().example !== undefined) {
-      switch ($location.search().example) {
-        case 'genes':
-          $scope.pasteSignalingPathwayExample();
-          $timeout(function(){
-            $scope.query();
-          });
-
-          break;
-        case 'vcf':
-          $location.search().computationId = 'example';
-          $scope.computationId = 'example';
-          user.getComputation('guest', 'example', function(computation){
-            $scope.computations.example = computation;
-            $scope.setSelectedTab('vcfranking');
-            $timeout(function(){
-              $scope.query();
-            });
-          });
-
-          break;
-        case 'drugs':
-          $scope.setSelectedTab('drugs');
-          $scope.drugs = [{standardName: 'Palbociclib'}];
-          $timeout(function(){
-            $scope.query();
-          });
-          break;
-      }
-    }
+        .then(this.manageResults(tableState));
+    };
   }]);

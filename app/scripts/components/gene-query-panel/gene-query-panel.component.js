@@ -5,7 +5,7 @@ angular.module('pandrugsFrontendApp')
       genes: '<',
       onChange: '&'
     },
-    controller: ['database', 'utilities', function (database, utilities) {
+    controller: ['database', 'utilities', '$location', function (database, utilities, $location) {
       this.genesTextAreaConfig = {
         autocomplete: [{
           words: [/([()-_A-Za-z0-9]+)/gi]
@@ -33,6 +33,10 @@ angular.module('pandrugsFrontendApp')
       };
 
       this.$onInit = function () {
+        if ($location.search().example === 'genes') {
+          this.pasteSignalingPathwayExample();
+        }
+
         this.notifyChange();
       }.bind(this);
 
@@ -44,7 +48,7 @@ angular.module('pandrugsFrontendApp')
       }.bind(this);
 
       this.pasteStomachCarcinomaExample = function() {
-        this.genes = 'TP53\nARID1A\nB2M\nPIK3CA\nPTEN\nKRAS\nRHOA\nMXRA8';
+        this.genes = 'TP53\nARID1A\nB2M\nPIK3CA\nPTEN\nKRAS\nRHOA\nMXRA8\n';
         this.notifyChange();
       }.bind(this);
 

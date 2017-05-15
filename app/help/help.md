@@ -349,7 +349,7 @@ Clicking on Query button the results are calculated.
 
 In the results page a section with the different graphs and the summary table appears (see [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#/help#output-for-genes-gene-rank-and-vcf) section for the explanation about the components)
 
-[See output of a VCF (Genomic Variant) Query](#/query?example=vcf)
+[See output of a VCF (Genomic Variant) Query](#/query?example=vcfrank)
 
 ![VCF (Genomic Variant)](vcf-query-output-01.png "VCF example output plot")
 

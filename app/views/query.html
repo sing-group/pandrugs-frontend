@@ -9,35 +9,35 @@
         <div class="form-group">
           <div class="panel panel-default">
             <ul class="nav nav-tabs" role="tablist">
-              <li ng-class="{active:!computationId}" role="presentation" ng-click="setSelectedTab('genes')">
+              <li ng-class="{active:selectedTab === 'genes'}" role="presentation" ng-click="setSelectedTab('genes')">
                 <a href="/query#genes" aria-controls="genes" data-toggle="tab" role="tab">Genes</a>
               </li>
-              <li role="presentation" ng-click="setSelectedTab('drugs')">
+              <li ng-class="{active:selectedTab === 'drugs'}" role="presentation" ng-click="setSelectedTab('drugs')">
                 <a href="/query#drugs" aria-controls="drugs" data-toggle="tab" role="tab">Drugs</a>
               </li>
-              <li role="presentation" ng-click="setSelectedTab('generank')">
+              <li ng-class="{active:selectedTab === 'generank'}" role="presentation" ng-click="setSelectedTab('generank')">
                 <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Ranking</a>
               </li>
-              <li ng-class="{active:computationId}" role="presentation" ng-click="setSelectedTab('vcfranking')">
-                <a href="/query#vcfranking" aria-controls="vcf-rank" data-toggle="tab" role="tab">Genomic Variants</a>
+              <li ng-class="{active:selectedTab === 'vcfranking'}" role="presentation" ng-click="setSelectedTab('vcfrank')">
+                <a href="/query#vcfrank" aria-controls="vcf-rank" data-toggle="tab" role="tab">Genomic Variants</a>
               </li>
             </ul>
 
             <div class="tab-content panel-body">
-              <div id="genes" class="tab-pane"  ng-class="{active:!computationId}">
+              <div id="genes" class="tab-pane"  role="tabpanel" ng-class="{active:selectedTab === 'genes'}">
                 <gene-query-panel genes="genes" on-change="updateGenes(genes, geneList)"/>
               </div>
 
-              <div id="drugs" class="tab-pane">
+              <div id="drugs" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'drugs'}">
                 <drug-query-panel drug="drugQuery" on-change="updateDrug(drugQuery, selectedDrug)"/>
               </div>
 
-              <div id="generanking" class="tab-pane" role="tabpanel">
+              <div id="generanking" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'generank'}">
                 <gene-rank-query-panel id-prefix="generankpanel" on-change="updateGenerank(generank)"/>
               </div>
 
-              <div id="vcfranking" class="tab-pane form-group" ng-class="{active:computationId}" role="tabpanel">
-                <vcf-query-panel id-prefix="vcfquerypanel" autoreload="selectedTab === 'vcfranking'" on-change="updateComputation(computationId, computation)"/>
+              <div id="vcfrank" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'vcfrank'}">
+                <vcf-query-panel id-prefix="vcfquerypanel" autoreload="selectedTab === 'vcfrank'" on-change="updateComputation(computationId, computation)"/>
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-success btn-lg" ng-show="results == null" ng-click="query()"
-      ng-disabled="(selectedTab == 'genes' && !genes) || (selectedTab == 'drugs' && !selectedDrug) || (selectedTab == 'generank' && !generank) || isLoading || (selectedTab !== 'drugs' && !advancedQueryOptions.isValid()) || (selectedTab =='vcfranking' && (!computationId || !computation || !computation.canBeQueried()))" >Query</button>
+      ng-disabled="!canQuery()" >Query</button>
   </div>
 </form>
 <div id="resultsContainer" class="container-fluid" ng-if="results!=null">
@@ -92,7 +92,7 @@
             </tr>
           </table>
         </div>
-        <div class="col-md-4" ng-show="selectedTab === 'vcfranking'">
+        <div class="col-md-4" ng-show="selectedTab === 'vcfrank'">
           <h4 class="row">Genomic variants</h4>
           <table>
             <tr>
@@ -298,7 +298,7 @@
             </div>
           </td>
         </tr>
-        <tr ng-repeat-end ng-if="row.moreinfo && selectedTab === 'vcfranking'" class="moreinfo">
+        <tr ng-repeat-end ng-if="row.moreinfo && selectedTab === 'vcfrank'" class="moreinfo">
           <td colspan="12" style="border-top: 0px">
             <div ng-repeat="gene in geneDrug.gene">
               <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{computation.affectedGenesInfo[gene.geneSymbol].HGVS_cDNA}} / {{computation.affectedGenesInfo[gene.geneSymbol].HGVS_protein}}</span>
