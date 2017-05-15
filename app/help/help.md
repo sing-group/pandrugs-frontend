@@ -1,33 +1,33 @@
 # PanDrugs Help
 
-1. [QUERY OPTIONS](#/help#query-options)
-  1. [Genes query](#/help#genes-query)
-  2. [Gene ranking query](#/help#gene-ranking-query)
-  3. [Drugs query](#/help#drugs-query)
-  4. [VCF (Genomic Variant)](#/help#vcf)
+1. [QUERY OPTIONS](#!/help#query-options)
+  1. [Genes query](#!/help#genes-query)
+  2. [Gene ranking query](#!/help#gene-ranking-query)
+  3. [Drugs query](#!/help#drugs-query)
+  4. [VCF (Genomic Variant)](#!/help#vcf)
 
-2. [ADVANCED OPTIONS](#/help#advanced-options)
-  1. [Drug status level](#/help#drugs-status-level)
-  2. [Interaction evidence level](#/help#interaction-evidence-level)
-  3. [Select cancer type](#/help#select-cancer-type)
+2. [ADVANCED OPTIONS](#!/help#advanced-options)
+  1. [Drug status level](#!/help#drugs-status-level)
+  2. [Interaction evidence level](#!/help#interaction-evidence-level)
+  3. [Select cancer type](#!/help#select-cancer-type)
 
-3. [GScore AND DScore CONCEPT AND CALCULATION](#/help#gscore-and-dscore-concept-and-calculation)
+3. [GScore AND DScore CONCEPT AND CALCULATION](#!/help#gscore-and-dscore-concept-and-calculation)
 
-4. [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#/help#output-for-genes-gene-rank-and-vcf)
-  1. [Charts](#/help#drugs-status-level)
-    1. [Plot-chart](#/help#plot-chart)
-    2. [Pie-charts](#/help#pie-charts)
-  2. [Summary table](#/help#summary-table)
+4. [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#!/help#output-for-genes-gene-rank-and-vcf)
+  1. [Charts](#!/help#drugs-status-level)
+    1. [Plot-chart](#!/help#plot-chart)
+    2. [Pie-charts](#!/help#pie-charts)
+  2. [Summary table](#!/help#summary-table)
 
-5. [OUTPUT FOR DRUGS QUERY](#/help#output-for-drugs-query)
+5. [OUTPUT FOR DRUGS QUERY](#!/help#output-for-drugs-query)
 
-6. [EXAMPLES](#/help#examples)
-  1. [Genes query](#/help#examples-genes-query)
-  2. [Gene ranking query](#/help#examples-gene-ranking-query)
-  3. [Drugs query](#/help#examples-drugs-query)
-  4. [VCF (Genomic Variant)](#/help#examples-vcf)
+6. [EXAMPLES](#!/help#examples)
+  1. [Genes query](#!/help#examples-genes-query)
+  2. [Gene ranking query](#!/help#examples-gene-ranking-query)
+  3. [Drugs query](#!/help#examples-drugs-query)
+  4. [VCF (Genomic Variant)](#!/help#examples-vcf)
 
-7. [DATABASE VERSIONS FOR VCF ANNOTATION](#/help#database-versions-for-vcf-annotation)
+7. [DATABASE VERSIONS FOR VCF ANNOTATION](#!/help#database-versions-for-vcf-annotation)
 
 
 ## 1. Query Options<a name="query-options"></a>
@@ -255,7 +255,7 @@ In case of consulting the database to extract the genes related to a particular 
 
 In this case, each of the rows represents each of the genes associated with the input drug. The DScore is the pre-calculated drug score for each drug-gene interaction in the database. The GScore is computed according to the relevance in carcinogenesis and an essentiality score based on RNA silencing experiments in cancer cell lines.
 
-See [Summary table](#/help#summary-table) for further information
+See [Summary table](#!/help#summary-table) for further information
 
 ## 6. Examples<a name="examples"></a>
 
@@ -269,9 +269,9 @@ Clicking on Query button the results are calculated.
 
 **Output**
 
-In the results page a section with the different graphs and the summary table appears (see [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#/help#output-for-genes-gene-rank-and-vcf) section for the explanation about the components)
+In the results page a section with the different graphs and the summary table appears (see [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#!/help#output-for-genes-gene-rank-and-vcf) section for the explanation about the components)
 
-[See output of a Gene Query](#/query?example=genes)
+[See output of a Gene Query](#!/query?example=genes)
 
 Among the best candidates PanDrugs suggest Everolimus, Temsirolimus of Tamoxifen.
 
@@ -299,7 +299,7 @@ Clicking on Query button the results are calculated.
 
 **Output**
 
-In the results page a section with the different graphs and the summary table appears (see [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#/help#output-for-genes-gene-rank-and-vcf) section for the explanation about the components)
+In the results page a section with the different graphs and the summary table appears (see [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#!/help#output-for-genes-gene-rank-and-vcf) section for the explanation about the components)
 
 Output is retrieved in the same way and the results are interpreted as just as in Genes query.
 
@@ -325,9 +325,9 @@ Clicking on Query button the results are calculated.
 
 **Output**
 
-In the results page a section with the different graphs and the summary table appears (see [Output for drugs query](#/help#output-for-drugs-query) section for the explanation about the components)
+In the results page a section with the different graphs and the summary table appears (see [Output for drugs query](#!/help#output-for-drugs-query) section for the explanation about the components)
 
-[See output of a Drugs Query](#/query?example=drugs)
+[See output of a Drugs Query](#!/query?example=drugs)
 
 Genes in three different levels of association are returned as a result for this query. Genes that are targeted by this drug are ABL1, FGFR3, FGFR2 or RET. Other genes are biomarkers of response, as for example BRAF which mutations are associated with sensitivity to Ponatinib or CCND2, which mutations are associated with resistance to Ponatinib according to GDSC studies. Also, some genes are with this drug in an indirect way, as happens with KDR. Ponatinib targets SRC, that is a gene downstream KDR. If some alterations occur in KDR, this drug could be used to block this pathway, targeting SRC.
 
@@ -347,9 +347,9 @@ Clicking on Query button the results are calculated.
 
 **Output**
 
-In the results page a section with the different graphs and the summary table appears (see [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#/help#output-for-genes-gene-rank-and-vcf) section for the explanation about the components)
+In the results page a section with the different graphs and the summary table appears (see [OUTPUT FOR GENES, GENE RANK AND VCF (GENOMIC VARIANTS)](#!/help#output-for-genes-gene-rank-and-vcf) section for the explanation about the components)
 
-[See output of a VCF (Genomic Variant) Query](#/query?example=vcfrank)
+[See output of a VCF (Genomic Variant) Query](#!/query?example=vcfrank)
 
 ![VCF (Genomic Variant)](vcf-query-output-01.png "VCF example output plot")
 
