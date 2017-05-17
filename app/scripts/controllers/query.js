@@ -57,7 +57,7 @@ angular.module('pandrugsFrontendApp')
     $scope.drugQuery = '';
     $scope.selectedDrug = null;
 
-    $scope.generank = '';
+    $scope.generank = null;
 
     $scope.computationId = undefined;
     $scope.computation = undefined;
@@ -65,12 +65,9 @@ angular.module('pandrugsFrontendApp')
     $scope.advancedQueryOptions = undefined;
 
     // ======== RESULTS ========
+    $scope.isLoading = false;
     $scope.results = null;
     $scope.resultsFiltered = null;
-
-    $scope.genePresence = null;
-
-    $scope.paginationOptions= [5, 20, 100, 'all'];
 
 
     $scope.setSelectedTab = function (tab) {
@@ -82,17 +79,6 @@ angular.module('pandrugsFrontendApp')
     $scope.newQuery = function() {
       $scope.results = null;
       $scope.resultsFiltered = null;
-    };
-
-    $scope.canQuery = function () {
-      return !$scope.isLoading
-        && ($scope.selectedTab === 'drugs' || ($scope.advancedQueryOptions && $scope.advancedQueryOptions.isValid()))
-        && (
-          ($scope.selectedTab === 'genes' && $scope.genes && $scope.geneList)
-          || ($scope.selectedTab === 'drugs' && $scope.selectedDrug)
-          || ($scope.selectedTab === 'generank' && $scope.generank)
-          || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
-        );
     };
 
     $scope.updateGenes = function(genes, uniqueGeneList) {
@@ -128,12 +114,10 @@ angular.module('pandrugsFrontendApp')
     }.bind(this);
 
     $scope.updateAdvancedQueryOptions = function(options) {
-      this.advancedQueryOptions = options;
-    };
+      $scope.advancedQueryOptions = options;
 
-    $scope.getGeneSymbols = function(genesArray) {
-      return genesArray.map(function(e) { return e.geneSymbol; });
-    };
+      this.checkTriggerQuery();
+    }.bind(this);
 
     $scope.hasResult = function() {
       return $scope.results !== null;
@@ -147,9 +131,28 @@ angular.module('pandrugsFrontendApp')
       return $scope.hasResult() && !$scope.results.isEmpty();
     };
 
+    $scope.canQuery = function () {
+      return !$scope.isLoading
+        && ($scope.selectedTab === 'drugs' || ($scope.advancedQueryOptions && $scope.advancedQueryOptions.isValid()))
+        && (
+          ($scope.selectedTab === 'genes' && $scope.genes && $scope.geneList)
+          || ($scope.selectedTab === 'drugs' && $scope.selectedDrug)
+          || ($scope.selectedTab === 'generank' && $scope.generank)
+          || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
+        );
+    };
+
     //  ========== QUERY ========
-    $scope.query = function(tableState) {
-      if ($scope.selectedTab === 'generank' && $scope.generank) {
+    $scope.query = function() {
+      if ($scope.selectedTab === 'genes' && $scope.geneList) {
+        db.genesPresence($scope.geneList).then(function(presence){
+          $scope.genePresence = presence;
+        });
+
+        this.searchBy(db.searchByGenes, $scope.geneList);
+      } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
+        this.searchBy(db.searchByDrugs, [ $scope.selectedDrug ], AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
+      } else if ($scope.selectedTab === 'generank' && $scope.generank) {
         var reader = new FileReader();
 
         reader.onload = function() {
@@ -162,55 +165,15 @@ angular.module('pandrugsFrontendApp')
 
         reader.readAsText($scope.generank);
 
-        this.searchBy(db.rankedSearch, $scope.generank, tableState);
+        this.searchBy(db.rankedSearch, $scope.generank);
       } else if ($scope.selectedTab === 'vcfrank' && $scope.computation) {
         db.genesPresence($scope.computation.affectedGenes).then(function(presence){
           $scope.genePresence = presence;
         });
 
-        this.searchBy(db.computationIdSearch, $scope.computationId, tableState);
-      } else if ($scope.selectedTab === 'genes' && $scope.genes) {
-        db.genesPresence($scope.geneList).then(function(presence){
-          $scope.genePresence = presence;
-        });
-
-        this.searchBy(db.searchByGenes, $scope.geneList, tableState);
-      } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
-        this.searchBy(db.searchByDrugs, [ $scope.selectedDrug ], tableState, AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
+        this.searchBy(db.computationIdSearch, $scope.computationId);
       }
     }.bind(this);
-
-    $scope.populateTable = function(tableState) {
-      function sort(groups) {
-        if (tableState.sort.predicate === 'dScore') {
-          return $filter('orderBy')(groups, function(gd) {
-            return Math.abs(gd.dScore);
-          }, tableState.sort.reverse);
-        } else {
-          return $filter('orderBy')(groups, tableState.sort.predicate, tableState.sort.reverse);
-        }
-      }
-
-      function paginate(groups) {
-        if (tableState.pagination.number === $scope.paginationOptions[$scope.paginationOptions.length - 1]) {
-          tableState.pagination.start = 0;
-          tableState.pagination.number = groups.length;
-        }
-
-        tableState.pagination.numberOfPages = Math.ceil(groups.length / tableState.pagination.number);
-        // show only current page
-
-        return groups.slice(tableState.pagination.start, tableState.pagination.start+tableState.pagination.number);
-      }
-
-      if (tableState.sort.predicate) {
-        $scope.resultsFiltered = sort($scope.resultsFiltered);
-      }
-
-      $scope.resultsPaginated = paginate($scope.resultsFiltered);
-
-      $scope.isLoading = false;
-    };
 
     this.checkTriggerQuery = function() {
       if (this.triggerQueryOnChange && $scope.canQuery()) {
@@ -226,20 +189,22 @@ angular.module('pandrugsFrontendApp')
       }
     };
 
-    this.searchBy = function(searchFunction, value, tableState, advancedQueryOptions) {
-      $scope.isLoading = true;
+    this.searchBy = function(searchFunction, value, advancedQueryOptions) {
+      if (!$scope.hasResult()) {
+        $scope.isLoading = true;
 
-      if ($scope.results) {
-        this.manageResults(tableState)($scope.results);
-      } else {
         searchFunction(value, advancedQueryOptions || $scope.advancedQueryOptions, true, true)
           .then(function(result) {
+            $scope.isLoading = false;
+
             $scope.results = QueryResultFactory.createQueryResult(result.geneDrugGroup, $scope.advancedQueryOptions);
             $scope.resultsFiltered = $scope.results.getFilteredGroups();
 
-            $scope.csvcontent = encodeURI('data:text/csv;charset=utf-8,' + $scope.results.toCSV());
             this.updateCharts($scope.resultsFiltered);
-          }.bind(this));
+          }.bind(this),
+          function() {
+            $scope.isLoading = false;
+          });
       }
     };
   }]);

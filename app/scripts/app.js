@@ -34,7 +34,7 @@ angular
     var server = ''; // the server is in this machine (e.g.: docker distribution)
     var app = server + '/pandrugs-backend/';
 
-    
+
     return {
       SERVER: server,
       APP: app,

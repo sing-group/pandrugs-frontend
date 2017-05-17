@@ -5,7 +5,7 @@ angular.module('pandrugsFrontendApp')
       genes: '<',
       onChange: '&'
     },
-    controller: ['database', 'utilities', '$location', function (database, utilities, $location) {
+    controller: ['database', 'utilities', '$location', '$timeout', function (database, utilities, $location, $timeout) {
       this.genesTextAreaConfig = {
         autocomplete: [{
           words: [/([()-_A-Za-z0-9]+)/gi]
@@ -34,10 +34,10 @@ angular.module('pandrugsFrontendApp')
 
       this.$onInit = function () {
         if ($location.search().example === 'genes') {
-          this.pasteSignalingPathwayExample();
+          $timeout(this.pasteSignalingPathwayExample());
+        } else {
+          $timeout(this.notifyChange());
         }
-
-        this.notifyChange();
       }.bind(this);
 
       this.notifyChange = function (genes) {

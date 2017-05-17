@@ -138,24 +138,29 @@ body {
   background-color: white;
 }
 
-div#results-summary {
-    background-color: $light-green;
-    border: 1px solid $medium-green;
-    h4 {
-      color: $dark-green;
-      margin-left: 0px;
-    }
-    h6 {
-      font-size: 1.05em;
-    }
-    h4, h5, h6 {
-      font-weight: bold;
-    }
-    table {
-      border-spacing: 10px;
-      border-collapse: separate;
-    }
-
+div.results-summary {
+  background-color: $light-green;
+  border: 1px solid $medium-green;
+  h4 {
+    color: $dark-green;
+    margin-left: 0px;
+  }
+  h6 {
+    font-size: 1.05em;
+  }
+  h4, h5, h6 {
+    font-weight: bold;
+  }
+  table {
+    border-spacing: 10px;
+    border-collapse: separate;
+  }
+  dt {
+    margin-top: 8px;
+  }
+  dd {
+    margin-left: 24px;
+  }
 }
 
 table#results tbody td:nth-child(3) {

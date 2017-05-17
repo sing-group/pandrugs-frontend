@@ -8,8 +8,42 @@
  * Factory in the pandrugsFrontendApp.
  */
 angular.module('pandrugsFrontendApp')
-  .factory('QueryResultFactory', function () {
-    function GeneDrug(geneDrug) {
+  .factory('QueryResultFactory', ['$sce', function ($sce) {
+    var geneDrugHeader =
+      'Gene(s),Target,Alteration,Status Info,Threrapy,Indirect Gene(s),' +
+      'Indirect Pathway(s),Sensitivity,Original Sensitivity,' +
+      'Indirect Resistance(s),Source(s),Warning(s),DScore,GScore';
+
+    var geneDrugGroupsHeader =
+      'Gene(s),Standard Drug Name,Show Drug Name,PubChemId(s),Status,' +
+      'Status Description,Therapy,Target,Source(s),Curated Source(s),' +
+      'Family(ies),Cancer(s),Indirect Gene(s),Best Interaction,' +
+      'DScore,GScore,' + geneDrugHeader;
+
+    function drugToLink(drug, pubchemId) {
+      return '<a href="https://pubchem.ncbi.nlm.nih.gov/compound/PUBCHEM_ID_TOKEN" target="_blank">DRUG_NAME_TOKEN</a>'
+        .replace('PUBCHEM_ID_TOKEN', pubchemId)
+        .replace('DRUG_NAME_TOKEN', drug);
+    }
+
+    function geneToLink(geneSymbol) {
+      return '<a href="http://www.ncbi.nlm.nih.gov/gene?term=GENE_TOKEN" target="_blank">GENE_TOKEN</a>'
+        .replace(new RegExp('GENE_TOKEN', 'g'), geneSymbol);
+    }
+
+    function drugLinkReplacer(drug, pubchemId) {
+      return function(text) {
+        return text.replace(drug, drugToLink(drug, pubchemId));
+      };
+    }
+
+    function geneLinkReplacer(geneSymbol) {
+      return function(text) {
+        return text.replace(geneSymbol, geneToLink(geneSymbol));
+      };
+    }
+
+    function GeneDrug(geneDrugGroup, geneDrug) {
       /*this.drug = geneDrug.drug;
       this.status = geneDrug.status;
       this.cancers = geneDrug.cancers;
@@ -28,6 +62,7 @@ angular.module('pandrugsFrontendApp')
       this.source = geneDrug.source;*/
 
       angular.merge(this, geneDrug);
+      this.geneDrugGroup = geneDrugGroup;
     }
 
     function GeneDrugGroup(geneDrugGroup) {
@@ -53,8 +88,8 @@ angular.module('pandrugsFrontendApp')
       this.moreinfo = false;
 
       this.geneDrugs = this.geneDrugInfo.map(function(gdi) {
-        return new GeneDrug(gdi);
-      });
+        return new GeneDrug(this, gdi);
+      }.bind(this));
       delete this.geneDrugInfo;
     }
 
@@ -90,12 +125,50 @@ angular.module('pandrugsFrontendApp')
       });
     };
 
+    GeneDrug.prototype.getPubchemId = function() {
+      return this.geneDrugGroup.pubchemId[0];
+    }
+
+    GeneDrug.prototype.getDrugStatusInfoWithLinks = function() {
+      var info = this.drugStatusInfo;
+
+      info = drugLinkReplacer(this.showDrugName, this.getPubchemId())(info);
+
+      info = this.getGeneSymbols().map(geneLinkReplacer)
+      .reduce(
+        function (previous, current) {
+          return current(previous);
+        },
+        info
+      );
+
+      if (this.indirect) {
+        info = geneLinkReplacer(this.getIndirectGeneSymbol())(info);
+      }
+
+      return $sce.trustAsHtml(info);
+    };
+
     GeneDrug.prototype.getIndirectGeneSymbol = function() {
       if (this.indirect) {
         return this.indirect.geneInfo.geneSymbol;
       } else {
         return null;
       }
+    };
+
+    GeneDrug.prototype.getDrugAndGenesAsText = function(joiner) {
+      var geneSymbol = this.indirect !== null ? this.getIndirectGeneSymbol() : this.getGeneSymbols();
+
+      return this.drug + joiner + geneSymbol;
+    };
+
+    GeneDrug.prototype.getDrugAndGenesAsHtml = function(joiner) {
+      var geneSymbol = this.indirect !== null ? this.getIndirectGeneSymbol() : this.getGeneSymbols();
+      geneSymbol = geneToLink(geneSymbol);
+      var drug = drugToLink(this.drug, this.getPubchemId());
+
+      return $sce.trustAsHtml(drug + joiner + geneSymbol);
     };
 
     GeneDrug.prototype.getIndirectPathways = function() {
@@ -145,9 +218,10 @@ angular.module('pandrugsFrontendApp')
       return '"' + value + '"';
     }
 
-    GeneDrug.prototype.toCSV = function() {
-      return [
-        '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+    GeneDrug.prototype.toCSV = function(addHeader) {
+      var header = addHeader === true ? geneDrugHeader + '\n' : '';
+
+      return header + [
         this.getGeneSymbols(),
         this.target,
         this.alteration,
@@ -241,7 +315,9 @@ angular.module('pandrugsFrontendApp')
       });
     };
 
-    GeneDrugGroup.prototype.toCSV = function() {
+    GeneDrugGroup.prototype.toCSV = function(addHeader) {
+      var header = addHeader === true ? geneDrugGroupsHeader + '\n' : '';
+
       var groupRow = [
         this.getGeneSymbols(),
         this.standardDrugName,
@@ -250,7 +326,7 @@ angular.module('pandrugsFrontendApp')
         this.status,
         this.statusDescription,
         this.therapy || '-',
-        this.target,
+        this.target ? 'target' : 'marker',
         this.getSourceNames(),
         this.curatedSource,
         this.family,
@@ -264,11 +340,15 @@ angular.module('pandrugsFrontendApp')
         .map(prepareValueForCSV)
       .join(',');
 
+      var geneDrugPadding = [ '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' ]
+        .map(prepareValueForCSV)
+      .join(',');
+
       var geneDrugRows = this.geneDrugs
-        .map(function(geneDrug) { return geneDrug.toCSV(); })
+        .map(function(geneDrug) { return geneDrugPadding + ',' + geneDrug.toCSV(); })
       .join('\n');
 
-      return groupRow + '\n' + geneDrugRows;
+      return header + groupRow + '\n' + geneDrugRows;
     };
 
     QueryResult.prototype.getFilteredGroups = function() {
@@ -280,21 +360,11 @@ angular.module('pandrugsFrontendApp')
     };
 
     QueryResult.prototype.toCSV = function() {
-      var header =
-        'Gene(s),Standard Drug Name,Show Drug Name,PubChemId(s),Status,' +
-        'Status Description,Therapy,Target,Source(s),Curated Source(s),' +
-        'Family(ies),Cancer(s),Indirect Gene(s),Best Interaction,' +
-        'DScore,GScore,' +
-        'Gene(s),Target,Alteration,Status Info,Threrapy,Indirect Gene(s),' +
-        'Indirect Pathway(s),Sensitivity,Original Sensitivity,' +
-        'Indirect Resistance(s),Source(s),Warning(s),DScore,GScore'
-      ;
-
       var groups = this.getFilteredGroups()
         .map(function(group) { return group.toCSV(); })
       .join('\n');
 
-      return header + '\n' + groups;
+      return geneDrugGroupsHeader + '\n' + groups;
     };
 
     QueryResult.prototype.getGroupsCount = function() {
@@ -306,4 +376,4 @@ angular.module('pandrugsFrontendApp')
         return new QueryResult(geneDrugGroups, advancedQueryOptions);
       }
     };
-  });
+  }]);
