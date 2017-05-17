@@ -41,7 +41,7 @@
 
               <div class="tab-content panel-body">
                 <div id="genes" class="tab-pane"  role="tabpanel" ng-class="{active:selectedTab === 'genes'}">
-                  <gene-query-panel genes="genes" on-change="updateGenes(genes, uniqueGeneList)"/>
+                  <gene-query-panel on-change="updateGenes(genes, uniqueGeneList)"/>
                 </div>
 
                 <div id="drugs" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'drugs'}">

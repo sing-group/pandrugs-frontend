@@ -10,7 +10,7 @@
  */
 
 angular.module('smartArea', [])
-    .directive('smartArea', ['$compile', '$parse', function($compile, $parse) {
+    .directive('smartArea', ['$compile', function($compile) {
     return {
         restrict: 'A',
         scope: {
@@ -18,7 +18,7 @@ angular.module('smartArea', [])
             areaData: '=ngModel'
         },
         replace: true,
-        link: function(scope, textArea, ngModelCtrl){
+        link: function(scope, textArea){
             if(textArea[0].tagName.toLowerCase() !== 'textarea'){
                 console.warn('smartArea can only be used on textareas');
                 return false;
@@ -82,10 +82,6 @@ angular.module('smartArea', [])
                 'wordBreak',
                 'wordWrap'
             ];
-
-            scope.notifyChange = function() {
-              $parse(ngModelCtrl.ngChange)();
-            };
 
             // Build the HTML structure
             var mainWrap = angular.element('<div class="sa-wrapper"></div>');
@@ -297,8 +293,6 @@ angular.module('smartArea', [])
                 if(!append && $scope.dropdown.match){
                   position = position - $scope.dropdown.match.length + selectedWord.toString().length;
                 }
-
-                $scope.notifyChange();
 
                 // Now reset the caret position
                 if($element[0].selectionStart) {

@@ -27,6 +27,7 @@
             placeholder="Enter HUGO Gene symbols" rows="20" spellcheck="false"
             ng-model="$ctrl.genes"
             ng-change="$ctrl.notifyChange()"
+            ng-focus="$ctrl.notifyChange()"
             smart-area="$ctrl.genesTextAreaConfig"
   />
 </div>

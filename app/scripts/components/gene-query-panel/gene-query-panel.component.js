@@ -2,10 +2,10 @@ angular.module('pandrugsFrontendApp')
   .component('geneQueryPanel', {
     templateUrl: 'views/components/gene-query-panel/gene-query-panel.template.html',
     bindings: {
-      genes: '<',
       onChange: '&'
     },
     controller: ['database', 'utilities', '$location', '$timeout', function (database, utilities, $location, $timeout) {
+      this.genes = '';
       this.genesTextAreaConfig = {
         autocomplete: [{
           words: [/([()-_A-Za-z0-9]+)/gi]
@@ -47,6 +47,7 @@ angular.module('pandrugsFrontendApp')
           parsedGenes = utilities.parseGenes(this.genes, false);
           genes = parsedGenes.join('\n').trim();
         } else {
+          this.genes = genes;
           parsedGenes = utilities.parseGenes(genes, false);
         }
 
