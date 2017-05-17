@@ -1,6 +1,6 @@
 angular.module('pandrugsFrontendApp')
   .component('geneQueryPanel', {
-    templateUrl: 'scripts/components/gene-query-panel/gene-query-panel.template.html',
+    templateUrl: 'views/components/gene-query-panel/gene-query-panel.template.html',
     bindings: {
       genes: '<',
       onChange: '&'

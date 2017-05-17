@@ -1,10 +1,11 @@
 angular.module('pandrugsFrontendApp')
   .component('geneResultsTable', {
-    templateUrl: 'scripts/components/gene-results-table/gene-results-table.template.html',
+    templateUrl: 'views/components/gene-results-table/gene-results-table.template.html',
     bindings: {
       queryResult: '<',
       geneDrugGroups: '<',
-      computation: '<'
+      computation: '<',
+      showVariantInformation: '<'
     },
     controller: ['TableHelper', function (TableHelper) {
       this.csvContent = null;

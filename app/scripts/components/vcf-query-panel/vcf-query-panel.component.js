@@ -1,6 +1,6 @@
 angular.module('pandrugsFrontendApp')
   .component('vcfQueryPanel', {
-    templateUrl: 'scripts/components/vcf-query-panel/vcf-query-panel.template.html',
+    templateUrl: 'views/components/vcf-query-panel/vcf-query-panel.template.html',
     bindings: {
       idPrefix: '@',
       reloadInterval: '@',
@@ -114,7 +114,7 @@ angular.module('pandrugsFrontendApp')
       };
 
       Computation.prototype.countAffectedGenes = function() {
-        return this.affectedGenes.length;
+        return this.affectedGenes ? this.affectedGenes.length : 0;
       };
 
       Computation.prototype.isFailed = function() {
@@ -136,7 +136,7 @@ angular.module('pandrugsFrontendApp')
             }
 
             this.computations = {};
-            for (computationId in computations) {
+            for (var computationId in computations) {
               if (computations.hasOwnProperty(computationId)) {
                 this.computations[computationId] = new Computation(computations[computationId]);
               }

@@ -1,6 +1,6 @@
 angular.module('pandrugsFrontendApp')
   .component('geneRankQueryPanel', {
-    templateUrl: 'scripts/components/generank-query-panel/generank-query-panel.template.html',
+    templateUrl: 'views/components/generank-query-panel/generank-query-panel.template.html',
     bindings: {
       idPrefix: '@',
       onChange: '&'

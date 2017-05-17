@@ -1,6 +1,6 @@
 angular.module('pandrugsFrontendApp')
   .component('drugResultsTable', {
-    templateUrl: 'scripts/components/drug-results-table/drug-results-table.template.html',
+    templateUrl: 'views/components/drug-results-table/drug-results-table.template.html',
     bindings: {
       geneDrugGroup: '<'
     },

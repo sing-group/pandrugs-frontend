@@ -1,6 +1,6 @@
 angular.module('pandrugsFrontendApp')
   .component('advancedQueryOptions', {
-    templateUrl: 'scripts/components/advanced-query-options/advanced-query-options.template.html',
+    templateUrl: 'views/components/advanced-query-options/advanced-query-options.template.html',
     bindings: {
       onChange: '&'
     },

@@ -12,7 +12,7 @@ function DrugItem(drugItem, query, htmlMapper) {
 
 angular.module('pandrugsFrontendApp')
   .component('drugQueryPanel', {
-    templateUrl: 'scripts/components/drug-query-panel/drug-query-panel.template.html',
+    templateUrl: 'views/components/drug-query-panel/drug-query-panel.template.html',
     bindings: {
       drug: '<',
       onChange: '&'
@@ -20,7 +20,7 @@ angular.module('pandrugsFrontendApp')
     controller: ['database', '$sce', '$scope', '$q', '$location', function (database, $sce, $scope, $q, $location) {
       this.drugItems = [];
       this.selectedDrugItems = [];
-      this.drugTemplateUrl = 'scripts/components/drug-query-panel/drugname-list-item.tpl.html';
+      this.drugTemplateUrl = 'views/components/drug-query-panel/drugname-list-item.tpl.html';
 
       this.$onInit = function () {
         if ($location.search().example === 'drugs') {
@@ -37,7 +37,7 @@ angular.module('pandrugsFrontendApp')
             .then(function (response) {
               this.drugItems = response.data.map(function (item) {
                 return new DrugItem(item, this.drug, highlight);
-              });
+              }.bind(this));
 
               if (this.drug) {
                 this.selectedDrugItems = this.drugItems.find(function (drugItem) {
