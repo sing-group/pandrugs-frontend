@@ -19,7 +19,8 @@
     "angular-list-group": "~0.0.3",
     "bootstrap-fileinput": "sass",
     "pagedown": "^1.1.0",
-    "components-font-awesome": "~4.7.0"
+    "components-font-awesome": "~4.7.0",
+    "spinkit": "~1.2.5"
   },
   "overrides": {
     "pagedown": {
