@@ -191,6 +191,10 @@ angular.module('pandrugsFrontendApp')
       return this.indirectResistance.length > 0;
     };
 
+    GeneDrug.prototype.hasChangedSensitivity = function() {
+      return this.originalSensitivity !== this.sensitivity;
+    }
+
     GeneDrug.prototype.getAdjustedGScore = function() {
       return Math.round(this.gScore * 10000) / 10000;
     };
