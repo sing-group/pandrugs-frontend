@@ -20,7 +20,6 @@ angular.module('pandrugsFrontendApp')
   'AdvancedQueryOptionsFactory',
   '$timeout',
   '$location',
-  '$filter',
   function (
     $scope,
     user,
@@ -32,8 +31,7 @@ angular.module('pandrugsFrontendApp')
     QueryResultFactory,
     AdvancedQueryOptionsFactory,
     $timeout,
-    $location,
-    $filter
+    $location
   ) {
 
     this.isValidTab = function(tab) {

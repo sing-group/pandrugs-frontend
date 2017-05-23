@@ -42,5 +42,5 @@ angular.module('pandrugsFrontendApp')
       } else {
         return $filter('orderBy')(geneDrugOrGroup, [absDScoreSort, gScoreSort], true);
       }
-    }
+    };
   }]);

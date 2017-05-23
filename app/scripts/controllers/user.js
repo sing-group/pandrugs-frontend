@@ -22,12 +22,10 @@ angular.module('pandrugsFrontendApp')
       $scope.newUser = false;
 
       $scope.showRegistration = function () {
-        console.log('registration');
         $scope.newUser = true;
       };
 
       $scope.showLogin = function () {
-        console.log('login');
         $scope.newUser = false;
       };
 

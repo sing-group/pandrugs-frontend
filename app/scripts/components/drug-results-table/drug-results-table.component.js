@@ -9,7 +9,6 @@ angular.module('pandrugsFrontendApp')
       this.geneDrugs = null;
 
       this.$onChanges = function(changes) {
-        console.log(changes);
         if (changes.geneDrugGroup && changes.geneDrugGroup.currentValue) {
           this.csvContent = encodeURI('data:text/csv;charset=utf-8,' + changes.geneDrugGroup.currentValue.toCSV(true));
         }

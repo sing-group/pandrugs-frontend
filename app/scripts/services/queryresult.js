@@ -127,7 +127,7 @@ angular.module('pandrugsFrontendApp')
 
     GeneDrug.prototype.getPubchemId = function() {
       return this.geneDrugGroup.pubchemId[0];
-    }
+    };
 
     GeneDrug.prototype.getDrugStatusInfoWithLinks = function() {
       var info = this.drugStatusInfo;
@@ -193,7 +193,7 @@ angular.module('pandrugsFrontendApp')
 
     GeneDrug.prototype.hasChangedSensitivity = function() {
       return this.originalSensitivity !== this.sensitivity;
-    }
+    };
 
     GeneDrug.prototype.getAdjustedGScore = function() {
       return Math.round(this.gScore * 10000) / 10000;
