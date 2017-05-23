@@ -32,6 +32,18 @@ angular.module('pandrugsFrontendApp')
       }
     };
 
+    AdvancedQueryOptions.prototype.getSelectedCancerTypeNames = function() {
+      if (this.cancerTypes === '*') {
+        return null;
+      } else {
+        return this.cancerTypes.filter(function (cancer) {
+          return cancer.selected;
+        }).map(function (cancer) {
+          return cancer.name;
+        });
+      }
+    };
+
     AdvancedQueryOptions.prototype.areAllCancerTypesSelected = function() {
       return this.cancerTypes === '*' || this.cancerTypes.every(function(cancer) {
         return cancer.selected;
@@ -44,9 +56,20 @@ angular.module('pandrugsFrontendApp')
       });
     };
 
+    AdvancedQueryOptions.prototype.hasAnyCancerSelected = function () {
+      return this.cancerTypes === '*' || this.cancerTypes.find(function(cancer) {
+          return cancer.selected;
+        });
+    };
+
+    AdvancedQueryOptions.prototype.hasCancerStatusSelected = function() {
+      return this.cancerFda || this.cancerClinical;
+    };
+
     AdvancedQueryOptions.prototype.isValid = function () {
       return (this.cancerFda || this.cancerClinical || this.otherClinical || this.otherExperimental || this.otherFda)
-        && (this.target || this.marker);
+        && (this.target || this.marker)
+        && (!this.hasCancerStatusSelected() || this.hasAnyCancerSelected());
     };
 
     // Public API here

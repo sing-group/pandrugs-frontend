@@ -484,6 +484,11 @@ input[type="radio"].toggle-right + label {
   color: #1da1f2;
 }
 
+div.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 /* =========== TOOLTIP =========================*/
 /* Tooltip container */
 .tooltipCSS {

@@ -39,20 +39,25 @@
           </div>
 
           <!-- cancer types -->
-          <div class="col-md-12">
+          <div class="col-md-12" ng-class="{'disabled': !$ctrl.hasCancerStatusSelected()}">
             <div class="panel panel-default">
               <div class="panel-heading">
                 Select Cancer Types
-                <input class="btn btn-default btn-xs pull-right" type="button" ng-click="$ctrl.clearCancerTypesSelection()" value="Clear all"/>
-                <input class="btn btn-default btn-xs pull-right" type="button" ng-click="$ctrl.selectAllCancerTypes()" value="Select all"/>
+                <input class="btn btn-default btn-xs pull-right" type="button" value="Clear all"
+                       ng-click="$ctrl.clearCancerTypesSelection()"
+                       ng-disabled="!$ctrl.hasCancerStatusSelected()"/>
+                <input class="btn btn-default btn-xs pull-right" type="button" value="Select all"
+                       ng-click="$ctrl.selectAllCancerTypes()"
+                       ng-disabled="!$ctrl.hasCancerStatusSelected()"/>
               </div>
               <div class="panel-body">
                 <span class="cancer_type_checkbox" ng-repeat="cancerType in $ctrl.cancerTypes">
                   <input
-                    type="checkbox"
-                    name="cancerType_{{$index}}"
                     id="cancerType_{{$index}}"
+                    name="cancerType_{{$index}}"
+                    type="checkbox"
                     value="{{cancerType.name}}"
+                    ng-disabled="!$ctrl.hasCancerStatusSelected()"
                     ng-model="cancerType.selected"
                     ng-change="$ctrl.notifyChange()"
                   />

@@ -44,5 +44,9 @@ angular.module('pandrugsFrontendApp')
         });
         this.notifyChange();
       }.bind(this);
+
+      this.hasCancerStatusSelected = function() {
+        return this.cancerFda || this.cancerClinical;
+      };
     }]
   });

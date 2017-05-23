@@ -41,6 +41,19 @@ angular.module('pandrugsFrontendApp')
         nonCancerDrugStatus = 'nonCancerDrugStatus=NONE&';
       }
 
+      var cancers = '';
+      if (advancedQueryOptions.hasCancerStatusSelected()
+        && advancedQueryOptions.hasAnyCancerSelected()
+        && !advancedQueryOptions.areAllCancerTypesSelected()
+      ) {
+        cancers = advancedQueryOptions.getSelectedCancerTypeNames()
+          .map(function(cancerType) {
+            return 'cancer=' + cancerType.toUpperCase();
+          })
+          .join('&');
+        cancers += '&';
+      }
+
       var target = '';
       if (advancedQueryOptions.target && advancedQueryOptions.marker) {
         target = 'target=BOTH&';
@@ -59,7 +72,7 @@ angular.module('pandrugsFrontendApp')
         direct = 'direct=INDIRECT&';
       }
 
-      return cancerDrugStatus + nonCancerDrugStatus + target + direct;
+      return cancerDrugStatus + nonCancerDrugStatus + cancers + target + direct;
     }
 
     function searchBy (
