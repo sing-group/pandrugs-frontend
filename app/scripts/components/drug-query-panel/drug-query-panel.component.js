@@ -28,6 +28,10 @@ angular.module('pandrugsFrontendApp')
         }
       }.bind(this);
 
+      this.$onChanges = function(changes) {
+        this.updateDrugList();
+      }.bind(this);
+
       this.updateDrugList = function () {
         this.drugItems = [];
         this.selectedDrugItems = [];
@@ -51,9 +55,9 @@ angular.module('pandrugsFrontendApp')
               }
 
             }.bind(this));
+        } else {
+          this.notifyChange();
         }
-
-        this.notifyChange();
       }.bind(this);
 
       this.notifyChange = function () {
