@@ -191,10 +191,14 @@
     </div>
   </div>
 
-  <div class="row" ng-if="hasAtLeastOneResult()">
-    <gene-results-table ng-if="selectedTab !== 'drugs'"
-                        query-result="results" gene-drug-groups="resultsFiltered"
+  <div class="row" ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult()">
+    <gene-results-table query-result="results" gene-drug-groups="resultsFiltered"
                         computation="computation" show-variant-information="selectedTab === 'vcfrank'"/>
+
     <drug-results-table ng-if="selectedTab === 'drugs'" gene-drug-group="resultsFiltered[0]"/>
+  </div>
+
+  <div class="row" ng-if="selectedTab === 'drugs' && hasAtLeastOneResult()">
+    <drug-results-table gene-drug-group="resultsFiltered[0]"/>
   </div>
 </div>

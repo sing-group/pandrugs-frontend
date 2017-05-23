@@ -182,8 +182,10 @@ angular.module('pandrugsFrontendApp')
     };
 
     this.updateCharts = function(results) {
-      for (var i = 0; i < charts.length; i++) {
-        charts[i].updateChart(results);
+      if ($scope.selectedTab !== 'drugs') {
+        for (var i = 0; i < charts.length; i++) {
+          charts[i].updateChart(results);
+        }
       }
     };
 
