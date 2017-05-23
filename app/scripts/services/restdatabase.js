@@ -192,7 +192,7 @@ angular.module('pandrugsFrontendApp')
 
         $http.get(BACKEND.API + 'cancer')
         .then(function(results) {
-          deferred.resolve(results.data.name);
+          deferred.resolve(results.data.cancer);
         });
 
         return deferred.promise;

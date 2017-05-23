@@ -21,7 +21,9 @@ angular.module('pandrugsFrontendApp')
       // cancer types
       database.getCancerTypes().then(function (results) {
         results.forEach(function(result) {
-          this.cancerTypes.push({name: result, selected: true});
+          if (result.canBeQueried) {
+            this.cancerTypes.push({name: result.name, selected: true});
+          }
         }.bind(this));
       }.bind(this));
 
