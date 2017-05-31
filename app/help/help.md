@@ -29,6 +29,8 @@
 
 7. [DATABASE VERSIONS FOR VCF ANNOTATION](#!/help#database-versions-for-vcf-annotation)
 
+8. [REST API](#!/help#rest-api)
+
 
 ## 1. Query Options<a name="query-options"></a>
 There are three possible input options to obtain a **list of therapies according to an individualized genetic profile**:
@@ -388,3 +390,7 @@ In a repurposing way, the approved drugs for blood cancer DASATINIB or BOSUTINIB
 **APPRIS** (gencode19/ensembl74)
 
 **KEGG** accessed 18/11/2016
+
+## 8. REST API <a name="rest-api"></a>
+
+A detailed documentation of the REST API can be found [online](/pandrugs-backend/) or can be downloaded in [DOCX format](/pandrugs-backend/PanDrugs.docx).
