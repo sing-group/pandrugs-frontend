@@ -329,8 +329,27 @@ a.non_curated_source[title="PharmGKB"] {
   color: red;
 }
 
+.indirect-gene {
+  color: gray;
+}
+
 .drug {
   color: blue;
+}
+
+.gene-highlighted {
+  @extend .gene;
+  font-weight: bold;
+}
+
+.indirect-gene-highlighted {
+  @extend .indirect-gene;
+  font-weight: bold;
+}
+
+.drug-highlighted {
+  @extend .drug;
+  font-weight: bold;
 }
 
 #genedrugnetworkgraph {
@@ -505,7 +524,7 @@ div.disabled {
    text-align: center;
    padding: 5px 4px;
    border-radius: 6px;
-   word-wrap: normal;
+   word-wrap: normal !important;
 
    /* Position the tooltip text */
    position: absolute;

@@ -10,7 +10,7 @@
         <th class="wrapped-column">Drug status <span class="help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
         <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="help_icon" title="Type of therapy for the approved drugs in cancer"/></th>
         <th class="min-column">R/S <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
-        <th class="min-column">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are Direct (target or marker) or Indirect (pathway search based)"/></th>
+        <th class="min-column">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
         <th class="wrapped-column">Family <span class="help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
         <th class="wrapped-column">Source(s) <span class="help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
         <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
@@ -41,17 +41,20 @@
             <img ng-if="row.getBestInteraction() === 'target-direct'" src="images/query/direct-interaction.png"/>
             <img ng-if="row.getBestInteraction() === 'target-indirect'" src="images/query/indirect-interaction.png"/>
             <span ng-if="row.getBestInteraction() === 'marker'" class="tooltiptext">
-              <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
-              is a <strong>biomarker</strong> of the response to drug <strong><span style="color:blue">D</span></strong>
+              <strong>Direct target</strong>: <strong>direct</strong> association in which the altered gene
+              <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
+              <span class="drug-highlighted">D</span>
             </span>
             <span ng-if="row.getBestInteraction() === 'target-direct'" class="tooltiptext">
-              <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
-              is the <strong>target</strong> of the drug <strong><span style="color:blue">D</span></strong>
+              <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
+              <span class="gene-highlighted">T</span> is the <strong>target</strong> of the drug
+              <span class="drug-highlighted">D</span>
             </span>
             <span ng-if="row.getBestInteraction() === 'target-indirect'" class="tooltiptext">
-              <strong>Indirect</strong> association in which the drug <strong><span style="color:blue">D</span></strong>
-              has as a <strong>target</strong> a gene <strong><span style="color:gray">T</span></strong> related to the altered
-              one <strong><span style="color:red">G</span></strong>
+              <strong>Pathway member</strong>: <strong>indirect</strong> association in which the drug
+              <span class="drug-highlighted">D</span> has as a <strong>target</strong> a gene <strong>
+              <span class="indirect-gene-highlighted">T</span></strong> related to the altered one
+              <span class="gene-highlighted">G</span>
             </span>
           </div>
         </td>
@@ -94,17 +97,20 @@
             <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-interaction.png"/>
             <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/indirect-interaction.png"/>
             <span ng-if="geneDrug.target === 'marker'" class="tooltiptext">
-              <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
-              is a <strong>biomarker</strong> of the response to drug <strong><span style="color:blue">D</span></strong>
+              <strong>Direct target</strong>: <strong>direct</strong> association in which the altered gene
+              <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
+              <span class="drug-highlighted">D</span>
             </span>
             <span ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" class="tooltiptext">
-              <strong>Direct</strong> association in which the altered gene <strong><span style="color:red">T</span></strong>
-              is the <strong>target</strong> of the drug <strong><span style="color:blue">D</span></strong>
+              <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
+              <span class="gene-highlighted">T</span> is the <strong>target</strong> of the drug
+              <span class="drug-highlighted">D</span>
             </span>
             <span ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" class="tooltiptext">
-              <strong>Indirect</strong> association in which the drug <strong><span style="color:blue">D</span></strong>
-              has as a <strong>target</strong> a gene <strong><span style="color:gray">T</span></strong> related to the altered one
-              <strong><span style="color:red">G</span></strong>
+              <strong>Pathway member</strong>: <strong>indirect</strong> association in which the drug
+              <span class="drug-highlighted">D</span> has as a <strong>target</strong> a gene <strong>
+              <span class="indirect-gene-highlighted">T</span></strong> related to the altered one
+              <span class="gene-highlighted">G</span>
             </span>
           </div>
           <div ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null">
@@ -120,7 +126,7 @@
                   </div>
                   <div class="modal-body">
                     The following KEGG pathways are those where the target gene of the drug ({{geneDrug.indirect.geneInfo.geneSymbol}}) is related
-                    to at least one of the altered genes ( <span ng-repeat="alteredGene in geneDrug.gene">{{alteredGene.geneSymbol}} </span>)
+                    to at least one of the altered genes (<span ng-repeat="alteredGene in geneDrug.gene">{{alteredGene.geneSymbol}}</span>)
                     <ul>
                       <li ng-repeat="pathway in geneDrug.indirect.pathway">
                         <a target='_blank' href="{{pathway|kegglink:geneDrug.indirect.geneInfo}}">{{pathway.name}}</a>
