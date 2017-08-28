@@ -1,6 +1,6 @@
 {
   "name": "pandrugs-frontend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A platform to guide the selection of therapies from the results of genome-wide studies in cancer disease",
   "repository": "https://github.com/sing-group/pandrugs-frontend.git",
   "author": {

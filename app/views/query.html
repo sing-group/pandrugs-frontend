@@ -72,6 +72,11 @@
                   <vcf-query-panel id-prefix="vcfquerypanel" autoreload="selectedTab === 'vcfrank'" on-change="updateComputation(computationId, computation)"/>
                 </div>
               </div>
+
+              <div class="panel-body" ng-show="selectedTab === 'vcfrank' && !hasResult()">
+                <button type="submit" class="btn btn-success btn-lg" ng-click="query()"
+                        ng-disabled="!canQuery()" >Query with affected genes</button>
+              </div>
             </div>
           </div>
         </div>
@@ -79,8 +84,8 @@
           <advanced-query-options on-change="updateAdvancedQueryOptions(options)"/>
         </div>
       </div>
-      <button type="submit" class="btn btn-success btn-lg" ng-show="!hasResult()" ng-click="query()"
-              ng-disabled="!canQuery()" >Query</button>
+      <button type="submit" class="btn btn-success btn-lg" ng-show="selectedTab !== 'vcfrank' && !hasResult()"
+              ng-click="query()" ng-disabled="!canQuery()" >Query</button>
     </div>
   </form>
 </div>
