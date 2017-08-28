@@ -1,8 +1,36 @@
 {
-  "name": "pandrugsfrontend",
-  "version": "0.0.0",
+  "name": "pandrugs-frontend",
+  "version": "1.0.0",
+  "description": "A platform to guide the selection of therapies from the results of genome-wide studies in cancer disease",
+  "repository": "https://github.com/sing-group/pandrugs-frontend.git",
+  "author": {
+    "name": "Daniel Glez-Peña",
+    "email": "dgpena@uvigo.es",
+    "url": "http://www.sing-group.org/"
+  },
+  "contributors": [
+    {
+      "name": "Miguel Reboiro-Jato",
+      "email": "mrjato@uvigo.es",
+      "url": "http://www.sing-group.org/"
+    },
+    {
+      "name": "Fátima Al-Shahrour",
+      "email": "falshahrour@cnio.es",
+      "url": "https://www.cnio.es"
+    },
+    {
+      "name": "Elena Piñeiro",
+      "email": "epineiro@cnio.es",
+      "url": "https://www.cnio.es"
+    }
+  ],
+  "license": "GPL-3.0",
+  "scripts": {
+    "install": "node ./node_modules/protractor/bin/webdriver-manager update",
+    "test": "grunt test"
+  },
   "dependencies": {},
-  "repository": {},
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^2.0.0",
@@ -39,9 +67,5 @@
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "scripts": {
-    "install": "node ./node_modules/protractor/bin/webdriver-manager update",
-    "test": "grunt test"
   }
 }
