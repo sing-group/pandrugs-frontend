@@ -99,8 +99,9 @@
                   ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
 
             <input ng-show="status.finished" type="button" class="deleteButton btn btn-danger"
-                   ng-click="$ctrl.deleteComputation(id)" value="Delete"/>
-
+                   ng-click="$ctrl.deleteComputation(id)" value="Delete"/>&nbsp;
+            <input ng-show="status.finished" type="button" class="downloadButton btn btn-default"
+                   ng-click="$ctrl.downloadVScoreFile(id)" value="Download VScores"/>
             <img ng-show="!status.finished" src="images/spinner.gif" width="20px">
           </div>
 
@@ -122,7 +123,8 @@
         <img ng-show="!status.finished" src="images/spinner.gif" width="20px">{{status.name}} (id: {{id}})<br>
         <span class="affectedGenes" ng-show="status.affectedGenes != null"
               ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
-
+        <input ng-show="status.finished" type="button" class="downloadButton btn btn-default"
+               ng-click="$ctrl.downloadVScoreFile(id)" value="Download VScores"/>
       </div>
       <div class="progress">
         <div ng-class="{'progress-bar': true, error: status.isFailed(), success: status.isSuccess()}"

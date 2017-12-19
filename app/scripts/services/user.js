@@ -156,6 +156,10 @@ angular.module('pandrugsFrontendApp')
         reader.readAsText(vcfFile);
       }
 
+      function getVscoreDownloadURLForComputation(computationId) {
+        return BACKEND.API + 'variantsanalysis/files/' + (currentUser==='anonymous'?'guest':currentUser) + '/' + computationId + '/vscorefile';
+      }
+
       function deleteComputation(computationId, onSuccess, onError) {
         $http.delete(
           BACKEND.API + 'variantsanalysis/' + currentUser + '/' + computationId)
@@ -187,6 +191,7 @@ angular.module('pandrugsFrontendApp')
         getComputations: getComputations,
         getComputation: getComputation,
         submitComputation: submitComputation,
+        getVscoreDownloadURLForComputation: getVscoreDownloadURLForComputation,
         deleteComputation: deleteComputation
       };
     }

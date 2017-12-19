@@ -121,6 +121,10 @@ angular.module('pandrugsFrontendApp')
         }
       };
 
+      this.downloadVScoreFile = function(computationId) {
+        window.location.href = user.getVscoreDownloadURLForComputation(computationId);
+      };
+
       function Computation(computation) {
         angular.merge(this, computation);
       };
