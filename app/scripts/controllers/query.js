@@ -62,6 +62,10 @@ angular.module('pandrugsFrontendApp')
     this.triggerQueryOnChange = this.isValidTab(example);
     $scope.selectedTab = this.isValidTab(example) ? example : 'genes';
 
+    // select an specific tab
+    var tab = $location.search().tab;
+    $scope.selectedTab = this.isValidTab(tab) ? tab : 'genes';
+
     // ======== CHARTS ========
     $scope.highchartsBubble = bubbleChart;
     $scope.highchartsTherapyByStatus = therapyByStatusChart;

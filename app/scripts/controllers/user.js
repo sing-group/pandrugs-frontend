@@ -49,11 +49,27 @@ angular.module('pandrugsFrontendApp')
         $scope.newUser = false;
       };
 
+      function doRedirectIfRef() {
+        if ($location.search().ref !== undefined && user.getCurrentUser() !== 'anonymous') {
+          $location.url(decodeURIComponent($location.search().ref));
+        } else if ($location.search().ref === undefined && user.getCurrentUser() !== 'anonymous') {
+          $location.path('/');
+        }
+      }
+
+      user.onLoginStateChanged(doRedirectIfRef);
+
+      $scope.$on('$destroy', function() {
+        user.removeLoginStateChanged(doRedirectIfRef);
+      });
+
+      doRedirectIfRef();
+
       $scope.doLogin = function() {
         user.login(
           $scope.login,
           $scope.password,
-          function() { $location.path('/'); },
+          null,
           function() { window.alert('Your login/password was not correct. Please make sure that you have been registered with this login/password'); }
         );
       };

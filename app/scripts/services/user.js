@@ -42,6 +42,7 @@ angular.module('pandrugsFrontendApp')
             $sessionStorage.user = login;
             $sessionStorage.password = password;
             currentUser = login;
+            notifyLoginStateChanged();
 
             if (onSuccess) {
               onSuccess();
@@ -55,10 +56,27 @@ angular.module('pandrugsFrontendApp')
           });
       }
 
+      var loginStateChangedListeners = [];
+      function onLoginStateChanged(listener) {
+        loginStateChangedListeners.push(listener);
+      }
+      function removeLoginStateChanged(listener) {
+        var index = loginStateChangedListeners.indexOf(listener);
+        if (index !== -1) {
+          loginStateChangedListeners.splice(index, 1);
+        }
+      }
+      function notifyLoginStateChanged() {
+        loginStateChangedListeners.forEach(function(listener) {
+          listener();
+        });
+      }
+
       function doLogout() {
         currentUser = 'anonymous';
         delete $sessionStorage.user;
         delete $sessionStorage.password;
+        notifyLoginStateChanged();
       }
 
       function doConfirm(token, onSuccess, onError) {
@@ -141,7 +159,13 @@ angular.module('pandrugsFrontendApp')
         var reader = new FileReader();
         reader.onload = function () {
           var fileContents = reader.result;
-          $http.post(BACKEND.API + 'variantsanalysis/' + requestUser + '?name=' + computationName, fileContents, {
+          var submitURL = BACKEND.API + 'variantsanalysis/' + requestUser + '?name=' + computationName;
+          if (currentUser !== 'anonymous') {
+            var absUrl = $location.absUrl();
+            var encodedTemplate = encodeURIComponent(absUrl.substring(0, absUrl.indexOf('#')) + '#!/login?ref=query?tab=vcfrank');
+            submitURL += '&resultsurltemplate='+encodedTemplate;
+          }
+          $http.post(submitURL, fileContents, {
             transformRequest: angular.identity,
             headers: headers
           }).then(function (response) {
@@ -187,6 +211,8 @@ angular.module('pandrugsFrontendApp')
         register: doRegister,
         login: doLogin,
         logout: doLogout,
+        onLoginStateChanged: onLoginStateChanged,
+        removeLoginStateChanged: removeLoginStateChanged,
         confirm: doConfirm,
         getComputations: getComputations,
         getComputation: getComputation,
