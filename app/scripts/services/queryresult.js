@@ -37,8 +37,11 @@ angular.module('pandrugsFrontendApp')
     var geneDrugGroupsHeader =
       'Gene(s),Standard Drug Name,Show Drug Name,PubChemId(s),Status,' +
       'Status Description,Therapy,Target,Source(s),Curated Source(s),' +
-      'Family(ies),Cancer(s),Indirect Gene(s),Best Interaction,' +
+      'Family(ies),Cancer(s),Indirect Gene(s),R/S,Best Interaction,' +
       'DScore,GScore,' + geneDrugHeader;
+    var geneDrugGroupsHeaderSimple = 'Gene(s),Show Drug Name,' +
+      'Status Description,Therapy,R/S,Best Interaction,Family(ies),' +
+      'Source(s),DScore,GScore,Best Candidate Therapy,Warning(s)';
 
     function drugToLink(drug, pubchemId) {
       return '<a href="https://pubchem.ncbi.nlm.nih.gov/compound/PUBCHEM_ID_TOKEN" target="_blank">DRUG_NAME_TOKEN</a>'
@@ -306,11 +309,21 @@ angular.module('pandrugsFrontendApp')
       return sensitivity;
     };
 
+    GeneDrugGroup.prototype.isBestCandidate = function() {
+      return this.dScore > 0.7 && this.gScore > 0.6;
+    }
+
     GeneDrugGroup.prototype.getWarnings = function() {
-      return this.geneDrugs
-        .map(function(gd) { return gd.warning; })
-        .filter(function (warning) { return warning.length > 0; })
-      .join('\n');
+      function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+      function flatten(array) {
+        return [].concat.apply([], array);
+      }
+      return flatten(this.geneDrugs
+                .map(function(gd) { return gd.warning; })
+                .filter(function (warning) { return warning.length > 0; })
+             ).filter(onlyUnique).join('\n');
     };
 
     GeneDrugGroup.prototype.getAdjustedGScore = function() {
@@ -339,40 +352,62 @@ angular.module('pandrugsFrontendApp')
       });
     };
 
-    GeneDrugGroup.prototype.toCSV = function(addHeader) {
+    GeneDrugGroup.prototype.toCSV = function(addHeader, expanded = true) {
       var header = addHeader === true ? geneDrugGroupsHeader + '\n' : '';
-
-      var groupRow = [
-        this.getGeneSymbols(),
-        this.standardDrugName,
-        this.showDrugName,
-        this.pubchemId,
-        this.status,
-        this.statusDescription,
-        this.therapy || '-',
-        this.target ? 'target' : 'marker',
-        this.getSourceNames(),
-        this.curatedSource,
-        this.family,
-        this.cancer,
-        this.getIndirectGeneSymbols(),
-        this.getBestInteraction(),
-        this.getAdjustedDScore(),
-        this.getAdjustedGScore(),
-        '', '', '', '', '', '', '', '', '', '', '', '', '', ''
-      ]
-        .map(prepareValueForCSV)
+      var groupRow = [];
+      if (expanded) {
+        groupRow = [
+          this.getGeneSymbols(),
+          this.standardDrugName,
+          this.showDrugName,
+          this.pubchemId,
+          this.status,
+          this.statusDescription,
+          this.therapy || '-',
+          this.target ? 'target' : 'marker',
+          this.getSourceNames(),
+          this.curatedSource,
+          this.family,
+          this.cancer,
+          this.getIndirectGeneSymbols(),
+          this.getSensitivity(),
+          this.getBestInteraction(),
+          this.getAdjustedDScore(),
+          this.getAdjustedGScore(),
+          '', '', '', '', '', '', '', '', '', '', '', '', '', ''
+        ];
+      } else {
+        groupRow = [
+          this.getGeneSymbols(),
+          this.showDrugName,
+          this.statusDescription,
+          this.therapy || '-',
+          this.getSensitivity(),
+          this.getBestInteraction(),
+          this.family,
+          this.getSourceNames(),
+          this.getAdjustedDScore(),
+          this.getAdjustedGScore(),
+          this.isBestCandidate(),
+          this.getWarnings()
+        ];
+      }
+      groupRow = groupRow.map(prepareValueForCSV)
       .join(',');
 
-      var geneDrugPadding = [ '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' ]
-        .map(prepareValueForCSV)
-      .join(',');
+      if (expanded) {
+        // include individual genedrugs
+        var geneDrugPadding = [ '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' ]
+          .map(prepareValueForCSV)
+          .join(',');
 
-      var geneDrugRows = this.geneDrugs
-        .map(function(geneDrug) { return geneDrugPadding + ',' + geneDrug.toCSV(); })
-      .join('\n');
 
-      return header + groupRow + '\n' + geneDrugRows;
+        var geneDrugRows = this.geneDrugs
+          .map(function(geneDrug) { return geneDrugPadding + ',' + geneDrug.toCSV(); })
+        .join('\n');
+      }
+
+      return header + groupRow + (expanded?('\n'+geneDrugRows):'');
     };
 
     QueryResult.prototype.getFilteredGroups = function() {
@@ -383,12 +418,12 @@ angular.module('pandrugsFrontendApp')
       return this.filteredGeneDrugGroups.length === 0;
     };
 
-    QueryResult.prototype.toCSV = function() {
+    QueryResult.prototype.toCSV = function(expanded = true) {
       var groups = this.getFilteredGroups()
-        .map(function(group) { return group.toCSV(); })
+        .map(function(group) { return group.toCSV(false, expanded); })
       .join('\n');
 
-      return geneDrugGroupsHeader + '\n' + groups;
+      return (expanded?geneDrugGroupsHeader:geneDrugGroupsHeaderSimple) + '\n' + groups;
     };
 
     QueryResult.prototype.getGroupsCount = function() {

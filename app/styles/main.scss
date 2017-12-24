@@ -632,6 +632,9 @@ div.disabled {
   @include squarebox($dark-blue);
 }
 
+.download-csv {
+  margin-right: 3px;
+}
 /* =========== RESPONSIVE ======================*/
 
 /* fix height on drug text area */

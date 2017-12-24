@@ -29,6 +29,8 @@ angular.module('pandrugsFrontendApp')
     },
     controller: ['TableHelper', function (TableHelper) {
       this.csvContent = null;
+      this.csvContentSimple = null;
+
       this.geneDrugGroupsPaginated = null;
 
       this.paginationOptions = [5, 20, 100, 'All'];
@@ -36,6 +38,7 @@ angular.module('pandrugsFrontendApp')
       this.$onChanges = function(changes) {
         if (changes.queryResult && changes.queryResult.currentValue) {
           this.csvContent = encodeURI('data:text/csv;charset=utf-8,' + changes.queryResult.currentValue.toCSV());
+          this.csvContentSimple = encodeURI('data:text/csv;charset=utf-8,' + changes.queryResult.currentValue.toCSV(false));
         }
       }.bind(this);
 

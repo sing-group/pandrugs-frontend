@@ -15,7 +15,8 @@
   along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div>
-  <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
+  <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (complete version)</button></a>
+  <a id="download-csv-link" href="{{$ctrl.csvContentSimple}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (simple version)</button></a>
 
   <table id="results" st-table="$ctrl.geneDrugGroups" st-pipe="$ctrl.populateTable" class="table table-striped query-table">
     <thead>
@@ -86,7 +87,7 @@
         <td class="min-column">{{row.dScore | number: 4}}</td>
         <td class="min-column">{{row.gScore | number: 4}}</td>
         <td class="min-column" style="text-align: center">
-          <div ng-if="row.dScore > 0.7 && row.gScore > 0.6" class="best-icon">
+          <div ng-if="row.isBestCandidate()" class="best-icon">
             <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
           </div>
           <div ng-if="row.getWarnings()" class="warning-icon">
