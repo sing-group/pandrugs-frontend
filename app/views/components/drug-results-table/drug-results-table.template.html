@@ -45,16 +45,16 @@
         <td class="min-column" style="white-space: nowrap">{{geneDrug.sensitivity | titlecase}}&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span></td>
         <td class="min-column">
           <div class="tooltipCSS">
-            <img ng-if="geneDrug.target === 'marker'" src="images/query/marker-interaction.png"/>
-            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-interaction.png"/>
-            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/indirect-interaction.png"/>
+            <img ng-if="geneDrug.target === 'marker'" src="images/query/direct-marker.png"/>
+            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
+            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/indirect.png"/>
             <span ng-if="geneDrug.target === 'marker'" class="tooltiptext">
-              <strong>Direct target</strong>: <strong>direct</strong> association in which the altered gene
+              <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
               <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
               <span class="drug-highlighted">D</span>
             </span>
             <span ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" class="tooltiptext">
-              <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
+              <strong>Direct target</strong>: <strong>direct</strong> association in which the altered gene
               <span class="gene-highlighted">T</span> is the <strong>target</strong> of the drug
               <span class="drug-highlighted">D</span>
             </span>
