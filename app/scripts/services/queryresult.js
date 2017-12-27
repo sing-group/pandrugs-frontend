@@ -105,7 +105,6 @@ angular.module('pandrugsFrontendApp')
       this.cancer = geneDrugGroup.cancer;
       this.indirectGene = geneDrugGroup.indirectGene;
       this.geneDrugInfo = geneDrugGroup.geneDrugInfo;*/
-
       angular.merge(this, geneDrugGroup);
 
       this.moreinfo = false;
@@ -352,7 +351,10 @@ angular.module('pandrugsFrontendApp')
       });
     };
 
-    GeneDrugGroup.prototype.toCSV = function(addHeader, expanded = true) {
+    GeneDrugGroup.prototype.toCSV = function(addHeader, expanded) {
+      if (expanded === undefined) {
+        expanded = true;
+      }
       var header = addHeader === true ? geneDrugGroupsHeader + '\n' : '';
       var groupRow = [];
       if (expanded) {
@@ -418,7 +420,10 @@ angular.module('pandrugsFrontendApp')
       return this.filteredGeneDrugGroups.length === 0;
     };
 
-    QueryResult.prototype.toCSV = function(expanded = true) {
+    QueryResult.prototype.toCSV = function(expanded) {
+      if (expanded === undefined) {
+        expanded = true;
+      }
       var groups = this.getFilteredGroups()
         .map(function(group) { return group.toCSV(false, expanded); })
       .join('\n');
