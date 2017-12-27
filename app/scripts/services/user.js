@@ -94,7 +94,7 @@ angular.module('pandrugsFrontendApp')
 
       function doRegister(login, email, password, onSuccess, onError) {
         var absUrl = $location.absUrl();
-        var encodedTemplate = encodeURIComponent(absUrl.substring(0, absUrl.indexOf('#')) + '#/login?confirmuuid=%s');
+        var encodedTemplate = encodeURIComponent(absUrl.substring(0, absUrl.indexOf('#')) + '#!/login?confirmuuid=%s');
 
         $http.post(BACKEND.API + 'registration/?confirmurltemplate=' + encodedTemplate,
           {
