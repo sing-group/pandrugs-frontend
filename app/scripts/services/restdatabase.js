@@ -251,15 +251,7 @@ angular.module('pandrugsFrontendApp')
       },
 
       genesPresence: function(genes) {
-        var presence = {present:[], absent:[]};
         var split = 50;
-
-        function createQuery(queryUrl) {
-          return function() {
-              return $http.get(BACKEND.API + 'genedrug/gene/presence'+queryUrl);
-          };
-        }
-
 
         var iterations = Math.ceil(genes.length / split);
         var queries = [];
@@ -269,32 +261,20 @@ angular.module('pandrugsFrontendApp')
           for (var j = i * split; j < Math.min(i * split + split, genes.length); j++) {
             query += 'gene='+genes[j]+'&';
           }
-          queries.push(createQuery(query));
+          queries.push($http.get(BACKEND.API + 'genedrug/gene/presence'+query).then(function(results){
+            return results.data;
+          }));
         }
 
-        var currentPromise = null;
-
-        //chain promises
-        queries.forEach(function(query){
-
-          if (currentPromise === null) {
-            currentPromise = query();
-          } else {
-            currentPromise = currentPromise.then(function(results) {
-              presence.present = presence.present.concat(results.data.present);
-              presence.absent = presence.absent.concat(results.data.absent);
-
-              return query();
-            });
-          }
-
-        });
-
-        return currentPromise.then(function(results) {
-          presence.present = presence.present.concat(results.data.present);
-          presence.absent = presence.absent.concat(results.data.absent);
+        return $q.all(queries).then(function(results) {
+          var presence = {present: [], absent: []};
+          results.forEach(function (result) {
+            presence.present = presence.present.concat(result.present);
+            presence.absent = presence.absent.concat(result.absent);
+          });
           return presence;
         });
+
       }
     };
   }
