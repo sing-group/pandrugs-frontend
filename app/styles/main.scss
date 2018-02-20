@@ -671,3 +671,15 @@ div.disabled {
     border-bottom: 0;
   }
 }
+
+#hometabs .nav-tabs li {
+  cursor: pointer;
+}
+
+#method img {
+  max-width: 2170px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

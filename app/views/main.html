@@ -54,7 +54,7 @@
 
       </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6" ng-init="hometab = 'workflow'">
 
       <h3>What is PanDrugs?</h3>
 
@@ -84,29 +84,53 @@
     exclusively</strong>. It should not be used for medical or professional advice.
   </div>
 
-
-  <h3>PanDrugs across TCGA tumoral landscape (by <form id="d3viewform" class="form-horizontal" ng-init="d3view = 'drugs'">
-    <input type="radio" class = "toggle toggle-left" ng-model="d3view" value="drugs" id="d3view-drugs"><label for="d3view-drugs">Drugs</label><input type="radio" class = "toggle toggle-right" ng-model="d3view" value="genes" id="d3view-genes"><label for="d3view-genes">Genes</label>
-  </form>)
-  </h3>
-  <p class="tcga_desc" ng-if="d3view == 'genes'">
-    This plot shows the percentage of patients in different tumor types from TCGA
-    study with druggable alterations according to the suggestions by PanDrugs based
-    on punctual genetic alterations. Each bubble represents a druggable alteration
-    and the gene score is the highest one among the computed for the altered gene in
-    each patient. For each gene, the highest availability of the treatment is
-    selected to establish the status label druggability of the gene (e.g. Approved
-    in same tumor type is preferable before approved in other tumor types).
-  </p>
-  <p class="tcga_desc" ng-if="d3view == 'drugs'">
-    This plot shows the percentage of patients in different tumor types from TCGA
-    study that would be treated according to PanDrugs suggestions based on punctual
-    genetic alterations. Each bubble represents a treatment with a particular drug
-    and the drug score is the highest one among the computed for each patient that
-    could be treated with that compound. Only alterations with a gene score greater
-    or equal than 0.6 are considered.
-  </p>
 </div><!-- end of the container -->
+<div class="panel panel-default" id="hometabs">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" ng-class="{active:hometab === 'workflow'}" ng-click="hometab = 'workflow'">
+        <a aria-controls="method" data-toggle="tab" role="tab">PanDrugs workflow</a>
+      </li>
+      <li role="presentation" ng-class="{active:hometab === 'tcga'}" ng-click="hometab = 'tcga'">
+        <a aria-controls="tcga" data-toggle="tab" role="tab">PanDrugs in TCGA</a>
+      </li>
+    </ul>
+    <div class="tab-content panel-body">
+      <div id="method" class="tab-pane active"  role="tabpanel" ng-class="{active:hometab === 'workflow'}">
+        <h3>PanDrugs workflow</h3>
+        <p>PanDrugs considers drug indication and status, gene-drug associations
+        and number of hits to calculate the <strong>Drug Score
+        (DScore)</strong>.</p> <p><strong>Gene Score (GScore)</strong> is
+        estimated according to gene essentiality and tumoral vulnerability, gene
+        relevance in cancer, the biological impact of mutations, the frequency
+        of gene alterations and their clinical implications.</p> <p>PanDrugs
+        resolves the <em>Best Therapeutic Candidates</em> based on the accumulated and
+        weighted scoring of <strong>GScore</strong> and <strong>DScore</strong>.</p>
+        <img src="images/pandrugs-scoring.png">
+      </div>
+      <div id="tcga" class="tab-pane"  role="tabpanel" ng-class="{active:hometab === 'tcga'}">
+        <h3>PanDrugs across TCGA tumoral landscape (by <form id="d3viewform" class="form-horizontal" ng-init="d3view = 'drugs'">
+          <input type="radio" class = "toggle toggle-left" ng-model="d3view" value="drugs" id="d3view-drugs"><label for="d3view-drugs">Drugs</label><input type="radio" class = "toggle toggle-right" ng-model="d3view" value="genes" id="d3view-genes"><label for="d3view-genes">Genes</label>
+        </form>)
+        </h3>
+        <p class="tcga_desc" ng-if="d3view == 'genes'">
+          This plot shows the percentage of patients in different tumor types from TCGA
+          study with druggable alterations according to the suggestions by PanDrugs based
+          on point mutations. Each bubble represents a druggable alteration
+          and the gene score is the highest one among the computed for the altered gene in
+          each patient. For each gene, the highest availability of the treatment is
+          selected to establish the status label druggability of the gene (e.g. Approved
+          in same tumor type is preferable before approved in other tumor types).
+        </p>
+        <p class="tcga_desc" ng-if="d3view == 'drugs'">
+          This plot shows the percentage of patients in different tumor types from TCGA
+          study that would be treated according to PanDrugs suggestions based on point mutations. Each bubble represents a treatment with a particular drug
+          and the drug score is the highest one among the computed for each patient that
+          could be treated with that compound. Only alterations with a gene score greater
+          or equal than 0.6 are considered.
+        </p>
+        <iframe id="d3genesiframe" ng-if="hometab === 'tcga' && d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
+        <iframe id="d3drugsiframe" ng-if="hometab === 'tcga' && d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
 
-<iframe id="d3genesiframe" ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
-<iframe id="d3drugsiframe" ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
+      </div>
+    </div>
+</div>

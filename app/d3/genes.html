@@ -24,7 +24,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="robots" content="noarchive">
 <meta name="hdl" content="PanDrugs vision across TCGA tumoral landscape">
-<meta name="lp" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations.">
+<meta name="lp" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on point mutations.">
 <meta name="dat" content="Dec 22, 2016">
 <meta name="DISPLAYDATE" content="Dec 22, 2016">
 <meta name="pdate" content="20161222">
@@ -49,7 +49,7 @@
 <meta name="PST" content="">
 <meta property="og:type" content="graph">
 <meta property="og:title" content="PanDrugs vision across TCGA tumoral landscape">
-<meta property="og:description" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations.">
+<meta property="og:description" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on point mutations.">
 <meta property="og:image" content="https://static01.nyt.com/images/icons/t_logo_2048_black.png">
 <meta property="fb:app_id" content="">
 <meta name="twitter:card" value="">
@@ -143,7 +143,7 @@
 // var consRadius = 20,
 //     dataFile = "data/pre_drugs.tsv",
 //     pageTitle = "PanDrugs across TCGA tumoral landscape (Drugs view)",
-//     pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations. Each bubble represents a treatment with a particular drug and the drug score is the highest one among the computed for each patient that could be treated with that compound. Only alterations with a gene score greater or equal than 0.6 are considered.",
+//     pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on point mutations. Each bubble represents a treatment with a particular drug and the drug score is the highest one among the computed for each patient that could be treated with that compound. Only alterations with a gene score greater or equal than 0.6 are considered.",
 //     scoreName = "DScore",
 //     scoreDesc = "Measure of the suitability of the drug according to the genomic profile",
 //     metricNameNPhit = "Patients with drug assignment",
@@ -157,7 +157,7 @@
 var consRadius = 60,
     dataFile = "data/pre_genes.tsv",
     pageTitle = "PanDrugs across TCGA tumoral landscape (Genes view)",
-    pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study with druggable alterations according to the suggestions by PanDrugs based on punctual genetic alterations. Each bubble represents a druggable alteration and the gene score is the highest one among the computed for the altered gene in each patient. For each gene, the highest availability of the treatment is selected to establish the status label druggability of the gene (e.g. Approved in same tumor type is preferable before approved in other tumor types).",
+    pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study with druggable alterations according to the suggestions by PanDrugs based on point mutations. Each bubble represents a druggable alteration and the gene score is the highest one among the computed for the altered gene in each patient. For each gene, the highest availability of the treatment is selected to establish the status label druggability of the gene (e.g. Approved in same tumor type is preferable before approved in other tumor types).",
     scoreName = "GScore",
     scoreDesc = "Measure of the biological relevance of the gene in the tumoral process",
     metricNameNPhit = "Patients with gene affected",
