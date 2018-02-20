@@ -79,7 +79,7 @@
         <td class="wrapped-column">
           <span ng-repeat="source in row.source">
             <a href="{{source.link}}" target="_blank" title="{{source.name}}"
-               ng-class="row.curatedSource.indexOf(source.name) !== -1 ? 'curated_source' : 'non_curated_source'">
+               ng-class="row.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
               {{source.shortName}}
             </a>
           </span>&nbsp;
@@ -157,7 +157,14 @@
           </div>
         </td>
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
-        <td class="wrapped-column">{{geneDrug.source | enumeration}}</td>
+        <td class="wrapped-column">
+          <span ng-repeat="source in geneDrug.getDrugSourcesInfo()">
+            <a href="{{source.link}}" target="_blank" title="{{source.name}}"
+               ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+              {{source.shortName}}
+            </a>
+          </span>
+        </td>
         <td class="min-column">{{geneDrug.dScore | number: 4}}</td>
         <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
         <td class="min-column" style="text-align: center" >

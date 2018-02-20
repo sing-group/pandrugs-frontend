@@ -171,6 +171,14 @@ angular.module('pandrugsFrontendApp')
       return $sce.trustAsHtml(info);
     };
 
+    GeneDrug.prototype.getDrugSourcesInfo = function() {
+      return this.source.map(function(drugSourceName) {
+        return this.geneDrugGroup.source.find(function(source) {
+          return source.name === drugSourceName;
+        });
+      }.bind(this));
+    };
+
     GeneDrug.prototype.getIndirectGeneSymbol = function() {
       if (this.indirect) {
         return this.indirect.geneInfo.geneSymbol;
@@ -310,7 +318,13 @@ angular.module('pandrugsFrontendApp')
 
     GeneDrugGroup.prototype.isBestCandidate = function() {
       return this.dScore > 0.7 && this.gScore > 0.6;
-    }
+    };
+
+    GeneDrugGroup.prototype.isCuratedSource = function(source) {
+      return this.curatedSource.some(function(curatedSource) {
+        return curatedSource === source;
+      });
+    };
 
     GeneDrugGroup.prototype.getWarnings = function() {
       function onlyUnique(value, index, self) {
@@ -397,6 +411,7 @@ angular.module('pandrugsFrontendApp')
       groupRow = groupRow.map(prepareValueForCSV)
       .join(',');
 
+      var geneDrugRows = '';
       if (expanded) {
         // include individual genedrugs
         var geneDrugPadding = [ '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '' ]
@@ -404,12 +419,12 @@ angular.module('pandrugsFrontendApp')
           .join(',');
 
 
-        var geneDrugRows = this.geneDrugs
+        geneDrugRows = this.geneDrugs
           .map(function(geneDrug) { return geneDrugPadding + ',' + geneDrug.toCSV(); })
         .join('\n');
       }
 
-      return header + groupRow + (expanded?('\n'+geneDrugRows):'');
+      return header + groupRow + (expanded ? ('\n' + geneDrugRows) : '');
     };
 
     QueryResult.prototype.getFilteredGroups = function() {
