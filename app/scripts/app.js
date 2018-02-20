@@ -80,13 +80,9 @@ angular
         templateUrl: 'views/login.html',
         controller: 'UserCtrl'
       })
-      .when('/query', {
+      .when('/query/', {
         templateUrl: 'views/query.html',
         controller: 'QueryCtrl'
-      })
-      .when('/queryMenu', {
-        templateUrl: 'views/querymenu.html',
-        controller: 'QuerymenuCtrl'
       })
       .otherwise({
         redirectTo: '/'
