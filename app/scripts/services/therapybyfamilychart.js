@@ -31,7 +31,6 @@ angular.module('pandrugsFrontendApp')
 .factory('therapyByFamilyChart', function () {
   // Public API here
   return {
-    options: {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -56,8 +55,7 @@ angular.module('pandrugsFrontendApp')
             }
           }
         }
-      }
-    },
+      },
     series: [{
       name: 'Drugs',
       colorByPoint: true,

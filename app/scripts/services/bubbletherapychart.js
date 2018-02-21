@@ -32,7 +32,6 @@ angular.module('pandrugsFrontendApp')
 
   // Public API here
   return {
-    options: {
       chart: {
         type: 'bubble',
         zoomType: 'xy',
@@ -171,23 +170,28 @@ angular.module('pandrugsFrontendApp')
         title: {
           text: 'Gene and Drugs score chart (click and drag to make zoom)'
         },
+        subtitle: {
+          text: 'drug approval status: <span style="color: #2BBE83; font-weight: bold">approved</span>, <span style="color: #FFCF3A; font-weight: bold">clinical trials</span>, <span style="color:#337BB7; font-weight: bold">experimental</span>',
+          useHTML: true,
+          verticalAlign: 'bottom'
+        },
+
         plotOptions: {
           bubble: {
             minSize: 1,
             maxSize: 20,
             tooltip: {
               headerFormat: '',
-              pointFormat: 'Status: {series.name}<br>DScore: {point.xRound}<br>GScore: {point.yRound}<br>Genes: {point.genes}<br>Drug: {point.drug}',
+              pointFormat: 'Status: {point.status}<br>Interaction: {series.name}<br>DScore: {point.xRound}<br>GScore: {point.yRound}<br>Genes: {point.genes}<br>Drug: {point.drug}',
               style: { wrap: 'hard'}
 
             }
           }
-        }
-      },
+        },
       series:  [
-        {name: 'approved', data: [], color:'#2BBE83'},
-        {name: 'clinical trials', data: [], color: '#FFCF3A'},
-        {name: 'experimental', data: [], color: '#337BB7'}
+        {name: 'biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
+        {name: 'target', data: [], color: 'black', marker: {symbol:'circle'}},
+        {name: 'pathway member', data: [], color: 'black', marker: {symbol:'diamond'}}
 
       ],
 
@@ -208,18 +212,26 @@ angular.module('pandrugsFrontendApp')
             y: results[i].gScore + jitterY,
             yRound: results[i].gScore.toFixed(4),
             z: Math.pow(((Math.abs(results[i].dScore) + results[i].gScore)/2) * 10, 10),
-            jitter: 'x: '+jitterX.toExponential()+', y: '+jitterY.toExponential()
+            jitter: 'x: '+jitterX.toExponential()+', y: '+jitterY.toExponential(),
+            color: results[i].status === 'APPROVED'? '#2BBE83': results[i].status === 'CLINICAL_TRIALS'?'#FFCF3A':'#337BB7',
+            status: results[i].status.toLowerCase().replace('_', ' ')
+
           };
-          if (results[i].status === 'APPROVED') {
+          if (results[i].getBestInteraction() === 'marker') {
             series[0].data.push(datapoint);
           }
-          if (results[i].status === 'CLINICAL_TRIALS') {
+          if (results[i].getBestInteraction() === 'target-direct') {
             series[1].data.push(datapoint);
           }
-          if (results[i].status === 'EXPERIMENTAL') {
+          if (results[i].getBestInteraction() === 'target-indirect') {
             series[2].data.push(datapoint);
           }
         }
+
+        //sort
+        series[0].data.sort(function(a,b) {return a.x - b.x});
+        series[1].data.sort(function(a,b) {return a.x - b.x});
+        series[2].data.sort(function(a,b) {return a.x - b.x});
       }
     };
   });

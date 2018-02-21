@@ -31,29 +31,27 @@ angular.module('pandrugsFrontendApp')
 .factory('therapyByStatusChart', function () {
   // Public API here
   return {
-    options: {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-      },
-      title: {
-        text: 'Drugs by approval status'
-      },
-      tooltip: {
-        pointFormat: '{point.y} drugs ({point.percentage:.1f}%)</b>'
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          dataLabels: {
-            enabled: true,
-            format: '{point.name}',
-            style: {
-              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black' // jshint ignore:line
-            }
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+    },
+    title: {
+      text: 'Drugs by approval status'
+    },
+    tooltip: {
+      pointFormat: '{point.y} drugs ({point.percentage:.1f}%)</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}',
+          style: {
+            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black' // jshint ignore:line
           }
         }
       }
@@ -61,7 +59,25 @@ angular.module('pandrugsFrontendApp')
     series: [{
       name: 'Drugs',
       colorByPoint: true,
-      data: []
+      data: [{
+        name: 'approved',
+        y: 50,
+        sliced: true,
+        selected: true,
+        color:'#2BBE83'
+      },{
+        name: 'approved',
+        y: 100,
+        sliced: true,
+        selected: true,
+        color:'#2BBE83'
+      },{
+        name: 'approved',
+        y: 50,
+        sliced: true,
+        selected: true,
+        color:'#2BBE83'
+      }]
     }],
     updateChart: function(results) {
       var approved = 0;

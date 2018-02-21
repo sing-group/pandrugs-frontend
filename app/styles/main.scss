@@ -334,6 +334,11 @@ a.non_curated_source[title="PharmGKB"] {
   }
 }
 
+highchart {
+  display: block;
+  width:100%;
+}
+
 #therapiesChart {
   height: 600px;
 }
