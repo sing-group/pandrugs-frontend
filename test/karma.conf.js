@@ -30,8 +30,6 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-smart-table/dist/smart-table.js',
       'bower_components/highcharts-release/highcharts.js',
-      'bower_components/highcharts-release/highcharts-more.js',
-      'bower_components/highcharts-release/modules/exporting.js',
       'bower_components/highcharts-ng/dist/highcharts-ng.js',
       'bower_components/cytoscape/dist/cytoscape.js',
       'bower_components/ng-storage/ngStorage.js',
