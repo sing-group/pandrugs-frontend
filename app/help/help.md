@@ -211,11 +211,11 @@ It is sortable and downloadable in csv format. In this table, we have the differ
 - **Direct:** the altered gene is the target or the biomarker of the drug
 
   - Target ![Summary table](direct-target.png "Interaction Direct Target")
-  - Biomarker ![Summary table](direct-marker.png "Interaction Direct Biomarker")
+  - Biomarker ![Summary table](biomarker.png "Interaction Direct Biomarker")
 
 - **Pathway member:** the drug has as a target a gene related to the altered one
 
-  ![Summary table](indirect.png "Interaction Indirect")
+  ![Summary table](pathway-member.png "Interaction Indirect")
 
 **7. Family:** category of drugs to which the compound belongs. It is based on the target-based classification of drugs provided by KEGG and the Connectivity Map classification.
 

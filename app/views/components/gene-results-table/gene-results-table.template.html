@@ -54,9 +54,9 @@
         <td class="min-column">{{row.getSensitivity() | titlecase}}</td>
         <td class="min-column">
           <div class="tooltipCSS">
-            <img ng-if="row.getBestInteraction() === 'marker'" src="images/query/direct-marker.png"/>
+            <img ng-if="row.getBestInteraction() === 'marker'" src="images/query/biomarker.png"/>
             <img ng-if="row.getBestInteraction() === 'target-direct'" src="images/query/direct-target.png"/>
-            <img ng-if="row.getBestInteraction() === 'target-indirect'" src="images/query/indirect.png"/>
+            <img ng-if="row.getBestInteraction() === 'target-indirect'" src="images/query/pathway-member.png"/>
             <span ng-if="row.getBestInteraction() === 'marker'" class="tooltiptext">
               <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
               <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
@@ -110,9 +110,9 @@
         <td class="min-column" style="white-space: nowrap">{{geneDrug.sensitivity | titlecase}}&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span></td>
         <td class="min-column">
           <div class="tooltipCSS">
-            <img ng-if="geneDrug.target === 'marker'" src="images/query/direct-marker.png"/>
+            <img ng-if="geneDrug.target === 'marker'" src="images/query/biomarker.png"/>
             <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
-            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/indirect.png"/>
+            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/pathway-member.png"/>
             <span ng-if="geneDrug.target === 'marker'" class="tooltiptext">
               <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
               <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug

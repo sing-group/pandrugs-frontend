@@ -14,7 +14,7 @@
    viewBox="0 0 239.99999 80"
    id="svg4841"
    version="1.1"
-   inkscape:version="0.91 r"
+   inkscape:version="0.92.2 (unknown)"
    sodipodi:docname="direct-interaction.svg">
   <defs
      id="defs4843" />
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-407.85714"
-     inkscape:cy="-134.28573"
+     inkscape:zoom="1.979899"
+     inkscape:cx="158.03532"
+     inkscape:cy="-6.318777"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -37,8 +37,8 @@
      fit-margin-bottom="0"
      inkscape:window-width="1280"
      inkscape:window-height="1014"
-     inkscape:window-x="1280"
-     inkscape:window-y="0"
+     inkscape:window-x="400"
+     inkscape:window-y="217"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata4846">
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -83,27 +83,25 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="122.04346"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="119.47998"
        y="375.97198"
-       id="text4194"
-       sodipodi:linespacing="125%"><tspan
+       id="text4194"><tspan
          sodipodi:role="line"
          id="tspan4196"
-         x="122.04346"
+         x="119.47998"
          y="375.97198"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, ';fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-opacity:1">T</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;line-height:1.25;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, ';fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-opacity:1">G</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:50px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="279.72412"
        y="375.97198"
-       id="text4198"
-       sodipodi:linespacing="125%"><tspan
+       id="text4198"><tspan
          sodipodi:role="line"
          id="tspan4200"
          x="279.72412"
          y="375.97198"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, ';fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-opacity:1">D</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:50px;line-height:1.25;font-family:'Arial Black';-inkscape-font-specification:'Arial Black, ';fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-opacity:1">D</tspan></text>
   </g>
 </svg>
