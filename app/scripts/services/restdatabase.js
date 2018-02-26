@@ -30,11 +30,7 @@
 angular.module('pandrugsFrontendApp')
 .factory('restDatabase', ['$q', '$timeout', '$filter', '$http', 'BACKEND',
   function restDatabaseFactory($q, $timeout, $filter, $http, BACKEND) {
-    function constructQueryString(
-      advancedQueryOptions,
-      queryDirect,
-      queryIndirect
-    ) {
+    function constructQueryString(advancedQueryOptions) {
       // query server
       var cancerDrugStatus = '';
       if (advancedQueryOptions.cancerFda) {
@@ -74,33 +70,17 @@ angular.module('pandrugsFrontendApp')
         cancers += '&';
       }
 
-      var target = '';
-      if (advancedQueryOptions.target && advancedQueryOptions.marker) {
-        target = 'target=BOTH&';
-      } else if (advancedQueryOptions.target) {
-        target = 'target=TARGET&';
-      } else if (advancedQueryOptions.marker) {
-        target = 'target=MARKER&';
-      }
+      var interaction = 'biomarker=' + advancedQueryOptions.biomarker +
+        '&pathwayMember=' + advancedQueryOptions.pathwayMember +
+        '&directTarget=' + advancedQueryOptions.directTarget;
 
-      var direct = '';
-      if (queryDirect && queryIndirect) {
-        direct = 'direct=BOTH&';
-      } else if (queryDirect) {
-        direct = 'direct=DIRECT&';
-      } else if (queryIndirect) {
-        direct = 'direct=INDIRECT&';
-      }
-
-      return cancerDrugStatus + nonCancerDrugStatus + cancers + target + direct;
+      return cancerDrugStatus + nonCancerDrugStatus + cancers + interaction;
     }
 
     function searchBy (
       queryType,
       queryValues,
-      advancedQueryOptions,
-      queryDirect,
-      queryIndirect
+      advancedQueryOptions
     ) {
       var deferred = $q.defer();
 
@@ -115,11 +95,7 @@ angular.module('pandrugsFrontendApp')
         }
       }
 
-      queryString += constructQueryString(
-        advancedQueryOptions,
-        queryDirect,
-        queryIndirect
-      );
+      queryString += constructQueryString(advancedQueryOptions);
 
       $http.get(BACKEND.API + 'genedrug?' + queryString)
       .then(function(results) {
@@ -141,19 +117,10 @@ angular.module('pandrugsFrontendApp')
 
     // Public API here
     return {
-      rankedSearch: function(
-        geneRankFile,
-        advancedQueryOptions,
-        queryDirect,
-        queryIndirect
-      ) {
+      rankedSearch: function(geneRankFile, advancedQueryOptions) {
         var deferred = $q.defer();
 
-        var queryString = constructQueryString(
-          advancedQueryOptions,
-          queryDirect,
-          queryIndirect
-        );
+        var queryString = constructQueryString(advancedQueryOptions);
 
         var fd = new FormData();
         fd.append('generank', geneRankFile);
@@ -170,47 +137,18 @@ angular.module('pandrugsFrontendApp')
         return deferred.promise;
       },
 
-      searchByGenes: function (
-        genesArray,
-        advancedQueryOptions,
-        queryDirect,
-        queryIndirect
-
-      ) {
-        return searchBy(
-          'gene',
-          genesArray,
-          advancedQueryOptions,
-          queryDirect,
-          queryIndirect);
+      searchByGenes: function(genesArray, advancedQueryOptions) {
+        return searchBy('gene', genesArray, advancedQueryOptions);
       },
 
-      searchByDrugs: function (
-        drugsArray,
-        advancedQueryOptions,
-        queryDirect,
-        queryIndirect) {
-        return searchBy(
-          'drug',
-          drugsArray,
-          advancedQueryOptions,
-          queryDirect,
-          queryIndirect);
+      searchByDrugs: function(drugsArray, advancedQueryOptions) {
+        return searchBy('drug', drugsArray, advancedQueryOptions);
       },
 
-      computationIdSearch: function (
-        computationId,
-        advancedQueryOptions,
-        queryDirect,
-        queryIndirect
-      ) {
+      computationIdSearch: function(computationId, advancedQueryOptions) {
         var deferred = $q.defer();
 
-        var queryString = constructQueryString(
-          advancedQueryOptions,
-          queryDirect,
-          queryIndirect
-        );
+        var queryString = constructQueryString(advancedQueryOptions);
 
         $http.get(BACKEND.API + 'genedrug/fromComputationId?computationId=' + computationId + '&' + queryString)
         .then(function(results) {

@@ -217,7 +217,7 @@ angular.module('pandrugsFrontendApp')
       if (!$scope.hasResult()) {
         $scope.isLoading = true;
 
-        searchFunction(value, advancedQueryOptions || $scope.advancedQueryOptions, true, true)
+        searchFunction(value, advancedQueryOptions || $scope.advancedQueryOptions)
           .then(function(result) {
             $scope.isLoading = false;
 

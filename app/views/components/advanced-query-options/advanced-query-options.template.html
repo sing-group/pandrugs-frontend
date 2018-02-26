@@ -48,8 +48,27 @@
             <div class="panel panel-default">
               <div class="panel-heading">Interaction evidence level</div>
               <div class="panel-body">
-                <label><input type="checkbox" ng-model="$ctrl.target" ng-change="$ctrl.notifyChange()">Target</label>
-                <label><input type="checkbox" ng-model="$ctrl.marker" ng-change="$ctrl.notifyChange()">Biomarker</label>
+                <div>
+                  <label>
+                    <input type="checkbox" ng-model="$ctrl.directTarget" ng-change="$ctrl.notifyChange()">
+                    Direct target
+                  </label>
+                  <img src="images/query/direct-target.png"/>
+                </div>
+                <div>
+                  <label>
+                    <input type="checkbox" ng-model="$ctrl.biomarker" ng-change="$ctrl.notifyChange()">
+                    Biomarker
+                  </label>
+                  <img src="images/query/direct-marker.png"/>
+                </div>
+                <div>
+                  <label>
+                    <input type="checkbox" ng-model="$ctrl.pathwayMember" ng-change="$ctrl.notifyChange()">
+                    Pathway member
+                  </label>
+                  <img src="images/query/indirect.png"/>
+                </div>
               </div><!-- end panel-body -->
             </div><!-- end  interaction evidence level -->
           </div>

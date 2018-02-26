@@ -35,8 +35,9 @@ angular.module('pandrugsFrontendApp')
       this.otherFda = options ? options.otherFda : true;
       this.otherClinical = options ? options.otherClinical : true;
       this.otherExperimental = options ? options.otherExperimental : true;
-      this.target = options ? options.target : true;
-      this.marker = options ? options.marker : true;
+      this.directTarget = options ? options.directTarget : true;
+      this.biomarker = options ? options.biomarker : true;
+      this.pathwayMember = options ? options.pathwayMember : true;
       this.cancerTypes = options ? options.cancerTypes : '*';
     }
 
@@ -88,7 +89,7 @@ angular.module('pandrugsFrontendApp')
 
     AdvancedQueryOptions.prototype.isValid = function () {
       return (this.cancerFda || this.cancerClinical || this.otherClinical || this.otherExperimental || this.otherFda)
-        && (this.target || this.marker)
+        && (this.directTarget || this.biomarker || this.pathwayMember)
         && (!this.hasCancerStatusSelected() || this.hasAnyCancerSelected());
     };
 

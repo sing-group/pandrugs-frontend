@@ -30,8 +30,9 @@ angular.module('pandrugsFrontendApp')
       this.otherFda = true;
       this.otherClinical = true;
       this.otherExperimental = true;
-      this.target = true;
-      this.marker = true;
+      this.directTarget = true;
+      this.biomarker = true;
+      this.pathwayMember = true;
       this.cancerTypes = [];
 
       this.$onInit = function () {
