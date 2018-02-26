@@ -222,7 +222,44 @@ td.min-column {
 }
 
 #resultsContainer h3 {
-  text-align:center;
+  text-align: center;
+}
+
+#resultsContainer > div.row {
+  margin-top: 50px;
+}
+
+dl.legend dt, dl.legend dd {
+  margin-bottom: 6px;
+  line-height: 24px;
+}
+
+dl.legend dt {
+  float: left;
+  clear: left;
+}
+
+dl.legend dd {
+  padding-left: 12px;
+  display: table;
+}
+
+dl.legend dd span {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+dl.legend * {
+  font-size: 1.1em !important;
+}
+
+div.legend h3 {
+  text-align: left !important;
+}
+
+div.legend-body {
+  background-color: #f5f5f5;
+  border-radius: 6px;
 }
 
 .icon {
@@ -234,8 +271,7 @@ td.min-column {
 }
 
 .help_icon {
-  @extend .icon;
-  background-image: url("../images/question.png");
+  color: #808080;
 }
 
 .gene_icon {

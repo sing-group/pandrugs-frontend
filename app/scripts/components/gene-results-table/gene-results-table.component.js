@@ -51,5 +51,9 @@ angular.module('pandrugsFrontendApp')
 
         this.geneDrugGroupsPaginated = TableHelper.paginate(tableState, this.paginationOptions, results);
       }.bind(this);
+
+      this.isVariantsAnalysis = function() {
+        return this.computation !== undefined && this.showVariantInformation;
+      }.bind(this);
     }]
   });
