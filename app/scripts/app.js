@@ -84,6 +84,9 @@ angular
         templateUrl: 'views/query.html',
         controller: 'QueryCtrl'
       })
+      .when('/tcga', {
+        templateUrl: 'views/tcga.html'
+      })
       .otherwise({
         redirectTo: '/'
       });

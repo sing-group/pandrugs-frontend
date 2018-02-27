@@ -14,30 +14,6 @@
   You should have received a copy of the GNU General Public License
   along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<script>
-
-  // fixes, to resize the height of the iframe dinamically, avoiding inner
-  // vertical scroll
-
-  function resizeIframe(obj) {
-    obj.style.height = (obj.contentWindow.document.body.offsetHeight + 100) + 'px';
-  }
-
-  // messages received from iframes, when clicking on buttons that implies
-  // that the iframe height changes
-  window.onmessage = function() {
-    setTimeout(function(){
-      resizeIframe(document.getElementById('d3drugsiframe'))},
-      3000
-
-    );
-    setTimeout(function(){
-      resizeIframe(document.getElementById('d3genesiframe'))},
-      3000
-    );
-  }
-
-</script>
 
 <div class="container-fluid">
   <div class="row" id="intro">
@@ -73,59 +49,50 @@
       <img src="images/interactions.png" id="interactions-legend">
     </div>
   </div>
-
+  <div id="method">
+    <h3>PanDrugs workflow</h3>
+    <p>PanDrugs considers drug indication and status, gene-drug associations
+    and number of hits to calculate the <strong>Drug Score
+    (DScore)</strong>.</p> <p><strong>Gene Score (GScore)</strong> is
+    estimated according to gene essentiality and tumoral vulnerability, gene
+    relevance in cancer, the biological impact of mutations, the frequency
+    of gene alterations and their clinical implications.</p> <p>PanDrugs
+    resolves the <em>Best Therapeutic Candidates</em> based on the accumulated and
+    weighted scoring of <strong>GScore</strong> and <strong>DScore</strong>.</p>
+    <img src="images/pandrugs-scoring.png">
+  </div>
   <div class="alert alert-warning">
     <strong>Disclaimer</strong>: this resource is intended <strong>for research purposes
-    exclusively</strong>. It should not be used for medical or professional advice.
+    exclusively</strong>. It should not be used for medical or professional advice. Read our <a href="" data-toggle="modal" ng-attr-data-target="#datapolicy">
+      data policy</a>.
   </div>
-
 </div><!-- end of the container -->
-<div class="panel panel-default" id="hometabs">
-    <ul class="nav nav-tabs" role="tablist">
-      <li role="presentation" ng-class="{active:hometab === 'workflow'}" ng-click="hometab = 'workflow'">
-        <a aria-controls="method" data-toggle="tab" role="tab">PanDrugs workflow</a>
-      </li>
-      <li role="presentation" ng-class="{active:hometab === 'tcga'}" ng-click="hometab = 'tcga'">
-        <a aria-controls="tcga" data-toggle="tab" role="tab">PanDrugs in TCGA</a>
-      </li>
-    </ul>
-    <div class="tab-content panel-body">
-      <div id="method" class="tab-pane active"  role="tabpanel" ng-class="{active:hometab === 'workflow'}">
-        <h3>PanDrugs workflow</h3>
-        <p>PanDrugs considers drug indication and status, gene-drug associations
-        and number of hits to calculate the <strong>Drug Score
-        (DScore)</strong>.</p> <p><strong>Gene Score (GScore)</strong> is
-        estimated according to gene essentiality and tumoral vulnerability, gene
-        relevance in cancer, the biological impact of mutations, the frequency
-        of gene alterations and their clinical implications.</p> <p>PanDrugs
-        resolves the <em>Best Therapeutic Candidates</em> based on the accumulated and
-        weighted scoring of <strong>GScore</strong> and <strong>DScore</strong>.</p>
-        <img src="images/pandrugs-scoring.png">
-      </div>
-      <div id="tcga" class="tab-pane"  role="tabpanel" ng-class="{active:hometab === 'tcga'}">
-        <h3>PanDrugs across TCGA tumoral landscape (by <form id="d3viewform" class="form-horizontal" ng-init="d3view = 'drugs'">
-          <input type="radio" class = "toggle toggle-left" ng-model="d3view" value="drugs" id="d3view-drugs"><label for="d3view-drugs">Drugs</label><input type="radio" class = "toggle toggle-right" ng-model="d3view" value="genes" id="d3view-genes"><label for="d3view-genes">Genes</label>
-        </form>)
-        </h3>
-        <p class="tcga_desc" ng-if="d3view == 'genes'">
-          This plot shows the percentage of patients in different tumor types from TCGA
-          study with druggable alterations according to the suggestions by PanDrugs based
-          on point mutations. Each bubble represents a druggable alteration
-          and the gene score is the highest one among the computed for the altered gene in
-          each patient. For each gene, the highest availability of the treatment is
-          selected to establish the status label druggability of the gene (e.g. Approved
-          in same tumor type is preferable before approved in other tumor types).
-        </p>
-        <p class="tcga_desc" ng-if="d3view == 'drugs'">
-          This plot shows the percentage of patients in different tumor types from TCGA
-          study that would be treated according to PanDrugs suggestions based on point mutations. Each bubble represents a treatment with a particular drug
-          and the drug score is the highest one among the computed for each patient that
-          could be treated with that compound. Only alterations with a gene score greater
-          or equal than 0.6 are considered.
-        </p>
-        <iframe id="d3genesiframe" ng-if="hometab === 'tcga' && d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
-        <iframe id="d3drugsiframe" ng-if="hometab === 'tcga' && d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
 
+<div id="datapolicy" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        <h4 class="modal-title">PanDrugs data policy</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>To prevent unauthorized access or disclosure, PanDrugs uses several technical
+          measures  to safeguard your data, in accordance with current technological and
+          industry standards. In particular, all connections to and from our website are
+          encrypted using Secure Socket Layer (SSL). Passwords are hashed in our database.
+          Data analyzed with PanDrugs are stored in our private servers. Removing an
+          analysis implies that it will completely and permanently removed from PanDrugs
+          servers. Files are not shared with third parties.</p> <p> We ensure that
+        experimental data and results are kept at least 1 week for guest requests and at
+        least 6 months for authenticated users. </p> <p> However, if you want to run
+        PanDrugs in your own servers, you can <a
+          href="http://github.com/sing-group/pandrugs-docker">build a docker image to run
+          PanDrugs in your own servers</a>. </p>
       </div>
     </div>
+  </div>
 </div>

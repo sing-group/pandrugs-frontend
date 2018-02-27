@@ -1,0 +1,64 @@
+<!--
+  This file is part of PanDrugs Backend.
+
+  PanDrugs Backend is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  PanDrugs Backend is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<script>
+
+  // fixes, to resize the height of the iframe dinamically, avoiding inner
+  // vertical scroll
+
+  function resizeIframe(obj) {
+    obj.style.height = (obj.contentWindow.document.body.offsetHeight + 100) + 'px';
+  }
+
+  // messages received from iframes, when clicking on buttons that implies
+  // that the iframe height changes
+  window.onmessage = function() {
+    setTimeout(function(){
+      resizeIframe(document.getElementById('d3drugsiframe'))},
+      3000
+
+    );
+    setTimeout(function(){
+      resizeIframe(document.getElementById('d3genesiframe'))},
+      3000
+    );
+  }
+
+</script>
+<div class="container-fluid" id="help">
+  <h3>PanDrugs across TCGA tumoral landscape (by <form id="d3viewform" class="form-horizontal" ng-init="d3view = 'drugs'">
+    <input type="radio" class = "toggle toggle-left" ng-model="d3view" value="drugs" id="d3view-drugs"><label for="d3view-drugs">Drugs</label><input type="radio" class = "toggle toggle-right" ng-model="d3view" value="genes" id="d3view-genes"><label for="d3view-genes">Genes</label>
+  </form>)
+  </h3>
+  <p class="tcga_desc" ng-if="d3view == 'genes'">
+    This plot shows the percentage of patients in different tumor types from TCGA
+    study with druggable alterations according to the suggestions by PanDrugs based
+    on point mutations. Each bubble represents a druggable alteration
+    and the gene score is the highest one among the computed for the altered gene in
+    each patient. For each gene, the highest availability of the treatment is
+    selected to establish the status label druggability of the gene (e.g. Approved
+    in same tumor type is preferable before approved in other tumor types).
+  </p>
+  <p class="tcga_desc" ng-if="d3view == 'drugs'">
+    This plot shows the percentage of patients in different tumor types from TCGA
+    study that would be treated according to PanDrugs suggestions based on point mutations. Each bubble represents a treatment with a particular drug
+    and the drug score is the highest one among the computed for each patient that
+    could be treated with that compound. Only alterations with a gene score greater
+    or equal than 0.6 are considered.
+  </p>
+  <iframe id="d3genesiframe" ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
+  <iframe id="d3drugsiframe" ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
+</div>
