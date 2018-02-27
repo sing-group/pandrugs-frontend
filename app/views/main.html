@@ -40,7 +40,7 @@
 </script>
 
 <div class="container-fluid">
-  <div class="row">
+  <div class="row" id="intro">
     <div class="col-lg-6">
       <div class="jumbotron">
 
@@ -55,27 +55,22 @@
       </div>
     </div>
     <div class="col-lg-6" ng-init="hometab = 'workflow'">
+<h3>What is PanDrugs?</h3>
+      <p class="db_desc"><strong>PanDrugs</strong> provides a bioinformatics platform
+<strong>to prioritize anticancer drug treatments according to individual genomic data</strong>.</p>
 
-      <h3>What is PanDrugs?</h3>
-
-      <p class="db_desc"><strong>PanDrugs</strong> provides a platform <strong>to
-        guide the selection of therapies from the results of genome-wide studies
-        in cancer disease.</strong></p>
-      <p class="db_desc">Using 4 alternative inputs (e.g. standard VCF files, RNK
-        files, gene list and drug query), <strong>PanDrugs identify actionable
-          molecular alterations and prioritize drugs by calculating gene-drug
-          scores</strong> which takes into account: i) genomic feature evidence by
-        mutation impact score; ii) target pathway context; iii) drug approval status
-        (FDA, clinical trial or experimental small molecule inhibitors) and iv)
-        manually-curated pharmacological information retrieved from the
-        literature.</p>
-      <p class="db_desc"><strong>PanDrugs scores combines biological and clinical
-        relevance of the genes and their susceptibility to be targeted </strong>
-        reflecting the strength or evidence level of the gene-drug association in order
-        to assist the clinical decision making.</p>
-      <p class="db_desc">PanDrugs current
-        version integrates data from 18 primary sources and supports ~50,000 drug-target
-        associations obtained from ~6,000 genes and ~11,000 unique compounds.</p>
+<p class="db_desc">Data input: standard VCF file, RNK file, gene lists and drug query.</p>
+    <p class="db_desc">Please note the PanDrugs terminology for druggable genes:
+      <ol type="I">
+        <li><strong>Direct targets</strong>: Genes that contribute to disease phenotype and can be directly
+        targeted by a drug (i.e. BRAF is a direct target for vemurafenib).</li>
+        <li><strong>Biomarkers</strong>: Genes showing a genetic status associated with drug response
+        which protein product is not the drug target itself (i.e. BRCA-mutated
+        cancers responding to PARP inhibitors).</li>
+        <li><strong>Pathway members</strong>: Genes located downstream in the biological pathway of a given undruggable gene.</li>
+      </ol>
+      </p>
+      <img src="images/interactions.png" id="interactions-legend">
     </div>
   </div>
 
