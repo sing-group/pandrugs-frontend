@@ -67,12 +67,14 @@ angular.module('pandrugsFrontendApp')
           parsedGenes = utilities.parseGenes(this.genes, false);
           genes = parsedGenes.join('\n').trim();
         } else {
-          this.genes = genes;
-          parsedGenes = utilities.parseGenes(genes, false);
+          try {
+            parsedGenes = utilities.parseGenes(genes, false);
+            this.genes = genes;
+          } catch(e) {
+            alert("The gene list is not valid. Check that there is only one gene name per line.");
+          }
         }
-
         var parsedGenesUnique = utilities.uniqueIgnoreCase(parsedGenes);
-
         this.onChange({ genes: genes, geneList: parsedGenes, uniqueGeneList: parsedGenesUnique });
       }.bind(this);
 
@@ -86,6 +88,16 @@ angular.module('pandrugsFrontendApp')
 
       this.pasteSignalingPathwayExample = function() {
         this.notifyChange('PIK3CA\nPIK3R1\nPIK3R2\nPTEN\nPDPK1\nAKT1\nAKT2\nFOXO1\nFOXO3\nMTOR\nRICTOR\nTSC1\nTSC2\nRHEB\nAKT1S1\nRPTOR\nMLST8\n');
+      }.bind(this);
+
+      this.changeFile = function(file) {
+        var reader = new FileReader();
+
+        reader.onload = function() {
+          this.notifyChange(reader.result);
+        }.bind(this);
+
+        reader.readAsText(file);
       }.bind(this);
     }]
   });

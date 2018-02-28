@@ -21,7 +21,12 @@
   </div>
 
   <button class="btn btn-default" data-toggle="collapse" data-target="#examples-zone">Use an example</button>
-
+  <div id="gene-query-panel-buttons">
+    <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
+         ng-attr-name="{{ $ctrl.idPrefix + '-input-file' }}"
+         class="file" type="file" file-model on-file-change="$ctrl.changeFile(file)"
+         data-show-preview="false" data-show-caption="false" data-browse-label="Load from file"/>
+  </div>
   <div id="examples-zone" class="collapse">
     <div id="sample-gene-list">
       <div id="genes-sample-1">
@@ -46,4 +51,6 @@
             ng-focus="$ctrl.notifyChange()"
             smart-area="$ctrl.genesTextAreaConfig"
   />
+
+
 </div>

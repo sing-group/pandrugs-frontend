@@ -47,7 +47,7 @@ angular
   .constant('BACKEND', (function() {
     // Service logic
     // ...
-    //var server = 'http://www.pandrugs.org';
+    //var server = 'https://www.pandrugs.org';
     //var server = 'http://sing.ei.uvigo.es';
     //var server = 'http://mrjato.sing-group.org:8080'; // development: test server
     //var server = 'http://0.0.0.0:9000'; // development: via grunt reverse proxy to local backend
