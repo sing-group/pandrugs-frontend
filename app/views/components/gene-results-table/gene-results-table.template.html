@@ -136,7 +136,9 @@
         </td>
         <td class="wrapped-column">{{row.statusDescription}}</td>
         <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
-        <td class="min-column">{{row.getSensitivity() | titlecase}}</td>
+        <td class="min-column">
+          <span ng-class="row.getSensitivity() | lowercase">{{row.getSensitivity() | titlecase}}</span>
+        </td>
         <td class="wrapped-column">{{row.family | enumeration}}</td>
         <td class="wrapped-column">
           <span ng-repeat="source in row.source">
@@ -216,8 +218,9 @@
             [<a target="_blank" href="https://clinicaltrials.gov/ct2/results?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">ClinicalTrials.gov</a>]
           </div>
         </td>
-
-        <td class="min-column" style="white-space: nowrap">{{geneDrug.sensitivity | titlecase}}&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span></td>
+        <td class="min-column" style="white-space: nowrap">
+          <span ng-class="geneDrug.getSensitivity() | lowercase">{{geneDrug.getSensitivity() | titlecase}}</span>&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span>
+        </td>
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
         <td class="wrapped-column">
           <span ng-repeat="source in geneDrug.getDrugSourcesInfo()">

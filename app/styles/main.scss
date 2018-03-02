@@ -284,7 +284,7 @@ div.legend-body {
   background-image: url("../images/drug.png");
 }
 
-.curated {
+.boxed-element {
   @include border-radius(4px);
   padding: 2px;
   border-width: 1px;
@@ -294,7 +294,7 @@ div.legend-body {
   display: inline-block;
 }
 
-@mixin sourcedb-box($color, $background) {
+@mixin color-and-background-mixin($color, $background) {
   border-color: $color !important;
   color: $color !important;
   background-color: $background !important;
@@ -307,39 +307,53 @@ div.legend-body {
 }
 
 a.curated_source {
-  @extend .curated;
-  @include sourcedb-box($dark-green, $light-green);
+  @extend .boxed-element;
+  @include color-and-background-mixin($dark-green, $light-green);
 }
 
 a.non_curated_source {
-  @extend .curated;
-  @include sourcedb-box($dark-blue, $light-blue);
+  @extend .boxed-element;
+  @include color-and-background-mixin($dark-blue, $light-blue);
 }
 
 a.curated_source[title="moAb"] {
-  @include sourcedb-box($medium-orange, $light-red);
+  @include color-and-background-mixin($medium-orange, $light-red);
 }
 a.curated_source[title="TARGET-CGA"] {
-  @include sourcedb-box($dark-yellow, $light-yellow);
+  @include color-and-background-mixin($dark-yellow, $light-yellow);
 }
 a.non_curated_source[title="CTRP"] {
-  @include sourcedb-box($dark-red, $light-red);
+  @include color-and-background-mixin($dark-red, $light-red);
 }
 a.non_curated_source[title="GDSC"] {
-  @include sourcedb-box($dark-blue, $light-blue);
+  @include color-and-background-mixin($dark-blue, $light-blue);
 }
 a.non_curated_source[title="DrugBank"],
 a.non_curated_source[title="TTD"],
 a.non_curated_source[title="PharmGKB"] {
-  @include sourcedb-box($dark-green, $light-green);
+  @include color-and-background-mixin($dark-green, $light-green);
 }
 
+span.sensitivity {
+  @extend .boxed-element;
+  @include color-and-background-mixin($dark-green, $light-green);
+}
+
+span.resistance {
+  @extend .boxed-element;
+  @include color-and-background-mixin($dark-red, $light-red);
+}
+
+span.both {
+  @extend .boxed-element;
+  @include color-and-background-mixin($dark-blue, $light-blue);
+}
 
 .cancer_type_checkbox input {
   display:none;
 }
 .cancer_type_checkbox label {
-  @extend .curated;
+  @extend .boxed-element;
   border-color: $light-green !important;
   cursor: pointer;
   color: $medium-dark-gray !important;
