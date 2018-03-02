@@ -86,6 +86,8 @@ angular.module('pandrugsFrontendApp')
 
       angular.merge(this, geneDrug);
       this.geneDrugGroup = geneDrugGroup;
+      if (this.getInteraction() === 'pathway-member')
+        this.pathwayId = 'pathway-' + this.geneDrugGroup.standardDrugName.replace(' ', '-') + '-' + this.getIndirectGeneSymbol();
     }
 
     function GeneDrugGroup(geneDrugGroup) {
@@ -241,6 +243,17 @@ angular.module('pandrugsFrontendApp')
       return this.originalSensitivity === 'BOTH' ? 'SENSITIVITY / RESISTANCE' : this.originalSensitivity;
     };
 
+    GeneDrug.prototype.getInteraction = function() {
+      if (this.target === 'marker') {
+        return 'biomarker';
+      } else if (this.indirect === null) {
+        return 'direct-target';
+      } else if (this.indirect !== null){
+        return 'pathway-member';
+      } else {
+        throw Error('Invalid gene drug group type');
+      }
+    };
 
     function prepareValueForCSV(value) {
       if (Array.isArray(value)) {
@@ -282,14 +295,7 @@ angular.module('pandrugsFrontendApp')
       for (var i = 0; i < this.geneDrugs.length; i++) {
         if (this.geneDrugs[i].dScore > bestDscore) {
           bestDscore = this.geneDrugs[i].dScore;
-
-          if (this.geneDrugs[i].target === 'marker') {
-            best = 'marker';
-          } else if (this.geneDrugs[i].target === 'target' && this.geneDrugs[i].indirect === null) {
-            best = 'target-direct';
-          } else if (this.geneDrugs[i].target === 'target' && this.geneDrugs[i].indirect !== null){
-            best = 'target-indirect';
-          }
+          best = this.geneDrugs[i].getInteraction();
         }
       }
 

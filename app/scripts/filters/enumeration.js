@@ -30,10 +30,15 @@
  */
 angular.module('pandrugsFrontendApp')
   .filter('enumeration', function () {
-    return function (input) {
-      var joined = input.join(', ');
+    return function (input, join, last) {
+      join = join === undefined ? ', ' : join;
+      last = last === undefined ? ' and ' : last;
+
+      var joined = input.join(join);
       if (input.length > 1) {
-        return joined.substring(0, joined.lastIndexOf(',')) + ' and' + joined.substring(joined.lastIndexOf(',') + 1, joined.length);
+        var joinIndex = joined.lastIndexOf(join);
+
+        return joined.substring(0, joinIndex) + last + joined.substring(joinIndex + join.length, joined.length);
       } else  {
       return joined;
       }

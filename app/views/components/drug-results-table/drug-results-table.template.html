@@ -21,8 +21,8 @@
     <thead>
       <tr>
         <th>Gene Drug Information </span> <span class="help_icon" title="General information about the gene-drug relation"></span></th>
-        <th class="min-column">R/S <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
         <th class="min-column">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
+        <th class="min-column">R/S <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
         <th class="wrapped-column">Family <span class="help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
         <th class="wrapped-column">Source(s) <span class="help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
         <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
@@ -41,9 +41,7 @@
           [<a target="_blank" href="https://clinicaltrials.gov/ct2/results?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">ClinicalTrials.gov</a>]
           <br>
         </td>
-
-        <td class="min-column" style="white-space: nowrap">{{geneDrug.sensitivity | titlecase}}&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span></td>
-        <td class="min-column">
+        <td class="min-column" style="text-align: center">
           <div class="tooltipCSS">
             <img ng-if="geneDrug.target === 'marker'" src="images/query/biomarker.png"/>
             <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
@@ -66,10 +64,8 @@
             </span>
           </div>
           <div ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null">
-            <button type="button" class="btn btn-sm btn-default seepathways" data-toggle="modal" data-target="#pathways-{{row.showDrugName|replace:' ':'-'}}-{{geneDrug.getIndirectGeneSymbol()}}">
-              See pathways
-            </button>
-            <div id = "pathways-{{row.showDrugName|replace:' ':'-'}}-{{geneDrug.getIndirectGeneSymbol()}}" class="modal fade">
+            [<button type="button" class="seepathways" data-toggle="modal" data-target="#pathways-{{geneDrug.pathwayId}}">See pathways</button>]
+            <div id="pathways-{{geneDrug.pathwayId}}" class="modal fade" style="text-align: justify">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -78,11 +74,11 @@
                   </div>
                   <div class="modal-body">
                     The following KEGG pathways are those where the target gene of the drug ({{geneDrug.indirect.geneInfo.geneSymbol}}) is related
-                    to at least one of the altered genes (<span ng-repeat="alteredGene in geneDrug.gene">{{alteredGene.geneSymbol}}</span>)
+                    to at least one of the altered genes ({{geneDrug.gene | mapAttribute : 'geneSymbol' | enumeration : ', ' : ' or '}})
                     <ul>
                       <li ng-repeat="pathway in geneDrug.indirect.pathway">
                         <a target='_blank' href="{{pathway|kegglink:geneDrug.indirect.geneInfo}}">{{pathway.name}}</a>
-                        ( <span ng-repeat="alteredGene in pathway.gene">{{alteredGene.geneSymbol}} </span>)
+                        ({{pathway.gene | mapAttribute : 'geneSymbol' | enumeration}})
                       </li>
                     </ul>
                   </div>
@@ -91,6 +87,7 @@
             </div>
           </div>
         </td>
+        <td class="min-column" style="white-space: nowrap">{{geneDrug.sensitivity | titlecase}}&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span></td>
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
         <td class="wrapped-column">
           <span ng-repeat="source in geneDrug.getDrugSourcesInfo()">

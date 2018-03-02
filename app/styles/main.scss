@@ -457,7 +457,16 @@ a.disabled:hover {
 
 .seepathways {
   margin-top: 5px;
+  color: $dark-green;
+  border: none;
+  padding: 0;
+  background-color: transparent;
 }
+
+.seepathways:hover {
+  text-decoration: underline;
+}
+
 .error {
   color: $medium-red;
 }

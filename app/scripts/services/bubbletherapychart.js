@@ -189,9 +189,9 @@ angular.module('pandrugsFrontendApp')
           }
         },
       series:  [
-        {name: 'biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
-        {name: 'target', data: [], color: 'black', marker: {symbol:'circle'}},
-        {name: 'pathway member', data: [], color: 'black', marker: {symbol:'diamond'}}
+        {name: 'Biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
+        {name: 'Direct target', data: [], color: 'black', marker: {symbol:'circle'}},
+        {name: 'Pathway member', data: [], color: 'black', marker: {symbol:'diamond'}}
 
       ],
 
@@ -220,10 +220,10 @@ angular.module('pandrugsFrontendApp')
           if (results[i].getBestInteraction() === 'marker') {
             series[0].data.push(datapoint);
           }
-          if (results[i].getBestInteraction() === 'target-direct') {
+          if (results[i].getBestInteraction() === 'direct-target') {
             series[1].data.push(datapoint);
           }
-          if (results[i].getBestInteraction() === 'target-indirect') {
+          if (results[i].getBestInteraction() === 'pathway-member') {
             series[2].data.push(datapoint);
           }
         }
