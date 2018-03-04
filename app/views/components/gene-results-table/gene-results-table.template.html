@@ -37,17 +37,15 @@
         <h4>Information Icons</h4>
 
         <dl class="legend">
-          <dt style="width: 60px">
+          <dt>
             <span class="glyphicon glyphicon-star best-icon" aria-hidden="true" title="Best Therapeutic Candidate"></span>
           </dt>
           <dd><span>Best therapeutic candidate</span></dd>
-          <dt style="width: 60px" >
+          <dt>
             <span class="glyphicon glyphicon-exclamation-sign warning-icon" aria-hidden="true"></span>
-            /
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
           </dt>
           <dd><span>Sensitivity/Resistance alteration</span></dd>
-          <dt style="width: 60px" >
+          <dt>
             <span class="glyphicon glyphicon-question-sign help_icon" aria-hidden="true"></span>
           </dt>
           <dd><span>Column description</span></dd>
@@ -219,7 +217,7 @@
           </div>
         </td>
         <td class="min-column" style="white-space: nowrap">
-          <span ng-class="geneDrug.getSensitivity() | lowercase">{{geneDrug.getSensitivity() | titlecase}}</span>&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span>
+          <span ng-class="geneDrug.sensitivity | lowercase">{{geneDrug.sensitivity | titlecase}}</span></span>
         </td>
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
         <td class="wrapped-column">

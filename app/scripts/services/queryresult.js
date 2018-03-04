@@ -31,14 +31,14 @@ angular.module('pandrugsFrontendApp')
   .factory('QueryResultFactory', ['$sce', function ($sce) {
     var geneDrugHeader =
       'Gene(s),Target,Alteration,Status Info,Threrapy,Indirect Gene(s),' +
-      'Indirect Pathway(s),Sensitivity,Original Sensitivity,' +
-      'Indirect Resistance(s),Source(s),Warning(s),DScore,GScore';
+      'Indirect Pathway(s),Sensitivity,Source(s),Warning(s),DScore,GScore';
 
     var geneDrugGroupsHeader =
       'Gene(s),Standard Drug Name,Show Drug Name,PubChemId(s),Status,' +
       'Status Description,Therapy,Target,Source(s),Curated Source(s),' +
       'Family(ies),Cancer(s),Indirect Gene(s),R/S,Best Interaction,' +
       'DScore,GScore,' + geneDrugHeader;
+
     var geneDrugGroupsHeaderSimple = 'Gene(s),Show Drug Name,' +
       'Status Description,Therapy,R/S,Best Interaction,Family(ies),' +
       'Source(s),DScore,GScore,Best Candidate Therapy,Warning(s)';
@@ -80,7 +80,6 @@ angular.module('pandrugsFrontendApp')
       this.gScore = geneDrug.gScore;
       this.gene = geneDrug.gene;
       this.warning = geneDrug.warning;
-      this.indirectResistance = geneDrug.indirectResistance;
       this.family = geneDrug.family;
       this.source = geneDrug.source;*/
 
@@ -105,7 +104,6 @@ angular.module('pandrugsFrontendApp')
       this.source = geneDrugGroup.source;
       this.curatedSource = geneDrugGroup.curatedSource;
       this.cancer = geneDrugGroup.cancer;
-      this.indirectGene = geneDrugGroup.indirectGene;
       this.geneDrugInfo = geneDrugGroup.geneDrugInfo;*/
       angular.merge(this, geneDrugGroup);
 
@@ -219,28 +217,12 @@ angular.module('pandrugsFrontendApp')
       });
     };
 
-    GeneDrug.prototype.hasIndirectResistance = function() {
-      return this.indirectResistance.length > 0;
-    };
-
-    GeneDrug.prototype.hasChangedSensitivity = function() {
-      return this.originalSensitivity !== this.sensitivity;
-    };
-
     GeneDrug.prototype.getAdjustedGScore = function() {
       return Math.round(this.gScore * 10000) / 10000;
     };
 
     GeneDrug.prototype.getAdjustedDScore = function() {
       return Math.round(this.dScore * 10000) / 10000;
-    };
-
-    GeneDrug.prototype.getSensitivity = function() {
-      return this.sensitivity === 'BOTH' ? 'SENSITIVITY / RESISTANCE' : this.sensitivity;
-    };
-
-    GeneDrug.prototype.getOriginalSensitivity = function() {
-      return this.originalSensitivity === 'BOTH' ? 'SENSITIVITY / RESISTANCE' : this.originalSensitivity;
     };
 
     GeneDrug.prototype.getInteraction = function() {
@@ -276,9 +258,7 @@ angular.module('pandrugsFrontendApp')
         this.therapy,
         this.getIndirectGeneSymbol(),
         this.getIndirectPathways(),
-        this.getSensitivity(),
-        this.getOriginalSensitivity(),
-        this.indirectResistance,
+        this.sensitivity,
         this.source,
         this.warning,
         this.getAdjustedDScore(),
