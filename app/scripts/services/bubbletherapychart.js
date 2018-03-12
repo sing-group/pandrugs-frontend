@@ -144,7 +144,7 @@ angular.module('pandrugsFrontendApp')
           max: 1,
           plotLines: [
             {
-              color: 'red',
+              color: 'gray',
               dashStyle: 'ShortDash',
               value: 0.7,
               width: 2
@@ -160,7 +160,7 @@ angular.module('pandrugsFrontendApp')
           max: 1,
           plotLines: [
             {
-              color: 'red',
+              color: 'gray',
               dashStyle: 'ShortDash',
               value: 0.60,
               width: 2
@@ -189,8 +189,8 @@ angular.module('pandrugsFrontendApp')
           }
         },
       series:  [
-        {name: 'Biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
         {name: 'Direct target', data: [], color: 'black', marker: {symbol:'circle'}},
+        {name: 'Biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
         {name: 'Pathway member', data: [], color: 'black', marker: {symbol:'diamond'}}
 
       ],
@@ -215,9 +215,9 @@ angular.module('pandrugsFrontendApp')
             jitter: 'x: '+jitterX.toExponential()+', y: '+jitterY.toExponential(),
             color: results[i].status === 'APPROVED'? '#2BBE83': results[i].status === 'CLINICAL_TRIALS'?'#FFCF3A':'#337BB7',
             status: results[i].status.toLowerCase().replace('_', ' ')
-
           };
-          if (results[i].getBestInteraction() === 'marker') {
+
+          if (results[i].getBestInteraction() === 'biomarker') {
             series[0].data.push(datapoint);
           }
           if (results[i].getBestInteraction() === 'direct-target') {
