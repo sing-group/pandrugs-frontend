@@ -33,9 +33,15 @@
     <div class="col-lg-6" ng-init="hometab = 'workflow'">
 <h3>What is PanDrugs?</h3>
       <p class="db_desc"><strong>PanDrugs</strong> provides a bioinformatics platform
-<strong>to prioritize anticancer drug treatments according to individual genomic data</strong>.</p>
+<strong>to prioritize anticancer drug treatments according to individual genomic
+data</strong>. PanDrugs current version integrates data from <strong>24</strong> primary
+sources and supports <strong>56297</strong> drug-target associations obtained
+from <strong>4804</strong> genes and <strong>9092</strong> unique compounds.</p>
 
-<p class="db_desc">Data input: standard VCF file, RNK file, gene lists and drug query.</p>
+<p class="db_desc">
+    <strong>Data input</strong>: standard <strong>VCF</strong> file,
+    <strong>RNK</strong> file, <strong>gene lists</strong> and <strong>drug
+    query</strong>.</p>
     <p class="db_desc">Please note the PanDrugs terminology for druggable genes:
       <ol type="I">
         <li><strong>Direct targets</strong>: Genes that contribute to disease phenotype and can be directly
@@ -43,7 +49,9 @@
         <li><strong>Biomarkers</strong>: Genes showing a genetic status associated with drug response
         which protein product is not the drug target itself (i.e. BRCA-mutated
         cancers responding to PARP inhibitors).</li>
-        <li><strong>Pathway members</strong>: Genes located downstream in the biological pathway of a given undruggable gene.</li>
+        <li><strong>Pathway members</strong>: Genes located downstream in the biological
+pathway of a given undruggable gene (i.e. patients with mutations in TSC1/2
+respond to a downstream inhibition of the mTOR pathway).</li>
       </ol>
       </p>
       <img src="images/interactions.png" id="interactions-legend">
@@ -53,10 +61,10 @@
     <h3>PanDrugs workflow</h3>
     <p>PanDrugs considers drug indication and status, gene-drug associations
     and number of hits to calculate the <strong>Drug Score
-    (DScore)</strong>.</p> <p><strong>Gene Score (GScore)</strong> is
+    (DScore)</strong>. <strong>Gene Score (GScore)</strong> is
     estimated according to gene essentiality and tumoral vulnerability, gene
     relevance in cancer, the biological impact of mutations, the frequency
-    of gene alterations and their clinical implications.</p> <p>PanDrugs
+    of gene alterations and their clinical implications. PanDrugs
     resolves the <em>Best Therapeutic Candidates</em> based on the accumulated and
     weighted scoring of <strong>GScore</strong> and <strong>DScore</strong>.</p>
     <img src="images/pandrugs-scoring.png">
