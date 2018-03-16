@@ -87,7 +87,7 @@
         <th class="min-column">Interaction <span class="glyphicon glyphicon-question-sign help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
         <th class="wrapped-column">Drug status <span class="glyphicon glyphicon-question-sign help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
         <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="glyphicon glyphicon-question-sign help_icon" title="Type of therapy for the approved drugs in cancer"/></th>
-        <th class="min-column">R/S <span class="glyphicon glyphicon-question-sign help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
+        <th class="min-column">Drug response <span class="glyphicon glyphicon-question-sign help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
         <th class="wrapped-column">Family <span class="glyphicon glyphicon-question-sign help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
         <th class="wrapped-column">Source(s) <span class="glyphicon glyphicon-question-sign help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
         <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
@@ -135,7 +135,10 @@
         <td class="wrapped-column">{{row.statusDescription}}</td>
         <td>{{row.therapy ? row.therapy : '' | titlecase | replace:'_':' '}}</td>
         <td class="min-column">
-          <span ng-class="row.getSensitivity() | lowercase">{{row.getSensitivity() | titlecase}}</span>
+          <span class ="sensitivity-type" ng-class="row.getSensitivity() | lowercase">{{row.getSensitivity() | titlecase}}</span>
+          <div ng-if="row.getWarnings()" class="warning-icon">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{row.getWarnings()}}"></span>
+          </div>
         </td>
         <td class="wrapped-column">{{row.family | enumeration}}</td>
         <td class="wrapped-column">
@@ -151,9 +154,6 @@
         <td class="min-column" style="text-align: center">
           <div ng-if="row.isBestCandidate()" class="best-icon">
             <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
-          </div>
-          <div ng-if="row.getWarnings()" class="warning-icon">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{row.getWarnings()}}"></span>
           </div>
         </td>
       </tr>
@@ -218,6 +218,9 @@
         </td>
         <td class="min-column" style="white-space: nowrap">
           <span ng-class="geneDrug.sensitivity | lowercase">{{geneDrug.sensitivity | titlecase}}</span></span>
+          <div ng-if="geneDrug.warning.length > 0" class="warning-icon">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.warning.join('\n')}}"></span>
+          </div>
         </td>
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
         <td class="wrapped-column">
@@ -231,9 +234,6 @@
         <td class="min-column">{{geneDrug.dScore | number: 4}}</td>
         <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
         <td class="min-column" style="text-align: center" >
-          <div ng-if="geneDrug.warning.length > 0" class="warning-icon">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.warning.join('\n')}}"></span>
-          </div>
         </td>
       </tr>
 

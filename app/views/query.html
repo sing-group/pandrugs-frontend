@@ -133,6 +133,25 @@
               <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
             </tr>
           </table>
+          <button class="btn btn-default" data-target="#genespresencedetails" data-toggle="modal">Show genes</button>
+          <div id="genespresencedetails" class="modal fade" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Genes in query</h4>
+                </div>
+                <div class="modal-body">
+                  <h4>Input genes ({{geneList.length}})</h4>
+                    {{geneList | enumeration}}
+                  <h4>Genes in PanDrugs ({{genePresence.present.length}})</h4>
+                    {{genePresence.present | enumeration}}
+                  <h4>Genes not in PanDrugs ({{genePresence.absent.length}})</h4>
+                    {{genePresence.absent | enumeration}}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-md-4" ng-if="selectedTab === 'generank'">
           <h4 class="row">GENE Rank</h4>
@@ -150,6 +169,25 @@
               <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
             </tr>
           </table>
+          <button class="btn btn-default" data-target="#genespresencedetails" data-toggle="modal">Show genes</button>
+          <div id="genespresencedetails" class="modal fade" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Genes in query</h4>
+                </div>
+                <div class="modal-body">
+                  <h4>Input genes ({{geneList.length}})</h4>
+                    {{geneList | enumeration}}
+                  <h4>Genes in PanDrugs ({{genePresence.present.length}})</h4>
+                    {{genePresence.present | enumeration}}
+                  <h4>Genes not in PanDrugs ({{genePresence.absent.length}})</h4>
+                    {{genePresence.absent | enumeration}}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-md-4" ng-if="selectedTab === 'vcfrank'">
           <h4 class="row">Genomic variants</h4>
@@ -170,6 +208,25 @@
               <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
             </tr>
           </table>
+          <button class="btn btn-default" data-target="#genespresencedetails" data-toggle="modal">Show genes</button>
+          <div id="genespresencedetails" class="modal fade" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Genes in query</h4>
+                </div>
+                <div class="modal-body">
+                  <h4>Affected genes ({{computation.affectedGenes.length}})</h4>
+                    {{computation.affectedGenes | enumeration}}
+                  <h4>Genes in PanDrugs ({{genePresence.present.length}})</h4>
+                    {{genePresence.present | enumeration}}
+                  <h4>Genes not in PanDrugs ({{genePresence.absent.length}})</h4>
+                    {{genePresence.absent | enumeration}}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-md-8">
           <div class="row">

@@ -21,8 +21,8 @@
     <thead>
       <tr>
         <th>Gene Drug Information </span> <span class="help_icon" title="General information about the gene-drug relation"></span></th>
-        <th class="min-column">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
-        <th class="min-column">R/S <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
+        <th class="min-column" st-sort="interaction" st-sort-default="reverse">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
+        <th class="min-column">Drug response <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
         <th class="wrapped-column">Family <span class="help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
         <th class="wrapped-column">Source(s) <span class="help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
         <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
@@ -88,7 +88,10 @@
           </div>
         </td>
         <td class="min-column" style="white-space: nowrap">
-          <span ng-class="geneDrug.getSensitivity() | lowercase">{{geneDrug.getSensitivity() | titlecase}}</span>&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span>
+          <span class="sensitivity-type" ng-class="geneDrug.sensitivity | lowercase">{{geneDrug.sensitivity | titlecase}}</span>&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span>
+          <div ng-if="geneDrug.warning.length > 0" class="warning-icon">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.warning.join('\n')}}"></span>
+          </div>
         </td>
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
         <td class="wrapped-column">
@@ -104,9 +107,6 @@
         <td class="min-column" style="text-align: center" >
           <div ng-if="geneDrug.dScore > 0.7 && geneDrug.gScore > 0.6" class="best-icon">
             <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
-          </div>
-          <div ng-if="geneDrug.warning.length > 0" class="warning-icon">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.warning.join('\n')}}"></span>
           </div>
         </td>
       </tr>

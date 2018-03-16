@@ -36,11 +36,11 @@ angular.module('pandrugsFrontendApp')
     var geneDrugGroupsHeader =
       'Gene(s),Standard Drug Name,Show Drug Name,PubChemId(s),Status,' +
       'Status Description,Therapy,Target,Source(s),Curated Source(s),' +
-      'Family(ies),Cancer(s),Indirect Gene(s),R/S,Best Interaction,' +
+      'Family(ies),Cancer(s),Indirect Gene(s),Drug response,Best Interaction,' +
       'DScore,GScore,' + geneDrugHeader;
 
     var geneDrugGroupsHeaderSimple = 'Gene(s),Show Drug Name,' +
-      'Status Description,Therapy,R/S,Best Interaction,Family(ies),' +
+      'Status Description,Therapy,Drug response,Best Interaction,Family(ies),' +
       'Source(s),DScore,GScore,Best Candidate Therapy,Warning(s)';
 
     function drugToLink(drug, pubchemId) {

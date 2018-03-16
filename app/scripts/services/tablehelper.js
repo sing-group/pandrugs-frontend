@@ -53,10 +53,30 @@ angular.module('pandrugsFrontendApp')
         return gd.gScore;
       };
 
+      var interactionSort = function (gd) {
+
+        if (gd.target === 'target' && gd.indirect === null) {
+          return 1; // target
+        }
+        if (gd.target === 'target' && gd.indirect !== null) {
+          return 0; // pathway member
+        }
+        if (gd.target === 'marker') {
+          return -1; // biomarker
+        }
+      };
+
+      /*
+      <img ng-if="geneDrug.target === 'marker'" src="images/query/biomarker.png"/>
+      <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
+      <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/pathway-member.png"/>*/
+
       if (tableState.sort.predicate === 'dScore') {
         return $filter('orderBy')(geneDrugOrGroup, [dScoreSort, gScoreSort], tableState.sort.reverse);
       } else if (tableState.sort.predicate === 'gScore') {
         return $filter('orderBy')(geneDrugOrGroup, [gScoreSort, dScoreSort], tableState.sort.reverse);
+      } else if (tableState.sort.predicate === 'interaction') {
+        return $filter('orderBy')(geneDrugOrGroup, [interactionSort, absDScoreSort, gScoreSort], tableState.sort.reverse);
       } else if (tableState.sort.predicate) {
         return $filter('orderBy')(geneDrugOrGroup, tableState.sort.predicate, tableState.sort.reverse);
       } else {

@@ -349,6 +349,10 @@ span.both {
   @include color-and-background-mixin($dark-blue, $light-blue);
 }
 
+span.sensitivity-type {
+  vertical-align: middle;
+}
+
 .cancer_type_checkbox input {
   display:none;
 }
@@ -587,6 +591,11 @@ input[type="radio"].toggle-right + label {
 .warning-icon {
   font-size: 2em;
   color: orangered;
+}
+
+div.warning-icon {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .twitter-color {
