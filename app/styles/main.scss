@@ -306,31 +306,31 @@ div.legend-body {
   }
 }
 
-a.curated_source {
+.curated_source {
   @extend .boxed-element;
   @include color-and-background-mixin($dark-green, $light-green);
 }
 
-a.non_curated_source {
+.non_curated_source {
   @extend .boxed-element;
   @include color-and-background-mixin($dark-blue, $light-blue);
 }
 
-a.curated_source[title="moAb"] {
+.curated_source[title="moAb"] {
   @include color-and-background-mixin($medium-orange, $light-red);
 }
-a.curated_source[title="TARGET-CGA"] {
+.curated_source[title="TARGET-CGA"] {
   @include color-and-background-mixin($dark-yellow, $light-yellow);
 }
-a.non_curated_source[title="CTRP"] {
+.non_curated_source[title="CTRP"] {
   @include color-and-background-mixin($dark-red, $light-red);
 }
-a.non_curated_source[title="GDSC"] {
+.non_curated_source[title="GDSC"] {
   @include color-and-background-mixin($dark-blue, $light-blue);
 }
-a.non_curated_source[title="DrugBank"],
-a.non_curated_source[title="TTD"],
-a.non_curated_source[title="PharmGKB"] {
+.non_curated_source[title="DrugBank"],
+.non_curated_source[title="TTD"],
+.non_curated_source[title="PharmGKB"] {
   @include color-and-background-mixin($dark-green, $light-green);
 }
 

@@ -143,10 +143,13 @@
         <td class="wrapped-column">{{row.family | enumeration}}</td>
         <td class="wrapped-column">
           <span ng-repeat="source in row.source">
-            <a href="{{source.link}}" target="_blank" title="{{source.name}}"
+            <a ng-if="source.link" href="{{source.link}}" target="_blank" title="{{source.name}}"
                ng-class="row.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
               {{source.shortName}}
             </a>
+            <span ng-if="!source.link" title="{{source.name}}" ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+              {{source.shortName}}
+            </span>
           </span>&nbsp;
         </td>
         <td class="min-column">{{row.dScore | number: 4}}</td>
@@ -225,10 +228,13 @@
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
         <td class="wrapped-column">
           <span ng-repeat="source in geneDrug.getDrugSourcesInfo()">
-            <a href="{{source.link}}" target="_blank" title="{{source.name}}"
+            <a ng-if="source.link" href="{{source.link ? source.link : '#'}}" target="_blank" title="{{source.name}}"
                ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
               {{source.shortName}}
             </a>
+            <span ng-if="!source.link" title="{{source.name}}" ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+              {{source.shortName}}
+            </span>
           </span>
         </td>
         <td class="min-column">{{geneDrug.dScore | number: 4}}</td>
