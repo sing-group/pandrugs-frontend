@@ -255,6 +255,7 @@
             <span class="clinvar-prediction" ng-if="affectedGenesInfo.clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
             <span class="gmaf-value" ng-if="affectedGenesInfo.GMAF_freq !== '' && affectedGenesInfo.GMAF_freq < 1" title="Low GMAF frequency: {{affectedGenesInfo.GMAF_freq}}%">GMAF &lt; 1%</span>
             <span class="exac-value" ng-if="affectedGenesInfo.ExAC !== '' && affectedGenesInfo.ExAC < 1" title = "Low ExAC: {{affectedGenesInfo.ExAC}}%">ExAC &lt; 1%</span>
+            <span class="gnomAD-value" ng-if="affectedGenesInfo.gnomAD !== '' && affectedGenesInfo.gnomAD < 1" title = "Low gnomAD: {{affectedGenesInfo.gnomAD}}%">gnomAD &lt; 1%</span>
             <span class="affected-domain" ng-if="affectedGenesInfo.interpro !== ''" title="Interpro affected domain">{{affectedGenesInfo.interpro}}</span>
           </div>
         </td>
