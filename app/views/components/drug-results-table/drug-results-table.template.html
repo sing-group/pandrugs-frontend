@@ -17,7 +17,7 @@
 <div>
   <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
 
-  <table id="results" st-table="$ctrl.geneDrugGroup" st-pipe="$ctrl.populateTable" class="table table-striped query-table">
+  <table id="results" st-table="$ctrl.geneDrugGroup" st-pipe="$ctrl.populateTable" class="table table-striped query-table drugs-table">
     <thead>
       <tr>
         <th>Gene Drug Information </span> <span class="help_icon" title="General information about the gene-drug relation"></span></th>
@@ -64,7 +64,7 @@
             </span>
           </div>
           <div ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null">
-            [<button type="button" class="seepathways" data-toggle="modal" data-target="#pathways-{{geneDrug.pathwayId}}">See pathways</button>]
+            <button type="button" class="seepathways btn btn-default" data-toggle="modal" data-target="#pathways-{{geneDrug.pathwayId}}">See pathways</button>
             <div id="pathways-{{geneDrug.pathwayId}}" class="modal fade" style="text-align: justify">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">

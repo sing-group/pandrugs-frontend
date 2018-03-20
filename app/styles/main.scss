@@ -294,10 +294,13 @@ div.legend-body {
   display: inline-block;
 }
 
-@mixin color-and-background-mixin($color, $background) {
+@mixin color-and-background-mixin-nohover($color, $background) {
   border-color: $color !important;
   color: $color !important;
   background-color: $background !important;
+}
+@mixin color-and-background-mixin($color, $background) {
+  @include color-and-background-mixin-nohover($color, $background);
 
   &:hover {
     border-color: $background !important;
@@ -336,17 +339,17 @@ div.legend-body {
 
 span.sensitivity {
   @extend .boxed-element;
-  @include color-and-background-mixin($dark-green, $light-green);
+  @include color-and-background-mixin-nohover($dark-green, $light-green);
 }
 
 span.resistance {
   @extend .boxed-element;
-  @include color-and-background-mixin($dark-red, $light-red);
+  @include color-and-background-mixin-nohover($dark-red, $light-red);
 }
 
 span.both {
   @extend .boxed-element;
-  @include color-and-background-mixin($dark-blue, $light-blue);
+  @include color-and-background-mixin-nohover($dark-blue, $light-blue);
 }
 
 span.sensitivity-type {
@@ -474,15 +477,15 @@ a.disabled:hover {
 }
 
 .seepathways {
-  margin-top: 5px;
-  color: $dark-green;
-  border: none;
-  padding: 0;
-  background-color: transparent;
+  @include color-and-background-mixin-nohover($dark-gray, $light-gray);
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
-.seepathways:hover {
-  text-decoration: underline;
+.drugs-table .seepathways {
+  margin-top: 5px;
 }
 
 .error {
