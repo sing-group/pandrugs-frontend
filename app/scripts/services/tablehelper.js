@@ -52,6 +52,9 @@ angular.module('pandrugsFrontendApp')
       var gScoreSort = function (gd) {
         return gd.gScore;
       };
+      var btcSort = function (gd) {
+        return !gd.isBestCandidate();
+      };
 
       var interactionSort = function (gd) {
 
@@ -77,6 +80,8 @@ angular.module('pandrugsFrontendApp')
         return $filter('orderBy')(geneDrugOrGroup, [gScoreSort, dScoreSort], tableState.sort.reverse);
       } else if (tableState.sort.predicate === 'interaction') {
         return $filter('orderBy')(geneDrugOrGroup, [interactionSort, absDScoreSort, gScoreSort], tableState.sort.reverse);
+      } else if (tableState.sort.predicate === 'btc') {
+        return $filter('orderBy')(geneDrugOrGroup, [btcSort, function() { -1* absDScoreSort}, function() {-1*gScoreSort}], tableState.sort.reverse);
       } else if (tableState.sort.predicate) {
         return $filter('orderBy')(geneDrugOrGroup, tableState.sort.predicate, tableState.sort.reverse);
       } else {
