@@ -147,7 +147,7 @@
                ng-class="row.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
               {{source.shortName}}
             </a>
-            <span ng-if="!source.link" title="{{source.name}}" ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+            <span ng-if="!source.link" title="{{source.name}}" ng-class="row.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
               {{source.shortName}}
             </span>
           </span>&nbsp;

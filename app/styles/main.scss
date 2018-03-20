@@ -325,6 +325,9 @@ div.legend-body {
 .curated_source[title="TARGET-CGA"] {
   @include color-and-background-mixin($dark-yellow, $light-yellow);
 }
+.curated_source[title="PanDrugs"] {
+  @include color-and-background-mixin($dark-gray, $light-gray);
+}
 .non_curated_source[title="CTRP"] {
   @include color-and-background-mixin($dark-red, $light-red);
 }
