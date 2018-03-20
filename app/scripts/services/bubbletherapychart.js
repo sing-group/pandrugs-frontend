@@ -30,112 +30,102 @@
 angular.module('pandrugsFrontendApp')
 .factory('bubbleTherapyChart', function () {
 
+  var addDecorations = function(hchart) {
+    //window.alert("axis: "+hchart.xAxis[0])
+    function toXPixel(xAxisPos) {
+      return hchart.xAxis[0].toPixels(xAxisPos, false);
+    }
+    function toYPixel(yAxisPos) {
+      return hchart.yAxis[0].toPixels(yAxisPos, false);
+    }
+
+    function drawRectFromCoordinates(fromX, fromY, toX, toY, radius) {
+      return hchart.renderer.rect(
+        toXPixel(fromX),
+        toYPixel(fromY),
+        toXPixel(toX) - toXPixel(fromX),
+        toYPixel(toY) - toYPixel(fromY),
+        radius);
+      }
+
+    function drawPath(fromX, fromY, toX, toY) {
+      return hchart.renderer.path(['M',
+      toXPixel(fromX),
+      toYPixel(fromY),
+      'L',
+      toXPixel(toX),
+      toYPixel(toY)]);
+    }
+
+      function drawText(atX, atY, text) {
+        return hchart.renderer.text(text, toXPixel(atX), toYPixel(atY));
+      }
+
+      //clearing rectangle
+
+      drawRectFromCoordinates(-1.5, 1.0, 1.5, -0.5, 0).attr({
+        fill: '#ffffff',
+        stroke: 'black',
+        'stroke-width': 0
+
+      }).add();
+
+      // add rectangle for best candidates
+      drawRectFromCoordinates(0.7, 1, 1, 0.6, 20).attr({
+        fill: '#EEFAEE',
+        stroke: 'black',
+        'stroke-width': 0
+
+      }).add();
+
+      // vertical x=0
+      drawPath(0, 0, 0, 1).attr({
+        'stroke-width': 1,
+        dashstyle: 'Solid',
+        stroke: '#888'
+      }).add();
+
+      // draw thik RESISTANCE - SENSISITIVITY bars
+      drawPath(-1, 0, 0, 0).attr({
+        'stroke-width': 5,
+        stroke: '#FF7F7F'
+      }).add();
+
+      drawPath(0, 0, 1, 0).attr({
+        'stroke-width': 5,
+        stroke: '#7FBF7F'
+      }).add();
+
+
+      drawText(0.72, 0.97, 'BEST CANDIDATES')
+      .css({color: '#888', fontWeight:'bold', opacity: 0.5})
+      .add();
+
+      drawText(-0.45, -0.115, 'RESISTANCE')
+      .css({color: '#FF7F7F', fontWeight:'bold'})
+      .add();
+
+      drawText(0.45, -0.115, 'SENSITIVITY')
+      .css({color: '#7FBF7F', fontWeight:'bold'})
+      .add();
+
+  };
   // Public API here
   return {
       chart: {
         type: 'bubble',
         zoomType: 'xy',
         events: {
-
-          redraw: function() {
-            var hchart = this;
-            //window.alert("axis: "+hchart.xAxis[0])
-            function toXPixel(xAxisPos) {
-              return hchart.xAxis[0].toPixels(xAxisPos, false);
-            }
-            function toYPixel(yAxisPos) {
-              return hchart.yAxis[0].toPixels(yAxisPos, false);
-            }
-
-            function drawRectFromCoordinates(fromX, fromY, toX, toY, radius) {
-              return hchart.renderer.rect(
-                toXPixel(fromX),
-                toYPixel(fromY),
-                toXPixel(toX) - toXPixel(fromX),
-                toYPixel(toY) - toYPixel(fromY),
-                radius);
-              }
-
-            function drawPath(fromX, fromY, toX, toY) {
-              return hchart.renderer.path(['M',
-              toXPixel(fromX),
-              toYPixel(fromY),
-              'L',
-              toXPixel(toX),
-              toYPixel(toY)]);
-            }
-
-              function drawText(atX, atY, text) {
-                return hchart.renderer.text(text, toXPixel(atX), toYPixel(atY));
-              }
-
-              //clearing rectangle
-
-              drawRectFromCoordinates(-1.5, 1.0, 1.5, -0.5, 0).attr({
-                fill: '#ffffff',
-                stroke: 'black',
-                'stroke-width': 0
-
-              }).add();
-
-              // add rectangle for best candidates
-              drawRectFromCoordinates(0.7, 1, 1, 0.6, 20).attr({
-                fill: '#EEFAEE',
-                stroke: 'black',
-                'stroke-width': 0
-
-              }).add();
-
-              //plot lines
-              drawPath(-1, 0.6, 1, 0.6).attr({
-                'stroke-width': 2,
-                dashstyle: 'ShortDot',
-                stroke: '#FAAFC4'
-              }).add();
-
-              drawPath(0.7, 0, 0.7, 1).attr({
-                'stroke-width': 2,
-                dashstyle: 'ShortDot',
-                stroke: '#FAAFC4'
-              }).add();
-
-              drawPath(0, 0, 0, 1).attr({
-                'stroke-width': 1,
-                dashstyle: 'Solid',
-                stroke: '#888'
-              }).add();
-
-              // draw thik RESISTANCE - SENSISITIVITY bars
-              drawPath(-1, 0, 0, 0).attr({
-                'stroke-width': 5,
-                stroke: '#FF7F7F'
-              }).add();
-
-              drawPath(0, 0, 1, 0).attr({
-                'stroke-width': 5,
-                stroke: '#7FBF7F'
-              }).add();
-
-
-              drawText(0.72, 0.97, 'BEST CANDIDATES')
-              .css({color: '#888', fontWeight:'bold', opacity: 0.5})
-              .add();
-
-              drawText(-0.45, -0.115, 'RESISTANCE')
-              .css({color: '#FF7F7F', fontWeight:'bold'})
-              .add();
-
-              drawText(0.45, -0.115, 'SENSITIVITY')
-              .css({color: '#7FBF7F', fontWeight:'bold'})
-              .add();
-
-            }
+          render: function() {
+          //  alert("render");
+            addDecorations(this);
           }
-        },
-        legend: {
-          verticalAlign: 'bottom'
-        },
-        xAxis: {
+        }
+      },
+      legend: {
+        verticalAlign: 'bottom'
+      },
+      xAxis: {
           title: {
             text: '<span class=\"help_icon\" title=\"Measure of the suitability of the drug according to the genomic profile\"></span>Drug Score',
             useHTML: true
@@ -150,8 +140,8 @@ angular.module('pandrugsFrontendApp')
               width: 2
             }
           ]
-        },
-        yAxis: {
+      },
+      yAxis: {
           title: {
             text: '<span class=\"help_icon\" title=\"Measure of the biological relevance of the gene in the tumoral process\"></span>Gene Score',
             useHTML: true
@@ -166,17 +156,17 @@ angular.module('pandrugsFrontendApp')
               width: 2
             }
           ]
-        },
-        title: {
+      },
+      title: {
           text: 'Gene and Drugs score chart (click and drag to make zoom)'
-        },
-        subtitle: {
+      },
+      subtitle: {
           text: 'drug approval status: <span style="color: #2BBE83; font-weight: bold">approved</span>, <span style="color: #FFCF3A; font-weight: bold">clinical trials</span>, <span style="color:#337BB7; font-weight: bold">experimental</span>',
           useHTML: true,
           verticalAlign: 'bottom'
-        },
+      },
 
-        plotOptions: {
+      plotOptions: {
           bubble: {
             minSize: 1,
             maxSize: 20,
@@ -187,7 +177,7 @@ angular.module('pandrugsFrontendApp')
 
             }
           }
-        },
+      },
       series:  [
         {name: 'Direct target', data: [], color: 'black', marker: {symbol:'circle'}},
         {name: 'Biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
@@ -232,6 +222,8 @@ angular.module('pandrugsFrontendApp')
         series[0].data.sort(function(a,b) {return a.x - b.x});
         series[1].data.sort(function(a,b) {return a.x - b.x});
         series[2].data.sort(function(a,b) {return a.x - b.x});
+
+
       }
     };
   });
