@@ -207,10 +207,10 @@ angular.module('pandrugsFrontendApp')
             status: results[i].status.toLowerCase().replace('_', ' ')
           };
 
-          if (results[i].getBestInteraction() === 'biomarker') {
+          if (results[i].getBestInteraction() === 'direct-target') {
             series[0].data.push(datapoint);
           }
-          if (results[i].getBestInteraction() === 'direct-target') {
+          if (results[i].getBestInteraction() === 'biomarker') {
             series[1].data.push(datapoint);
           }
           if (results[i].getBestInteraction() === 'pathway-member') {
