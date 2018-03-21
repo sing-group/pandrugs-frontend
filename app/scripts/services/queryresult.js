@@ -269,17 +269,36 @@ angular.module('pandrugsFrontendApp')
     };
 
     GeneDrugGroup.prototype.getBestInteraction = function() {
-      var bestDscore = -1;
-      var best = '';
+      var isBetterInteractionThan = function(interaction1, interaction2) {
+        var interactionOrder = [ 'direct-target', 'biomarker', 'pathway-member' ];
 
+        var index1 = interactionOrder.indexOf(interaction1);
+        var index2 = interactionOrder.indexOf(interaction2);
+
+        return index2 > index1;
+      };
+
+      var bestInteraction = null;
+      var bestGScore = null;
       for (var i = 0; i < this.geneDrugs.length; i++) {
-        if (this.geneDrugs[i].dScore > bestDscore) {
-          bestDscore = this.geneDrugs[i].dScore;
-          best = this.geneDrugs[i].getInteraction();
+        var geneDrug = this.geneDrugs[i];
+
+        if (
+          (geneDrug.dScore === this.dScore)
+          && ((bestInteraction === null)
+            || (geneDrug.gScore > bestGScore
+                || (geneDrug.gScore === bestGScore
+                  && isBetterInteractionThan(geneDrug.getInteraction(), bestInteraction)
+                )
+              )
+            )
+        ) {
+          bestInteraction = geneDrug.getInteraction();
+          bestGScore = geneDrug.gScore;
         }
       }
 
-      return best;
+      return bestInteraction;
     };
 
     GeneDrugGroup.prototype.getSensitivity = function() {
