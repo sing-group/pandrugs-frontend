@@ -325,6 +325,10 @@ angular.module('pandrugsFrontendApp')
       return this.dScore > 0.7 && this.gScore > 0.6;
     };
 
+    GeneDrug.prototype.isBestCandidate = function() {
+      return this.dScore > 0.7 && this.gScore > 0.6;
+    };
+
     GeneDrugGroup.prototype.isCuratedSource = function(source) {
       return this.curatedSource.some(function(curatedSource) {
         return curatedSource === source;

@@ -21,13 +21,13 @@
     <thead>
       <tr>
         <th>Gene Drug Information </span> <span class="help_icon" title="General information about the gene-drug relation"></span></th>
-        <th class="min-column" st-sort="interaction" st-sort-default="reverse">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
+        <th class="min-column" st-sort="interaction" st-sort-default="reverse" style="cursor: pointer" title="click to sort">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
         <th class="min-column">Drug response <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
         <th class="wrapped-column">Family <span class="help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
         <th class="wrapped-column">Source(s) <span class="help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
-        <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
-        <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
-        <th class="wrapped-column">BTC <span class="help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/></th>
+        <th class="wrapped-column" st-sort="dScore" style="cursor: pointer" title="click to sort">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
+        <th class="wrapped-column" st-sort="gScore" style="cursor: pointer" title="click to sort">GScore <span class="help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
+        <th class="wrapped-column" st-sort="btc" style="cursor: pointer" title="click to sort">BTC <span class="help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/></th>
       </tr>
     </thead>
 
@@ -108,7 +108,7 @@
         <td class="min-column">{{geneDrug.dScore | number: 4}}</td>
         <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
         <td class="min-column" style="text-align: center" >
-          <div ng-if="geneDrug.dScore > 0.7 && geneDrug.gScore > 0.6" class="best-icon">
+          <div ng-if="geneDrug.isBestCandidate()" class="best-icon">
             <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
           </div>
         </td>

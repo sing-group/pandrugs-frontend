@@ -84,7 +84,7 @@
         <th class="min-column">Actions</th>
         <th><span class="gene">Gene(s)</span> </span> <span class="glyphicon glyphicon-question-sign help_icon" title="Gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
         <th><span class="drug">Drug</span> </span> <span class="glyphicon glyphicon-question-sign help_icon" title="Compound name"></span></th>
-        <th class="min-column">Interaction <span class="glyphicon glyphicon-question-sign help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
+        <th class="min-column" st-sort="interaction" style="cursor:pointer" title="click to sort">Interaction <span class="glyphicon glyphicon-question-sign help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
         <th class="wrapped-column">Drug status <span class="glyphicon glyphicon-question-sign help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
         <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="glyphicon glyphicon-question-sign help_icon" title="Type of therapy for the approved drugs in cancer"/></th>
         <th class="min-column">Drug response <span class="glyphicon glyphicon-question-sign help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
@@ -92,7 +92,7 @@
         <th class="wrapped-column">Source(s) <span class="glyphicon glyphicon-question-sign help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
         <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
         <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
-        <th st-sort="btc" style="cursor:pointer" title="click to sort" class="wrapped-column">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/> </th>
+        <th class="wrapped-column" st-sort="btc" style="cursor:pointer" title="click to sort">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/> </th>
       </tr>
     </thead>
 

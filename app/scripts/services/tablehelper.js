@@ -57,35 +57,29 @@ angular.module('pandrugsFrontendApp')
       };
 
       var interactionSort = function (gd) {
-
-        if (gd.target === 'target' && gd.indirect === null) {
-          return 1; // target
-        }
-        if (gd.target === 'target' && gd.indirect !== null) {
-          return 0; // pathway member
-        }
-        if (gd.target === 'marker') {
-          return -1; // biomarker
-        }
+        var getInteraction = (gd.getInteraction || gd.getBestInteraction).bind(gd);
+        var interactionOrder = ['pathway-member', 'biomarker', 'direct-target'];
+        return interactionOrder.indexOf(getInteraction());
       };
 
-      /*
-      <img ng-if="geneDrug.target === 'marker'" src="images/query/biomarker.png"/>
-      <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
-      <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/pathway-member.png"/>*/
-
       if (tableState.sort.predicate === 'dScore') {
-        return $filter('orderBy')(geneDrugOrGroup, [dScoreSort, gScoreSort], tableState.sort.reverse);
+        return $filter('orderBy')(geneDrugOrGroup, [dScoreSort, gScoreSort, interactionSort], tableState.sort.reverse);
       } else if (tableState.sort.predicate === 'gScore') {
-        return $filter('orderBy')(geneDrugOrGroup, [gScoreSort, dScoreSort], tableState.sort.reverse);
+        return $filter('orderBy')(geneDrugOrGroup, [gScoreSort, dScoreSort, interactionSort], tableState.sort.reverse);
       } else if (tableState.sort.predicate === 'interaction') {
         return $filter('orderBy')(geneDrugOrGroup, [interactionSort, absDScoreSort, gScoreSort], tableState.sort.reverse);
       } else if (tableState.sort.predicate === 'btc') {
-        return $filter('orderBy')(geneDrugOrGroup, [btcSort, function() { -1* absDScoreSort}, function() {-1*gScoreSort}], tableState.sort.reverse);
+        return $filter('orderBy')(geneDrugOrGroup,
+          [ btcSort,
+            function(gd) { return -1 * absDScoreSort(gd) },
+            function(gd) { return -1 * gScoreSort(gd) },
+            function(gd) { return -1 * interactionSort(gd) }
+          ],
+          tableState.sort.reverse);
       } else if (tableState.sort.predicate) {
         return $filter('orderBy')(geneDrugOrGroup, tableState.sort.predicate, tableState.sort.reverse);
       } else {
-        return $filter('orderBy')(geneDrugOrGroup, [absDScoreSort, gScoreSort], true);
+        return $filter('orderBy')(geneDrugOrGroup, [absDScoreSort, gScoreSort, interactionSort], true);
       }
     };
   }]);
