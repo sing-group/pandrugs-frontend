@@ -122,6 +122,9 @@ angular.module('pandrugsFrontendApp')
           }
         }
       },
+      credits: {
+        enabled: false
+      },
       legend: {
         verticalAlign: 'bottom'
       },

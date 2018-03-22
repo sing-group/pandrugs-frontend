@@ -37,6 +37,9 @@ angular.module('pandrugsFrontendApp')
         plotShadow: false,
         type: 'pie'
       },
+      credits: {
+        enabled: false
+      },
       title: {
         text: 'Drugs by family'
       },
