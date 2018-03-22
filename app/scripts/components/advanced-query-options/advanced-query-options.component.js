@@ -44,6 +44,7 @@ angular.module('pandrugsFrontendApp')
         results.forEach(function(result) {
           if (result.canBeQueried) {
             this.cancerTypes.push({name: result.name, selected: true});
+            this.notifyChange();
           }
         }.bind(this));
       }.bind(this));

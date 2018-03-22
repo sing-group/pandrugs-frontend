@@ -54,6 +54,8 @@ angular.module('pandrugsFrontendApp')
     };
 
     AdvancedQueryOptions.prototype.getSelectedCancerTypeNames = function() {
+      if (this.cancerTypes === undefined) return undefined;
+
       if (this.cancerTypes === '*') {
         return null;
       } else {
@@ -66,21 +68,21 @@ angular.module('pandrugsFrontendApp')
     };
 
     AdvancedQueryOptions.prototype.areAllCancerTypesSelected = function() {
-      return this.cancerTypes === '*' || this.cancerTypes.every(function(cancer) {
+      return this.cancerTypes !== undefined && (this.cancerTypes === '*' || this.cancerTypes.some(function(cancer) {
         return cancer.selected;
-      });
+      }));
     };
 
     AdvancedQueryOptions.prototype.isCancerSelected = function (cancerType) {
-      return this.cancerTypes === '*' || this.cancerTypes.find(function(cancer) {
+      return this.cancerTypes !== undefined && (this.cancerTypes === '*' || this.cancerTypes.some(function(cancer) {
         return cancer.name.toUpperCase() === cancerType.toUpperCase();
-      });
+      }));
     };
 
     AdvancedQueryOptions.prototype.hasAnyCancerSelected = function () {
-      return this.cancerTypes === '*' || this.cancerTypes.find(function(cancer) {
+      return this.cancerTypes !== undefined && (this.cancerTypes === '*' || this.cancerTypes.some(function(cancer) {
           return cancer.selected;
-        });
+        }));
     };
 
     AdvancedQueryOptions.prototype.hasCancerStatusSelected = function() {

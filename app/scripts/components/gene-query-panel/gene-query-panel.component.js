@@ -24,7 +24,7 @@ angular.module('pandrugsFrontendApp')
     bindings: {
       onChange: '&'
     },
-    controller: ['database', 'utilities', '$location', '$timeout', function (database, utilities, $location, $timeout) {
+    controller: ['database', 'utilities', '$location', function (database, utilities, $location) {
       this.genes = '';
       this.genesTextAreaConfig = {
         autocomplete: [{
@@ -54,9 +54,9 @@ angular.module('pandrugsFrontendApp')
 
       this.$onInit = function () {
         if ($location.search().example === 'genes') {
-          $timeout(this.pasteSignalingPathwayExample());
+          this.pasteSignalingPathwayExample();
         } else {
-          $timeout(this.notifyChange());
+          this.notifyChange();
         }
       }.bind(this);
 

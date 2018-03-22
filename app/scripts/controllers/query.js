@@ -58,13 +58,14 @@ angular.module('pandrugsFrontendApp')
       return tab === 'genes' || tab === 'drugs' || tab === 'generank' || tab === 'vcfrank';
     };
 
+
     var example = $location.search().example;
     this.triggerQueryOnChange = this.isValidTab(example);
     $scope.selectedTab = this.isValidTab(example) ? example : 'genes';
 
     // select an specific tab
     var tab = $location.search().tab;
-    $scope.selectedTab = this.isValidTab(tab) ? tab : 'genes';
+    $scope.selectedTab = this.isValidTab(tab) ? tab : $scope.selectedTab;
 
     // ======== CHARTS ========
     $scope.highchartsBubble = bubbleChart;
@@ -81,8 +82,8 @@ angular.module('pandrugsFrontendApp')
 
     $scope.generank = null;
 
-    $scope.computationId = undefined;
-    $scope.computation = undefined;
+    $scope.computationId = null;
+    $scope.computation = null;
 
     $scope.advancedQueryOptions = undefined;
 
@@ -106,7 +107,6 @@ angular.module('pandrugsFrontendApp')
     $scope.updateGenes = function(genes, uniqueGeneList) {
       $scope.genes = genes;
       $scope.geneList = uniqueGeneList;
-
       this.checkTriggerQuery();
     }.bind(this);
 
@@ -128,16 +128,11 @@ angular.module('pandrugsFrontendApp')
       $scope.computationId = computationId;
       $scope.computation = computation;
 
-      if ($scope.computationId && $scope.computation) {
-        $scope.setSelectedTab('vcfrank');
-      }
-
       this.checkTriggerQuery();
     }.bind(this);
 
     $scope.updateAdvancedQueryOptions = function(options) {
       $scope.advancedQueryOptions = options;
-
       this.checkTriggerQuery();
     }.bind(this);
 
