@@ -20,7 +20,7 @@
 
   <div ng-class="$ctrl.isVariantsAnalysis() ? 'col-md-12 col-lg-8 legend-body' : 'col-sm-12 col-md-8 col-lg-6 legend-body'">
     <div class="row">
-      <div ng-class="$ctrl.isVariantsAnalysis() ? 'col-md-4' : 'col-md-5'">
+      <div ng-class="$ctrl.isVariantsAnalysis() ? 'col-md-3' : 'col-md-4'">
         <h4>Interactions</h4>
 
         <dl class="legend">
@@ -33,7 +33,7 @@
         </dl>
       </div>
 
-      <div ng-class="$ctrl.isVariantsAnalysis() ? 'col-md-5' : 'col-md-7'">
+      <div ng-class="$ctrl.isVariantsAnalysis() ? 'col-md-3' : 'col-md-4'">
         <h4>Information Icons</h4>
 
         <dl class="legend">
@@ -50,6 +50,17 @@
           </dt>
           <dd><span>Column description</span></dd>
         </dl>
+      </div>
+
+      <div ng-class="$ctrl.isVariantsAnalysis() ? 'col-md-3' : 'col-md-4'">
+        <h4>Source types</h4>
+
+        <span title="DGIdb" class="drug_source">Sources in DGIdb</span>
+        <span title="moAb" class="drug_source">Monoclonal Antibodies</span>
+        <span title="TARGET-CGA" class="drug_source">TARGET database</span>
+        <span title="GDSC" class="drug_source">GDSC</span>
+        <span title="CTRP" class="drug_source">CTRP</span>
+        <span title="ExpertCurated" class="drug_source">Expert curated</span>
       </div>
 
       <div ng-if="$ctrl.isVariantsAnalysis()" class="col-md-3">
@@ -143,11 +154,11 @@
         <td class="wrapped-column">{{row.family | enumeration}}</td>
         <td class="wrapped-column">
           <span ng-repeat="source in row.source">
-            <a ng-if="source.link" href="{{source.link}}" target="_blank" title="{{source.name}}"
-               ng-class="row.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+            <a ng-if="source.link" href="{{source.link}}" target="_blank" title="{{source.name}}" class="drug_source active"
+               ng-class="row.isCuratedSource(source.name) ? 'curated' : 'non_curated'">
               {{source.shortName}}
             </a>
-            <span ng-if="!source.link" title="{{source.name}}" ng-class="row.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+            <span ng-if="!source.link" title="{{source.name}}" class="drug_source" ng-class="row.isCuratedSource(source.name) ? 'curated' : 'non_curated'">
               {{source.shortName}}
             </span>
           </span>&nbsp;
@@ -228,11 +239,11 @@
         <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
         <td class="wrapped-column">
           <span ng-repeat="source in geneDrug.getDrugSourcesInfo()">
-            <a ng-if="source.link" href="{{source.link ? source.link : '#'}}" target="_blank" title="{{source.name}}"
-               ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+            <a ng-if="source.link" href="{{source.link ? source.link : '#'}}" target="_blank" title="{{source.name}}" class="drug_source active"
+               ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated' : 'non_curated'">
               {{source.shortName}}
             </a>
-            <span ng-if="!source.link" title="{{source.name}}" ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
+            <span ng-if="!source.link" title="{{source.name}}" class="drug_source" ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated' : 'non_curated'">
               {{source.shortName}}
             </span>
           </span>

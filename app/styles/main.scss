@@ -30,8 +30,6 @@ $medium-green: #DFF0D8;
 $medium-dark-green: #4CAE4C;
 $dark-green: #297856;
 
-$medium-red: #D43F3A;
-
 $light-blue: #EEEEFA;
 $dark-blue: #295678;
 
@@ -43,15 +41,15 @@ $dark-gray: #777777;
 
 $light-black: #333333;
 
-$medium-orange: #e36c0a;
+$medium-orange: #E36C0a;
 
-$light-yellow: #ffffe6;
+$light-yellow: #FFFFE6;
 $medium-yellow: yellow;
-$dark-yellow: #e6e600;
+$dark-yellow: #A8A800;
 
-$light-red: #ffebe6;
+$light-red: #FFEBE6;
+$medium-red: #D43F3A;
 $dark-red: #800000;
-$medium-red: #ff3300;
 
 
 
@@ -229,6 +227,10 @@ td.min-column {
   margin-top: 50px;
 }
 
+div.legend span:hover {
+
+}
+
 dl.legend dt, dl.legend dd {
   margin-bottom: 6px;
   line-height: 24px;
@@ -294,13 +296,14 @@ div.legend-body {
   display: inline-block;
 }
 
-@mixin color-and-background-mixin-nohover($color, $background) {
+@mixin color-and-background-mixin($color, $background) {
   border-color: $color !important;
   color: $color !important;
   background-color: $background !important;
 }
-@mixin color-and-background-mixin($color, $background) {
-  @include color-and-background-mixin-nohover($color, $background);
+
+@mixin color-and-background-mixin-hover($color, $background) {
+  @include color-and-background-mixin($color, $background);
 
   &:hover {
     border-color: $background !important;
@@ -309,50 +312,123 @@ div.legend-body {
   }
 }
 
-.curated_source {
+$curated-color: $dark-green;
+$curated-background: $light-green;
+$nonCurated-color: $dark-red;
+$nonCurated-background: $light-red;
+$dgidb-color: $dark-green;
+$dgidb-background: $light-green;
+$moab-color: $medium-orange;
+$moab-background: $light-red;
+$targetCga-color: $dark-yellow;
+$targetCga-background: $light-yellow;
+$gdsc-color: $dark-blue;
+$gdsc-background: $light-blue;
+$ctrp-color: $dark-red;
+$ctrp-background: $light-red;
+$expertCurated-color: $dark-gray;
+$expertCurated-background: $light-gray;
+
+.drug_source {
   @extend .boxed-element;
-  @include color-and-background-mixin($dark-green, $light-green);
 }
 
-.non_curated_source {
-  @extend .boxed-element;
-  @include color-and-background-mixin($dark-blue, $light-blue);
+.drug_source:not(.active) {
+  cursor: default;
 }
 
-.curated_source[title="moAb"] {
-  @include color-and-background-mixin($medium-orange, $light-red);
+a.drug_source {
+  text-decoration: none !important;
 }
-.curated_source[title="TARGET-CGA"] {
-  @include color-and-background-mixin($dark-yellow, $light-yellow);
+
+.drug_source.curated {
+  @include color-and-background-mixin($curated-color, $curated-background);
 }
-.curated_source[title="PanDrugs"] {
-  @include color-and-background-mixin($dark-gray, $light-gray);
+
+.drug_source.curated.active {
+  @include color-and-background-mixin-hover($curated-color, $curated-background);
 }
-.non_curated_source[title="CTRP"] {
-  @include color-and-background-mixin($dark-red, $light-red);
+
+.drug_source.non_curated {
+  @include color-and-background-mixin($nonCurated-color, $nonCurated-background);
 }
-.non_curated_source[title="GDSC"] {
-  @include color-and-background-mixin($dark-blue, $light-blue);
+
+.drug_source.non_curated.active {
+  @include color-and-background-mixin-hover($nonCurated-color, $nonCurated-background);
 }
-.non_curated_source[title="DrugBank"],
-.non_curated_source[title="TTD"],
-.non_curated_source[title="PharmGKB"] {
-  @include color-and-background-mixin($dark-green, $light-green);
+
+.drug_source[title="DGIdb"],
+.drug_source[title="DrugBank"],
+.drug_source[title="TTD"],
+.drug_source[title="PharmGKB"] {
+  @include color-and-background-mixin($dgidb-color, $dgidb-background);
+}
+
+.drug_source[title="DGIdb"].active,
+.drug_source[title="DrugBank"].active,
+.drug_source[title="TTD"].active,
+.drug_source[title="PharmGKB"].active {
+  @include color-and-background-mixin-hover($dgidb-color, $dgidb-background);
+}
+
+.drug_source[title="moAb"] {
+  @include color-and-background-mixin($moab-color, $moab-background);
+}
+
+.drug_source[title="moAb"].active {
+  @include color-and-background-mixin-hover($moab-color, $moab-background);
+}
+
+.drug_source[title="TARGET-CGA"] {
+  @include color-and-background-mixin($targetCga-color, $targetCga-background);
+}
+
+.drug_source[title="TARGET-CGA"].active {
+  @include color-and-background-mixin-hover($targetCga-color, $targetCga-background);
+}
+
+.drug_source[title="GDSC"] {
+  @include color-and-background-mixin($gdsc-color, $gdsc-background);
+}
+
+.drug_source[title="GDSC"].active {
+  @include color-and-background-mixin-hover($gdsc-color, $gdsc-background);
+}
+
+.drug_source[title="CTRP"] {
+  @include color-and-background-mixin($ctrp-color, $ctrp-background);
+}
+
+.drug_source[title="CTRP"].active {
+  @include color-and-background-mixin-hover($ctrp-color, $ctrp-background);
+}
+
+.drug_source[title="ExpertCurated"],
+.drug_source[title="PanDrugs"] {
+  @include color-and-background-mixin($expertCurated-color, $expertCurated-background);
+}
+
+.drug_source[title="ExpertCurated"].active,
+.drug_source[title="PanDrugs"].active {
+  @include color-and-background-mixin-hover($expertCurated-color, $expertCurated-background);
 }
 
 span.sensitivity {
   @extend .boxed-element;
-  @include color-and-background-mixin-nohover($dark-green, $light-green);
+  @include color-and-background-mixin($dark-green, $light-green);
+  cursor: default;
 }
 
 span.resistance {
   @extend .boxed-element;
-  @include color-and-background-mixin-nohover($dark-red, $light-red);
+  @include color-and-background-mixin($dark-red, $light-red);
+  cursor: default;
 }
 
 span.both {
   @extend .boxed-element;
-  @include color-and-background-mixin-nohover($dark-blue, $light-blue);
+  @include color-and-background-mixin($dark-blue, $light-blue);
+  cursor: default;
 }
 
 span.sensitivity-type {
@@ -480,7 +556,8 @@ a.disabled:hover {
 }
 
 .seepathways {
-  @include color-and-background-mixin-nohover($dark-gray, $light-gray);
+  @include color-and-background-mixin($dark-gray, $light-gray);
+
   padding-top: 0px;
   padding-bottom: 0px;
   padding-left: 2px;

@@ -15,110 +15,160 @@
   along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div>
-  <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
+  <div class="row legend">
+    <h3>Table Legend</h3>
 
-  <table id="results" st-table="$ctrl.geneDrugGroup" st-pipe="$ctrl.populateTable" class="table table-striped query-table drugs-table">
-    <thead>
-      <tr>
-        <th>Gene Drug Information </span> <span class="help_icon" title="General information about the gene-drug relation"></span></th>
-        <th class="min-column" st-sort="interaction" st-sort-default="reverse" style="cursor: pointer" title="click to sort">Interaction <span class="help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
-        <th class="min-column">Drug response <span class="help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
-        <th class="wrapped-column">Family <span class="help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
-        <th class="wrapped-column">Source(s) <span class="help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
-        <th class="wrapped-column" st-sort="dScore" style="cursor: pointer" title="click to sort">DScore <span class="help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
-        <th class="wrapped-column" st-sort="gScore" style="cursor: pointer" title="click to sort">GScore <span class="help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
-        <th class="wrapped-column" st-sort="btc" style="cursor: pointer" title="click to sort">BTC <span class="help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/></th>
-      </tr>
-    </thead>
+    <div class="col-sm-12 col-md-8 col-lg-6 legend-body">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Interactions</h4>
 
-    <tbody ng-hide="$ctrl.isLoading()">
-      <tr ng-repeat="geneDrug in $ctrl.geneDrugs" class="moreinfo">
-        <td>
-          <div ng-if="geneDrug.drugStatusInfo.length > 0" ng-bind-html="geneDrug.getDrugStatusInfoWithLinks()"></div>
-          <span ng-if="geneDrug.alteration">Alteration: {{geneDrug.alteration}}<br></span>
-          <span ng-bind-html="'Find more info for ' + geneDrug.getDrugAndGenesAsHtml(' and ') + ' in: '"></span>
-          [<a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">PubMed</a>]
-          [<a target="_blank" href="https://clinicaltrials.gov/ct2/results?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">ClinicalTrials.gov</a>]
-          <br>
-        </td>
-        <td class="min-column" style="text-align: center">
-          <div class="tooltipCSS">
-            <img ng-if="geneDrug.target === 'marker'" src="images/query/biomarker.png"/>
-            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
-            <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/pathway-member.png"/>
-            <span ng-if="geneDrug.target === 'marker'" class="tooltiptext">
-              <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
-              <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
-              <span class="drug-highlighted">D</span>
-            </span>
-            <span ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" class="tooltiptext">
-              <strong>Direct target</strong>: <strong>direct</strong> association in which the altered gene
-              <span class="gene-highlighted">T</span> is the <strong>target</strong> of the drug
-              <span class="drug-highlighted">D</span>
-            </span>
-            <span ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" class="tooltiptext">
-              <strong>Pathway member</strong>: <strong>indirect</strong> association in which the drug
-              <span class="drug-highlighted">D</span> has as a <strong>target</strong> a gene <strong>
-              <span class="indirect-gene-highlighted">T</span></strong> related to the altered one
-              <span class="gene-highlighted">G</span>
-            </span>
-          </div>
-          <div ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null">
-            <button type="button" class="seepathways btn btn-default" data-toggle="modal" data-target="#pathways-{{geneDrug.pathwayId}}">See pathways</button>
-            <div id="pathways-{{geneDrug.pathwayId}}" class="modal fade" style="text-align: justify">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Involved pathways in indirect relation</h4>
-                  </div>
-                  <div class="modal-body">
-                    The following KEGG pathways are those where the target gene of the drug ({{geneDrug.indirect.geneInfo.geneSymbol}}) is related
-                    to at least one of the altered genes ({{geneDrug.gene | mapAttribute : 'geneSymbol' | enumeration : ', ' : ' or '}})
-                    <ul>
-                      <li ng-repeat="pathway in geneDrug.indirect.pathway">
-                        <a target='_blank' href="{{pathway|kegglink:geneDrug.indirect.geneInfo}}">{{pathway.name}}</a>
-                        ({{pathway.gene | mapAttribute : 'geneSymbol' | enumeration}})
-                      </li>
-                    </ul>
+          <dl class="legend">
+            <dt style="width: 100px"><img src="images/query/direct-target.png"/></dt>
+            <dd><span>Direct target</span></dd>
+            <dt style="width: 100px"><img src="images/query/biomarker.png"/></dt>
+            <dd><span>Biomarker</span></dd>
+            <dt style="width: 100px"><img src="images/query/pathway-member.png"/></dt>
+            <dd><span>Pathway member</span></dd>
+          </dl>
+        </div>
+
+        <div class="col-md-4">
+          <h4>Information Icons</h4>
+
+          <dl class="legend">
+            <dt>
+              <span class="glyphicon glyphicon-star best-icon" aria-hidden="true" title="Best Therapeutic Candidate"></span>
+            </dt>
+            <dd><span>Best therapeutic candidate</span></dd>
+            <dt>
+              <span class="glyphicon glyphicon-question-sign help_icon" aria-hidden="true"></span>
+            </dt>
+            <dd><span>Column description</span></dd>
+          </dl>
+        </div>
+
+        <div class="col-md-4">
+          <h4>Source types</h4>
+
+          <span title="DGIdb" class="drug_source">Sources in DGIdb</span>
+          <span title="moAb" class="drug_source">Monoclonal Antibodies</span>
+          <span title="TARGET-CGA" class="drug_source">TARGET database</span>
+          <span title="GDSC" class="drug_source">GDSC</span>
+          <span title="CTRP" class="drug_source">CTRP</span>
+          <span title="ExpertCurated" class="drug_source">Expert curated</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="btn btn-primary">Download as CSV</button></a>
+
+    <table id="results" st-table="$ctrl.geneDrugGroup" st-pipe="$ctrl.populateTable" class="table table-striped query-table drugs-table">
+      <thead>
+        <tr>
+          <th>Gene Drug Information </span> <span class="glyphicon glyphicon-question-sign help_icon" title="General information about the gene-drug relation"></span></th>
+          <th class="min-column" st-sort="interaction" st-sort-default="reverse" style="cursor: pointer" title="click to sort">Interaction <span class="glyphicon glyphicon-question-sign help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
+          <th class="min-column">Drug response <span class="glyphicon glyphicon-question-sign help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
+          <th class="wrapped-column">Family <span class="glyphicon glyphicon-question-sign help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
+          <th class="wrapped-column">Source(s) <span class="glyphicon glyphicon-question-sign help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
+          <th class="wrapped-column" st-sort="dScore" style="cursor: pointer" title="click to sort">DScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
+          <th class="wrapped-column" st-sort="gScore" style="cursor: pointer" title="click to sort">GScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
+          <th class="wrapped-column" st-sort="btc" style="cursor: pointer" title="click to sort">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/></th>
+        </tr>
+      </thead>
+
+      <tbody ng-hide="$ctrl.isLoading()">
+        <tr ng-repeat="geneDrug in $ctrl.geneDrugs" class="moreinfo">
+          <td>
+            <div ng-if="geneDrug.drugStatusInfo.length > 0" ng-bind-html="geneDrug.getDrugStatusInfoWithLinks()"></div>
+            <span ng-if="geneDrug.alteration">Alteration: {{geneDrug.alteration}}<br></span>
+            <span ng-bind-html="'Find more info for ' + geneDrug.getDrugAndGenesAsHtml(' and ') + ' in: '"></span>
+            [<a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">PubMed</a>]
+            [<a target="_blank" href="https://clinicaltrials.gov/ct2/results?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">ClinicalTrials.gov</a>]
+            <br>
+          </td>
+          <td class="min-column" style="text-align: center">
+            <div class="tooltipCSS">
+              <img ng-if="geneDrug.target === 'marker'" src="images/query/biomarker.png"/>
+              <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
+              <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/pathway-member.png"/>
+              <span ng-if="geneDrug.target === 'marker'" class="tooltiptext">
+                <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
+                <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
+                <span class="drug-highlighted">D</span>
+              </span>
+              <span ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" class="tooltiptext">
+                <strong>Direct target</strong>: <strong>direct</strong> association in which the altered gene
+                <span class="gene-highlighted">T</span> is the <strong>target</strong> of the drug
+                <span class="drug-highlighted">D</span>
+              </span>
+              <span ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" class="tooltiptext">
+                <strong>Pathway member</strong>: <strong>indirect</strong> association in which the drug
+                <span class="drug-highlighted">D</span> has as a <strong>target</strong> a gene <strong>
+                <span class="indirect-gene-highlighted">T</span></strong> related to the altered one
+                <span class="gene-highlighted">G</span>
+              </span>
+            </div>
+            <div ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null">
+              <button type="button" class="seepathways btn btn-default" data-toggle="modal" data-target="#pathways-{{geneDrug.pathwayId}}">See pathways</button>
+              <div id="pathways-{{geneDrug.pathwayId}}" class="modal fade" style="text-align: justify">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Involved pathways in indirect relation</h4>
+                    </div>
+                    <div class="modal-body">
+                      The following KEGG pathways are those where the target gene of the drug ({{geneDrug.indirect.geneInfo.geneSymbol}}) is related
+                      to at least one of the altered genes ({{geneDrug.gene | mapAttribute : 'geneSymbol' | enumeration : ', ' : ' or '}})
+                      <ul>
+                        <li ng-repeat="pathway in geneDrug.indirect.pathway">
+                          <a target='_blank' href="{{pathway|kegglink:geneDrug.indirect.geneInfo}}">{{pathway.name}}</a>
+                          ({{pathway.gene | mapAttribute : 'geneSymbol' | enumeration}})
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </td>
-        <td class="min-column" style="white-space: nowrap">
-          <span class="sensitivity-type" ng-class="geneDrug.sensitivity | lowercase">{{geneDrug.sensitivity | titlecase}}</span>&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span>
-          <div ng-if="geneDrug.warning.length > 0" class="warning-icon">
-            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.warning.join('\n')}}"></span>
-          </div>
-        </td>
-        <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
-        <td class="wrapped-column">
-          <span ng-repeat="source in geneDrug.getDrugSourcesInfo()">
-            <a ng-if="source.link" href="{{source.link}}" target="_blank" title="{{source.name}}"
-               ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
-              {{source.shortName}}
-            </a>
-            <span ng-if="!source.link" title="{{source.name}}" ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated_source' : 'non_curated_source'">
-              {{source.shortName}}
+          </td>
+          <td class="min-column" style="white-space: nowrap">
+            <span class="sensitivity-type" ng-class="geneDrug.sensitivity | lowercase">{{geneDrug.sensitivity | titlecase}}</span>&nbsp;<span ng-if="geneDrug.hasChangedSensitivity()" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.indirectResistance | enumeration}}"></span>
+            <div ng-if="geneDrug.warning.length > 0" class="warning-icon">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{geneDrug.warning.join('\n')}}"></span>
+            </div>
+          </td>
+          <td class="wrapped-column">{{geneDrug.family | enumeration}}</td>
+          <td class="wrapped-column">
+            <span ng-repeat="source in geneDrug.getDrugSourcesInfo()">
+              <a ng-if="source.link" href="{{source.link}}" target="_blank" title="{{source.name}}" class="drug_source active"
+                 ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated' : 'non_curated'">
+                {{source.shortName}}
+              </a>
+              <span ng-if="!source.link" title="{{source.name}}" class="drug_source"
+                    ng-class="geneDrug.geneDrugGroup.isCuratedSource(source.name) ? 'curated' : 'non_curated'">
+                {{source.shortName}}
+              </span>
             </span>
-          </span>
-        </td>
-        <td class="min-column">{{geneDrug.dScore | number: 4}}</td>
-        <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
-        <td class="min-column" style="text-align: center" >
-          <div ng-if="geneDrug.isBestCandidate()" class="best-icon">
-            <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
-          </div>
-        </td>
-      </tr>
-    </tbody>
+          </td>
+          <td class="min-column">{{geneDrug.dScore | number: 4}}</td>
+          <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
+          <td class="min-column" style="text-align: center" >
+            <div ng-if="geneDrug.isBestCandidate()" class="best-icon">
+              <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
+            </div>
+          </td>
+        </tr>
+      </tbody>
 
-    <tbody ng-hide="!$ctrl.isLoading()">
-      <tr>
-        <td colspan="8">Loading...</td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody ng-hide="!$ctrl.isLoading()">
+        <tr>
+          <td colspan="8">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
