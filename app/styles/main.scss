@@ -855,3 +855,13 @@ div.disabled {
 #gene-query-panel-buttons {
   float: right;
 }
+
+.pandrugs-version {
+  float: right;
+  color: $dark-gray;
+  padding-top: 15px;
+}
+
+.pandrugs-version a {
+  color: $dark-green;
+}
