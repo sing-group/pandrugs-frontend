@@ -91,6 +91,8 @@ body {
   padding-right: 15px;
 }
 
+
+
 /* Custom page header */
 .header {
   margin-bottom: 10px;
@@ -799,6 +801,25 @@ div.disabled {
     width: 100%;
 }
 
+footer {
+  #logos {
+    text-align: center;
+    margin-bottom: 10px;
+    a {
+      display: block;
+      margin-bottom: 5px;
+    }
+    img {
+      height: 30px;
+      margin-right:10px;
+    }
+
+    #uvigo-logo {
+      height: 20px;
+      margin-right: 0px;
+    }
+  }
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -816,7 +837,11 @@ div.disabled {
     text-align: center;
     line-height: 50px;
     vertical-align: bottom;
+    #logos a {
+      display: inline-block;
+    }
   }
+
 
   /* Space out the masthead */
   .header {
