@@ -55,6 +55,8 @@ angular.module('pandrugsFrontendApp')
       this.$onInit = function () {
         if ($location.search().example === 'genes') {
           this.pasteSignalingPathwayExample();
+        } else if ($location.search().genes != undefined) {
+          this.notifyChange($location.search().genes.split(',').join('\n'));
         } else {
           this.notifyChange();
         }

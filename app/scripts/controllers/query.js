@@ -60,7 +60,9 @@ angular.module('pandrugsFrontendApp')
 
 
     var example = $location.search().example;
-    this.triggerQueryOnChange = this.isValidTab(example);
+    var urlGeneList = $location.search().genes;
+    this.triggerQueryOnChange = this.isValidTab(example) || urlGeneList != undefined;
+
     $scope.selectedTab = this.isValidTab(example) ? example : 'genes';
 
     // select an specific tab
@@ -226,4 +228,7 @@ angular.module('pandrugsFrontendApp')
           });
       }
     };
+
+
+
   }]);
