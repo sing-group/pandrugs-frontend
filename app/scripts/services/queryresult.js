@@ -117,7 +117,6 @@ angular.module('pandrugsFrontendApp')
 
 
     function QueryResult(geneDrugGroups, advancedQueryOptions) {
-      this.advancedQueryOptions = advancedQueryOptions;
       this.geneDrugGroups = geneDrugGroups.map(function(gdg) {
         return new GeneDrugGroup(gdg);
       });
@@ -131,7 +130,8 @@ angular.module('pandrugsFrontendApp')
           return advancedQueryOptions.areAllCancerTypesSelected();
         } else {
           return geneDrugGroup.cancer.find(function(cancer) {
-            return advancedQueryOptions.isCancerSelected(cancer);
+            return cancer === 'CLINICAL_CANCER' || cancer === 'CANCER'
+              || advancedQueryOptions.isCancerSelected(cancer);
           });
         }
       });

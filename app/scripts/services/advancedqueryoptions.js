@@ -68,7 +68,7 @@ angular.module('pandrugsFrontendApp')
     };
 
     AdvancedQueryOptions.prototype.areAllCancerTypesSelected = function() {
-      return this.cancerTypes !== undefined && (this.cancerTypes === '*' || this.cancerTypes.some(function(cancer) {
+      return this.cancerTypes !== undefined && (this.cancerTypes === '*' || this.cancerTypes.every(function(cancer) {
         return cancer.selected;
       }));
     };
