@@ -22,27 +22,27 @@
 
 /**
  * @ngdoc filter
- * @name pandrugsFrontendApp.filter:enumeration
+ * @name pandrugsFrontendApp.filter:groupBy
  * @function
  * @description
- * # enumeration
+ * # groupBy
  * Filter in the pandrugsFrontendApp.
  */
 angular.module('pandrugsFrontendApp')
-  .filter('enumeration', function () {
-    return function (input, join, last) {
-      join = join === undefined ? ', ' : join;
-      last = last === undefined ? ' and ' : last;
+  .filter('groupBy', function () {
+    return function (input, attribute) {
+      var grouped = {};
 
-      //var joined = input.join(join);
-      if (input.length > 1) {
-
-        return input.slice(0,-1).join(join) + last + input[input.length - 1];
-        /*var joinIndex = joined.lastIndexOf(join);
-
-        return joined.substring(0, joinIndex) + last + joined.substring(joinIndex + join.length, joined.length);*/
-      } else  {
-      return input.join(join);
-      }
+      input.forEach(function(element) {
+        if (element[attribute]) {
+          if(grouped[element[attribute]] !== undefined) {
+            grouped[element[attribute]].push(element);
+          } else {
+            grouped[element[attribute]] = [element];
+          }
+        }
+      });
+      return grouped;
+      
     };
   });

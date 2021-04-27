@@ -83,7 +83,7 @@
         <tr ng-repeat="geneDrug in $ctrl.geneDrugs" class="moreinfo">
           <td>
             <div ng-if="geneDrug.drugStatusInfo.length > 0" ng-bind-html="geneDrug.getDrugStatusInfoWithLinks()"></div>
-            <span ng-if="geneDrug.alteration">Alteration: {{geneDrug.alteration}}<br></span>
+            <span ng-if="geneDrug.alteration && geneDrug.alteration.length > 0">Alteration(s): {{geneDrug.alteration | groupBy : 'alteration' | formatAlterations | enumeration}}<br></span>
             <span ng-bind-html="'Find more info for ' + geneDrug.getDrugAndGenesAsHtml(' and ') + ' in: '"></span>
             [<a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">PubMed</a>]
             [<a target="_blank" href="https://clinicaltrials.gov/ct2/results?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">ClinicalTrials.gov</a>]

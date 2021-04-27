@@ -223,7 +223,7 @@
               </div>
             </span>
           </div>
-          <div ng-if="geneDrug.alteration">Alteration: {{geneDrug.alteration}}</div>
+          <div ng-if="geneDrug.alteration && geneDrug.alteration.length > 0">Alteration(s): {{geneDrug.alteration | groupBy : 'alteration' | formatAlterations | enumeration}}</div>
           <div>
             Find more info for {{ geneDrug.getDrugAndGenesAsText(' and ') }} in:
             [<a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">PubMed</a>]
