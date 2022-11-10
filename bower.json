@@ -2,25 +2,25 @@
   "name": "pandrugs-frontend",
   "version": "1.2.1",
   "dependencies": {
-    "angular": "~1.6.4",
-    "bootstrap-sass": "~3.3.7",
-    "angular-animate": "~1.6.4",
-    "angular-cookies": "~1.6.4",
-    "angular-resource": "~1.6.4",
-    "angular-route": "~1.6.4",
-    "angular-sanitize": "~1.6.4",
-    "angular-touch": "~1.6.4",
-    "angular-smart-table": "~2.0.1",
-    "highcharts-release": "~5.0.0",
-    "highcharts-ng": "~1.2.0",
-    "cytoscape": "~2.6.1",
-    "ng-storage": "~0.3",
-    "angular-loading-bar": "~0.9",
-    "angular-list-group": "~0.0.3",
-    "bootstrap-fileinput": "sass",
-    "pagedown": "^1.1.0",
-    "components-font-awesome": "~4.7.0",
-    "spinkit": "~1.2.5"
+    "angular": "1.6.4",
+    "bootstrap-sass": "3.3.7",
+    "angular-animate": "1.6.4",
+    "angular-cookies": "1.6.4",
+    "angular-resource": "1.6.4",
+    "angular-route": "1.6.4",
+    "angular-sanitize": "1.6.4",
+    "angular-touch": "1.6.4",
+    "angular-smart-table": "2.0.3",
+    "highcharts-release": "v5.0.14",
+    "highcharts-ng": "1.2.0",
+    "cytoscape": "2.6.12",
+    "ng-storage": "0.3.9",
+    "angular-loading-bar": "0.9.0",
+    "bootstrap-fileinput": "https://github.com/kartik-v/bootstrap-fileinput.git#839118339660179da055628f7d522d891208cb0b",    
+    "pagedown": "1.1.0",
+    "components-font-awesome": "4.7.0",
+    "spinkit": "1.2.5",
+    "jquery": "3.2.1"
   },
   "overrides": {
     "pagedown": {
@@ -31,7 +31,7 @@
     }
   },
   "devDependencies": {
-    "angular-mocks": "~1.6.4"
+    "angular-mocks": "1.6.4"
   },
   "appPath": "app",
   "moduleName": "pandrugsFrontendApp"
