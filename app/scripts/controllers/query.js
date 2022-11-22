@@ -94,7 +94,6 @@ angular.module('pandrugsFrontendApp')
     $scope.results = null;
     $scope.resultsFiltered = null;
 
-
     $scope.setSelectedTab = function (tab) {
       if (this.isValidTab(tab) && $scope.selectedTab !== tab) {
         $scope.selectedTab = tab;
@@ -159,6 +158,10 @@ angular.module('pandrugsFrontendApp')
           || ($scope.selectedTab === 'generank' && $scope.generank)
           || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
         );
+    };
+
+    $scope.getPharmcatURL = function(computationId) {
+      return user.getPharmcatURLForComputation(computationId); 
     };
 
     //  ========== QUERY ========
@@ -228,7 +231,5 @@ angular.module('pandrugsFrontendApp')
           });
       }
     };
-
-
 
   }]);

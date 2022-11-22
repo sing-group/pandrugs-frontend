@@ -27,14 +27,14 @@ angular.module('pandrugsFrontendApp')
       computation: '<',
       showVariantInformation: '<'
     },
-    controller: ['TableHelper', function (TableHelper) {
+    controller: ['user','TableHelper', function (user, TableHelper) {
       this.csvContent = null;
       this.csvContentSimple = null;
 
       this.geneDrugGroupsPaginated = null;
 
       this.paginationOptions = [5, 20, 100, 'All'];
-
+     
       this.$onChanges = function(changes) {
         if (changes.queryResult && changes.queryResult.currentValue) {
           this.csvContent = encodeURI('data:text/csv;charset=utf-8,' + changes.queryResult.currentValue.toCSV());
@@ -48,12 +48,15 @@ angular.module('pandrugsFrontendApp')
 
       this.populateTable = function(tableState) {
         var results = TableHelper.sort(tableState, this.geneDrugGroups);
-
         this.geneDrugGroupsPaginated = TableHelper.paginate(tableState, this.paginationOptions, results);
       }.bind(this);
 
       this.isVariantsAnalysis = function() {
         return this.computation !== undefined && this.showVariantInformation;
       }.bind(this);
+      
+      this.getPharmcatURL = function(computationId, drugName) {
+        return user.getPharmcatURLForComputation(computationId) + '#' + drugName; 
+      };
     }]
   });

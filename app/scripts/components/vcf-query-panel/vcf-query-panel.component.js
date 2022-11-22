@@ -32,6 +32,8 @@ angular.module('pandrugsFrontendApp')
       this.computationName = 'My Computation';
       this.computations = [];
       this.computationId = $location.search().computationId;
+      this.withPharmcat = false;
+      this.tsvFile = '';
 
       if (this.autoreload === undefined) {
         this.autoreload = true;
@@ -43,7 +45,7 @@ angular.module('pandrugsFrontendApp')
 
           user.getComputation('guest', 'example', function(computation){
             this.computationId = 'example';
-            this.computations.example = new Computation(computation);
+            this.computations.example = new Computation(this.computationId, computation);
             this.notifyComputationIdChange();
           }.bind(this));
         }
@@ -76,12 +78,16 @@ angular.module('pandrugsFrontendApp')
         });
       }.bind(this);
 
-      this.changeFile = function(file) {
-        this.vcfFile = file;
+      this.changeFile = function(file, option) {
+        if (option == "VCF"){
+          this.vcfFile = file; 
+        }else if (option == "TSV"){
+          this.tsvFile = file;
+        }
       };
 
       this.submitVCF = function() {
-        user.submitComputation(this.vcfFile, this.computationName,
+        user.submitComputation(this.vcfFile, this.computationName, this.withPharmcat, this.tsvFile,
           function(newId) {
             if (this.isAnonymous()) {
               var absoluteUrl = $location.absUrl();
@@ -125,7 +131,8 @@ angular.module('pandrugsFrontendApp')
         window.location.href = user.getVscoreDownloadURLForComputation(computationId);
       };
 
-      function Computation(computation) {
+      function Computation(computationId, computation) {
+        this.id = computationId;
         angular.merge(this, computation);
       };
 
@@ -162,7 +169,7 @@ angular.module('pandrugsFrontendApp')
             this.computations = {};
             for (var computationId in computations) {
               if (computations.hasOwnProperty(computationId)) {
-                this.computations[computationId] = new Computation(computations[computationId]);
+                this.computations[computationId] = new Computation(computationId, computations[computationId]);
               }
             }
 
@@ -173,7 +180,8 @@ angular.module('pandrugsFrontendApp')
         } else if(this.computationId) {
           user.getComputation('guest', this.computationId, function(computation) {
             this.computations = {};
-            this.computations[this.computationId] = new Computation(computation);
+            this.computations[this.computationId] = new Computation(this.computationId, computation);
+
             this.notifyComputationIdChange();
           }.bind(this));
         }

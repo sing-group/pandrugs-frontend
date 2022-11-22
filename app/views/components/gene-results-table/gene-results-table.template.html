@@ -84,7 +84,7 @@
     </div>
   </div>
 </div>
-
+          
 <div class="row">
   <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (complete version)</button></a>
   <a id="download-csv-link" href="{{$ctrl.csvContentSimple}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (simple version)</button></a>
@@ -104,6 +104,7 @@
         <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
         <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
         <th class="wrapped-column" st-sort="btc" style="cursor:pointer" title="click to sort">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.computation.pharmcat === true">Pharmcat <span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
       </tr>
     </thead>
 
@@ -170,8 +171,13 @@
             <span class="glyphicon glyphicon-star" aria-hidden="true" title="Best Therapeutic Candidate"></span><br/>
           </div>
         </td>
+        <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true">
+          <a ng-if="row.pharmCatGermLineAnnotation !== 'NOT_AVAILABLE'" 
+              ng-href="{{$ctrl.getPharmcatURL($ctrl.computation.id, row.showDrugName | lowercase)}}" target="pharmcatReport" class="icon">
+            <span class="{{ row.pharmCatGermLineAnnotation | toIconClass }}"></span>
+          </a>
+         </td>
       </tr>
-
       <!-- Gene Drugs -->
       <tr ng-repeat-start="geneDrug in row.geneDrugs" ng-if="row.moreinfo" class="moreinfo">
         <td colspan="6">
@@ -250,12 +256,12 @@
         </td>
         <td class="min-column">{{geneDrug.dScore | number: 4}}</td>
         <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
-        <td class="min-column" style="text-align: center" >
-        </td>
+        <td class="min-column" style="text-align: center" ></td>
+        <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true"></td>
       </tr>
 
       <tr ng-repeat-end ng-if="row.moreinfo && $ctrl.isVariantsAnalysis()" class="moreinfo">
-        <td colspan="12" style="border-top: 0px">
+        <td colspan="13" style="border-top: 0px">
           <div ng-repeat="gene in geneDrug.gene" ng-init="affectedGenesInfo = $ctrl.computation.affectedGenesInfo[gene.geneSymbol]">
             <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{affectedGenesInfo.HGVS_cDNA}} / {{affectedGenesInfo.HGVS_protein}}</span>
             <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>

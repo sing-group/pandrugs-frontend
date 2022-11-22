@@ -207,6 +207,12 @@
             <tr>
               <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
             </tr>
+            <tr ng-if="computation.pharmcat === true">
+              <th>Pharmcat report</th>
+              <td>
+                <a ng-href="{{getPharmcatURL(computationId)}}" target="pharmcatReport" class="icon"><span class="glyphicon glyphicon-save-file"></span></a>
+              </td>
+            </tr>
           </table>
           <button class="btn btn-default" data-target="#genespresencedetails" data-toggle="modal">Show genes</button>
           <div id="genespresencedetails" class="modal fade" role="dialog">
