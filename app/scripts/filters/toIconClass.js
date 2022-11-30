@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('pandrugsFrontendApp')
   .filter('toIconClass', function () {
     return function (input) {
