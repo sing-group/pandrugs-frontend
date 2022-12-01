@@ -288,6 +288,33 @@ div.legend-body {
   background-image: url("../images/drug.png");
 }
 
+.pharmcat_icon {
+  display: inline-block; 
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+}
+
+.warning_pharmcat_icon {
+  background-image: url("../images/PharmCAT/warning.png");
+}
+
+.strongly_recommended_pharmcat_icon {
+  background-image: url("../images/PharmCAT/strongly-recommended.png");
+}
+
+.strongly_not_recommended_pharmcat_icon {
+  background-image: url("../images/PharmCAT/strongly-not-recommended.png");
+}
+
+.moderately_recommended_pharmcat_icon {
+  background-image: url("../images/PharmCAT/moderately-recommended.png");
+}
+
+.moderately_not_recommended_pharmcat_icon {
+  background-image: url("../images/PharmCAT/moderately-not-recommended.png");
+}
+
 .boxed-element {
   @include border-radius(4px);
   padding: 2px;

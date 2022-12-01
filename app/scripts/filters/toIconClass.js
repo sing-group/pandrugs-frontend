@@ -5,15 +5,15 @@ angular.module('pandrugsFrontendApp')
     return function (input) {
         switch(input){
             case 'WARNING':
-              return 'images/PharmCAT/warning.png';
+              return 'warning_pharmcat_icon';
             case 'STRONGLY_RECOMMENDED':
-              return 'images/PharmCAT/strongly-recommended.png';
+              return 'strongly_recommended_pharmcat_icon';
             case 'STRONGLY_NOT_RECOMMENDED':
-              return 'images/PharmCAT/strongly-not-recommended.png';
+              return 'strongly_not_recommended_pharmcat_icon';
             case 'MODERATELY_RECOMMENDED':
-              return 'images/PharmCAT/moderately-recommended.png';
+              return 'moderately_recommended_pharmcat_icon';
             case 'MODERATELY_NOT_RECOMMENDED':
-              return 'images/PharmCAT/moderately-not-recommended.png';
+              return 'moderately_not_recommended_pharmcat_icon';
             case 'NOT_AVAILABLE':
               return '';
         }
