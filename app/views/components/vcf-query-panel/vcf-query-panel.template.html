@@ -43,34 +43,32 @@
 
         <div class="modal-body">
           <fieldset class="form-group">
-            <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file' }}">Select a variants file (in <a
+            <label style="display:block" ng-attr-for="{{ $ctrl.idPrefix + '-input-file' }}">Select a variants file (in <a
               href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). <strong>Note:</strong>
-              The genome positions must be accordiyng to the GRCh37/hg19 human genome assembly</label>
-            <div>
-              <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
+              The genome positions must be accordiyng to the GRCh38/hg38 human genome assembly</label>
+            <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
                      ng-attr-name="{{ $ctrl.idPrefix + '-input-file' }}"
                      class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file, 'VCF')"/>
 
-              <a href="downloads/TCGA-BF-A1PU-01A-11D-A19A-08.vcf">Download a VCF example file</a> (Melanoma patient
+            <a href="downloads/TCGA-BF-A1PU-01A-11D-A19A-08.vcf">Download a VCF example file</a> (Melanoma patient
               BRAF mutant from TCGA)
+            
+            <label style="display:block"><input type="checkbox" ng-model="$ctrl.withPharmcat"> Pharmcat analysis</label>
+            <div ng-if="$ctrl.withPharmcat==true" >
+              <label ng-attr-for="{{ $ctrl.idPrefix + '-input-tsv-file' }}">Select a outside call file (tab-separated file):</label>
+                <input ng-attr-id="{{ $ctrl.idPrefix + '-input-tsv-file' }}" ng-attr-name="{{ $ctrl.idPrefix + '-input-tsv-file' }}"
+                     class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file, 'TSV')"/>  
+                     <p>
+                      <strong>WARNING</strong>: the optional file <strong>MUST </strong> contain the genotypes that PharmCAT cannot call from the VCF. 
+                      See more: <a target='_blank' href="https://pharmcat.org/using/Outside-Call-Format">Outside Call Format</a>
+                    </p>  
             </div>
 
-            <label ng-attr-for="{{ $ctrl.idPrefix + '-input-name' }}">Computation name</label>
+            <label style="display:block" ng-attr-for="{{ $ctrl.idPrefix + '-input-name' }}">Computation name</label>
             <input ng-attr-id="{{ $ctrl.idPrefix + '-input-name' }}"
                    ng-attr-name="{{ $ctrl.idPrefix + '-input-name' }}"
                    class="form-control" type="text"
                    ng-model="$ctrl.computationName"/>
-            
-            <label><input type="checkbox" ng-model="$ctrl.withPharmcat">Pharmcat analysis</label>
-            <div  ng-if="$ctrl.withPharmcat==true" >
-              <label ng-attr-for="{{ $ctrl.idPrefix + '-input-tsv-file' }}">TSV format</label>
-              <input ng-attr-id="{{ $ctrl.idPrefix + '-input-tsv-file' }}"
-                     ng-attr-name="{{ $ctrl.idPrefix + '-input-tsv-file' }}"
-                     class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file, 'TSV')"/>  
-              <p>
-                <strong>WARNING</strong>: the optional file <strong>MUST </strong> contain the genotypes that PharmCAT cannot call from the VCF.
-              </p>  
-            </div>
           </fieldset>
         </div>
 

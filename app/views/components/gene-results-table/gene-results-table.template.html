@@ -173,8 +173,9 @@
         </td>
         <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true">
           <a ng-if="row.pharmCatGermLineAnnotation !== 'NOT_AVAILABLE'" 
-              ng-href="{{$ctrl.getPharmcatURL($ctrl.computation.id, row.showDrugName | lowercase)}}" target="pharmcatReport" class="icon">
-            <span class="{{ row.pharmCatGermLineAnnotation | toIconClass }}"></span>
+              ng-href="{{$ctrl.getPharmcatURL($ctrl.computation.id, row.showDrugName | lowercase)}}" target="pharmcatReport">
+            <img alt="{{ row.pharmCatGermLineAnnotation}}" title="{{ row.pharmCatGermLineAnnotation}}" 
+              src="{{ row.pharmCatGermLineAnnotation | toIconClass }}" width="30px" height="30px"/>
           </a>
          </td>
       </tr>
