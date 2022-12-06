@@ -83,7 +83,6 @@ angular.module('pandrugsFrontendApp')
       advancedQueryOptions
     ) {
       var deferred = $q.defer();
-
       // build query string
       var queryString = '';
       for (var i = 0; i < queryValues.length; i++) {
@@ -126,6 +125,27 @@ angular.module('pandrugsFrontendApp')
         fd.append('generank', geneRankFile);
 
         $http.post(BACKEND.API + 'genedrug?' + queryString, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .then(function(results) {
+            deferred.resolve(results.data);
+          }
+        );
+
+        return deferred.promise;
+      },
+
+      combinedSearch: function(combinedFile, advancedQueryOptions) {
+        var deferred = $q.defer();
+
+        var queryString = constructQueryString(advancedQueryOptions);
+
+        var fd = new FormData();
+        fd.append('cnv', combinedFile.cnvFile);
+        fd.append('expressiongenerank', combinedFile.expressionFile);
+
+        $http.post(BACKEND.API + 'genedrug/combined?' + queryString, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })

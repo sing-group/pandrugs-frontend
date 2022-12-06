@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file-cnv' }}">Select a CNV</label>
+  <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file-cnv' }}"
+         ng-attr-name="{{ $ctrl.idPrefix + '-input-file-cnv' }}"
+         class="file" type="file" file-model on-file-change="$ctrl.changeCNVFile(file)"/>
+
+  <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file-expression' }}">Select a EXPRESSION</label>
+  <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file-expression' }}"
+         ng-attr-name="{{ $ctrl.idPrefix + '-input-file-expression' }}"
+         class="file" type="file" file-model on-file-change="$ctrl.changeExpressionFile(file)"/>
+</div>

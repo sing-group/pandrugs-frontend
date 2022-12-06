@@ -55,7 +55,7 @@ angular.module('pandrugsFrontendApp')
   ) {
 
     this.isValidTab = function(tab) {
-      return tab === 'genes' || tab === 'drugs' || tab === 'generank' || tab === 'vcfrank';
+      return tab === 'genes' || tab === 'drugs' || tab === 'generank' || tab === 'vcfrank' || tab === 'combined';
     };
 
 
@@ -83,6 +83,8 @@ angular.module('pandrugsFrontendApp')
     $scope.selectedDrug = null;
 
     $scope.generank = null;
+
+    $scope.combined = null
 
     $scope.computationId = null;
     $scope.computation = null;
@@ -125,6 +127,10 @@ angular.module('pandrugsFrontendApp')
       $scope.generank = generank;
     };
 
+    $scope.updateCombined = function(cnvFile, expressionFile) {
+      $scope.combined = {cnvFile: cnvFile, expressionFile: expressionFile};
+    };
+
     $scope.updateComputation = function(computationId, computation) {
       $scope.computationId = computationId;
       $scope.computation = computation;
@@ -157,6 +163,7 @@ angular.module('pandrugsFrontendApp')
           || ($scope.selectedTab === 'drugs' && $scope.selectedDrug)
           || ($scope.selectedTab === 'generank' && $scope.generank)
           || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
+          || ($scope.selectedTab === 'combined' && $scope.combined && $scope.combined.cnvFile && $scope.combined.expressionFile)
         );
     };
 
@@ -170,7 +177,6 @@ angular.module('pandrugsFrontendApp')
         db.genesPresence($scope.geneList).then(function(presence){
           $scope.genePresence = presence;
         });
-
         this.searchBy(db.searchByGenes, $scope.geneList);
       } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
         this.searchBy(db.searchByDrugs, [ $scope.selectedDrug ], AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
@@ -194,6 +200,30 @@ angular.module('pandrugsFrontendApp')
         });
 
         this.searchBy(db.computationIdSearch, $scope.computationId);
+      } else if ($scope.selectedTab === 'combined' && $scope.combined && $scope.combined.cnvFile && $scope.combined.expressionFile) {
+        var cnvReader = new FileReader();
+        var expressionReader = new FileReader();
+
+        function onOneReaded() {
+          if (expressionReader.readyState === FileReader.DONE && cnvReader.readyState === FileReader.DONE) {
+            // both data is available
+            var cnvGeneList = utilities.parseGenes(cnvReader.result, false); // false is for not filter unique by now...
+            var expressionGeneList = utilities.parseGenes(expressionReader.result, false); // false is for not filter unique by now...
+            $scope.geneList = utilities.uniqueIgnoreCase([...cnvGeneList, ...expressionGeneList]);
+            db.genesPresence($scope.geneList)
+                .then(function(presence){
+                  $scope.genePresence = presence;
+            });
+            
+          }
+        }
+        cnvReader.onload = onOneReaded;
+        cnvReader.readAsText($scope.combined.cnvFile);
+
+        expressionReader.onload = onOneReaded;
+        expressionReader.readAsText($scope.combined.expressionFile);
+
+        this.searchBy(db.combinedSearch, $scope.combined);
       }
     }.bind(this);
 
@@ -223,7 +253,6 @@ angular.module('pandrugsFrontendApp')
 
             $scope.results = QueryResultFactory.createQueryResult(result.geneDrugGroup, $scope.advancedQueryOptions);
             $scope.resultsFiltered = $scope.results.getFilteredGroups();
-
             this.updateCharts($scope.resultsFiltered);
           }.bind(this),
           function() {

@@ -105,6 +105,8 @@
         <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
         <th class="wrapped-column" st-sort="btc" style="cursor:pointer" title="click to sort">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/> </th>
         <th class="wrapped-column" ng-if="$ctrl.computation.pharmcat === true">Pharmcat <span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showCnvInformation">CNV<span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showExpressionInformation">Expression<span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
       </tr>
     </thead>
 
@@ -177,6 +179,12 @@
               <span title="{{row.pharmCatGermLineAnnotation | titlecase | replace:'_':' '}}" class="pharmcat_icon {{row.pharmCatGermLineAnnotation | toIconClass}}"></span>
           </a>
          </td>
+        <td ng-if="$ctrl.showCnvInformation" style="text-align: center" >
+          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.cnv).length > 0" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="There is CNV information related to some genes. Expand this row to see it."></span>
+        </td>
+        <td ng-if="$ctrl.showExpressionInformation" style="text-align: center" >
+          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.expression).length > 0" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="There is expression information related to some genes. Expand this row to see it."></span>
+        </td>
       </tr>
       <!-- Gene Drugs -->
       <tr ng-repeat-start="geneDrug in row.geneDrugs" ng-if="row.moreinfo" class="moreinfo">
@@ -258,6 +266,16 @@
         <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
         <td class="min-column" style="text-align: center" ></td>
         <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true"></td>
+        <td ng-if="$ctrl.showCnvInformation">
+          <span ng-if="row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol]">
+          {{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'Amplification' | replace:'DEL':'Deletion' }}
+          </span>
+        </td>
+        <td ng-if="$ctrl.showExpressionInformation">
+          <span ng-if="row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol]">
+            {{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | titlecase}}
+          </span>
+        </td>
       </tr>
 
       <tr ng-repeat-end ng-if="row.moreinfo && $ctrl.isVariantsAnalysis()" class="moreinfo">

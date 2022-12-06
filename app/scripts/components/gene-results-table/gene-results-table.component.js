@@ -25,9 +25,12 @@ angular.module('pandrugsFrontendApp')
       queryResult: '<',
       geneDrugGroups: '<',
       computation: '<',
-      showVariantInformation: '<'
+      showVariantInformation: '<',
+      showCnvInformation: '<',
+      showExpressionInformation: '<'
     },
     controller: ['user','TableHelper', function (user, TableHelper) {
+      this.keys = Object.keys;
       this.csvContent = null;
       this.csvContentSimple = null;
 
@@ -54,6 +57,7 @@ angular.module('pandrugsFrontendApp')
       this.isVariantsAnalysis = function() {
         return this.computation !== undefined && this.showVariantInformation;
       }.bind(this);
+      
       
       this.getPharmcatURL = function(computationId, drugName) {
         return user.getPharmcatURLForComputation(computationId) + '#' + drugName; 
