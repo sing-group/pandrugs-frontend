@@ -209,7 +209,7 @@ angular.module('pandrugsFrontendApp')
             // both data is available
             var cnvGeneList = utilities.parseGenes(cnvReader.result, false); // false is for not filter unique by now...
             var expressionGeneList = utilities.parseGenes(expressionReader.result, false); // false is for not filter unique by now...
-            $scope.geneList = utilities.uniqueIgnoreCase([...cnvGeneList, ...expressionGeneList]);
+            $scope.geneList = utilities.uniqueIgnoreCase(cnvGeneList.concat(expressionGeneList));
             db.genesPresence($scope.geneList)
                 .then(function(presence){
                   $scope.genePresence = presence;
