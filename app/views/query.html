@@ -56,6 +56,9 @@
                 <li ng-class="{active:selectedTab === 'combined'}" role="presentation" ng-click="setSelectedTab('combined')">
                   <a href="/query#combined" aria-controls="combined" data-toggle="tab" role="tab">Combined analysis</a>
                 </li>
+                <li ng-class="{active:selectedTab === 'cnv'}" role="presentation" ng-click="setSelectedTab('cnv')">
+                  <a href="/query#cnv" aria-controls="cnv" data-toggle="tab" role="tab">CNV</a>
+                </li>
               </ul>
 
               <div class="tab-content panel-body">
@@ -79,6 +82,9 @@
                   <combined-query-panel id-prefix="combinedpanel" on-change="updateCombined(cnvFile, expressionFile)"/>
                 </div>
 
+                <div id="cnv" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'cnv'}">
+                  <cnv-query-panel id-prefix="cnvpanel" on-change="updateCNV(cnv)"/>
+                </div>
               </div>
 
               <div class="panel-body" ng-show="selectedTab === 'vcfrank' && !hasResult()">
@@ -161,9 +167,10 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4" ng-if="selectedTab === 'generank' || selectedTab === 'combined'">
+        <div class="col-md-4" ng-if="selectedTab === 'generank' || selectedTab === 'combined' || selectedTab === 'cnv'">
           <h4 class="row" ng-if="selectedTab === 'generank'">GENE Rank</h4>
           <h4 class="row" ng-if="selectedTab === 'combined'">Combined analysis</h4>
+          <h4 class="row" ng-if="selectedTab === 'cnv'">CNV</h4>
           <table>
             <tr ng-if="selectedTab === 'generank'">
               <th>Input file</th><td>{{generank.name}}</td>
@@ -173,6 +180,9 @@
             </tr>
             <tr ng-if="selectedTab === 'combined' && combined.expressionFile">
               <th>Input file</th><td>{{combined.expressionFile.name}}</td>
+            </tr>
+            <tr ng-if="selectedTab === 'cnv'">
+              <th>Input file</th><td>{{cnv.name}}</td>
             </tr>
             <tr>
               <th>No. input genes</th><td>{{geneList.length}}</td>
@@ -293,7 +303,7 @@
   <div class="row" ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult()">
     <gene-results-table query-result="results" gene-drug-groups="resultsFiltered"
                         computation="computation" show-variant-information="selectedTab === 'vcfrank'" 
-                        show-cnv-information="selectedTab === 'combined'" 
+                        show-cnv-information="selectedTab === 'combined' || selectedTab === 'cnv'" 
                         show-expression-information="selectedTab === 'combined'"/>
 
     <drug-results-table ng-if="selectedTab === 'drugs'" gene-drug-group="resultsFiltered[0]"/>

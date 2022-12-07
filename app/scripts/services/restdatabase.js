@@ -157,6 +157,26 @@ angular.module('pandrugsFrontendApp')
         return deferred.promise;
       },
 
+      cnvSearch: function(cnv, advancedQueryOptions) {
+        var deferred = $q.defer();
+
+        var queryString = constructQueryString(advancedQueryOptions);
+
+        var fd = new FormData();
+        fd.append('cnv', cnv);
+
+        $http.post(BACKEND.API + 'genedrug/cnv?' + queryString, fd, {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        })
+        .then(function(results) {
+            deferred.resolve(results.data);
+          }
+        );
+
+        return deferred.promise;
+      },
+
       searchByGenes: function(genesArray, advancedQueryOptions) {
         return searchBy('gene', genesArray, advancedQueryOptions);
       },

@@ -55,7 +55,7 @@ angular.module('pandrugsFrontendApp')
   ) {
 
     this.isValidTab = function(tab) {
-      return tab === 'genes' || tab === 'drugs' || tab === 'generank' || tab === 'vcfrank' || tab === 'combined';
+      return tab === 'genes' || tab === 'drugs' || tab === 'generank' || tab === 'vcfrank' || tab === 'combined'  || tab === 'cnv';
     };
 
 
@@ -84,7 +84,9 @@ angular.module('pandrugsFrontendApp')
 
     $scope.generank = null;
 
-    $scope.combined = null
+    $scope.combined = null;
+
+    $scope.cnv = null;
 
     $scope.computationId = null;
     $scope.computation = null;
@@ -131,6 +133,10 @@ angular.module('pandrugsFrontendApp')
       $scope.combined = {cnvFile: cnvFile, expressionFile: expressionFile};
     };
 
+    $scope.updateCNV = function(cnv) {
+      $scope.cnv = cnv;
+    };
+
     $scope.updateComputation = function(computationId, computation) {
       $scope.computationId = computationId;
       $scope.computation = computation;
@@ -164,6 +170,7 @@ angular.module('pandrugsFrontendApp')
           || ($scope.selectedTab === 'generank' && $scope.generank)
           || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
           || ($scope.selectedTab === 'combined' && $scope.combined && $scope.combined.cnvFile && $scope.combined.expressionFile)
+          || ($scope.selectedTab === 'cnv' && $scope.cnv)
         );
     };
 
@@ -224,6 +231,20 @@ angular.module('pandrugsFrontendApp')
         expressionReader.readAsText($scope.combined.expressionFile);
 
         this.searchBy(db.combinedSearch, $scope.combined);
+      }else if ($scope.selectedTab === 'cnv' && $scope.cnv) {
+        var reader = new FileReader();
+
+        reader.onload = function() {
+          $scope.geneList = utilities.parseGenes(reader.result);
+          db.genesPresence($scope.geneList)
+            .then(function(presence){
+              $scope.genePresence = presence;
+            });
+        };
+
+        reader.readAsText($scope.cnv);
+
+        this.searchBy(db.cnvSearch, $scope.cnv);
       }
     }.bind(this);
 
