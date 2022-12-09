@@ -147,7 +147,7 @@
             <tr><th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td></tr>
             <tr><th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td></tr>
             <tr ng-if="selectedTab === 'vcfrank' && computation.pharmcat === true">
-              <th>Pharmcat report</th>
+              <th>PharmCAT report</th>
               <td>
                 <a ng-href="{{getPharmcatURL(computationId)}}" target="pharmcatReport" class="icon"><span class="glyphicon glyphicon-save-file"></span></a>
               </td>
