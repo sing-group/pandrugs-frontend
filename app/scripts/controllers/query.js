@@ -61,7 +61,7 @@ angular.module('pandrugsFrontendApp')
 
     var example = $location.search().example;
     var urlGeneList = $location.search().genes;
-    this.triggerQueryOnChange = this.isValidTab(example) || urlGeneList != undefined;
+    this.triggerQueryOnChange = this.isValidTab(example) || urlGeneList !== undefined;
 
     $scope.selectedTab = this.isValidTab(example) ? example : 'genes';
 
@@ -100,20 +100,20 @@ angular.module('pandrugsFrontendApp')
 
     $scope.getTitleForCurrentResults = function() {
       switch ($scope.selectedTab) {
-        case "genes":
-          return "GENES";
-        case "drugs":
-          return "DRUG INFORMATION";
+        case 'genes':
+          return 'GENES';
+        case 'drugs':
+          return 'DRUG INFORMATION';
         case "generank":
-          return "GENE Rank";
-        case "vcfrank":
-          return "Small variants";
+          return 'GENE Rank';
+        case 'vcfrank':
+          return 'Small variants';
         case "combined":
-          return "Combined analysis";
-        case "cnv":
-          return "CNV";
+          return 'Combined analysis';
+        case 'cnv':
+          return 'CNV';
       }
-    }
+    };
 
     $scope.getInputFilesForCurrentResults = function() {
       if ($scope.selectedTab === 'generank' && $scope.generank) {
@@ -123,8 +123,8 @@ angular.module('pandrugsFrontendApp')
       } else if ($scope.selectedTab === 'cnv' && $scope.cnv) {
         return [$scope.cnv];
       }
+    };
 
-    }
     $scope.setSelectedTab = function (tab) {
       if (this.isValidTab(tab) && $scope.selectedTab !== tab) {
         $scope.selectedTab = tab;        
@@ -228,7 +228,7 @@ angular.module('pandrugsFrontendApp')
         var cnvReader = new FileReader();
         var expressionReader = new FileReader();
 
-        function onOneReaded() {
+        var onOneReaded = function onOneReaded() {
           if (expressionReader.readyState === FileReader.DONE && cnvReader.readyState === FileReader.DONE) {
             // both data is available
             var cnvGeneList = utilities.parseGenes(cnvReader.result, false); // false is for not filter unique by now...
