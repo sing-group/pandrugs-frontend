@@ -73,8 +73,12 @@ angular
         controller: 'AboutCtrl'
       })
       .when('/help', {
-        templateUrl: 'views/help.html',
+        templateUrl: 'views/markdown.html',
         controller: 'HelpCtrl'
+      })
+      .when('/faqs', {
+        templateUrl: 'views/markdown.html',
+        controller: 'FaqCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',

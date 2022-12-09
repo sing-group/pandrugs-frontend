@@ -451,7 +451,8 @@ module.exports = function (grunt) {
             'downloads/*.*',
             'd3/*.*',
             'd3/data/*.*',
-            'help/*.*'
+            'help/*.*',
+            'faqs/*.*'
           ]
         }, {
           expand: true,
