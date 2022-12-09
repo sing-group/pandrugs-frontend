@@ -243,6 +243,7 @@
             [<a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">PubMed</a>]
             [<a target="_blank" href="https://clinicaltrials.gov/ct2/results?term=&quot;{{ geneDrug.getDrugAndGenesAsText('&quot;+&quot;') }}&quot;">ClinicalTrials.gov</a>]
           </div>
+          <div>{{row.calculatedGeneAnnotations.coherence[geneDrug.gene[0].geneSymbol]}}</div>
         </td>
         <td class="min-column" style="white-space: nowrap">
           <span ng-class="geneDrug.sensitivity | lowercase">{{geneDrug.sensitivity | titlecase}}</span></span>
