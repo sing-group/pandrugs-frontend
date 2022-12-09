@@ -176,14 +176,14 @@
         <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true">
           <a ng-if="row.pharmCatGermLineAnnotation !== 'NOT_AVAILABLE'" 
               ng-href="{{$ctrl.getPharmcatURL($ctrl.computation.id, row.showDrugName | lowercase)}}" target="pharmcatReport">
-              <span title="{{row.pharmCatGermLineAnnotation | titlecase | replace:'_':' '}}" class="pharmcat_icon {{row.pharmCatGermLineAnnotation | toIconClass}}"></span>
+              <span title="{{row.pharmCatGermLineAnnotation | titlecase | replace:'_':' '}}" class="custom_icon {{row.pharmCatGermLineAnnotation | toIconClass}}"></span>
           </a>
          </td>
         <td ng-if="$ctrl.showCnvInformation" style="text-align: center" >
-          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.cnv).length > 0" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="There is CNV information related to some genes. Expand this row to see it."></span>
+          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.cnv).length > 0" class="custom_icon has_cnv" aria-hidden="true" title="There is CNV information related to some genes. Expand this row to see it."></span>
         </td>
         <td ng-if="$ctrl.showExpressionInformation" style="text-align: center" >
-          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.expression).length > 0" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="There is expression information related to some genes. Expand this row to see it."></span>
+          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.expression).length > 0" class="custom_icon has_expression" aria-hidden="true" title="There is expression information related to some genes. Expand this row to see it."></span>
         </td>
       </tr>
       <!-- Gene Drugs -->
@@ -272,10 +272,10 @@
           {{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'Amplification' | replace:'DEL':'Deletion' }}
           </span>
         </td>
-        <td ng-if="$ctrl.showExpressionInformation">
-          <span ng-if="row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol]">
-            {{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | titlecase}}
-          </span>
+        <td ng-if="$ctrl.showExpressionInformation" style="text-align: center">
+          <span  ng-if="row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol]""
+            title="{{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | titlecase | replace:'_':' '}}" 
+            class="custom_icon {{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | toIconClass}}"></span>
         </td>
       </tr>
 

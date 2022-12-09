@@ -288,11 +288,12 @@ div.legend-body {
   background-image: url("../images/drug.png");
 }
 
-.pharmcat_icon {
+.custom_icon {
   display: inline-block; 
   width: 30px;
   height: 30px;
   background-size: 30px;
+  background-repeat: no-repeat;
 }
 
 .warning_pharmcat_icon {
@@ -313,6 +314,26 @@ div.legend-body {
 
 .moderately_not_recommended_pharmcat_icon {
   background-image: url("../images/PharmCAT/moderately-not-recommended.png");
+}
+
+.underexpressed_icon {
+  background-image: url("../images/Expression/underexpressed.png");
+}
+
+.overexpressed_icon {
+  background-image: url("../images/Expression/overexpressed.png");
+}
+
+.highly_overexpressed_icon {
+  background-image: url("../images/Expression/highly-overexpressed-oncogene.png");
+}
+
+.has_expression {
+  background-image: url("../images/Icons/expression.png");
+}
+
+.has_cnv {
+  background-image: url("../images/Icons/cnvs.png");
 }
 
 .boxed-element {

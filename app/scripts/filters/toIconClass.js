@@ -16,6 +16,12 @@ angular.module('pandrugsFrontendApp')
               return 'moderately_not_recommended_pharmcat_icon';
             case 'NOT_AVAILABLE':
               return '';
+            case 'UNDEREXPRESSED':
+              return 'underexpressed_icon';
+            case 'OVEREXPRESSED':
+              return 'overexpressed_icon';
+            case 'HIGHLY_OVEREXPRESSED':
+              return 'highly_overexpressed_icon';
         }
     };
   });
