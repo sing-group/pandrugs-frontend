@@ -98,9 +98,36 @@ angular.module('pandrugsFrontendApp')
     $scope.results = null;
     $scope.resultsFiltered = null;
 
+    $scope.getTitleForCurrentResults = function() {
+      switch ($scope.selectedTab) {
+        case "genes":
+          return "GENES";
+        case "drugs":
+          return "DRUG INFORMATION";
+        case "generank":
+          return "GENE Rank";
+        case "vcfrank":
+          return "Small variants";
+        case "combined":
+          return "Combined analysis";
+        case "cnv":
+          return "CNV";
+      }
+    }
+
+    $scope.getInputFilesForCurrentResults = function() {
+      if ($scope.selectedTab === 'generank' && $scope.generank) {
+        return [$scope.generank];
+      } else if ($scope.selectedTab === 'combined' && $scope.combined && $scope.combined.cnvFile && $scope.combined.expressionFile) {
+        return $scope.combined;
+      } else if ($scope.selectedTab === 'cnv' && $scope.cnv) {
+        return [$scope.cnv];
+      }
+
+    }
     $scope.setSelectedTab = function (tab) {
       if (this.isValidTab(tab) && $scope.selectedTab !== tab) {
-        $scope.selectedTab = tab;
+        $scope.selectedTab = tab;        
       }
     }.bind(this);
 
@@ -188,17 +215,7 @@ angular.module('pandrugsFrontendApp')
       } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
         this.searchBy(db.searchByDrugs, [ $scope.selectedDrug ], AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
       } else if ($scope.selectedTab === 'generank' && $scope.generank) {
-        var reader = new FileReader();
-
-        reader.onload = function() {
-          $scope.geneList = utilities.parseGenes(reader.result);
-          db.genesPresence($scope.geneList)
-            .then(function(presence){
-              $scope.genePresence = presence;
-            });
-        };
-
-        reader.readAsText($scope.generank);
+        this.fileReader($scope.generank);
 
         this.searchBy(db.rankedSearch, $scope.generank);
       } else if ($scope.selectedTab === 'vcfrank' && $scope.computation) {
@@ -232,21 +249,25 @@ angular.module('pandrugsFrontendApp')
 
         this.searchBy(db.combinedSearch, $scope.combined);
       }else if ($scope.selectedTab === 'cnv' && $scope.cnv) {
-        var reader = new FileReader();
-
-        reader.onload = function() {
-          $scope.geneList = utilities.parseGenes(reader.result);
-          db.genesPresence($scope.geneList)
-            .then(function(presence){
-              $scope.genePresence = presence;
-            });
-        };
-
-        reader.readAsText($scope.cnv);
+        this.fileReader($scope.cnv);
 
         this.searchBy(db.cnvSearch, $scope.cnv);
       }
     }.bind(this);
+
+    this.fileReader = function(file){
+      var reader = new FileReader();
+
+      reader.onload = function() {
+        $scope.geneList = utilities.parseGenes(reader.result);
+          db.genesPresence($scope.geneList)
+            .then(function(presence){
+              $scope.genePresence = presence;
+          });
+      };
+
+      reader.readAsText(file);
+    };
 
     this.checkTriggerQuery = function() {
       if (this.triggerQueryOnChange && $scope.canQuery()) {
@@ -271,7 +292,6 @@ angular.module('pandrugsFrontendApp')
         searchFunction(value, advancedQueryOptions || $scope.advancedQueryOptions)
           .then(function(result) {
             $scope.isLoading = false;
-
             $scope.results = QueryResultFactory.createQueryResult(result.geneDrugGroup, $scope.advancedQueryOptions);
             $scope.resultsFiltered = $scope.results.getFilteredGroups();
             this.updateCharts($scope.resultsFiltered);

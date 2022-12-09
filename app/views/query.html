@@ -109,7 +109,7 @@
     <div class="col-md-10 col-lg-8 col-md-push-1 col-lg-push-2 results-summary" ng-if="selectedTab === 'drugs'" ng-init="geneDrugGroup = resultsFiltered[0]">
       <div class="row">
         <div class="col-md-12">
-          <h4 class="row">DRUG INFORMATION</h4>
+          <h4 class="row">{{getTitleForCurrentResults()}}</h4>
           <dl>
             <dt>Drug</dt>
             <dd ng-if="geneDrugGroup.pubchemId.length === 0">
@@ -134,105 +134,19 @@
 
     <div class="col-md-10 col-lg-8 col-md-push-1 col-lg-push-2 results-summary" ng-if="selectedTab !== 'drugs'">
       <div class="row">
-        <div class="col-md-4" ng-if="selectedTab === 'genes'">
-          <h4 class="row">GENES</h4>
+        <div class="col-md-4" ng-if="selectedTab !== 'drugs'">
+          <h4 class="row">{{getTitleForCurrentResults()}}</h4>
           <table>
-            <tr>
-              <th>No. input genes</th><td>{{geneList.length}}</td>
+            <tr ng-repeat="file in getInputFilesForCurrentResults()">
+              <th>Input file</th><td>{{file.name}}</td>
             </tr>
-            <tr>
-              <th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td>
-            </tr>
-            <tr>
-              <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
-            </tr>
-          </table>
-          <button class="btn btn-default" data-target="#genespresencedetails" data-toggle="modal">Show genes</button>
-          <div id="genespresencedetails" class="modal fade" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title">Genes in query</h4>
-                </div>
-                <div class="modal-body">
-                  <h4>Input genes ({{geneList.length}})</h4>
-                    {{geneList | enumeration}}
-                  <h4>Genes in PanDrugs ({{genePresence.present.length}})</h4>
-                    {{genePresence.present | enumeration}}
-                  <h4>Genes not in PanDrugs ({{genePresence.absent.length}})</h4>
-                    {{genePresence.absent | enumeration}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4" ng-if="selectedTab === 'generank' || selectedTab === 'combined' || selectedTab === 'cnv'">
-          <h4 class="row" ng-if="selectedTab === 'generank'">GENE Rank</h4>
-          <h4 class="row" ng-if="selectedTab === 'combined'">Combined analysis</h4>
-          <h4 class="row" ng-if="selectedTab === 'cnv'">CNV</h4>
-          <table>
-            <tr ng-if="selectedTab === 'generank'">
-              <th>Input file</th><td>{{generank.name}}</td>
-            </tr>
-            <tr ng-if="selectedTab === 'combined' && combined.cnvFile">
-              <th>Input file</th><td>{{combined.cnvFile.name}}</td>
-            </tr>
-            <tr ng-if="selectedTab === 'combined' && combined.expressionFile">
-              <th>Input file</th><td>{{combined.expressionFile.name}}</td>
-            </tr>
-            <tr ng-if="selectedTab === 'cnv'">
-              <th>Input file</th><td>{{cnv.name}}</td>
-            </tr>
-            <tr>
-              <th>No. input genes</th><td>{{geneList.length}}</td>
-            </tr>
-            <tr>
-              <th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td>
-            </tr>
-            <tr>
-              <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
-            </tr>
-          </table>
-          <button class="btn btn-default" data-target="#genespresencedetails" data-toggle="modal">Show genes</button>
-          <div id="genespresencedetails" class="modal fade" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title">Genes in query</h4>
-                </div>
-                <div class="modal-body">
-                  <h4>Input genes ({{geneList.length}})</h4>
-                    {{geneList | enumeration}}
-                  <h4>Genes in PanDrugs ({{genePresence.present.length}})</h4>
-                    {{genePresence.present | enumeration}}
-                  <h4>Genes not in PanDrugs ({{genePresence.absent.length}})</h4>
-                    {{genePresence.absent | enumeration}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4" ng-if="selectedTab === 'vcfrank'">
-          <h4 class="row">Genomic variants</h4>
-          <table>
-            <tr>
-              <th>Name</th><td>{{computation.name}}</td>
-            </tr>
-            <tr>
-              <th>No. variants</th><td>{{computation.variantsInInput}}</td>
-            </tr>
-            <tr>
-              <th>No. affected genes</th><td>{{computation.affectedGenes.length}}</td>
-            </tr>
-            <tr>
-              <th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td>
-            </tr>
-            <tr>
-              <th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td>
-            </tr>
-            <tr ng-if="computation.pharmcat === true">
+            <tr ng-if="selectedTab !== 'vcfrank'"><th>No. input genes</th><td>{{geneList.length}}</td></tr>
+            <tr ng-if="selectedTab === 'vcfrank'"><th>Name</th><td>{{computation.name}}</td></tr>
+            <tr ng-if="selectedTab === 'vcfrank'"><th>No. variants</th><td>{{computation.variantsInInput}}</td></tr>
+            <tr ng-if="selectedTab === 'vcfrank'"><th>No. affected genes</th><td>{{computation.affectedGenes.length}}</td></tr>
+            <tr><th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td></tr>
+            <tr><th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td></tr>
+            <tr ng-if="selectedTab === 'vcfrank' && computation.pharmcat === true">
               <th>Pharmcat report</th>
               <td>
                 <a ng-href="{{getPharmcatURL(computationId)}}" target="pharmcatReport" class="icon"><span class="glyphicon glyphicon-save-file"></span></a>
@@ -248,12 +162,14 @@
                   <h4 class="modal-title">Genes in query</h4>
                 </div>
                 <div class="modal-body">
-                  <h4>Affected genes ({{computation.affectedGenes.length}})</h4>
-                    {{computation.affectedGenes | enumeration}}
+                  <h4 ng-if="selectedTab !== 'vcfrank'">Input genes ({{geneList.length}})</h4>
+                  <p ng-if="selectedTab !== 'vcfrank'">{{geneList | enumeration}}</p>
+                  <h4 ng-if="selectedTab === 'vcfrank'">Affected genes ({{computation.affectedGenes.length}})</h4>
+                  <p ng-if="selectedTab === 'vcfrank'">{{computation.affectedGenes | enumeration}}</p>
                   <h4>Genes in PanDrugs ({{genePresence.present.length}})</h4>
-                    {{genePresence.present | enumeration}}
+                  <p>{{genePresence.present | enumeration}}</p>
                   <h4>Genes not in PanDrugs ({{genePresence.absent.length}})</h4>
-                    {{genePresence.absent | enumeration}}
+                  <p>{{genePresence.absent | enumeration}}</p>
                 </div>
               </div>
             </div>
