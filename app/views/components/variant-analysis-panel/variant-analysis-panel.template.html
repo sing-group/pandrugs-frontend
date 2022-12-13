@@ -1,0 +1,78 @@
+<!--
+  This file is part of PanDrugs Backend.
+
+  PanDrugs Backend is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  PanDrugs Backend is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="panel panel-default" ng-show="$ctrl.computations && !$ctrl.isAnonymous()">
+  <div class="panel-heading" role="tab">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="computationselect">
+        Your variant analyses
+      </a>
+    </h4>
+  </div>
+
+  <div class="panel-collapse collapse in" role="tabpanel" aria-labelledby="computationselect">
+    <div class="panel-body">
+      Select one of your analysis to do the Query
+      <div ng-repeat="(id, status) in $ctrl.computations" class="computationSubmit">
+        <div class="radio">
+          <label>
+            <input ng-disabled="!status.canBeQueried()" type="radio"
+                    name="computationid" ng-model="$ctrl.computationId" ng-value="id"
+                    ng-change="$ctrl.notifyComputationIdChange()"/>
+            {{status.name}}
+          </label>
+
+          <span class="affectedGenes" ng-show="status.affectedGenes != null"
+                ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
+
+          <input ng-show="status.finished" type="button" class="deleteButton btn btn-danger"
+                  ng-click="$ctrl.deleteComputation(id)" value="Delete"/>&nbsp;
+          <input ng-show="status.finished" type="button" class="downloadButton btn btn-default"
+                  ng-click="$ctrl.downloadVScoreFile(id)" value="Download VScores"/>
+          <img ng-show="!status.finished" src="images/spinner.gif" width="20px">
+        </div>
+
+        <div class="progress">
+          <div ng-class="{'progress-bar': true, error: status.isFailed(), success: status.isSuccess()}"
+                role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+                style="width:{{status.overallProgress | percentage: 0}}">
+            {{status.taskName}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-show="$ctrl.computations && $ctrl.isAnonymous()">
+  <div ng-repeat="(id, status) in $ctrl.computations">
+    <div class="radio">
+      <img ng-show="!status.finished" src="images/spinner.gif" width="20px">{{status.name}} (id: {{id}})<br>
+      <span class="affectedGenes" ng-show="status.affectedGenes != null"
+            ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
+      <input ng-show="status.finished" type="button" class="downloadButton btn btn-default"
+              ng-click="$ctrl.downloadVScoreFile(id)" value="Download VScores"/>
+    </div>
+    <div class="progress">
+      <div ng-class="{'progress-bar': true, error: status.isFailed(), success: status.isSuccess()}"
+            role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+            style="width:{{status.overallProgress | percentage: 0}}">
+        {{status.taskName}}
+      </div>
+    </div>
+  </div>
+</div>

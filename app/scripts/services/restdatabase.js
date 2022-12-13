@@ -136,16 +136,25 @@ angular.module('pandrugsFrontendApp')
         return deferred.promise;
       },
 
-      combinedSearch: function(combinedFile, advancedQueryOptions) {
+      combinedSearch: function(combined, advancedQueryOptions) {
         var deferred = $q.defer();
 
         var queryString = constructQueryString(advancedQueryOptions);
+        var url = BACKEND.API + 'genedrug/combined?' + queryString;
+
+        if(combined.computationId !== null){
+          queryString = 'computationId=' + combined.computationId + '&' + queryString;
+          url = BACKEND.API + 'genedrug/fromComputationId/combined?' + queryString;
+        }
 
         var fd = new FormData();
-        fd.append('cnv', combinedFile.cnvFile);
-        fd.append('expressiongenerank', combinedFile.expressionFile);
-
-        $http.post(BACKEND.API + 'genedrug/combined?' + queryString, fd, {
+        if(combined.cnvFile){
+          fd.append('cnv', combined.cnvFile);
+        }
+        if(combined.expressionFile){
+          fd.append('expressiongenerank', combined.expressionFile);
+        }
+        $http.post(url, fd, {
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
         })

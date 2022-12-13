@@ -336,6 +336,10 @@ div.legend-body {
   background-image: url("../images/Icons/cnvs.png");
 }
 
+.has_snv {
+  background-image: url("../images/Icons/small-variants.png");
+}
+
 .boxed-element {
   @include border-radius(4px);
   padding: 2px;

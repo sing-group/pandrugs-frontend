@@ -7,5 +7,11 @@
   <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file-expression' }}">Select a EXPRESSION</label>
   <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file-expression' }}"
          ng-attr-name="{{ $ctrl.idPrefix + '-input-file-expression' }}"
-         class="file" type="file" file-model on-file-change="$ctrl.changeExpressionFile(file)"/>
+         class="file" type="file" file-model on-file-change="$ctrl.changeExpressionFile(file)"/> 
+  
+  <label style="display:block"><input type="checkbox" ng-model="$ctrl.combinedWithVCF" ng-change="$ctrl.changeWithCombined()"/> With variant analysis</label>    
+  
+  <variant-analysis-panel ng-if="$ctrl.combinedWithVCF == true" on-selected="$ctrl.selectedComputation(computationId, computation)">
+
 </div>
+   

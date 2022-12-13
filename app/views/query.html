@@ -75,11 +75,12 @@
                 </div>
 
                 <div id="vcfrank" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'vcfrank'}">
-                  <vcf-query-panel id-prefix="vcfquerypanel" autoreload="selectedTab === 'vcfrank'" on-change="updateComputation(computationId, computation)"/>
+                  <vcf-query-panel id-prefix="vcfquerypanel" autoreload="selectedTab === 'vcfrank'"/>
+                  <variant-analysis-panel autoreload="selectedTab === 'vcfrank'" on-selected="updateComputation(computationId, computation)"/>
                 </div>
                 
                 <div id="combined" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'combined'}">
-                  <combined-query-panel id-prefix="combinedpanel" on-change="updateCombined(cnvFile, expressionFile)"/>
+                  <combined-query-panel id-prefix="combinedpanel" on-change="updateCombined(cnvFile, expressionFile, computationId, computation)"/>
                 </div>
 
                 <div id="cnv" class="tab-pane" role="tabpanel" ng-class="{active:selectedTab === 'cnv'}">
@@ -140,6 +141,7 @@
             <tr ng-repeat="file in getInputFilesForCurrentResults()">
               <th>Input file</th><td>{{file.name}}</td>
             </tr>
+            <tr ng-if="selectedTab === 'combined' && combined.computationId !== null"><th>Variant analysis</th><td>{{combined.computation.name}}</td></tr>
             <tr ng-if="selectedTab !== 'vcfrank'"><th>No. input genes</th><td>{{geneList.length}}</td></tr>
             <tr ng-if="selectedTab === 'vcfrank'"><th>Name</th><td>{{computation.name}}</td></tr>
             <tr ng-if="selectedTab === 'vcfrank'"><th>No. variants</th><td>{{computation.variantsInInput}}</td></tr>
@@ -220,7 +222,8 @@
     <gene-results-table query-result="results" gene-drug-groups="resultsFiltered"
                         computation="computation" show-variant-information="selectedTab === 'vcfrank'" 
                         show-cnv-information="selectedTab === 'combined' || selectedTab === 'cnv'" 
-                        show-expression-information="selectedTab === 'combined'"/>
+                        show-expression-information="selectedTab === 'combined'" 
+                        show-snv-information="selectedTab === 'combined' && combined.computationId !== null"/>
 
     <drug-results-table ng-if="selectedTab === 'drugs'" gene-drug-group="resultsFiltered[0]"/>
   </div>

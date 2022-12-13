@@ -104,11 +104,11 @@ angular.module('pandrugsFrontendApp')
           return 'GENES';
         case 'drugs':
           return 'DRUG INFORMATION';
-        case "generank":
+        case 'generank':
           return 'GENE Rank';
         case 'vcfrank':
           return 'Small variants';
-        case "combined":
+        case 'combined':
           return 'Combined analysis';
         case 'cnv':
           return 'CNV';
@@ -118,8 +118,15 @@ angular.module('pandrugsFrontendApp')
     $scope.getInputFilesForCurrentResults = function() {
       if ($scope.selectedTab === 'generank' && $scope.generank) {
         return [$scope.generank];
-      } else if ($scope.selectedTab === 'combined' && $scope.combined && $scope.combined.cnvFile && $scope.combined.expressionFile) {
-        return $scope.combined;
+      } else if ($scope.selectedTab === 'combined' && $scope.combined) {
+        var result = [];
+        if ($scope.combined.cnvFile){
+          result.push($scope.combined.cnvFile);
+        }
+        if ($scope.combined.expressionFile){
+          result.push($scope.combined.expressionFile);
+        }
+        return result;
       } else if ($scope.selectedTab === 'cnv' && $scope.cnv) {
         return [$scope.cnv];
       }
@@ -156,8 +163,18 @@ angular.module('pandrugsFrontendApp')
       $scope.generank = generank;
     };
 
-    $scope.updateCombined = function(cnvFile, expressionFile) {
-      $scope.combined = {cnvFile: cnvFile, expressionFile: expressionFile};
+    $scope.updateCombined = function(cnvFile, expressionFile, computationId, computation) {
+      $scope.combined = {cnvFile: cnvFile, expressionFile: expressionFile, computationId: computationId, computation: computation};
+    };
+
+    $scope.getSelectedCombinedItems = function(){
+      var count = 0;
+      if($scope.combined){
+        if ($scope.combined.cnvFile){count += 1;}
+        if ($scope.combined.expressionFile){count += 1;}
+        if ($scope.combined.computationId){count += 1;}
+      }
+      return count;
     };
 
     $scope.updateCNV = function(cnv) {
@@ -196,7 +213,7 @@ angular.module('pandrugsFrontendApp')
           || ($scope.selectedTab === 'drugs' && $scope.selectedDrug)
           || ($scope.selectedTab === 'generank' && $scope.generank)
           || ($scope.selectedTab === 'vcfrank' && $scope.computationId && $scope.computation && $scope.computation.canBeQueried())
-          || ($scope.selectedTab === 'combined' && $scope.combined && $scope.combined.cnvFile && $scope.combined.expressionFile)
+          || ($scope.selectedTab === 'combined' && $scope.getSelectedCombinedItems() >= 2)
           || ($scope.selectedTab === 'cnv' && $scope.cnv)
         );
     };
@@ -224,28 +241,42 @@ angular.module('pandrugsFrontendApp')
         });
 
         this.searchBy(db.computationIdSearch, $scope.computationId);
-      } else if ($scope.selectedTab === 'combined' && $scope.combined && $scope.combined.cnvFile && $scope.combined.expressionFile) {
-        var cnvReader = new FileReader();
-        var expressionReader = new FileReader();
+      } else if ($scope.selectedTab === 'combined' && $scope.getSelectedCombinedItems() >= 2) {
 
+        var readers = [];
         var onOneReaded = function onOneReaded() {
-          if (expressionReader.readyState === FileReader.DONE && cnvReader.readyState === FileReader.DONE) {
-            // both data is available
-            var cnvGeneList = utilities.parseGenes(cnvReader.result, false); // false is for not filter unique by now...
-            var expressionGeneList = utilities.parseGenes(expressionReader.result, false); // false is for not filter unique by now...
-            $scope.geneList = utilities.uniqueIgnoreCase(cnvGeneList.concat(expressionGeneList));
-            db.genesPresence($scope.geneList)
-                .then(function(presence){
-                  $scope.genePresence = presence;
-            });
-            
-          }
-        }
-        cnvReader.onload = onOneReaded;
-        cnvReader.readAsText($scope.combined.cnvFile);
+          if (readers.filter(function(r) { return r.readyState === FileReader.DONE;}).length === readers.length) {
+            //all files (one or two) are read
+            var allGenes = readers.map(function(reader) {return utilities.parseGenes(reader.result,false);})
+              .reduce(function(totalArray, currentSubArray) { return totalArray.concat(currentSubArray);}, []);
 
-        expressionReader.onload = onOneReaded;
-        expressionReader.readAsText($scope.combined.expressionFile);
+            if ($scope.combined.computation) {
+              allGenes = allGenes.concat($scope.combined.computation.affectedGenes);
+            }
+
+            $scope.geneList = utilities.uniqueIgnoreCase(allGenes);
+
+            db.genesPresence($scope.geneList)
+                  .then(function(presence){
+                    $scope.genePresence = presence;
+              });
+          }
+        };
+
+        var files = [];
+        if ($scope.combined.cnvFile) {
+          files = files.concat($scope.combined.cnvFile);
+        }
+        if ($scope.combined.expressionFile) {
+          files = files.concat($scope.combined.expressionFile);
+        }
+
+        readers = files.map(function() {
+          var reader = new FileReader();
+          reader.onload = onOneReaded;          
+          return reader;
+        });
+        readers.forEach(function(reader, index)  {reader.readAsText(files[index]);});
 
         this.searchBy(db.combinedSearch, $scope.combined);
       }else if ($scope.selectedTab === 'cnv' && $scope.cnv) {

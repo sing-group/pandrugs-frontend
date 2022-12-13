@@ -23,14 +23,11 @@ angular.module('pandrugsFrontendApp')
     templateUrl: 'views/components/vcf-query-panel/vcf-query-panel.template.html',
     bindings: {
       idPrefix: '@',
-      reloadInterval: '@',
-      autoreload: '<',
-      onChange: '&'
+      autoreload: '<'
     },
-    controller: ['user', '$location', '$scope', '$interval', '$timeout', function (user, $location, $scope, $interval, $timeout) {
+    controller: ['user', '$location', '$timeout', function (user, $location, $timeout) {
       this.vcfFile = '';
       this.computationName = 'My Computation';
-      this.computations = [];
       this.computationId = $location.search().computationId;
       this.withPharmcat = false;
       this.tsvFile = '';
@@ -38,45 +35,6 @@ angular.module('pandrugsFrontendApp')
       if (this.autoreload === undefined) {
         this.autoreload = true;
       }
-
-      this.$onInit = function () {
-        if ($location.search().example === 'vcfrank') {
-          this.computationId = 'example';
-
-          user.getComputation('guest', 'example', function(computation){
-            this.computationId = 'example';
-            this.computations.example = new Computation(this.computationId, computation);
-            this.notifyComputationIdChange();
-          }.bind(this));
-        }
-
-        // User requires some time to load the actual user.
-        // This delay wait for the current user to be set.
-        $timeout(this.reloadComputations, 1000)
-          .then(function() {
-            this.reloadComputationsTask = $interval(
-              function() {
-                if (this.autoreload) {
-                  this.reloadComputations();
-                }
-              }.bind(this),
-              this.reloadInterval ? this.reloadInterval : 5000
-            );
-          }.bind(this));
-      }.bind(this);
-
-      this.$onDestroy = function() {
-        if (this.reloadComputationsTask !== undefined) {
-          $interval.cancel(this.reloadComputationsTask);
-        }
-      }.bind(this);
-
-      this.notifyComputationIdChange = function () {
-        this.onChange({
-          computationId: this.computationId,
-          computation: this.computations[this.computationId]
-        });
-      }.bind(this);
 
       this.changeFile = function(file, option) {
         if (option == "VCF"){
@@ -113,78 +71,5 @@ angular.module('pandrugsFrontendApp')
       this.isAnonymous = function() {
         return user.getCurrentUser() === 'anonymous';
       };
-
-      this.deleteComputation = function(computationId) {
-        if (window.confirm('Are you sure?')) {
-          user.deleteComputation(computationId,
-            function() {
-              window.alert('Computation deleted successfully.');
-            },
-            function() {
-              window.alert('ERROR: computation could not be deleted.');
-            }
-          );
-        }
-      };
-
-      this.downloadVScoreFile = function(computationId) {
-        window.location.href = user.getVscoreDownloadURLForComputation(computationId);
-      };
-
-      function Computation(computationId, computation) {
-        this.id = computationId;
-        angular.merge(this, computation);
-      };
-
-      Computation.prototype.canBeQueried = function() {
-        return this.isSuccess() && this.hasAffectedGenes();
-      };
-
-      Computation.prototype.hasAffectedGenes = function() {
-        return this.countAffectedGenes() > 0;
-      };
-
-      Computation.prototype.countAffectedGenes = function() {
-        return this.affectedGenes ? this.affectedGenes.length : 0;
-      };
-
-      Computation.prototype.isFailed = function() {
-        return this.failed;
-      };
-
-      Computation.prototype.isSuccess = function() {
-        return this.finished && !this.isFailed();
-      };
-
-      //update computation status...
-      this.reloadComputations = function() {
-        if (!this.isAnonymous()) {
-          user.getComputations(function(computations) {
-            var savedExample;
-
-            if (this.computations.example) {
-              savedExample = this.computations.example;
-            }
-
-            this.computations = {};
-            for (var computationId in computations) {
-              if (computations.hasOwnProperty(computationId)) {
-                this.computations[computationId] = new Computation(computationId, computations[computationId]);
-              }
-            }
-
-            if (savedExample) {
-              this.computations.example = savedExample;
-            }
-          }.bind(this));
-        } else if(this.computationId) {
-          user.getComputation('guest', this.computationId, function(computation) {
-            this.computations = {};
-            this.computations[this.computationId] = new Computation(this.computationId, computation);
-
-            this.notifyComputationIdChange();
-          }.bind(this));
-        }
-      }.bind(this);
     }]
   });

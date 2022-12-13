@@ -27,7 +27,8 @@ angular.module('pandrugsFrontendApp')
       computation: '<',
       showVariantInformation: '<',
       showCnvInformation: '<',
-      showExpressionInformation: '<'
+      showExpressionInformation: '<',
+      showSnvInformation: '<'
     },
     controller: ['user','TableHelper', function (user, TableHelper) {
       this.keys = Object.keys;

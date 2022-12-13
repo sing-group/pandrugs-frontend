@@ -28,13 +28,33 @@ angular.module('pandrugsFrontendApp')
     controller: function () {
         this.cnvFile = null;
         this.expressionFile = null;
+        this.combinedWithVCF = false;
+        this.computationId = null;
+        this.computation = null;
+
         this.changeCNVFile = function (cnvFile) {
           this.cnvFile = cnvFile;
-          this.onChange({cnvFile: this.cnvFile, expressionFile: this.expressionFile});
+          this.onChange({cnvFile: this.cnvFile, expressionFile: this.expressionFile,
+            computationId: this.computationId, computation: this.computation});
         }.bind(this);
+        
         this.changeExpressionFile = function (expressionFile) {
           this.expressionFile = expressionFile;
-          this.onChange({cnvFile: this.cnvFile, expressionFile: this.expressionFile});
+          this.onChange({cnvFile: this.cnvFile, expressionFile: this.expressionFile,
+            computationId: this.computationId, computation: this.computation});
+        }.bind(this);
+
+        this.changeWithCombined = function(){
+          if(this.combinedWithVCF == false){
+            this.selectedComputation(null, null);
+          }
+        }
+
+        this.selectedComputation = function(computationId, computation) {
+          this.computationId =  computationId;
+          this.computation = computation;
+          this.onChange({cnvFile: this.cnvFile, expressionFile: this.expressionFile,
+            computationId: this.computationId, computation: this.computation});
         }.bind(this);
       }
   });
