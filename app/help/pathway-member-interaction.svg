@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1168.02 226.8" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<clipPath id="TextBounds">
+<rect height="161.595" width="90.3988" x="543.772" y="32.6025"/>
+</clipPath>
+<clipPath id="TextBounds_2">
+<rect height="161.595" width="96.7112" x="1006.04" y="32.6025"/>
+</clipPath>
+<clipPath id="TextBounds_3">
+<rect height="161.595" width="102.968" x="62.1394" y="32.6025"/>
+</clipPath>
+</defs>
+<g id="layer1" vectornator:layerName="layer1">
+<g opacity="1">
+<g opacity="1">
+<path d="M489.746 113.4C489.746 58.5995 534.171 14.175 588.971 14.175C643.772 14.175 688.196 58.5995 688.196 113.4C688.196 168.2 643.772 212.625 588.971 212.625C534.171 212.625 489.746 168.2 489.746 113.4Z" fill="none" opacity="1" stroke="#808080" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="28.35"/>
+<path clip-path="url(#TextBounds)" d="M550.627 76.1685L626.873 76.1685L626.873 96.2128L601.291 96.2128L601.291 157.342L576.208 157.342L576.208 96.2128L550.627 96.2128L550.627 76.1685Z" fill="#808080" opacity="1" stroke="#808080" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="2.268"/>
+</g>
+<g opacity="1">
+<g opacity="1">
+<path d="M770.896 113.4L940.996 113.4" fill="none" opacity="1" stroke="#0000ff" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="28.35"/>
+<path d="M756.721 56.7L756.721 170.1" fill="none" opacity="1" stroke="#0000ff" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="28.35"/>
+</g>
+<g opacity="1">
+<path d="M999.272 14.175L1109.52 14.175C1133.88 14.175 1153.62 33.9192 1153.62 58.275L1153.62 168.525C1153.62 192.881 1133.88 212.625 1109.52 212.625L999.272 212.625C974.916 212.625 955.172 192.881 955.172 168.525L955.172 58.275C955.172 33.9192 974.916 14.175 999.272 14.175Z" fill="none" opacity="1" stroke="#0000ff" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="28.35"/>
+<path clip-path="url(#TextBounds_2)" d="M1018.93 76.1685L1056.2 76.1685C1063.54 76.1685 1069.48 77.1652 1074 79.1585C1078.52 81.1519 1082.26 84.0127 1085.21 87.741C1088.16 91.4694 1090.3 95.8068 1091.63 100.753C1092.96 105.7 1093.63 110.942 1093.63 116.479C1093.63 125.153 1092.64 131.881 1090.66 136.661C1088.69 141.442 1085.95 145.447 1082.44 148.677C1078.94 151.907 1075.17 154.057 1071.15 155.128C1065.65 156.604 1060.66 157.342 1056.2 157.342L1018.93 157.342L1018.93 76.1685ZM1044.01 94.5517L1044.01 138.904L1050.16 138.904C1055.4 138.904 1059.13 138.323 1061.35 137.16C1063.56 135.997 1065.3 133.967 1066.55 131.069C1067.81 128.171 1068.43 123.474 1068.43 116.977C1068.43 108.376 1067.03 102.488 1064.22 99.3136C1061.42 96.139 1056.77 94.5517 1050.27 94.5517L1044.01 94.5517Z" fill="#0000ff" opacity="1" stroke="#0000ff" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="2.268"/>
+</g>
+</g>
+<g opacity="1">
+<g opacity="1">
+<path d="M14.3985 113.4C14.3985 58.5995 58.823 14.175 113.623 14.175C168.424 14.175 212.848 58.5995 212.848 113.4C212.848 168.2 168.424 212.625 113.623 212.625C58.823 212.625 14.3985 168.2 14.3985 113.4Z" fill="none" opacity="1" stroke="#ff0000" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="28.35"/>
+<path clip-path="url(#TextBounds_3)" d="M115.506 127.94L115.506 111.052L154.266 111.052L154.266 145.659C146.846 150.716 140.285 154.159 134.581 155.986C128.878 157.813 122.114 158.727 114.288 158.727C104.653 158.727 96.7999 157.084 90.7275 153.799C84.6551 150.513 79.9486 145.622 76.6079 139.125C73.2672 132.629 71.5968 125.172 71.5968 116.755C71.5968 107.896 73.424 100.19 77.0785 93.6381C80.733 87.0858 86.0856 82.1116 93.1361 78.7155C98.6363 76.0946 106.038 74.7842 115.34 74.7842C124.31 74.7842 131.019 75.5963 135.467 77.2205C139.915 78.8447 143.607 81.3641 146.542 84.7787C149.476 88.1932 151.682 92.5214 153.158 97.7632L128.961 102.082C127.965 99.0183 126.276 96.6742 123.895 95.05C121.514 93.4258 118.478 92.6137 114.786 92.6137C109.286 92.6137 104.903 94.524 101.636 98.3446C98.3687 102.165 96.7353 108.21 96.7353 116.479C96.7353 125.264 98.3872 131.54 101.691 135.305C104.995 139.07 109.6 140.953 115.506 140.953C118.312 140.953 120.988 140.547 123.535 139.734C126.082 138.922 128.998 137.538 132.284 135.582L132.284 127.94L115.506 127.94Z" fill="#ff0000" opacity="1" stroke="#ff0000" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="2.268"/>
+</g>
+<g opacity="1">
+<path d="M212.848 113.4L368.773 113.4" fill="none" opacity="1" stroke="#ff0000" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="28.35"/>
+<path d="M346.093 70.875L431.143 113.4L346.093 155.925" fill="#ff0000" fill-rule="nonzero" opacity="1" stroke="none"/>
+</g>
+</g>
+</g>
+</g>
+</svg>
