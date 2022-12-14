@@ -136,23 +136,23 @@ angular.module('pandrugsFrontendApp')
         return deferred.promise;
       },
 
-      combinedSearch: function(combined, advancedQueryOptions) {
+      multiOmicsSearch: function(multiOmics, advancedQueryOptions) {
         var deferred = $q.defer();
 
         var queryString = constructQueryString(advancedQueryOptions);
-        var url = BACKEND.API + 'genedrug/combined?' + queryString;
+        var url = BACKEND.API + 'genedrug/multiomics?' + queryString;
 
-        if(combined.computationId !== null){
-          queryString = 'computationId=' + combined.computationId + '&' + queryString;
-          url = BACKEND.API + 'genedrug/fromComputationId/combined?' + queryString;
+        if(multiOmics.computationId !== null){
+          queryString = 'computationId=' + multiOmics.computationId + '&' + queryString;
+          url = BACKEND.API + 'genedrug/fromComputationId/multiomics?' + queryString;
         }
 
         var fd = new FormData();
-        if(combined.cnvFile){
-          fd.append('cnv', combined.cnvFile);
+        if(multiOmics.cnvFile){
+          fd.append('cnv', multiOmics.cnvFile);
         }
-        if(combined.expressionFile){
-          fd.append('expressiongenerank', combined.expressionFile);
+        if(multiOmics.expressionFile){
+          fd.append('expressiongenerank', multiOmics.expressionFile);
         }
         $http.post(url, fd, {
             transformRequest: angular.identity,

@@ -88,7 +88,9 @@
 <div class="row">
   <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (complete version)</button></a>
   <a id="download-csv-link" href="{{$ctrl.csvContentSimple}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (simple version)</button></a>
-
+  {{$ctrl.showSnvInformation}}
+  {{$ctrl.showCnvInformation}}
+  {{$ctrl.showExpressionInformation}}
   <table id="results" st-table="$ctrl.geneDrugGroups" st-pipe="$ctrl.populateTable" class="table table-striped query-table">
     <thead>
       <tr>
@@ -108,7 +110,6 @@
         <th class="wrapped-column" ng-if="$ctrl.showSnvInformation">SNV<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug presents a somatic variant"/> </th>
         <th class="wrapped-column" ng-if="$ctrl.showCnvInformation">CNV<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug presents a CNV"/> </th>
         <th class="wrapped-column" ng-if="$ctrl.showExpressionInformation">Expression<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug has expression data"/> </th>
-        
       </tr>
     </thead>
 

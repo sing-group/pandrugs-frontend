@@ -9,9 +9,9 @@
          ng-attr-name="{{ $ctrl.idPrefix + '-input-file-expression' }}"
          class="file" type="file" file-model on-file-change="$ctrl.changeExpressionFile(file)"/> 
   
-  <label style="display:block"><input type="checkbox" ng-model="$ctrl.combinedWithVCF" ng-change="$ctrl.changeWithCombined()"/> With variant analysis</label>    
+  <label style="display:block"><input type="checkbox" ng-model="$ctrl.multiOmicsWithVCF" ng-change="$ctrl.changeWithMultiOmics()"/> With variant analysis</label>    
   
-  <variant-analysis-panel ng-if="$ctrl.combinedWithVCF == true" on-selected="$ctrl.selectedComputation(computationId, computation)">
+  <variant-analysis-panel ng-if="$ctrl.multiOmicsWithVCF == true" on-selected="$ctrl.selectedComputation(computationId, computation)">
 
 </div>
    

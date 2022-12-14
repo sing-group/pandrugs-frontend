@@ -19,8 +19,8 @@
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  */
 angular.module('pandrugsFrontendApp')
-  .component('combinedQueryPanel', {
-    templateUrl: 'views/components/combined-query-panel/combined-query-panel.template.html',
+  .component('multiOmicsQueryPanel', {
+    templateUrl: 'views/components/multi-omics-query-panel/multi-omics-query-panel.template.html',
     bindings: {
       idPrefix: '@',
       onChange: '&'
@@ -28,7 +28,7 @@ angular.module('pandrugsFrontendApp')
     controller: function () {
         this.cnvFile = null;
         this.expressionFile = null;
-        this.combinedWithVCF = false;
+        this.multiOmicsWithVCF = false;
         this.computationId = null;
         this.computation = null;
 
@@ -44,8 +44,8 @@ angular.module('pandrugsFrontendApp')
             computationId: this.computationId, computation: this.computation});
         }.bind(this);
 
-        this.changeWithCombined = function(){
-          if(this.combinedWithVCF == false){
+        this.changeWithMultiOmics = function(){
+          if(this.multiOmicsWithVCF == false){
             this.selectedComputation(null, null);
           }
         }
