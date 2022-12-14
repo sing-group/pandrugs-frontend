@@ -85,8 +85,9 @@ angular.module('pandrugsFrontendApp')
 
       angular.merge(this, geneDrug);
       this.geneDrugGroup = geneDrugGroup;
-      if (this.getInteraction() === 'pathway-member')
+      if (this.getInteraction() === 'pathway-member') {
         this.pathwayId = 'pathway-' + this.geneDrugGroup.standardDrugName.replace(' ', '-') + '-' + this.getIndirectGeneSymbol();
+      }
     }
 
     function GeneDrugGroup(geneDrugGroup) {
