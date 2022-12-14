@@ -94,6 +94,10 @@ angular.module('pandrugsFrontendApp')
         window.location.href = user.getVscoreDownloadURLForComputation(computationId);
       };
 
+      this.getPharmcatURL = function(computationId) {
+        return user.getPharmcatURLForComputation(computationId); 
+      };
+
       function Computation(computationId, computation) {
         this.id = computationId;
         angular.merge(this, computation);
