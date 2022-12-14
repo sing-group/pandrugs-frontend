@@ -88,9 +88,6 @@
 <div class="row">
   <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (complete version)</button></a>
   <a id="download-csv-link" href="{{$ctrl.csvContentSimple}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (simple version)</button></a>
-  {{$ctrl.showSnvInformation}}
-  {{$ctrl.showCnvInformation}}
-  {{$ctrl.showExpressionInformation}}
   <table id="results" st-table="$ctrl.geneDrugGroups" st-pipe="$ctrl.populateTable" class="table table-striped query-table">
     <thead>
       <tr>
@@ -279,7 +276,8 @@
           </span>
         </td>
         <td ng-if="$ctrl.showCnvInformation" style="text-align: center" class="min-column" >
-          <span ng-if="row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol]">
+          <span class="{{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'amplification' | replace:'DEL':'deletion'}}" 
+            ng-if="row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol]">
           {{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'Amplification' | replace:'DEL':'Deletion' }}
           </span>
         </td>

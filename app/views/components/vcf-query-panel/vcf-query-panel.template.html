@@ -50,7 +50,7 @@
             
             <label style="display:block"><input type="checkbox" ng-model="$ctrl.withPharmcat"> PharmCAT analysis</label>
             <div ng-if="$ctrl.withPharmcat==true" >
-              <label ng-attr-for="{{ $ctrl.idPrefix + '-input-tsv-file' }}">Select a outside call file (tab-separated file):</label>
+              <label ng-attr-for="{{ $ctrl.idPrefix + '-input-tsv-file' }}">Select an outside call file (tab-separated file):</label>
                 <input ng-attr-id="{{ $ctrl.idPrefix + '-input-tsv-file' }}" ng-attr-name="{{ $ctrl.idPrefix + '-input-tsv-file' }}"
                      class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file, 'TSV')"/>  
                      <p>

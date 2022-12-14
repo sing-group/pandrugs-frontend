@@ -489,6 +489,18 @@ span.sensitivity-type {
   vertical-align: middle;
 }
 
+span.amplification {
+  @extend .boxed-element;
+  @include color-and-background-mixin(#FFA42B, #FAD8AB);
+  vertical-align: middle;
+}
+
+span.deletion {
+  @extend .boxed-element;
+  @include color-and-background-mixin(#6E66D4,#EDDCF7);
+  vertical-align: middle;
+}
+
 .cancer_type_checkbox input {
   display:none;
 }
