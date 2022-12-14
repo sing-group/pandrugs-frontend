@@ -93,21 +93,22 @@
     <thead>
       <tr>
         <th class="min-column">Actions</th>
-        <th><span class="gene">Gene(s)</span> </span> <span class="glyphicon glyphicon-question-sign help_icon" title="Gene(s) from the input list with a match in the database related to the proposed therapy"></span></th>
-        <th><span class="drug">Drug</span> </span> <span class="glyphicon glyphicon-question-sign help_icon" title="Compound name"></span></th>
-        <th class="min-column" st-sort="interaction" style="cursor:pointer" title="click to sort">Interaction <span class="glyphicon glyphicon-question-sign help_icon" title="Type of relation between the genes and the drugs. Options are direct target, biomarker or pathway member"/></th>
-        <th class="wrapped-column">Drug status <span class="glyphicon glyphicon-question-sign help_icon" title="FDA approval status of the drug and the cancer prescription for the approved ones"/></th>
-        <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="glyphicon glyphicon-question-sign help_icon" title="Type of therapy for the approved drugs in cancer"/></th>
-        <th class="min-column">Drug response <span class="glyphicon glyphicon-question-sign help_icon" title="Resistance or sensitivity of the gene/s to the drug"/></th>
-        <th class="wrapped-column">Family <span class="glyphicon glyphicon-question-sign help_icon" title="Drug family based on the KEGG target-based classification of drugs"/></th>
-        <th class="wrapped-column">Source(s) <span class="glyphicon glyphicon-question-sign help_icon" title="Source(s) where the drug-gene interaction came from"/></th>
-        <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the suitability of the drug based on approval status, use in cancer, drug-target relation, number of associated genes and curation level of the sources"/></th>
-        <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="glyphicon glyphicon-question-sign help_icon" title="Score for the gene representing the biological relevance of the gene in the tumoral process"/></th>
-        <th class="wrapped-column" st-sort="btc" style="cursor:pointer" title="click to sort">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The star highlights the Best Therapeutic Candidates (BTC) proposed according to both DrugScore and GeneScore"/> </th>
-        <th class="wrapped-column" ng-if="$ctrl.computation.pharmcat === true">PharmCAT <span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
-        <th class="wrapped-column" ng-if="$ctrl.showCnvInformation">CNV<span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
-        <th class="wrapped-column" ng-if="$ctrl.showExpressionInformation">Expression<span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
-        <th class="wrapped-column" ng-if="$ctrl.showSnvInformation">SNV<span class="glyphicon glyphicon-question-sign help_icon" title=""/> </th>
+        <th><span class="gene">Gene(s)</span> </span> <span class="glyphicon glyphicon-question-sign help_icon" title="Queried genes that have an association with the corresponding drug in PanDrugsdb"></span></th>
+        <th><span class="drug">Drug</span> </span> <span class="glyphicon glyphicon-question-sign help_icon" title="Compound's name"></span></th>
+        <th class="min-column" st-sort="interaction" style="cursor:pointer" title="click to sort">Interaction <span class="glyphicon glyphicon-question-sign help_icon" title="Drug-gene relationship between the genes and the drug. Options are: Direct target, Biomarker and Pathway member"/></th>
+        <th class="wrapped-column">Drug status <span class="glyphicon glyphicon-question-sign help_icon" title="Approval status and cancer prescription for the approved drugs"/></th>
+        <th st-sort="therapy" style="cursor: pointer" title="click to sort">Type of therapy <span class="glyphicon glyphicon-question-sign help_icon" title="Type of therapy. Only available for drugs approved for cancer treatment"/></th>
+        <th class="min-column">Drug response <span class="glyphicon glyphicon-question-sign help_icon" title="Sensitivity or Resistance response, based on the gene alteration"/></th>
+        <th class="wrapped-column">Family <span class="glyphicon glyphicon-question-sign help_icon" title="Drug family to which the compound belongs to"/></th>
+        <th class="wrapped-column">Source(s) <span class="glyphicon glyphicon-question-sign help_icon" title="Source(s) where the drug-gene interaction comes from"/></th>
+        <th class="wrapped-column" st-sort="dScore" style="cursor: pointer">DScore <span class="glyphicon glyphicon-question-sign help_icon" title="Measures the suitability of the treatment. It ranges from -1 to 1, with the negative values corresponding to resistance and the positive values corresponding to sensitivity"/></th>
+        <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="glyphicon glyphicon-question-sign help_icon" title="Measures the biological relevance of the gene in the tumoral process and its druggability. It ranges from 0 to 1"/></th>
+        <th class="wrapped-column" st-sort="btc" style="cursor:pointer" title="click to sort">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The Best Therapeutic Candidates, with DScore > 0.7 and GScore > 0.6, are highlighted with a yellow star"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.computation.pharmcat === true">PharmCAT <span class="glyphicon glyphicon-question-sign help_icon" title="CPIC recommendations for the corresponding drug"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showSnvInformation">SNV<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug presents a somatic variant"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showCnvInformation">CNV<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug presents a CNV"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showExpressionInformation">Expression<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug has expression data"/> </th>
+        
       </tr>
     </thead>
 
@@ -179,15 +180,15 @@
               ng-href="{{$ctrl.getPharmcatURL($ctrl.computation.id, row.showDrugName | lowercase)}}" target="pharmcatReport">
               <span title="{{row.pharmCatGermLineAnnotation | titlecase | replace:'_':' '}}" class="custom_icon {{row.pharmCatGermLineAnnotation | toIconClass}}"></span>
           </a>
-         </td>
+        </td>
+        <td ng-if="$ctrl.showSnvInformation" class="min-column" style="text-align: center">
+          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.snv).length > 0" class="custom_icon has_snv" aria-hidden="true" title="There is SNV information related to some genes. Expand this row to see it."></span>
+        </td>
         <td ng-if="$ctrl.showCnvInformation" class="min-column" style="text-align: center">
           <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.cnv).length > 0" class="custom_icon has_cnv" aria-hidden="true" title="There is CNV information related to some genes. Expand this row to see it."></span>
         </td>
         <td ng-if="$ctrl.showExpressionInformation" class="min-column" style="text-align: center">
           <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.expression).length > 0" class="custom_icon has_expression" aria-hidden="true" title="There is expression information related to some genes. Expand this row to see it."></span>
-        </td>
-        <td ng-if="$ctrl.showSnvInformation" class="min-column" style="text-align: center">
-          <span ng-if="$ctrl.keys(row.calculatedGeneAnnotations.snv).length > 0" class="custom_icon has_snv" aria-hidden="true" title="There is SNV information related to some genes. Expand this row to see it."></span>
         </td>
       </tr>
       <!-- Gene Drugs -->
@@ -271,6 +272,11 @@
         <td class="min-column">{{geneDrug.gScore | number: 4}}</td>
         <td class="min-column" style="text-align: center" ></td>
         <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true"></td>
+        <td ng-if="$ctrl.showSnvInformation" style="text-align: center" class="min-column" >
+          <span ng-if="row.calculatedGeneAnnotations.snv[geneDrug.gene[0].geneSymbol]">
+          {{row.calculatedGeneAnnotations.snv[geneDrug.gene[0].geneSymbol] | titlecase}}
+          </span>
+        </td>
         <td ng-if="$ctrl.showCnvInformation" style="text-align: center" class="min-column" >
           <span ng-if="row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol]">
           {{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'Amplification' | replace:'DEL':'Deletion' }}
@@ -281,11 +287,6 @@
             title="{{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | titlecase | replace:'_':' '}}" 
             class="custom_icon {{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | toIconClass}}"></span>
         </td>
-        <td ng-if="$ctrl.showSnvInformation" style="text-align: center" class="min-column" >
-          <span ng-if="row.calculatedGeneAnnotations.snv[geneDrug.gene[0].geneSymbol]">
-          {{row.calculatedGeneAnnotations.snv[geneDrug.gene[0].geneSymbol] | titlecase}}
-          </span>
-        </td>      
       </tr>
 
       <tr ng-repeat-end ng-if="row.moreinfo && $ctrl.isVariantsAnalysis()" class="moreinfo">

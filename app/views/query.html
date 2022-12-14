@@ -44,20 +44,20 @@
                 <li ng-class="{active:selectedTab === 'genes'}" role="presentation" ng-click="setSelectedTab('genes')">
                   <a href="/query#genes" aria-controls="genes" data-toggle="tab" role="tab">Genes</a>
                 </li>
-                <li ng-class="{active:selectedTab === 'drugs'}" role="presentation" ng-click="setSelectedTab('drugs')">
-                  <a href="/query#drugs" aria-controls="drugs" data-toggle="tab" role="tab">Drugs</a>
-                </li>
                 <li ng-class="{active:selectedTab === 'generank'}" role="presentation" ng-click="setSelectedTab('generank')">
                   <a href="/query#generanking" aria-controls="gene-rank" data-toggle="tab" role="tab">Gene Ranking</a>
+                </li>
+                <li ng-class="{active:selectedTab === 'drugs'}" role="presentation" ng-click="setSelectedTab('drugs')">
+                  <a href="/query#drugs" aria-controls="drugs" data-toggle="tab" role="tab">Drug</a>
+                </li>
+                <li ng-class="{active:selectedTab === 'cnv'}" role="presentation" ng-click="setSelectedTab('cnv')">
+                  <a href="/query#cnv" aria-controls="cnv" data-toggle="tab" role="tab">CNVs</a>
                 </li>
                 <li ng-class="{active:selectedTab === 'vcfrank'}" role="presentation" ng-click="setSelectedTab('vcfrank')">
                   <a href="/query#vcfrank" aria-controls="vcf-rank" data-toggle="tab" role="tab">Small Variants</a>
                 </li>
-                <li ng-class="{active:selectedTab === 'cnv'}" role="presentation" ng-click="setSelectedTab('cnv')">
-                  <a href="/query#cnv" aria-controls="cnv" data-toggle="tab" role="tab">CNV</a>
-                </li>
                 <li ng-class="{active:selectedTab === 'combined'}" role="presentation" ng-click="setSelectedTab('combined')">
-                  <a href="/query#combined" aria-controls="combined" data-toggle="tab" role="tab">Combined analysis</a>
+                  <a href="/query#combined" aria-controls="combined" data-toggle="tab" role="tab">Multi-omics</a>
                 </li>
               </ul>
 

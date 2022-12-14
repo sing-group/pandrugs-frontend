@@ -20,10 +20,6 @@
       Upload a <strong><a href="https://en.wikipedia.org/wiki/Variant_Call_Format" target="_blank">VCF
       file</a></strong> to execute this query.
     </p>
-    <p>
-      <strong>WARNING</strong>: genomic coordinates <strong>MUST BE</strong> expressed in the human genome
-      HG19 assembly.
-    </p>
   </div>
 
   <button type="button" class="btn btn-primary" data-toggle="modal" ng-attr-data-target="{{ '#' + $ctrl.idPrefix + '-new-modal' }}">
@@ -44,8 +40,7 @@
         <div class="modal-body">
           <fieldset class="form-group">
             <label style="display:block" ng-attr-for="{{ $ctrl.idPrefix + '-input-file' }}">Select a variants file (in <a
-              href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). <strong>Note:</strong>
-              The genome positions must be accordiyng to the GRCh38/hg38 human genome assembly</label>
+              href="http://www.internationalgenome.org/wiki/Analysis/vcf4.0/">VCF format</a>). </label>
             <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
                      ng-attr-name="{{ $ctrl.idPrefix + '-input-file' }}"
                      class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file, 'VCF')"/>
