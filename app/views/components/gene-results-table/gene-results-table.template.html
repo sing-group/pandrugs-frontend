@@ -104,9 +104,9 @@
         <th class="wrapped-column" st-sort="gScore" style="cursor: pointer">GScore <span class="glyphicon glyphicon-question-sign help_icon" title="Measures the biological relevance of the gene in the tumoral process and its druggability. It ranges from 0 to 1"/></th>
         <th class="wrapped-column" st-sort="btc" style="cursor:pointer" title="click to sort">BTC <span class="glyphicon glyphicon-question-sign help_icon" title="The Best Therapeutic Candidates, with DScore > 0.7 and GScore > 0.6, are highlighted with a yellow star"/> </th>
         <th class="wrapped-column" ng-if="$ctrl.computation.pharmcat === true">PharmCAT <span class="glyphicon glyphicon-question-sign help_icon" title="CPIC recommendations for the corresponding drug"/> </th>
-        <th class="wrapped-column" ng-if="$ctrl.showSnvInformation">SNV<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug presents a somatic variant"/> </th>
-        <th class="wrapped-column" ng-if="$ctrl.showCnvInformation">CNV<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug presents a CNV"/> </th>
-        <th class="wrapped-column" ng-if="$ctrl.showExpressionInformation">Expression<span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug has expression data"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showSnvInformation">SNV <span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug presents a somatic variant"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showCnvInformation">CNV <span class="glyphicon glyphicon-question-sign help_icon" title="It indicates if any of the genes associated with the drug presents a CNV"/> </th>
+        <th class="wrapped-column" ng-if="$ctrl.showExpressionInformation">Expression <span class="glyphicon glyphicon-question-sign help_icon" title="After a Multi-omics Query, it indicates if any of the genes associated with the drug has expression data"/> </th>
       </tr>
     </thead>
 

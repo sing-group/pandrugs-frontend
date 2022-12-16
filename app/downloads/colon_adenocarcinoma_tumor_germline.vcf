@@ -1,0 +1,230 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##FILTER=<ID=DPfilter,Description="DP < 30">
+##FILTER=<ID=base_qual,Description="alt median base quality">
+##FILTER=<ID=clustered_events,Description="Clustered events observed in the tumor">
+##FILTER=<ID=contamination,Description="contamination">
+##FILTER=<ID=duplicate,Description="evidence for alt allele is overrepresented by apparent duplicates">
+##FILTER=<ID=fragment,Description="abs(ref - alt) median fragment length">
+##FILTER=<ID=germline,Description="Evidence indicates this site is germline, not somatic">
+##FILTER=<ID=haplotype,Description="Variant near filtered variant on same haplotype.">
+##FILTER=<ID=low_allele_frac,Description="Allele fraction is below specified threshold">
+##FILTER=<ID=map_qual,Description="ref - alt median mapping quality">
+##FILTER=<ID=multiallelic,Description="Site filtered because too many alt alleles pass tumor LOD">
+##FILTER=<ID=n_ratio,Description="Ratio of N to alt exceeds specified ratio">
+##FILTER=<ID=normal_artifact,Description="artifact_in_normal">
+##FILTER=<ID=numt_chimera,Description="NuMT variant with too many ALT reads originally from autosome">
+##FILTER=<ID=numt_novel,Description="Alt depth is below expected coverage of NuMT in autosome">
+##FILTER=<ID=orientation,Description="orientation bias detected by the orientation bias mixture model">
+##FILTER=<ID=panel_of_normals,Description="Blacklisted site in panel of normals">
+##FILTER=<ID=position,Description="median distance of alt variants from end of reads">
+##FILTER=<ID=slippage,Description="Site filtered due to contraction of short tandem repeat region">
+##FILTER=<ID=strand_bias,Description="Evidence for alt allele comes from one read direction only">
+##FILTER=<ID=strict_strand,Description="Evidence for alt allele is not represented in both directions">
+##FILTER=<ID=weak_evidence,Description="Mutation does not meet likelihood threshold">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##GATKCommandLine=<ID=FilterMutectCalls,CommandLine="FilterMutectCalls  --output out/mutect_filter/tumor_passlable.vcf.gz --variant out/mutect/tumor.vcf.gz --reference /home/epineiro/REFERENCES/Homo_sapiens/HG19/hg19.fa  --threshold-strategy OPTIMAL_F_SCORE --f-score-beta 1.0 --false-discovery-rate 0.05 --initial-threshold 0.1 --mitochondria-mode false --max-events-in-region 2 --max-alt-allele-count 1 --unique-alt-read-count 0 --min-median-mapping-quality 30 --min-median-base-quality 20 --max-median-fragment-length-difference 10000 --min-median-read-position 1 --max-n-ratio Infinity --min-reads-per-strand 0 --autosomal-coverage 0.0 --max-numt-fraction 0.85 --min-allele-fraction 0.0 --contamination-estimate 0.0 --log-snv-prior -13.815510557964275 --log-indel-prior -16.11809565095832 --log-artifact-prior -2.302585092994046 --normal-p-value-threshold 0.001 --min-slippage-length 8 --pcr-slippage-rate 0.1 --distance-on-haplotype 100 --long-indel-length 5 --interval-set-rule UNION --interval-padding 0 --interval-exclusion-padding 0 --interval-merging-rule ALL --read-validation-stringency SILENT --seconds-between-progress-updates 10.0 --disable-sequence-dictionary-validation false --create-output-bam-index true --create-output-bam-md5 false --create-output-variant-index true --create-output-variant-md5 false --lenient false --add-output-sam-program-record true --add-output-vcf-command-line true --cloud-prefetch-buffer 40 --cloud-index-prefetch-buffer -1 --disable-bam-index-caching false --sites-only-vcf-output false --help false --version false --showHidden false --verbosity INFO --QUIET false --use-jdk-deflater false --use-jdk-inflater false --gcs-max-retries 20 --gcs-project-for-requester-pays  --disable-tool-default-read-filters false",Version="4.1.2.0",Date="October 5, 2021 12:45:15 PM CEST">
+##GATKCommandLine=<ID=Mutect2,CommandLine="Mutect2  --normal-sample normal --callable-depth 1 --native-pair-hmm-threads 16 --output out/mutect/tumor.vcf.gz --intervals /storage/scratch01/users/epineiro/bedfiles/CHP2.20131001.designed.bed --input out/recal/tumor-1.bam --input out/recal/normal-1.bam --reference /home/epineiro/REFERENCES/Homo_sapiens/HG19/hg19.fa  --f1r2-median-mq 50 --f1r2-min-bq 20 --f1r2-max-depth 200 --genotype-pon-sites false --genotype-germline-sites false --af-of-alleles-not-in-resource -1.0 --mitochondria-mode false --tumor-lod-to-emit 3.0 --initial-tumor-lod 2.0 --pcr-snv-qual 40 --pcr-indel-qual 40 --max-population-af 0.01 --downsampling-stride 1 --max-suspicious-reads-per-alignment-start 0 --normal-lod 2.2 --ignore-itr-artifacts false --gvcf-lod-band -2.5 --gvcf-lod-band -2.0 --gvcf-lod-band -1.5 --gvcf-lod-band -1.0 --gvcf-lod-band -0.5 --gvcf-lod-band 0.0 --gvcf-lod-band 0.5 --gvcf-lod-band 1.0 --minimum-allele-fraction 0.0 --genotype-filtered-alleles false --disable-adaptive-pruning false --dont-trim-active-regions false --max-disc-ar-extension 25 --max-gga-ar-extension 300 --padding-around-indels 150 --padding-around-snps 20 --kmer-size 10 --kmer-size 25 --dont-increase-kmer-sizes-for-cycles false --allow-non-unique-kmers-in-ref false --num-pruning-samples 1 --min-dangling-branch-length 4 --recover-all-dangling-branches false --max-num-haplotypes-in-population 128 --min-pruning 2 --adaptive-pruning-initial-error-rate 0.001 --pruning-lod-threshold 2.302585092994046 --max-unpruned-variants 100 --debug-assembly false --debug-graph-transformations false --capture-assembly-failure-bam false --error-correct-reads false --kmer-length-for-read-error-correction 25 --min-observations-for-kmer-to-be-solid 20 --likelihood-calculation-engine PairHMM --base-quality-score-threshold 18 --pair-hmm-gap-continuation-penalty 10 --pair-hmm-implementation FASTEST_AVAILABLE --pcr-indel-model CONSERVATIVE --phred-scaled-global-read-mismapping-rate 45 --native-pair-hmm-use-double-precision false --bam-writer-type CALLED_HAPLOTYPES --dont-use-soft-clipped-bases false --min-base-quality-score 10 --smith-waterman JAVA --emit-ref-confidence NONE --max-mnp-distance 1 --min-assembly-region-size 50 --max-assembly-region-size 300 --assembly-region-padding 100 --max-reads-per-alignment-start 50 --active-probability-threshold 0.002 --max-prob-propagation-distance 50 --force-active false --interval-set-rule UNION --interval-padding 0 --interval-exclusion-padding 0 --interval-merging-rule ALL --read-validation-stringency SILENT --seconds-between-progress-updates 10.0 --disable-sequence-dictionary-validation false --create-output-bam-index true --create-output-bam-md5 false --create-output-variant-index true --create-output-variant-md5 false --lenient false --add-output-sam-program-record true --add-output-vcf-command-line true --cloud-prefetch-buffer 40 --cloud-index-prefetch-buffer -1 --disable-bam-index-caching false --sites-only-vcf-output false --help false --version false --showHidden false --verbosity INFO --QUIET false --use-jdk-deflater false --use-jdk-inflater false --gcs-max-retries 20 --gcs-project-for-requester-pays  --disable-tool-default-read-filters false --max-read-length 2147483647 --min-read-length 30 --minimum-mapping-quality 20 --disable-tool-default-annotations false --enable-all-annotations false",Version="4.1.2.0",Date="October 5, 2021 12:40:20 PM CEST">
+##GATKCommandLine=<ID=VariantFiltration,CommandLine="VariantFiltration  --output out/mutect_filter/tumor_passlable_filtered.vcf.gz --filter-expression DP < 30 --filter-name DPfilter --variant out/mutect_filter/tumor_passlable.vcf.gz --reference /home/epineiro/REFERENCES/Homo_sapiens/HG19/hg19.fa  --cluster-size 3 --cluster-window-size 0 --mask-extension 0 --mask-name Mask --filter-not-in-mask false --missing-values-evaluate-as-failing false --invalidate-previous-filters false --invert-filter-expression false --invert-genotype-filter-expression false --set-filtered-genotype-to-no-call false --interval-set-rule UNION --interval-padding 0 --interval-exclusion-padding 0 --interval-merging-rule ALL --read-validation-stringency SILENT --seconds-between-progress-updates 10.0 --disable-sequence-dictionary-validation false --create-output-bam-index true --create-output-bam-md5 false --create-output-variant-index true --create-output-variant-md5 false --lenient false --add-output-sam-program-record true --add-output-vcf-command-line true --cloud-prefetch-buffer 40 --cloud-index-prefetch-buffer -1 --disable-bam-index-caching false --sites-only-vcf-output false --help false --version false --showHidden false --verbosity INFO --QUIET false --use-jdk-deflater false --use-jdk-inflater false --gcs-max-retries 20 --gcs-project-for-requester-pays  --disable-tool-default-read-filters false",Version="4.1.4.1",Date="October 5, 2021 12:45:33 PM CEST">
+##MutectVersion=2.2
+##contig=<ID=chr1,length=249250621>
+##contig=<ID=chr2,length=243199373>
+##contig=<ID=chr3,length=198022430>
+##contig=<ID=chr4,length=191154276>
+##contig=<ID=chr5,length=180915260>
+##contig=<ID=chr6,length=171115067>
+##contig=<ID=chr7,length=159138663>
+##contig=<ID=chr8,length=146364022>
+##contig=<ID=chr9,length=141213431>
+##contig=<ID=chr10,length=135534747>
+##contig=<ID=chr11,length=135006516>
+##contig=<ID=chr12,length=133851895>
+##contig=<ID=chr13,length=115169878>
+##contig=<ID=chr14,length=107349540>
+##contig=<ID=chr15,length=102531392>
+##contig=<ID=chr16,length=90354753>
+##contig=<ID=chr17,length=81195210>
+##contig=<ID=chr18,length=78077248>
+##contig=<ID=chr19,length=59128983>
+##contig=<ID=chr20,length=63025520>
+##contig=<ID=chr21,length=48129895>
+##contig=<ID=chr22,length=51304566>
+##contig=<ID=chrX,length=155270560>
+##contig=<ID=chrY,length=59373566>
+##filtering_status=These calls have been filtered by FilterMutectCalls to label false positives with a list of failed filters and true positives with PASS.
+##normal_sample=normal
+##source=FilterMutectCalls
+##source=Mutect2
+##source=VariantFiltration
+##tumor_sample=tumor
+##bcftools_annotateVersion=1.3.1+htslib-1.3.1
+##bcftools_annotateCommand=annotate -x INFO,^FORMAT/GT ../data/PharmCAT/CHP_tumor_passlable_filtered.vcf
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	normal	tumor
+chr3	178952085	.	A	G	.	PASS	.	GT	0/0	0/1
+chr4	153245446	.	G	A	.	PASS	.	GT	0/0	0/1
+chr5	112175423	.	C	T	.	PASS	.	GT	0/0	0/1
+chr11	108117798	.	C	T	.	PASS	.	GT	0/0	0/1
+chr12	25398281	.	C	T	.	PASS	.	GT	0/0	0/1
+chr1	97078987	rs114096998	G	T	.	PASS	.	GT	0/0	0/0
+chr1	97078993	rs148799944	C	G	.	PASS	.	GT	0/0	0/0
+chr1	97079005	rs140114515	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97079071	rs1801268	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97079076	rs139459586	A	C	.	PASS	.	GT	0/0	0/0
+chr1	97079077	rs202144771	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97079121	rs72547601	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97079133	rs72547602	T	A	.	PASS	.	GT	0/0	0/0
+chr1	97079139	rs145529148	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97082365	rs141044036	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97082391	rs67376798	T	A	.	PASS	.	GT	0/0	0/0
+chr1	97098598	rs1801267	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97098599	rs147545709	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97098616	rs55674432	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97098632	rs201035051	T	G	.	PASS	.	GT	0/0	0/0
+chr1	97193109	rs60139309	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97193209	rs200687447	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97234958	rs199634007	G	T	.	PASS	.	GT	0/0	0/0
+chr1	97234991	rs56005131	G	T	.	PASS	.	GT	0/0	0/0
+chr1	97305279	rs112766203	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97305363	rs60511679	A	C	.	PASS	.	GT	0/0	0/0
+chr1	97305364	rs1801160	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97305372	rs146529561	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97306195	rs145548112	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97373598	rs137999090	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97373629	rs138545885	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97382461	rs55971861	T	G	.	PASS	.	GT	0/0	0/0
+chr1	97450058	rs3918290	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97450059	rs3918289	G	C	.	PASS	.	GT	0/0	0/0
+chr1	97450065	rs72549303	TG	T	.	PASS	.	GT	0/0	0/0
+chr1	97450068	rs17376848	A	G	.	PASS	.	GT	0/0	0/0
+chr1	97450168	rs147601618	A	G	.	PASS	.	GT	0/0	0/0
+chr1	97450187	rs145773863	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97450189	rs138616379	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97450190	rs59086055	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97515784	rs201615754	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97515787	rs55886062	A	C	.	PASS	.	GT	1/1	0/0
+chr1	97515839	rs1801159	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97515851	rs142619737	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97515865	rs1801158	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97515889	rs190951787	G	C	.	PASS	.	GT	0/0	0/0
+chr1	97515923	rs148994843	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97549565	rs138391898	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97549600	rs111858276	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97549609	rs72549304	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97549681	rs199549923	G	T	.	PASS	.	GT	0/0	0/0
+chr1	97549713	rs57918000	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97549726	rs144395748	G	C	.	PASS	.	GT	0/0	0/0
+chr1	97549735	rs72975710	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97573785	rs186169810	A	C	.	PASS	.	GT	0/0	0/0
+chr1	97573805	rs142512579	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97573821	rs764666241	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97573839	rs200064537	A	T	.	PASS	.	GT	0/0	0/0
+chr1	97573863	rs56038477	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97573881	rs61622928	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97573918	rs143815742	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97573919	rs140602333	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97573943	rs78060119	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97579893	rs75017182	G	C	.	PASS	.	GT	0/0	0/0
+chr1	97593238	rs72549305	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97593289	rs143154602	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97593322	rs183385770	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97593343	rs72549306	C	A	.	PASS	.	GT	0/0	0/0
+chr1	97593379	rs201018345	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97595083	rs145112791	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97595088	rs150437414	A	G	.	PASS	.	GT	0/0	0/0
+chr1	97595149	rs146356975	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97679170	rs45589337	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97691776	rs1801266	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97699399	rs72549307	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97699430	rs72549308	T	G	.	PASS	.	GT	0/0	0/0
+chr1	97699474	rs115232898	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97699506	rs6670886	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97699533	rs139834141	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97699535	rs2297595	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97721542	rs200562975	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97721650	rs141462178	T	C	.	PASS	.	GT	0/0	0/0
+chr1	97740400	rs150385342	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97740410	rs72549309	GATGA	G	.	PASS	.	GT	0/0	0/0
+chr1	97883329	rs1801265	A	G	.	PASS	.	GT	0/0	0/0
+chr1	97883352	rs80081766	C	T	.	PASS	.	GT	0/0	0/0
+chr1	97883353	rs72549310	G	A	.	PASS	.	GT	0/0	0/0
+chr1	97883368	rs150036960	G	C	.	PASS	.	GT	0/0	0/0
+chr10	94938683	rs114071557	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94938719	.	T	G	.	PASS	.	GT	0/0	0/0
+chr10	94938737	rs67807361	C	A	.	PASS	.	GT	0/0	0/0
+chr10	94938771	rs142240658	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94938788	.	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94938800	rs1364419386	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94938803	rs2031308986	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94938828	rs564813580	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94941897	rs371055887	G	C	.	PASS	.	GT	0/0	0/0
+chr10	94941915	.	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94941958	rs72558187	T	C	.	PASS	.	GT	0/0	0/0
+chr10	94941975	.	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94941976	.	G	C	.	PASS	.	GT	0/0	0/0
+chr10	94941982	rs762239445	G	T	.	PASS	.	GT	0/0	0/0
+chr10	94942018	.	T	C	.	PASS	.	GT	0/0	0/0
+chr10	94942205	rs1304490498	CAATGGAAAGA	C	.	PASS	.	GT	0/0	0/0
+chr10	94942216	rs774607211	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94942230	rs767576260	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94942231	rs12414460	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94942233	rs375805362	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94942234	rs72558189	G	A,T	.	PASS	.	GT	0/0	0/0
+chr10	94942243	rs1375956433	T	G	.	PASS	.	GT	0/0	0/0
+chr10	94942249	rs200965026	C	G,T	.	PASS	.	GT	0/0	0/0
+chr10	94942254	rs199523631	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94942255	rs200183364	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94942290	rs1799853	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94942291	rs141489852	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94942305	rs754487195	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94942306	rs1289704600	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94942308	rs17847037	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94942309	rs7900194	G	A,T	.	PASS	.	GT	0/0	0/0
+chr10	94947782	rs72558190	C	A	.	PASS	.	GT	0/0	0/0
+chr10	94947785	rs774550549	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94947869	.	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94947907	.	A	C	.	PASS	.	GT	0/0	0/0
+chr10	94947917	rs1326630788	T	C	.	PASS	.	GT	0/0	0/0
+chr10	94947938	rs2031531005	A	T	.	PASS	.	GT	0/0	0/0
+chr10	94947939	rs370100007	G	T	.	PASS	.	GT	0/0	0/0
+chr10	94949129	.	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94949144	.	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94949145	rs772782449	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94949161	.	AT	A	.	PASS	.	GT	0/0	0/0
+chr10	94949217	rs2256871	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94949280	rs9332130	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94949281	rs9332131	GA	G	.	PASS	.	GT	0/0	0/0
+chr10	94972119	rs182132442	C	A	.	PASS	.	GT	0/0	0/0
+chr10	94972123	.	C	G	.	PASS	.	GT	0/0	0/0
+chr10	94972134	.	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94972179	rs72558192	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94972180	rs988617574	C	G	.	PASS	.	GT	0/0	0/0
+chr10	94972183	.	A	T	.	PASS	.	GT	0/0	0/0
+chr10	94972233	rs1237225311	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94981199	.	G	T	.	PASS	.	GT	0/0	0/0
+chr10	94981201	rs57505750	T	C	.	PASS	.	GT	0/0	0/0
+chr10	94981224	rs28371685	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94981225	rs367826293	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94981230	rs1274535931	C	A	.	PASS	.	GT	0/0	0/0
+chr10	94981250	rs750820937	C	A	.	PASS	.	GT	0/0	0/0
+chr10	94981258	rs1297714792	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94981281	rs749060448	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94981296	rs1057910	A	C	.	PASS	.	GT	0/0	0/0
+chr10	94981297	rs56165452	T	C	.	PASS	.	GT	0/0	0/0
+chr10	94981301	rs28371686	C	G	.	PASS	.	GT	0/0	0/0
+chr10	94981302	rs1250577724	C	A	.	PASS	.	GT	0/0	0/0
+chr10	94981305	rs578144976	C	G	.	PASS	.	GT	0/0	0/0
+chr10	94981365	.	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94981371	rs542577750	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94986042	rs764211126	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94986073	rs72558193	A	C	.	PASS	.	GT	0/0	0/0
+chr10	94986136	rs1254213342	A	C	.	PASS	.	GT	0/0	0/0
+chr10	94986174	rs1441296358	G	C	.	PASS	.	GT	0/0	0/0
+chr10	94988852	rs776908257	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94988855	.	A	T	.	PASS	.	GT	0/0	0/0
+chr10	94988880	.	G	T	.	PASS	.	GT	0/0	0/0
+chr10	94988917	rs769942899	G	C	.	PASS	.	GT	0/0	0/0
+chr10	94988925	rs202201137	A	G	.	PASS	.	GT	0/0	0/0
+chr10	94988955	rs767284820	T	C	.	PASS	.	GT	0/0	0/0
+chr10	94988984	rs781583846	G	A	.	PASS	.	GT	0/0	0/0
+chr10	94989020	rs9332239	C	T	.	PASS	.	GT	0/0	0/0
+chr10	94989023	rs868182778	G	T	.	PASS	.	GT	0/0	0/0

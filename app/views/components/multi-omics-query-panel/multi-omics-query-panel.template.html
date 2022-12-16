@@ -1,16 +1,25 @@
 <div class="form-group">
+   <div class="alert alert-info">
+       <p>Provide multi-omics input data (CNV, expression and/or small variants) to retrieve PanDrugs therapeutic candidates. 
+       <strong>Note</strong> that small variants analyses must be done first in the corresponding tab.</p>      
+       <p>You can use the following sample data:</p>
+       <p>- A CNV file is available <strong><a href="downloads/Multi-omics/TCGA-D8-A1JD_CNV.tsv" target="_blank">here</a></strong>.</p>
+       <p>- Expression data in RNK file format is available <strong><a href="downloads/Multi-omics/TCGA-D8-A1JD.rnk" target="_blank">here</a></strong>.</p>
+       <p>- An VCF file (to perform an small variants analysis first) is available <strong><a href="downloads/Multi-omics/TCGA-D8-A1JD_tumor.vcf" target="_blank">here</a></strong>.</p>
+   </div>
+          
   <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file-cnv' }}">Select a CNV file</label>
   <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file-cnv' }}"
          ng-attr-name="{{ $ctrl.idPrefix + '-input-file-cnv' }}"
          class="file" type="file" file-model on-file-change="$ctrl.changeCNVFile(file)"/>
-
+  <br/>     
   <label ng-attr-for="{{ $ctrl.idPrefix + '-input-file-expression' }}">Select a expression RNK file</label>
   <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file-expression' }}"
          ng-attr-name="{{ $ctrl.idPrefix + '-input-file-expression' }}"
          class="file" type="file" file-model on-file-change="$ctrl.changeExpressionFile(file)"/> 
-  
+  <br/>
   <label style="display:block"><input type="checkbox" ng-model="$ctrl.multiOmicsWithVCF" ng-change="$ctrl.changeWithMultiOmics()"/> With variant analysis</label>    
-  
+
   <variant-analysis-panel ng-if="$ctrl.multiOmicsWithVCF == true" on-selected="$ctrl.selectedComputation(computationId, computation)">
 
 </div>

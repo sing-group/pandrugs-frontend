@@ -449,6 +449,7 @@ module.exports = function (grunt) {
             'images/{,*/}*.{webp}',
             'styles/fonts/{,*/}*.*',
             'downloads/*.*',
+            'downloads/Multi-omics/*.*',
             'd3/*.*',
             'd3/data/*.*',
             'help/*.*',
