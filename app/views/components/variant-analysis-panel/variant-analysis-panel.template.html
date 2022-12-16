@@ -39,14 +39,14 @@
           <span class="affectedGenes" ng-show="status.affectedGenes != null"
                 ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
           
-          <span class="affectedGenes" ng-show="status.pharmcat === true">[{{status.pharmcatResultsCount}} drug recommendations from PharmCAT]</span>
+          <span class="affectedGenes" ng-show="status.finished && status.pharmcat === true">[{{status.pharmcatResultsCount}} drug recommendations from PharmCAT]</span>
       
           <input ng-show="status.finished" type="button" class="deleteButton btn btn-danger"
                   ng-click="$ctrl.deleteComputation(id)" value="Delete"/>&nbsp;
           <input ng-show="status.finished" type="button" class="downloadButton btn btn-default"
                   ng-click="$ctrl.downloadVScoreFile(id)" value="Download VScores"/>
           
-          <a ng-show="status.pharmcat === true" ng-href="{{$ctrl.getPharmcatURL(id)}}" target="pharmcatReport" class="pharmcatButton btn btn-default ">PharmCAT report</a>
+          <a ng-show="status.finished && status.pharmcat === true" ng-href="{{$ctrl.getPharmcatURL(id)}}" target="pharmcatReport" class="pharmcatButton btn btn-default ">PharmCAT report</a>
           
           <img ng-show="!status.finished" src="images/spinner.gif" width="20px">
         </div>
@@ -70,12 +70,12 @@
       <span class="affectedGenes" ng-show="status.affectedGenes != null"
             ng-class="{error: !status.hasAffectedGenes()}">[{{status.countAffectedGenes()}} affected genes]</span>
       
-      <span class="affectedGenes" ng-show="status.pharmcat === true">[{{status.pharmcatResultsCount}} drug recommendations from PharmCAT]</span>
+      <span class="affectedGenes" ng-show="status.finished && status.pharmcat === true">[{{status.pharmcatResultsCount}} drug recommendations from PharmCAT]</span>
       
       <input ng-show="status.finished" type="button" class="downloadButton btn btn-default"
               ng-click="$ctrl.downloadVScoreFile(id)" value="Download VScores"/>
       
-      <a ng-show="status.pharmcat === true" ng-href="{{$ctrl.getPharmcatURL(id)}}" target="pharmcatReport" class="pharmcatButton btn btn-default ">PharmCAT report</a>
+      <a ng-show="status.finished && status.pharmcat === true" ng-href="{{$ctrl.getPharmcatURL(id)}}" target="pharmcatReport" class="pharmcatButton btn btn-default ">PharmCAT report</a>
           
     </div>
     <div class="progress">
