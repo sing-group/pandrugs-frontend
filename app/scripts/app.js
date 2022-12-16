@@ -41,7 +41,8 @@ angular
     'highcharts-ng',
     'smartArea',
     'angular-loading-bar',
-    'ngSanitize'
+    'ngSanitize',
+    'listGroup'
   ])
   .constant('BACKEND', (function() {
     // Service logic
@@ -53,7 +54,6 @@ angular
     var server = ''; // the server is in this machine (e.g.: docker distribution)
     //var server = 'http://0.0.0.0:8080'
     var app = server + '/pandrugs-backend/';
-
 
     return {
       SERVER: server,
