@@ -32,6 +32,20 @@ angular.module('pandrugsFrontendApp')
     function restDatabaseFactory($q, $timeout, $filter, $http, $sessionStorage, $location, BACKEND) {
       var currentUser = 'anonymous';
 
+      var loginStateChangedListeners = [];
+      function notifyLoginStateChanged() {
+        loginStateChangedListeners.forEach(function(listener) {
+          listener();
+        });
+      }
+
+      function doLogout() {
+        currentUser = 'anonymous';
+        delete $sessionStorage.user;
+        delete $sessionStorage.password;
+        notifyLoginStateChanged();
+      }
+      
       function doLogin(login, password, onSuccess, onError) {
         $http.defaults.headers.common.Authorization = 'Basic ' + btoa(login + ':' + password);
         // signals the backend to send a WWW-Authenticate: xBasic avoiding the browser login dialog to appear
@@ -56,7 +70,6 @@ angular.module('pandrugsFrontendApp')
           });
       }
 
-      var loginStateChangedListeners = [];
       function onLoginStateChanged(listener) {
         loginStateChangedListeners.push(listener);
       }
@@ -65,18 +78,6 @@ angular.module('pandrugsFrontendApp')
         if (index !== -1) {
           loginStateChangedListeners.splice(index, 1);
         }
-      }
-      function notifyLoginStateChanged() {
-        loginStateChangedListeners.forEach(function(listener) {
-          listener();
-        });
-      }
-
-      function doLogout() {
-        currentUser = 'anonymous';
-        delete $sessionStorage.user;
-        delete $sessionStorage.password;
-        notifyLoginStateChanged();
       }
 
       function doConfirm(token, onSuccess, onError) {
