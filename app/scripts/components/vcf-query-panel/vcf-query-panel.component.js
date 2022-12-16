@@ -50,7 +50,7 @@ angular.module('pandrugsFrontendApp')
             if (this.isAnonymous()) {
               var absoluteUrl = $location.absUrl();
 
-              var followUrl = absoluteUrl.substring(0, absoluteUrl.indexOf('#!')) + '#!/query?computationId=' + newId;
+              var followUrl = absoluteUrl.substring(0, absoluteUrl.indexOf('#!')) + '#!/query?tab=vcfrank&computationId=' + newId;
               window.alert('Computation submitted successfully. Please keep this link in a SAFE PLACE in order to get back and follow the computation progress:\n' + followUrl);
 
               $timeout(function() {
