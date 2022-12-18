@@ -48,7 +48,9 @@
             <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
                      ng-attr-name="{{ $ctrl.idPrefix + '-input-file' }}"
                      class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file, 'VCF')"/>
-            
+            <div class="alert alert-danger" ng-if="$ctrl.errorVCFFile !== ''">
+              <p>{{$ctrl.errorVCFFile}}</p>
+            </div>            
             <label style="display:block"><input type="checkbox" ng-model="$ctrl.withPharmcat"> PharmCAT analysis</label>
             <div ng-if="$ctrl.withPharmcat==true" >
               <label ng-attr-for="{{ $ctrl.idPrefix + '-input-tsv-file' }}">Select an outside call file (tab-separated file):</label>
@@ -71,10 +73,8 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button ng-disabled="!$ctrl.vcfFile || !$ctrl.computationName" type="button" class="btn btn-success"
-                  data-dismiss="modal" ng-click="$ctrl.submitVCF()">
-            Submit VCF
-          </button>
+          <button ng-disabled="!$ctrl.vcfFile || !$ctrl.computationName" type="button" class="btn btn-success" ng-click="$ctrl.submitVCF()">
+            Submit VCF </button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

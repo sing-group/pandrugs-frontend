@@ -25,47 +25,107 @@ angular.module('pandrugsFrontendApp')
       idPrefix: '@',
       autoreload: '<'
     },
-    controller: ['user', '$location', '$timeout', function (user, $location, $timeout) {
+    controller: ['user', '$location', '$timeout', '$scope', function (user, $location, $timeout, $scope) {
       this.vcfFile = '';
       this.computationName = 'My Computation';
       this.computationId = $location.search().computationId;
       this.withPharmcat = false;
       this.tsvFile = '';
-
+      this.errorVCFFile = '';
+      
       if (this.autoreload === undefined) {
         this.autoreload = true;
       }
 
       this.changeFile = function(file, option) {
         if (option == "VCF"){
-          this.vcfFile = file; 
+          this.vcfFile = file;          
         }else if (option == "TSV"){
           this.tsvFile = file;
         }
       };
 
+      this.checkVCF = function(file, onOK, onNotOK){
+        
+        var reader = new FileReader();
+
+        reader.onload = function () {
+          var allrows = reader.result.split('\n');
+          var isValid = true;
+          var error = ''
+
+         
+          for(var row = 0; row < allrows.length; row++) {
+              var line = allrows[row].trim();
+              
+              if (line.startsWith('#') && !line.startsWith('##')) {
+                  // in header
+                  var colsCount = line.split('\t').length;
+                  if (!this.withPharmcat) {
+                    if (colsCount > 11) {
+                      isValid = false;
+                      error = "Number of columns exceeds 11";
+                    }
+                  } else {
+                    if (colsCount < 10 || colsCount > 11){
+                      isValid = false;
+                      error = "Number of columns should be exactly 10 or 11";
+                    }
+                  }
+                  if (colsCount === 11) {                    
+                    var lastTwoColumns = [line.split('\t')[9].toUpperCase(), line.split('\t')[10].toUpperCase()]; 
+                    if (!lastTwoColumns.includes('TUMOR') || !lastTwoColumns.includes('NORMAL')) {                    
+                        isValid = false;
+                        error = 'The two latests columns should be named "tumor/normal" or "normal/tumor';
+                    }            
+                  }
+                  break;
+              }
+          }
+          if (isValid) {              
+              onOK();
+          } else {
+              onNotOK(error);
+          }
+        }.bind(this);
+
+        reader.readAsText(file);
+      
+      };
+
+      this.onSubmissionComplete = function(newId) {        
+        if (this.isAnonymous()) {
+          var absoluteUrl = $location.absUrl();
+
+          var followUrl = absoluteUrl.substring(0, absoluteUrl.indexOf('#!')) + '#!/query?tab=vcfrank&computationId=' + newId;
+          window.alert('Computation submitted successfully. Please keep this link in a SAFE PLACE in order to get back and follow the computation progress:\n' + followUrl);
+          
+          $timeout(function() {
+            //do redirection asynchronously, since in chrome the modal vcf dialog black background does not disappear ...
+            document.location.href = followUrl;
+          });
+        } else {
+          window.alert('Computation submitted successfully. We will start to analyze it as soon as we can.');
+        }
+      }.bind(this);
+
       this.submitVCF = function() {
-        user.submitComputation(this.vcfFile, this.computationName, this.withPharmcat, this.tsvFile,
-          function(newId) {
-            if (this.isAnonymous()) {
-              var absoluteUrl = $location.absUrl();
-
-              var followUrl = absoluteUrl.substring(0, absoluteUrl.indexOf('#!')) + '#!/query?tab=vcfrank&computationId=' + newId;
-              window.alert('Computation submitted successfully. Please keep this link in a SAFE PLACE in order to get back and follow the computation progress:\n' + followUrl);
-
-              $timeout(function() {
-                //do redirection asynchronously, since in chrome the modal vcf dialog black background does not disappear ...
-                document.location.href = followUrl;
-              });
-
-            } else {
-              window.alert('Computation submitted successfully. We will start to analyze it as soon as we can.');
-            }
-          }.bind(this),
+        this.checkVCF(this.vcfFile,
+          // on OK
           function() {
-            window.alert('ERROR: computation could not be submitted.');
-          }.bind(this)
-        );
+            $('#'+this.idPrefix+'-new-modal').modal('hide');
+            this.errorVCFFile = '';
+            user.submitComputation(this.vcfFile, this.computationName, this.withPharmcat, this.tsvFile,
+              this.onSubmissionComplete,
+              function() { // onSubmissionError
+                window.alert('ERROR: computation could not be submitted.');
+              }.bind(this)
+            )}.bind(this), 
+          // on not OK
+          function(error) {
+            this.errorVCFFile = error;
+            $scope.$apply();
+          }.bind(this))
       }.bind(this);
 
       this.isAnonymous = function() {
