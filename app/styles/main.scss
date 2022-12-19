@@ -501,6 +501,12 @@ span.deletion {
   vertical-align: middle;
 }
 
+span.mutated {
+  @extend .boxed-element;
+  @include color-and-background-mixin(#FE0B0B,#FFEBE6);
+  vertical-align: middle;
+}
+
 .cancer_type_checkbox input {
   display:none;
 }

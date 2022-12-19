@@ -271,7 +271,7 @@
         <td class="min-column" style="text-align: center" ></td>
         <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true"></td>
         <td ng-if="$ctrl.showSnvInformation" style="text-align: center" class="min-column" >
-          <span ng-if="row.calculatedGeneAnnotations.snv[geneDrug.gene[0].geneSymbol]">
+          <span class="mutated" ng-if="row.calculatedGeneAnnotations.snv[geneDrug.gene[0].geneSymbol]">
           {{row.calculatedGeneAnnotations.snv[geneDrug.gene[0].geneSymbol] | titlecase}}
           </span>
         </td>
