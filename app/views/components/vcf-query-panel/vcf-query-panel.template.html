@@ -48,8 +48,6 @@
             <input ng-attr-id="{{ $ctrl.idPrefix + '-input-file' }}"
                      ng-attr-name="{{ $ctrl.idPrefix + '-input-file' }}"
                      class="form-control" type="file" file-model on-file-change="$ctrl.changeFile(file, 'VCF')"/>
-
-            <a href="downloads/colon_adenocarcinoma_tumor_germline.vcf">Download a VCF example </a> (Colon adenocarcinoma patient with synthetic germline variants)
             
             <label style="display:block"><input type="checkbox" ng-model="$ctrl.withPharmcat"> PharmCAT analysis</label>
             <div ng-if="$ctrl.withPharmcat==true" >
