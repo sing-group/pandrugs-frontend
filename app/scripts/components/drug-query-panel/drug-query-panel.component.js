@@ -44,7 +44,7 @@ angular.module('pandrugsFrontendApp')
 
       this.$onInit = function () {
         if ($location.search().example === 'drugs') {
-          this.pastePalbociclib();
+          this.pasteTemsirolimus();
         }
       }.bind(this);
 
@@ -95,8 +95,8 @@ angular.module('pandrugsFrontendApp')
         return this.drugItems.length > 0;
       };
 
-      this.pastePalbociclib = function () {
-        this.drug = 'Palbociclib';
+      this.pasteTemsirolimus = function () {
+        this.drug = 'Temsirolimus';
         this.updateDrugList();
       }.bind(this);
     }]
