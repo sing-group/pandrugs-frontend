@@ -28,7 +28,8 @@ angular.module('pandrugsFrontendApp')
       showVariantInformation: '<',
       showCnvInformation: '<',
       showExpressionInformation: '<',
-      showSnvInformation: '<'
+      showSnvInformation: '<',
+      multiomics: '<'
     },
     controller: ['user','TableHelper', function (user, TableHelper) {
       this.keys = Object.keys;
@@ -56,10 +57,21 @@ angular.module('pandrugsFrontendApp')
       }.bind(this);
 
       this.isVariantsAnalysis = function() {
-        return this.computation !== undefined && this.showVariantInformation;
+        return (this.computation !== undefined && this.showVariantInformation);
+      }.bind(this);
+
+      this.isMultiOmicsWithVCFAnalysis = function(){
+        return this.multiomics && this.multiomics.computation && this.showSnvInformation? true:false;
       }.bind(this);
       
-      
+      this.getComputation = function() {
+        if (this.isMultiOmicsWithVCFAnalysis()) {
+          return this.multiomics.computation;
+        } else {
+          return this.computation;
+        }
+      }.bind(this);
+
       this.getPharmcatURL = function(computationId, drugName) {
         return user.getPharmcatURLForComputation(computationId) + '#' + drugName; 
       };

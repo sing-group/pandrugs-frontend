@@ -223,7 +223,7 @@
                         computation="computation" show-variant-information="selectedTab === 'vcfrank'" 
                         show-cnv-information="(selectedTab === 'multiomics' && multiOmics.cnvFile) || selectedTab === 'cnv'" 
                         show-expression-information="selectedTab === 'multiomics' && multiOmics.expressionFile" 
-                        show-snv-information="selectedTab === 'multiomics' && multiOmics.computationId !== null"/>
+                        show-snv-information="selectedTab === 'multiomics' && multiOmics.computationId !== null" multiomics="multiOmics"/>
 
     <drug-results-table ng-if="selectedTab === 'drugs'" gene-drug-group="resultsFiltered[0]"/>
   </div>

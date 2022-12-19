@@ -288,9 +288,9 @@
         </td>
       </tr>
 
-      <tr ng-repeat-end ng-if="row.moreinfo && $ctrl.isVariantsAnalysis()" class="moreinfo">
-        <td colspan="13" style="border-top: 0px">
-          <div ng-repeat="gene in geneDrug.gene" ng-init="affectedGenesInfo = $ctrl.computation.affectedGenesInfo[gene.geneSymbol]">
+      <tr ng-repeat-end ng-if="row.moreinfo && ($ctrl.isVariantsAnalysis() || $ctrl.isMultiOmicsWithVCFAnalysis())" class="moreinfo">
+        <td ng-attr-colspan="{{13 + ($ctrl.showCnvInformation ? 1: 0) + ($ctrl.computation.pharmcat ? 1:0) + ($ctrl.showSnvInformation ? 1: 0) + ($ctrl.showExpressionInformation ? 1: 0) }}" style="border-top: 0px">
+          <div ng-repeat="gene in geneDrug.gene" ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]" ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]">
             <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{affectedGenesInfo.HGVS_cDNA}} / {{affectedGenesInfo.HGVS_protein}}</span>
             <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
             <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'frameshift_variant'" title="consequence of the variant in gene sequence">frameshift variant</span>
