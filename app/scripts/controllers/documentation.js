@@ -42,7 +42,7 @@ var markdownControllerFactory = function(markdownSubdir, markdownFile, markdownN
               $(this).attr('src', markdownSubdir + '/' + $(this).attr('src')); // jshint ignore:line
 
               // images max-width
-              $(this).attr('style', 'max-width:600px'); // jshint ignore:line
+              //$(this).attr('style', 'max-width:600px'); // jshint ignore:line
 
               // add link to see image in original size
               $(this).wrap('<a href=\"' + $(this).attr('src') + '\"></a>'); // jshint ignore:line
