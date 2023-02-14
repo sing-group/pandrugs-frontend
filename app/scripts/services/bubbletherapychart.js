@@ -71,7 +71,7 @@ angular.module('pandrugsFrontendApp')
       }).add();
 
       // add rectangle for best candidates
-      drawRectFromCoordinates(0.7, 1, 1, 0.6, 20).attr({
+      drawRectFromCoordinates(0.7, 1.1, 1.05, 0.6, 20).attr({
         fill: '#EEFAEE',
         stroke: 'black',
         'stroke-width': 0
@@ -79,13 +79,13 @@ angular.module('pandrugsFrontendApp')
       }).add();
 
       // vertical x=0
-      drawPath(0, 0, 0, 1).attr({
+      drawPath(0, 0, 0, 1.1).attr({
         'stroke-width': 1,
         dashstyle: 'Solid',
         stroke: '#888'
       }).add();
 
-      // draw thik RESISTANCE - SENSISITIVITY bars
+      // draw thick RESISTANCE - SENSITIVITY bars
       drawPath(-1, 0, 0, 0).attr({
         'stroke-width': 5,
         stroke: '#FF7F7F'
@@ -97,15 +97,15 @@ angular.module('pandrugsFrontendApp')
       }).add();
 
 
-      drawText(0.72, 0.97, 'BEST CANDIDATES')
+      drawText(0.735, 1.07, 'BEST CANDIDATES')
       .css({color: '#888', fontWeight:'bold', opacity: 0.5})
       .add();
 
-      drawText(-0.45, -0.115, 'RESISTANCE')
+      drawText(-0.6, -0.16, 'RESISTANCE')
       .css({color: '#FF7F7F', fontWeight:'bold'})
       .add();
 
-      drawText(0.45, -0.115, 'SENSITIVITY')
+      drawText(0.41, -0.16, 'SENSITIVITY')
       .css({color: '#7FBF7F', fontWeight:'bold'})
       .add();
 
@@ -133,8 +133,10 @@ angular.module('pandrugsFrontendApp')
             text: '<span class=\"help_icon\" title=\"Measure of the suitability of the drug according to the genomic profile\"></span>Drug Score',
             useHTML: true
           },
-          min: -1,
-          max: 1,
+          min: -1.05,
+          max: 1.05,
+          startOnTick: false,
+          endOnTick: false,
           plotLines: [
             {
               color: 'gray',
@@ -149,8 +151,10 @@ angular.module('pandrugsFrontendApp')
             text: '<span class=\"help_icon\" title=\"Measure of the biological relevance of the gene in the tumoral process\"></span>Gene Score',
             useHTML: true
           },
-          min: 0,
-          max: 1,
+          min: -0.05,
+          max: 1.1,
+          startOnTick: false,
+          endOnTick: false,
           plotLines: [
             {
               color: 'gray',
@@ -210,23 +214,23 @@ angular.module('pandrugsFrontendApp')
             status: results[i].status.toLowerCase().replace('_', ' ')
           };
 
-          if (results[i].getBestInteraction() === 'direct-target') {
-            series[0].data.push(datapoint);
-          }
-          if (results[i].getBestInteraction() === 'biomarker') {
-            series[1].data.push(datapoint);
-          }
-          if (results[i].getBestInteraction() === 'pathway-member') {
-            series[2].data.push(datapoint);
+          switch(results[i].getBestInteraction()) {
+            case 'direct-target':
+              series[0].data.push(datapoint);
+              break;
+            case 'biomarker':
+              series[1].data.push(datapoint);
+              break;
+            case 'pathway-member':
+              series[2].data.push(datapoint);
+              break;
           }
         }
 
         //sort
-        series[0].data.sort(function(a,b) {return a.x - b.x});
-        series[1].data.sort(function(a,b) {return a.x - b.x});
-        series[2].data.sort(function(a,b) {return a.x - b.x});
-
-
+        for (var serie of series) {
+          serie.data.sort(function(a,b) {return a.x - b.x});
+        }
       }
     };
   });
