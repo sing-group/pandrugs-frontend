@@ -38,6 +38,7 @@ angular.module('pandrugsFrontendApp')
       this.directTarget = options ? options.directTarget : true;
       this.biomarker = options ? options.biomarker : true;
       this.pathwayMember = options ? options.pathwayMember : true;
+      this.geneDependency = options ? options.geneDependency : true;
       this.cancerTypes = options ? options.cancerTypes : '*';
     }
 
@@ -91,7 +92,7 @@ angular.module('pandrugsFrontendApp')
 
     AdvancedQueryOptions.prototype.isValid = function () {
       return (this.cancerFda || this.cancerClinical || this.otherClinical || this.otherExperimental || this.otherFda)
-        && (this.directTarget || this.biomarker || this.pathwayMember)
+        && (this.directTarget || this.biomarker || this.pathwayMember || this.geneDependency)
         && (!this.hasCancerStatusSelected() || this.hasAnyCancerSelected());
     };
 

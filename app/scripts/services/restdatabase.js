@@ -72,7 +72,8 @@ angular.module('pandrugsFrontendApp')
 
       var interaction = 'biomarker=' + advancedQueryOptions.biomarker +
         '&pathwayMember=' + advancedQueryOptions.pathwayMember +
-        '&directTarget=' + advancedQueryOptions.directTarget;
+        '&directTarget=' + advancedQueryOptions.directTarget + 
+        '&geneDependency=' + advancedQueryOptions.geneDependency;
 
       return cancerDrugStatus + nonCancerDrugStatus + cancers + interaction;
     }

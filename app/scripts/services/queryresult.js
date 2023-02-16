@@ -233,14 +233,17 @@ angular.module('pandrugsFrontendApp')
     };
 
     GeneDrug.prototype.getInteraction = function() {
-      if (this.target === 'marker') {
-        return 'biomarker';
-      } else if (this.indirect === null) {
-        return 'direct-target';
-      } else if (this.indirect !== null){
-        return 'pathway-member';
-      } else {
-        throw Error('Invalid gene drug group type');
+      switch(this.interactionType) {
+        case 'BIOMARKER':
+          return 'biomarker';
+        case 'DIRECT_TARGET':
+          return 'direct-target';
+        case 'PATHWAY_MEMBER':
+          return 'pathway-member';
+        case 'GENE_DEPENDENCY':
+          return 'gene-dependency';
+        default:
+          throw Error('Invalid gene drug group type');
       }
     };
 
@@ -277,7 +280,7 @@ angular.module('pandrugsFrontendApp')
 
     GeneDrugGroup.prototype.getBestInteraction = function() {
       var isBetterInteractionThan = function(interaction1, interaction2) {
-        var interactionOrder = [ 'direct-target', 'biomarker', 'pathway-member' ];
+        var interactionOrder = [ 'direct-target', 'biomarker', 'pathway-member', 'gene-dependency' ];
 
         var index1 = interactionOrder.indexOf(interaction1);
         var index2 = interactionOrder.indexOf(interaction2);

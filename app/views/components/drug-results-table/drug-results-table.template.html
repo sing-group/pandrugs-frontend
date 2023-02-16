@@ -30,6 +30,8 @@
             <dd><span>Biomarker</span></dd>
             <dt style="width: 100px"><img src="images/query/pathway-member.png"/></dt>
             <dd><span>Pathway member</span></dd>
+            <dt style="width: 100px"><img src="images/query/genetic-dependency.png"/></dt>
+            <dd><span>Genetic dependency</span></dd>
           </dl>
         </div>
 
@@ -91,27 +93,33 @@
           </td>
           <td class="min-column" style="text-align: center">
             <div class="tooltipCSS">
-              <img ng-if="geneDrug.target === 'marker'" src="images/query/biomarker.png"/>
-              <img ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" src="images/query/direct-target.png"/>
-              <img ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" src="images/query/pathway-member.png"/>
-              <span ng-if="geneDrug.target === 'marker'" class="tooltiptext">
+              <img ng-if="geneDrug.getInteraction() === 'biomarker'" src="images/query/biomarker.png"/>
+              <img ng-if="geneDrug.getInteraction() === 'direct-target'" src="images/query/direct-target.png"/>
+              <img ng-if="geneDrug.getInteraction() === 'pathway-member'" src="images/query/pathway-member.png"/>
+              <img ng-if="geneDrug.getInteraction() === 'gene-dependency'" src="images/query/genetic-dependency.png"/>
+              <span ng-if="geneDrug.getInteraction() === 'biomarker'" class="tooltiptext">
                 <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
                 <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
                 <span class="drug-highlighted">D</span>
               </span>
-              <span ng-if="geneDrug.target === 'target' && geneDrug.indirect === null" class="tooltiptext">
+              <span ng-if="geneDrug.getInteraction() === 'direct-target'" class="tooltiptext">
                 <strong>Direct target</strong>: <strong>direct</strong> association in which the altered gene
                 <span class="gene-highlighted">T</span> is the <strong>target</strong> of the drug
                 <span class="drug-highlighted">D</span>
               </span>
-              <span ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null" class="tooltiptext">
+              <span ng-if="geneDrug.getInteraction() === 'pathway-member'" class="tooltiptext">
                 <strong>Pathway member</strong>: <strong>indirect</strong> association in which the drug
                 <span class="drug-highlighted">D</span> has as a <strong>target</strong> a gene <strong>
                 <span class="indirect-gene-highlighted">T</span></strong> related to the altered one
                 <span class="gene-highlighted">G</span>
               </span>
+              <span ng-if="geneDrug.getInteraction() === 'gene-dependency'" class="tooltiptext">
+                <strong>Genetic dependency</strong>: <strong>Indirect</strong> association in which the drug
+                <span class="drug-highlighted">D</span> has as a target a gene
+                <span class="gene-highlighted">T</span> which depends upon the altered one <span class="gene-highlighted">G</span>
+              </span>
             </div>
-            <div ng-if="geneDrug.target === 'target' && geneDrug.indirect !== null">
+            <div ng-if="geneDrug.getInteraction() === 'pathway-member'">
               <button type="button" class="seepathways btn btn-default" data-toggle="modal" data-target="#pathways-{{geneDrug.pathwayId}}">See pathways</button>
               <div id="pathways-{{geneDrug.pathwayId}}" class="modal fade" style="text-align: justify">
                 <div class="modal-dialog" role="document">

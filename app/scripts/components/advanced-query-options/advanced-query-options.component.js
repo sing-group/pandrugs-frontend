@@ -33,6 +33,7 @@ angular.module('pandrugsFrontendApp')
       this.directTarget = true;
       this.biomarker = true;
       this.pathwayMember = true;
+      this.geneDependency = true;
       this.cancerTypes = [];
 
       this.$onInit = function () {

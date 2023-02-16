@@ -188,8 +188,8 @@ angular.module('pandrugsFrontendApp')
       series:  [
         {name: 'Direct target', data: [], color: 'black', marker: {symbol:'circle'}},
         {name: 'Biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
-        {name: 'Pathway member', data: [], color: 'black', marker: {symbol:'diamond'}}
-
+        {name: 'Pathway member', data: [], color: 'black', marker: {symbol:'diamond'}},
+        {name: 'Genetic dependency', data: [], color: 'black', marker: {symbol:'square'}} 
       ],
 
       updateChart: function(results) {
@@ -198,6 +198,7 @@ angular.module('pandrugsFrontendApp')
         series[0].data = [];
         series[1].data = [];
         series[2].data = [];
+        series[3].data = [];
         for (var i = 0; i < results.length; i++) {
           var jitterX = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
           var jitterY = (Math.round((Math.random() - 0.5)*100000) / 1000000000);
@@ -223,6 +224,9 @@ angular.module('pandrugsFrontendApp')
               break;
             case 'pathway-member':
               series[2].data.push(datapoint);
+              break;
+            case 'gene-dependency':
+              series[3].data.push(datapoint);
               break;
           }
         }
