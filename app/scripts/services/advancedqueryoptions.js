@@ -55,7 +55,9 @@ angular.module('pandrugsFrontendApp')
     };
 
     AdvancedQueryOptions.prototype.getSelectedCancerTypeNames = function() {
-      if (this.cancerTypes === undefined) return undefined;
+      if (this.cancerTypes === undefined) {
+        return undefined;
+      }
 
       if (this.cancerTypes === '*') {
         return null;

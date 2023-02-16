@@ -189,7 +189,7 @@ angular.module('pandrugsFrontendApp')
         {name: 'Direct target', data: [], color: 'black', marker: {symbol:'circle'}},
         {name: 'Biomarker', data: [], color: 'black', marker: {symbol:'triangle'}},
         {name: 'Pathway member', data: [], color: 'black', marker: {symbol:'diamond'}},
-        {name: 'Genetic dependency', data: [], color: 'black', marker: {symbol:'square'}} 
+        {name: 'Genetic dependency', data: [], color: 'black', marker: {symbol:'square'}}
       ],
 
       updateChart: function(results) {
@@ -232,8 +232,9 @@ angular.module('pandrugsFrontendApp')
         }
 
         //sort
-        for (var serie of series) {
-          serie.data.sort(function(a,b) {return a.x - b.x});
+        for (var si = 0; si < series.length; si++) {
+          var serie = series[si];
+          serie.data.sort(function(a,b) {return a.x - b.x;});
         }
       }
     };

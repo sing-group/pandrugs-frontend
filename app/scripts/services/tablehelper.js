@@ -71,9 +71,9 @@ angular.module('pandrugsFrontendApp')
       } else if (tableState.sort.predicate === 'btc') {
         return $filter('orderBy')(geneDrugOrGroup,
           [ btcSort,
-            function(gd) { return -1 * absDScoreSort(gd) },
-            function(gd) { return -1 * gScoreSort(gd) },
-            function(gd) { return -1 * interactionSort(gd) }
+            function(gd) { return -1 * absDScoreSort(gd); },
+            function(gd) { return -1 * gScoreSort(gd); },
+            function(gd) { return -1 * interactionSort(gd); }
           ],
           tableState.sort.reverse);
       } else if (tableState.sort.predicate) {
