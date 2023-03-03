@@ -1,0 +1,40 @@
+<!--
+  This file is part of PanDrugs Backend.
+
+  PanDrugs Backend is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  PanDrugs Backend is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="report">
+    <button type="button" class="btn btn-default" data-target="#report" data-toggle="modal">See best candidates report</button>
+    <div id="report" class="modal fade" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    Best Candidates Report <button CLASS="btn btn-default" onclick="window.print()"><span class="glyphicon glyphicon-print"></span> Print or save to PDF</button>
+                </div>
+                <div class="modal-body printable">
+                    <h1>Pandrugs Report</h1>
+                    <div id="report-header">
+                    This is a report of the results. Number of genedrug-groups are: {{$ctrl.geneDrugGroups.length}}<br>
+                    Input gene list size: {{$ctrl.geneList.length}}<br>
+                    No. genes in PanDrugs: {{$ctrl.genePresence.present.length}}<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

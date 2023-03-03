@@ -1,0 +1,37 @@
+#report-header{
+    background-color: green !important;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+@media print{
+    
+
+    gene-results-table,
+    #resultsContainer .row:nth-child(1),
+    #resultsContainer .row:nth-child(2),
+    footer,
+    .modal-header,
+    report button[data-toggle="modal"],
+    .header,
+    body>div>div>div:nth-child(1),
+    body>div>div>div:nth-child(2) {
+        display: none;
+    }
+
+    .modal-content {
+        border-width: 0px !important;  
+    }
+
+    .modal,
+    .modal-body {
+        display: block !important;
+        position: relative;
+        padding: 0px;
+    }
+    .report .modal-dialog {
+        width: 100%;
+        padding: 0px;
+    }
+}
+
