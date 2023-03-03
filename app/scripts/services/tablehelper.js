@@ -58,7 +58,7 @@ angular.module('pandrugsFrontendApp')
 
       var interactionSort = function (gd) {
         var getInteraction = (gd.getInteraction || gd.getBestInteraction).bind(gd);
-        var interactionOrder = ['pathway-member', 'biomarker', 'direct-target', 'gene-dependency'];
+        var interactionOrder = ['pathway-member', 'gene-dependency', 'biomarker', 'direct-target'];
         return interactionOrder.indexOf(getInteraction());
       };
 
