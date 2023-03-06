@@ -16,25 +16,216 @@
 -->
 
 <div class="report">
-    <button type="button" class="btn btn-default" data-target="#report" data-toggle="modal">See best candidates report</button>
+    <button type="button" class="btn btn-default" data-target="#report"
+        ng-click="$ctrl.showingReport = !$ctrl.showingReport" data-toggle="modal">See best candidates report</button>
     <div id="report" class="modal fade" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    Best Candidates Report <button CLASS="btn btn-default" onclick="window.print()"><span class="glyphicon glyphicon-print"></span> Print or save to PDF</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"
+                            ng-click="$ctrl.showingReport = false">&times;</span></button>
+                    <button class="btn btn-primary" onclick="window.print()"><span
+                            class="glyphicon glyphicon-print">&nbsp;</span>Print or save to PDF</button>
                 </div>
                 <div class="modal-body printable">
-                    <h1>Pandrugs Report</h1>
-                    <div id="report-header">
-                    This is a report of the results. Number of genedrug-groups are: {{$ctrl.geneDrugGroups.length}}<br>
-                    Input gene list size: {{$ctrl.geneList.length}}<br>
-                    No. genes in PanDrugs: {{$ctrl.genePresence.present.length}}<br>
+                    <div id="report-contents" ng-if="$ctrl.showingReport">
+                        <div class="container-fluid">
+                            <h2 class="row">PANDRUGS REPORT</h2>
+                            <div class="row">
+                                <p>Disclaimer:This report is intended for research use only and should
+                                    not be used for medical
+                                    or professional advice. </p>
+                            </div>
+                            <div class="row">
+                                <dl>
+                                    <dt class="dt-report">ID</dt>
+                                    <dd>My patient analysis</dd>
+                                    <dt class="dt-report">Date:</dt>
+                                    <dd>Fri Nov 11 15:40:02 CET 2022</dd>
+                                    <dt class="dt-report">Analysis type:</dt>
+                                    <dd>xxxxx (Variants, combined…)</dd>
+                                    <dt class="dt-report">Tumour Type:</dt>
+                                    <dd></dd>
+                                </dl>
+                                <p>This report includes xxxxx</p>
+                            </div>
+
+                            <h2 class="row">SUMMARY</h2>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h3>GENES</h3>
+                                    <dl>
+                                        <dt># genes:</dt>
+                                        <dd>{{$ctrl.geneList.length}}</dd>
+                                        <dt># genes in Pandrugs:</dt>
+                                        <dd>109</dd>
+                                    </dl>
+                                    <h3>ALL MOLECULAR EVIDENCES</h3>
+                                    <dl>
+                                        <dt># SNVs:</dt>
+                                        <dd>143 - Missense: 25; NS: 2; Damaging: 9</dd>
+                                        <dt># CNVs:</dt>
+                                        <dd>134 (Amp: 78; Del: 56)</dd>
+                                        <dt># Exprs:
+                                        <dd>67 up, 54 down</dd>
+                                    </dl>
+                                    <h3>BEST CANDIDATES</h3>
+                                    <dl>
+                                        <dt># SNVs:</dt>
+                                        <dd>13 - Missense: 25; NS: 2; Damaging: 9</dd>
+                                        <dt># CNVs:</dt>
+                                        <dd>14 (Amp: 8; Del: 4)</dd>
+                                        <dt># Exprs:
+                                        <dd>67 up, 54 down</dd>
+                                    </dl>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h3>DRUGS</h3>
+                                    <dl>
+                                        <dt># “Best Candidate” drugs:</dt>
+                                        <dd>145</dd>
+                                        <dt>Drug status:</dt>
+                                        <dd>AP: 20; CT: 60; EX: 65</dd>
+                                        <dt>Drug type:</dt>
+                                        <dd>TT: 45; Qx: 100</dd>
+                                    </dl>
+
+                                    <h3>Top-5 drug families:</h3>
+                                    <ol>
+                                        <li>[TT] PI3K inhibitors - 7 [AP: 5; CT: 1; EX: 1]</li>
+                                        <li>2. [TT] EGFR inhibitors - 4 [AP: 1; CT: 2; EX: 1]</li>
+                                        <li>3. [TT] BRAF inhibitors - 2 [AP: 2; CT: 0; EX: 0]</li>
+                                        <li>4. [TT] MEK inhibitors - 2 [AP: 2; CT: 1; EX: 1]</li>
+                                        <li>5. [Qx] Cellular process - 1 [AP: 1; CT: 0; EX: 0]</li>
+                                    </ol>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <p class="col">
+                                    <strong>Legend:</strong> Targeted therapy (TT), Chemotherapy(Qx), etcxxxxx
+                                </p>
+                            </div>
+
+
+
+                            <h2 class="row">DRUG-GENE ASSOCIATIONS BEST CANDIDATES</h2>
+
+
+                            <p>SUMMARY: PanDrugs suggest to treat (patient ID) with XXX based on xxxx alterations and
+                                xxxx. The germline
+                                alteration profile indicates xxxxx</p>
+
+                            <p>Method: Patient's alterations (e.g. mutations, germinal variants, amplifications and
+                                deletions) and gene
+                                expression alterations are searched in PanDrugsDB and reported according to PanDrugs
+                                scores (see GScore and
+                                DScore), which combine clinico-biological gene relevance and susceptibility to
+                                treatment, reflecting the
+                                evidence level of the gene-drug association to the clinical evidence. </p>
+
+                            <p>Table of results: In the following table, basic information of the patient´s alterations
+                                with relevant clinical
+                                implications can be found. Only the top best candidate drug-gene associations are
+                                reported in this report. For a
+                                detailed evaluation it is recommended to access the full PanDrugs analysis results.</p>
+
+                            <p>Legend: Direct target (DT), Biomarker(BM), Pathway member (PM), Genetic Dependency (GD),
+                                DrugScore (DS),
+                                GeneScore (GS).</p>
+
+                            <table>
+
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5">
+                                            <p dir="ltr"><span>Drug&nbsp;</span></p>
+                                        </td>
+                                        <td colspan="4">&nbsp;<p dir="ltr"><span>Molecular evidences</span></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2">&nbsp;<p dir="ltr"><span>Drug</span></p>
+                                        </td>
+                                        <td colspan="4">
+                                            <p dir="ltr"><span>Status</span></p>
+                                        </td>
+                                        <td colspan="4">
+                                            <p dir="ltr"><span>Gene (Variant, Alteration / Association)</span></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">&nbsp;<p dir="ltr"><span>Type</span></p>
+                                        </td>
+                                        <td>&nbsp;<p dir="ltr"><span>Response</span></p>
+                                        </td>
+                                        <td>&nbsp;<p dir="ltr"><span>Family</span></p>
+                                        </td>
+                                        <td colspan="4">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2">&nbsp;<p dir="ltr"><span>Vemurafenib</span></p>
+                                        </td>
+                                        <td colspan="4">
+                                            <p dir="ltr"><span>Vemurafenib is approved by FDA that acts as an inhibitor
+                                                    of BRAF</span></p>
+
+                                            <p dir="ltr"><span>Molecular alterations in MAP2K1 are associated with
+                                                    response to Vemurafenib, a drug approved by FDA</span></p>
+                                        </td>
+                                        <td colspan="4" rowspan="2">
+                                            <p dir="ltr"><a
+                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22BRAF%22"><span>BRAF</span></a><span>(p.V600E
+                                                    / DT);&nbsp;</span></p>
+
+                                            <p dir="ltr"><a
+                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22MAP2K1%22"><span>MAP2K1</span></a><span>(p.V211D,
+                                                </span><span>#Up</span><span> / BM);</span></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <p dir="ltr"><span>TT</span></p>
+                                        </td>
+                                        <td>
+                                            <p dir="ltr"><span>Sensitivity</span></p>
+                                        </td>
+                                        <td>
+                                            <p dir="ltr"><span>Hydrolase</span></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="2">&nbsp;<p dir="ltr"><span>RAF265</span></p>
+                                        </td>
+                                        <td colspan="4">
+                                            <p dir="ltr"><span>RAF265 is a drug in Clinical Trials that acts as an
+                                                    inhibitor of BRAF</span></p>
+
+                                            <p dir="ltr"><span>RAF265 is a drug in Clinical Trials that acts as an
+                                                    inhibitor of BRAF, a protein downstream to MAP2K1</span></p>
+                                        </td>
+                                        <td colspan="4" rowspan="2">
+                                            <p dir="ltr"><a
+                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22BRAF%22"><span>BRAF</span></a><span>(p.V600E
+                                                    / DT);&nbsp;</span></p>
+
+                                            <p dir="ltr"><a
+                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22MAP2K1%22"><span>MAP2K1</span></a><span>(p.V211D,
+                                                </span><span>#Up</span><span> / BM);</span></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

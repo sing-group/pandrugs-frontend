@@ -38,6 +38,8 @@ angular.module('pandrugsFrontendApp')
       this.csvContent = null;
       this.csvContentSimple = null;
 
+      this.showingReport = false;
+      
       this.geneDrugGroupsPaginated = null;
 
       this.paginationOptions = [5, 20, 100, 'All'];

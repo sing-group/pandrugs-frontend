@@ -4,12 +4,53 @@
     padding: 10px;
 }
 
-@media print{
-    
+#report-contents h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center !important;
+    background-color: #A9C89C !important;
+    padding: 1% !important;
+}
+#report-contents h3 {
+    text-align: left;
+    font-size: 1.1em;
+}
 
+#report-contents dt, #report-contents dd {
+    display: inline;
+}
+#report-contents dd::after {
+    content: "";
+    display: block;
+}
+
+#report-contents table {
+    border-collapse: collapse;
+}
+#report-contents td {
+    border: 1px solid black;
+}
+@media print{
+ 
+    a::after {
+        content: "" !important;
+    }
+
+    #report-contents {
+        font-size: 9pt;
+    }
+
+    .container-fluid {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    body {
+        margin: 0px;
+    }
     gene-results-table,
-    #resultsContainer .row:nth-child(1),
-    #resultsContainer .row:nth-child(2),
+    #resultsContainer > div:nth-child(1),
+    #resultsContainer > div:nth-child(2),
     footer,
     .modal-header,
     report button[data-toggle="modal"],
