@@ -222,10 +222,7 @@
 
   <div class="row" ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult()">
     <report gene-list="geneList"  gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
-            computation="computation"show-variant-information="selectedTab === 'vcfrank'" 
-            show-cnv-information="(selectedTab === 'multiomics' && multiOmics.cnvFile) || selectedTab === 'cnv'" 
-            show-expression-information="selectedTab === 'multiomics' && multiOmics.expressionFile" 
-            show-snv-information="selectedTab === 'multiomics' && multiOmics.computationId !== null" multiomics="multiOmics"/>
+            computation="computation" multiomics="multiOmics"/>
 
     <gene-results-table query-result="results" gene-drug-groups="resultsFiltered"
                         computation="computation" show-variant-information="selectedTab === 'vcfrank'" 

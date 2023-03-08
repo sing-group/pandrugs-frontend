@@ -59,14 +59,14 @@
                                         <dt># genes:</dt>
                                         <dd>{{$ctrl.geneList.length}}</dd>
                                         <dt># genes in Pandrugs:</dt>
-                                        <dd>109</dd>
+                                        <dd>{{$ctrl.genePresence.present.length}}</dd>
                                     </dl>
                                     <h3>ALL MOLECULAR EVIDENCES</h3>
                                     <dl>
                                         <dt># SNVs:</dt>
                                         <dd>143 - Missense: 25; NS: 2; Damaging: 9</dd>
-                                        <dt># CNVs:</dt>
-                                        <dd>134 (Amp: 78; Del: 56)</dd>
+                                        <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
+                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">134 (Amp: 78; Del: 56)</dd>
                                         <dt># Exprs:
                                         <dd>67 up, 54 down</dd>
                                     </dl>
@@ -74,8 +74,8 @@
                                     <dl>
                                         <dt># SNVs:</dt>
                                         <dd>13 - Missense: 25; NS: 2; Damaging: 9</dd>
-                                        <dt># CNVs:</dt>
-                                        <dd>14 (Amp: 8; Del: 4)</dd>
+                                        <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
+                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">14 (Amp: 8; Del: 4)</dd>
                                         <dt># Exprs:
                                         <dd>67 up, 54 down</dd>
                                     </dl>

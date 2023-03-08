@@ -27,48 +27,37 @@ angular.module('pandrugsFrontendApp')
       genePresence: '<',
       geneDrugGroups: '<',
       computation: '<',
-      showVariantInformation: '<',
-      showCnvInformation: '<',
-      showExpressionInformation: '<',
-      showSnvInformation: '<',
       multiomics: '<'
     },
-    controller: ['user','TableHelper', function (user, TableHelper) {
+    controller: ['user', function (user) {
       this.keys = Object.keys;
-      this.csvContent = null;
-      this.csvContentSimple = null;
 
       this.showingReport = false;
-      
-      this.geneDrugGroupsPaginated = null;
 
-      this.paginationOptions = [5, 20, 100, 'All'];
-     
-      this.$onChanges = function(changes) {
-        if (changes.queryResult && changes.queryResult.currentValue) {
-          this.csvContent = encodeURI('data:text/csv;charset=utf-8,' + changes.queryResult.currentValue.toCSV());
-          this.csvContentSimple = encodeURI('data:text/csv;charset=utf-8,' + changes.queryResult.currentValue.toCSV(false));
+      this.$onChanges = function (changes) {
+        // log stuff
+        if (changes.queryResult) {
+          console.log(changes.queryResult.currentValue);
+        }
+        if (changes.multiomics) {
+          console.log(changes.multiomics.currentValue);
         }
       }.bind(this);
 
-      this.isLoading = function() {
-        return this.geneDrugGroupsPaginated === null;
-      };
-
-      this.populateTable = function(tableState) {
-        var results = TableHelper.sort(tableState, this.geneDrugGroups);
-        this.geneDrugGroupsPaginated = TableHelper.paginate(tableState, this.paginationOptions, results);
+      this.isVariantsAnalysis = function () {
+        return (this.computation !== undefined);
       }.bind(this);
 
-      this.isVariantsAnalysis = function() {
-        return (this.computation !== undefined && this.showVariantInformation);
+      this.isMultiOmicsWithVCFAnalysis = function () {
+        return this.multiomics && this.multiomics.computation ? true : false;
       }.bind(this);
 
-      this.isMultiOmicsWithVCFAnalysis = function(){
-        return this.multiomics && this.multiomics.computation && this.showSnvInformation? true:false;
+
+      this.isMultiOmicsWithCNVAnalysis = function() {
+        return this.multiomics && this.multiomics.cnvFile ? true : false;
       }.bind(this);
-      
-      this.getComputation = function() {
+
+      this.getComputation = function () {
         if (this.isMultiOmicsWithVCFAnalysis()) {
           return this.multiomics.computation;
         } else {
@@ -76,8 +65,6 @@ angular.module('pandrugsFrontendApp')
         }
       }.bind(this);
 
-      this.getPharmcatURL = function(computationId, drugName) {
-        return user.getPharmcatURLForComputation(computationId) + '#' + drugName; 
-      };
+
     }]
   });
