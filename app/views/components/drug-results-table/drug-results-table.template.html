@@ -24,13 +24,13 @@
           <h4>Interactions</h4>
 
           <dl class="legend">
-            <dt style="width: 100px"><img src="images/query/direct-target.png"/></dt>
+            <dt style="width: 100px"><img class="img_icon" src="images/query/direct-target.svg"/></dt>
             <dd><span>Direct target</span></dd>
-            <dt style="width: 100px"><img src="images/query/biomarker.png"/></dt>
+            <dt style="width: 100px"><img class="img_icon" src="images/query/biomarker.svg"/></dt>
             <dd><span>Biomarker</span></dd>
-            <dt style="width: 100px"><img src="images/query/pathway-member.png"/></dt>
+            <dt style="width: 100px"><img class="img_icon" src="images/query/pathway-member.svg"/></dt>
             <dd><span>Pathway member</span></dd>
-            <dt style="width: 100px"><img src="images/query/genetic-dependency.png"/></dt>
+            <dt style="width: 100px"><img class="img_icon" src="images/query/genetic-dependency.svg"/></dt>
             <dd><span>Genetic dependency</span></dd>
           </dl>
         </div>
@@ -93,10 +93,10 @@
           </td>
           <td class="min-column" style="text-align: center">
             <div class="tooltipCSS">
-              <img ng-if="geneDrug.getInteraction() === 'biomarker'" src="images/query/biomarker.png"/>
-              <img ng-if="geneDrug.getInteraction() === 'direct-target'" src="images/query/direct-target.png"/>
-              <img ng-if="geneDrug.getInteraction() === 'pathway-member'" src="images/query/pathway-member.png"/>
-              <img ng-if="geneDrug.getInteraction() === 'gene-dependency'" src="images/query/genetic-dependency.png"/>
+              <img ng-if="geneDrug.getInteraction() === 'biomarker'" class="img_icon" src="images/query/biomarker.svg"/>
+              <img ng-if="geneDrug.getInteraction() === 'direct-target'" class="img_icon" src="images/query/direct-target.svg"/>
+              <img ng-if="geneDrug.getInteraction() === 'pathway-member'" class="img_icon" src="images/query/pathway-member.svg"/>
+              <img ng-if="geneDrug.getInteraction() === 'gene-dependency'" class="img_icon" src="images/query/genetic-dependency.svg"/>
               <span ng-if="geneDrug.getInteraction() === 'biomarker'" class="tooltiptext">
                 <strong>Biomarker</strong>: <strong>direct</strong> association in which the altered gene
                 <span class="gene-highlighted">T</span> is a <strong>biomarker</strong> of the response to drug
