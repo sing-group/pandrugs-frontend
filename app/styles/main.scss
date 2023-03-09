@@ -229,10 +229,6 @@ td.min-column {
   margin-top: 50px;
 }
 
-div.legend span:hover {
-
-}
-
 dl.legend dt, dl.legend dd {
   margin-bottom: 6px;
   line-height: 24px;
@@ -527,7 +523,7 @@ span.mutated {
 }
 .cancer_type_checkbox input:checked + label {
   border-color: $medium-gray;
-  background-color: $medium-gray;
+  background-color:#3DAEE9;
   color: white !important;
 
 }

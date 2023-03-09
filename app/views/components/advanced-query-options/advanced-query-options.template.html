@@ -19,66 +19,105 @@
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="advanced">
-          Advanced Options
+          Analysis options
         </a>
       </h4>
     </div>
     <div id="advanced" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
         <div class="row">
-          <!-- drug and status level-->
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-heading">Drug Status Level</div>
+              <div class="panel-heading"><strong>CLINICAL MODE</strong></div>
               <div class="panel-body">
-                <h4>Cancer</h4>
-                <label><input type="checkbox" ng-model="$ctrl.cancerFda" ng-change="$ctrl.notifyChange()">FDA approved</label>
-                <label><input type="checkbox" ng-model="$ctrl.cancerClinical" ng-change="$ctrl.notifyChange()">Clinical trials</label>
+                <div class="row">
+                  <!-- drug and status level-->
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">DRUG STATUS</div>
+                      <div class="panel-body">
+                        <h4>Cancer</h4>
+                        <label><input type="checkbox" ng-model="$ctrl.cancerFda" ng-change="$ctrl.notifyChange()">FDA
+                          approved</label>
+                        <label><input type="checkbox" ng-model="$ctrl.cancerClinical"
+                            ng-change="$ctrl.notifyChange()">Clinical
+                          trials</label>
+                        <h4>Other pathologies</h4>
+                        <label><input type="checkbox" ng-model="$ctrl.otherFda" ng-change="$ctrl.notifyChange()">FDA
+                          approved</label>
+                        <label><input type="checkbox" ng-model="$ctrl.otherClinical"
+                            ng-change="$ctrl.notifyChange()">Clinical
+                          trials</label>
+                      </div><!-- end panel-body -->
+                    </div><!-- end drug and status level -->
+                  </div>
 
-                <h4>Other pathologies</h4>
-                <label><input type="checkbox" ng-model="$ctrl.otherFda" ng-change="$ctrl.notifyChange()">FDA approved</label>
-                <label><input type="checkbox" ng-model="$ctrl.otherClinical" ng-change="$ctrl.notifyChange()">Clinical trials</label>
-                <label><input type="checkbox" ng-model="$ctrl.otherExperimental" ng-change="$ctrl.notifyChange()">Experimental</label>
-              </div><!-- end panel-body -->
-            </div><!-- end drug and status level -->
+                  <!-- interaction evidence level -->
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">INTERACTION TYPE</div>
+                      <div class="panel-body">
+                        <div>
+                          <label>
+                            <input type="checkbox" ng-model="$ctrl.directTarget" ng-change="$ctrl.notifyChange()">
+                            Direct target
+                          </label>
+                          <img class="img_icon" src="images/query/direct-target.svg" />
+                        </div>
+                        <div>
+                          <label>
+                            <input type="checkbox" ng-model="$ctrl.biomarker" ng-change="$ctrl.notifyChange()">
+                            Biomarker
+                          </label>
+                          <img class="img_icon" src="images/query/biomarker.svg" />
+                        </div>
+                        <div>
+                          <label>
+                            <input type="checkbox" ng-model="$ctrl.geneDependency" ng-change="$ctrl.notifyChange()">
+                            Genetic dependency
+                          </label>
+                          <img class="img_icon" src="images/query/genetic-dependency.svg" />
+                        </div>
+                      </div><!-- end panel-body -->
+                    </div><!-- end  interaction evidence level -->
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- interaction evidence level -->
-          <div class="col-md-6">
+          <!-- discovery mode -->
+          <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-heading">Interaction Evidence Level</div>
+              <div class="panel-heading"><strong>DISCOVERY MODE</strong></div>
               <div class="panel-body">
-                <div>
-                  <label>
-                    <input type="checkbox" ng-model="$ctrl.directTarget" ng-change="$ctrl.notifyChange()">
-                    Direct target
-                  </label>
-                  <img class="img_icon" src="images/query/direct-target.svg"/>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">DRUG STATUS</div>
+                      <div class="panel-body">
+                        <label><input type="checkbox" ng-model="$ctrl.otherExperimental"
+                            ng-change="$ctrl.notifyChange()">Experimental drugs</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">INTERACTION TYPE</div>
+                      <div class="panel-body">
+                        <label>
+                          <input type="checkbox" ng-model="$ctrl.pathwayMember" ng-change="$ctrl.notifyChange()">
+                          Pathway member
+                        </label>
+                        <img class="img_icon" src="images/query/pathway-member.svg" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label>
-                    <input type="checkbox" ng-model="$ctrl.biomarker" ng-change="$ctrl.notifyChange()">
-                    Biomarker
-                  </label>
-                  <img class="img_icon" src="images/query/biomarker.svg"/>
-                </div>
-                <div>
-                  <label>
-                    <input type="checkbox" ng-model="$ctrl.geneDependency" ng-change="$ctrl.notifyChange()">
-                    Genetic dependency
-                  </label>
-                  <img class="img_icon" src="images/query/genetic-dependency.svg"/>
-                </div>
-                <div>
-                  <label>
-                    <input type="checkbox" ng-model="$ctrl.pathwayMember" ng-change="$ctrl.notifyChange()">
-                    Pathway member
-                  </label>
-                  <img class="img_icon" src="images/query/pathway-member.svg"/>
-                </div>
-              </div><!-- end panel-body -->
-            </div><!-- end  interaction evidence level -->
-          </div>
+              </div>
+            </div>
+          </div><!-- end discovery mode -->
 
           <!-- cancer types -->
           <div class="col-md-12" ng-class="{'disabled': !$ctrl.hasCancerStatusSelected()}">
@@ -86,29 +125,21 @@
               <div class="panel-heading">
                 Select Cancer Types
                 <input class="btn btn-default btn-xs pull-right" type="button" value="Clear all"
-                       ng-click="$ctrl.clearCancerTypesSelection()"
-                       ng-disabled="!$ctrl.hasCancerStatusSelected()"/>
+                  ng-click="$ctrl.clearCancerTypesSelection()" ng-disabled="!$ctrl.hasCancerStatusSelected()" />
                 <input class="btn btn-default btn-xs pull-right" type="button" value="Select all"
-                       ng-click="$ctrl.selectAllCancerTypes()"
-                       ng-disabled="!$ctrl.hasCancerStatusSelected()"/>
+                  ng-click="$ctrl.selectAllCancerTypes()" ng-disabled="!$ctrl.hasCancerStatusSelected()" />
               </div>
               <div class="panel-body">
                 <span class="cancer_type_checkbox" ng-repeat="cancerType in $ctrl.cancerTypes">
-                  <input
-                    id="cancerType_{{$index}}"
-                    name="cancerType_{{$index}}"
-                    type="checkbox"
-                    value="{{cancerType.name}}"
-                    ng-disabled="!$ctrl.hasCancerStatusSelected()"
-                    ng-model="cancerType.selected"
-                    ng-change="$ctrl.notifyChange()"
-                  />
+                  <input id="cancerType_{{$index}}" name="cancerType_{{$index}}" type="checkbox"
+                    value="{{cancerType.name}}" ng-disabled="!$ctrl.hasCancerStatusSelected()"
+                    ng-model="cancerType.selected" ng-change="$ctrl.notifyChange()" />
                   <label for="cancerType_{{$index}}"> {{cancerType.name | replace:'_':' ' | titlecase}}</label>
                 </span>
               </div>
             </div><!-- end panel-body -->
-          </div>
-        </div><!-- end cancer types -->
+          </div><!-- end cancer types -->
+        </div>
       </div>
     </div>
   </div>
