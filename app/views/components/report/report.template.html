@@ -62,25 +62,54 @@
                                     <h3>DRUGS</h3>
                                     <dl>
                                         <dt># “Best Candidate” drugs:</dt>
-                                        <dd><span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.length}}</span></dd>
+                                        <dd><span
+                                                class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.length}}</span>
+                                        </dd>
                                         <dt>Drug status:</dt>
                                         <dd>AP:
-                                            <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.statusCounts['APPROVED'] || "0"}}</span>;
+                                            <span
+                                                class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.statusCounts['APPROVED']
+                                                || "0"}}</span>;
                                             CT:
-                                            <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.statusCounts['CLINICAL_TRIALS'] || "0"}}</span>;
+                                            <span
+                                                class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.statusCounts['CLINICAL_TRIALS']
+                                                || "0"}}</span>;
                                             EX:
-                                            <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.statusCounts['EXPERIMENTAL'] || "0"}}</span>
+                                            <span
+                                                class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.statusCounts['EXPERIMENTAL']
+                                                || "0"}}</span>
                                         </dd>
                                         <dt>Drug type:</dt>
                                         <dd>
-                                            <span ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['TARGETED_THERAPY']">TT: <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['TARGETED_THERAPY']}}</span>;</span>
-                                            <span ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['CHEMOTHERAPY']">QxT: <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['CHEMOTHERAPY']}}</span>;</span>
-                                            <span ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['COMBINATION_THERAPY']">CbT: <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['COMBINATION_THERAPY']}}</span>;</span>
-                                            <span ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['IMMUNOTHERAPY']">IT: <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['IMMUNOTHERAPY']}}</span>;</span>
-                                            <span ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['PHOTODYNAMIC_THERAPY']">PdT: <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['PHOTODYNAMIC_THERAPY']}}</span>;</span>
-                                            <span ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['HORMONE_THERAPY']">HT: <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['HORMONE_THERAPY']}}</span>;</span>
-                                            <span ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['OTHER']">other/NA: <span class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['OTHER']}}</span>;</span>
-                                            
+                                            <span
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['TARGETED_THERAPY']">TT:
+                                                <span
+                                                    class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['TARGETED_THERAPY']}}</span>;</span>
+                                            <span
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['CHEMOTHERAPY']">QxT:
+                                                <span
+                                                    class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['CHEMOTHERAPY']}}</span>;</span>
+                                            <span
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['COMBINATION_THERAPY']">CbT:
+                                                <span
+                                                    class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['COMBINATION_THERAPY']}}</span>;</span>
+                                            <span
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['IMMUNOTHERAPY']">IT:
+                                                <span
+                                                    class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['IMMUNOTHERAPY']}}</span>;</span>
+                                            <span
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['PHOTODYNAMIC_THERAPY']">PdT:
+                                                <span
+                                                    class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['PHOTODYNAMIC_THERAPY']}}</span>;</span>
+                                            <span
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['HORMONE_THERAPY']">HT:
+                                                <span
+                                                    class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['HORMONE_THERAPY']}}</span>;</span>
+                                            <span
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['OTHER']">other/NA:
+                                                <span
+                                                    class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['OTHER']}}</span>;</span>
+
                                         </dd>
                                     </dl>
 
