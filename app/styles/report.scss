@@ -14,14 +14,21 @@
 #report-contents h3 {
     text-align: left;
     font-size: 1.1em;
+    font-weight: bold;
 }
 
 #report-contents dt, #report-contents dd {
     display: inline;
+    font-weight: normal;
 }
 #report-contents dd::after {
     content: "";
     display: block;
+}
+
+#report-header-data dt:nth-child(1), 
+#report-header-data dd:nth-child(2) {
+    font-weight: bold;
 }
 
 #report-contents table {

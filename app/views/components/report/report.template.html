@@ -38,17 +38,23 @@
                                 <p><strong>Disclaimer:</strong> This report is intended for research use only and should
                                     not be used for medical or professional advice.</p>
                             </div>
-                            <div class="row">
+                            <div class="row" id="report-header-data">
                                 <dl>
-                                    <dt class="dt-report">ID:</dt>
+                                    <dt>ID:</dt>
                                     <dd>{{$ctrl.getComputation().name}}</dd>
-                                    <dt class="dt-report">Date:</dt>
+                                    <dt>Date:</dt>
                                     <dd>{{$ctrl.date.toString()}}</dd>
-                                    <dt class="dt-report">Analysis type:</dt>
+                                    <dt>Analysis type:</dt>
                                     <dd>{{$ctrl.getAnalysisType()}}</dd>
                                 </dl>
                             </div>
-
+                            <div class="row">
+                                <p>
+                                    This report provides a summary and statistical overview of the results obtained from
+                                    PanDrugs, as well as a complete list of the most promising drugs associated with the
+                                    identified actionable variants and the supporting molecular evidence.
+                                </p>
+                            </div>
                             <h2 class="row">SUMMARY</h2>
 
                             <div class="row">
