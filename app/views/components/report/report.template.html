@@ -86,7 +86,7 @@
                                                 <span
                                                     class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['TARGETED_THERAPY']}}</span>;</span>
                                             <span
-                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['CHEMOTHERAPY']">QxT:
+                                                ng-if="$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['CHEMOTHERAPY']">CTx:
                                                 <span
                                                     class="count-value">{{$ctrl.bestCandidateGeneDrugGroups.therapyTypeCounts['CHEMOTHERAPY']}}</span>;</span>
                                             <span
@@ -119,14 +119,14 @@
                                         <li>2. [TT] EGFR inhibitors - 4 [AP: 1; CT: 2; EX: 1]</li>
                                         <li>3. [TT] BRAF inhibitors - 2 [AP: 2; CT: 0; EX: 0]</li>
                                         <li>4. [TT] MEK inhibitors - 2 [AP: 2; CT: 1; EX: 1]</li>
-                                        <li>5. [Qx] Cellular process - 1 [AP: 1; CT: 0; EX: 0]</li>
+                                        <li>5. [CTx] Cellular process - 1 [AP: 1; CT: 0; EX: 0]</li>
                                     </ol>
                                 </div>
                                 <div class="col-xs-6">
                                     <h3>GENES</h3>
                                     <dl>
                                         <dt># genes:</dt>
-                                        <dd>{{$ctrl.geneList.length}}</dd>
+                                        <dd>{{$ctrl.getQueriedGenesLength()}}</dd>
                                         <dt># genes in Pandrugs:</dt>
                                         <dd>{{$ctrl.genePresence.present.length}}</dd>
                                     </dl>
@@ -154,7 +154,7 @@
                             <div class="row">
                                 <p class="col">
                                     <strong>Legend:</strong> Drug status: Approved(AP), Clinical Trials(CT),
-                                    Experimental(EX). Drug type: Targeted therapy (TT), Chemotherapy(QxT), Combination
+                                    Experimental(EX). Drug type: Targeted therapy (TT), Chemotherapy(CTx), Combination
                                     therapy (CbT), Hormone therapy (HT), Immunotherapy (IT), Photodynamic therapy (PdT),
                                     Other therapy (OT)
                                 </p>
