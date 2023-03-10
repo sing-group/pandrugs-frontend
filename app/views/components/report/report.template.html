@@ -216,15 +216,15 @@
                                         </td>
                                         <td colspan="4">&nbsp;</td>
                                     </tr>
+                                </tbody>
+                                <tbody ng-repeat="row in $ctrl.bestCandidateGeneDrugGroups">
                                     <tr>
-                                        <td rowspan="2">&nbsp;<p dir="ltr"><span>Vemurafenib</span></p>
+                                        <td rowspan="2">&nbsp;<p dir="ltr"><span>{{row.showDrugName}}</span></p>
                                         </td>
                                         <td colspan="4">
-                                            <p dir="ltr"><span>Vemurafenib is approved by FDA that acts as an inhibitor
-                                                    of BRAF</span></p>
+                                            <p ng-repeat="geneDrug in row.geneDrugs" dir="ltr"><span>{{geneDrug.drugStatusInfo}}</span></p>
 
-                                            <p dir="ltr"><span>Molecular alterations in MAP2K1 are associated with
-                                                    response to Vemurafenib, a drug approved by FDA</span></p>
+                                            
                                         </td>
                                         <td colspan="4" rowspan="2">
                                             <p dir="ltr"><a
@@ -246,31 +246,6 @@
                                         <td>
                                             <p dir="ltr"><span>Hydrolase</span></p>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td rowspan="2">&nbsp;<p dir="ltr"><span>RAF265</span></p>
-                                        </td>
-                                        <td colspan="4">
-                                            <p dir="ltr"><span>RAF265 is a drug in Clinical Trials that acts as an
-                                                    inhibitor of BRAF</span></p>
-
-                                            <p dir="ltr"><span>RAF265 is a drug in Clinical Trials that acts as an
-                                                    inhibitor of BRAF, a protein downstream to MAP2K1</span></p>
-                                        </td>
-                                        <td colspan="4" rowspan="2">
-                                            <p dir="ltr"><a
-                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22BRAF%22"><span>BRAF</span></a><span>(p.V600E
-                                                    / DT);&nbsp;</span></p>
-
-                                            <p dir="ltr"><a
-                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22MAP2K1%22"><span>MAP2K1</span></a><span>(p.V211D,
-                                                </span><span>#Up</span><span> / BM);</span></p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">&nbsp;</td>
-                                        <td>&nbsp;</td>
-                                        <td>&nbsp;</td>
                                     </tr>
                                 </tbody>
                             </table>
