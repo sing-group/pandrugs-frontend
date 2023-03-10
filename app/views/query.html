@@ -221,7 +221,8 @@
   </div>
 
   <div class="row" ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult()">
-    <report gene-list="geneList"  gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
+
+    <report ng-if="selectedTab === 'vcfrank' || (selectedTab === 'multiomics' && multiOmics.computationId !== null)" gene-list="geneList"  gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
             computation="computation" multiomics="multiOmics"/>
 
     <gene-results-table query-result="results" gene-drug-groups="resultsFiltered"
