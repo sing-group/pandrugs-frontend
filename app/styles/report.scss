@@ -30,6 +30,11 @@
 #report-contents td {
     border: 1px solid black;
 }
+
+#report #logo {
+    height: 30px;
+}
+
 @media print{
  
     a::after {
@@ -70,6 +75,7 @@
         position: relative;
         padding: 0px;
     }
+    
     .report .modal-dialog {
         width: 100%;
         padding: 0px;
