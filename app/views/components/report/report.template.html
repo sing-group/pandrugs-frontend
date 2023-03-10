@@ -35,22 +35,18 @@
                             </div>
                             <h2 class="row">PANDRUGS REPORT</h2>
                             <div class="row">
-                                <p>Disclaimer:This report is intended for research use only and should
-                                    not be used for medical
-                                    or professional advice. </p>
+                                <p><strong>Disclaimer:</strong> This report is intended for research use only and should
+                                    not be used for medical or professional advice.</p>
                             </div>
                             <div class="row">
                                 <dl>
-                                    <dt class="dt-report">ID</dt>
-                                    <dd>My patient analysis</dd>
+                                    <dt class="dt-report">ID:</dt>
+                                    <dd>{{$ctrl.getComputation().name}}</dd>
                                     <dt class="dt-report">Date:</dt>
-                                    <dd>Fri Nov 11 15:40:02 CET 2022</dd>
+                                    <dd>{{$ctrl.date.toString()}}</dd>
                                     <dt class="dt-report">Analysis type:</dt>
-                                    <dd>xxxxx (Variants, combined…)</dd>
-                                    <dt class="dt-report">Tumour Type:</dt>
-                                    <dd></dd>
+                                    <dd>{{$ctrl.getAnalysisType()}}</dd>
                                 </dl>
-                                <p>This report includes xxxxx</p>
                             </div>
 
                             <h2 class="row">SUMMARY</h2>

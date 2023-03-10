@@ -34,6 +34,8 @@ angular.module('pandrugsFrontendApp')
 
       this.showingReport = false;
 
+      this.date = new Date();
+
       this.$onChanges = function (changes) {
         // log stuff
         if (changes.queryResult) {
@@ -42,10 +44,17 @@ angular.module('pandrugsFrontendApp')
         if (changes.multiomics) {
           console.log(changes.multiomics.currentValue);
         }
+        if (changes.computation) {
+          console.log(changes.computation.currentValue);
+        }
       }.bind(this);
 
-      this.isVariantsAnalysis = function () {
-        return (this.computation !== undefined);
+      this.isSmallVariantsAnalysis = function () {
+        return (this.computation !== undefined && !this.multiomics);
+      }.bind(this);
+
+      this.isMultiOmicsAnalysis = function () {
+        return this.multiomics ? true : false;
       }.bind(this);
 
       this.isMultiOmicsWithVCFAnalysis = function () {
@@ -53,7 +62,7 @@ angular.module('pandrugsFrontendApp')
       }.bind(this);
 
 
-      this.isMultiOmicsWithCNVAnalysis = function() {
+      this.isMultiOmicsWithCNVAnalysis = function () {
         return this.multiomics && this.multiomics.cnvFile ? true : false;
       }.bind(this);
 
@@ -64,6 +73,12 @@ angular.module('pandrugsFrontendApp')
           return this.computation;
         }
       }.bind(this);
+
+      this.getAnalysisType = function () {
+        return this.isSmallVariantsAnalysis() ? "Small Variants" : "Multi-omics";
+      }.bind(this);
+
+
 
 
     }]
