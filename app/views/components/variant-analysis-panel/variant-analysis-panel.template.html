@@ -15,7 +15,22 @@
   along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<div class="panel panel-default" ng-show="$ctrl.computations && !$ctrl.isAnonymous()">
+<div class="container-fluid" ng-if="$ctrl.fetchedComputations === false" >
+  <div class="row">
+    <img height="30" src="images/spinner.gif"> Loading computations...
+  </div>
+</div>
+<div class="container-fluid" ng-if="$ctrl.isMultiomics === true && $ctrl.fetchedComputations === true && $ctrl.getFetchedComputationsCount() === 0" >
+       <div class="row">
+              <div class="jumbotron col-md-12">
+                <h2>No small variant analyses</h2>
+                <p>No small variants analyses have been found. Please, create a small variant analysis before proceeding, by using the corresponding tab.</p>
+                <button class="btn btn-default" ng-click="$ctrl.goTo()">Go to small variant analysis</button>
+              </div>
+       </div>
+</div>
+
+<div class="panel panel-default" ng-if="$ctrl.fetchedComputations === true && $ctrl.computations && !$ctrl.isAnonymous() && !($ctrl.isMultiomics === true && $ctrl.fetchedComputations === true && $ctrl.getFetchedComputationsCount() === 0)">
   <div class="panel-heading" role="tab">
     <h4 class="panel-title">
       <a data-toggle="collapse" data-parent="#accordion" aria-expanded="true" aria-controls="computationselect">
@@ -63,7 +78,7 @@
   </div>
 </div>
 
-<div ng-show="$ctrl.computations && $ctrl.isAnonymous()">
+<div ng-if="$ctrl.computations && $ctrl.isAnonymous()">
   <div ng-repeat="(id, status) in $ctrl.computations">
     <div class="radio">
       <img ng-show="!status.finished" src="images/spinner.gif" width="20px">{{status.name}} (id: {{id}})<br>

@@ -24,12 +24,14 @@ angular.module('pandrugsFrontendApp')
     bindings: {
       reloadInterval: '@',
       autoreload: '<',
-      onSelected: '&'
+      onSelected: '&',
+      isMultiomics: '<'
     },
     controller: ['user', '$location', '$interval', '$timeout', function (user, $location, $interval, $timeout) {
-      this.computations = [];
+      this.computations = {};
       this.computationId = $location.search().computationId;
-
+      this.fetchedComputations = false;
+      
       if (this.autoreload === undefined) {
         this.autoreload = true;
       }
@@ -47,6 +49,7 @@ angular.module('pandrugsFrontendApp')
 
         // User requires some time to load the actual user.
         // This delay wait for the current user to be set.
+        this.reloadComputations();
         $timeout(this.reloadComputations, 1000)
           .then(function() {
             this.reloadComputationsTask = $interval(
@@ -57,9 +60,10 @@ angular.module('pandrugsFrontendApp')
               }.bind(this),
               this.reloadInterval ? this.reloadInterval : 5000
             );
+            
           }.bind(this));
       }.bind(this);
-
+     
       this.$onDestroy = function() {
         if (this.reloadComputationsTask !== undefined) {
           $interval.cancel(this.reloadComputationsTask);
@@ -98,6 +102,18 @@ angular.module('pandrugsFrontendApp')
         return user.getPharmcatURLForComputation(computationId); 
       };
 
+      this.goTo = function() {
+        document.location.href = "/#!/query?tab=vcfrank";
+      };
+
+      this.getFetchedComputationsCount = function() {
+        if (this.fetchedComputations === true) {
+          return Object.keys(this.computations).length;
+        } else {
+          return 0;
+        }
+      }.bind(this);
+      
       function Computation(computationId, computation) {
         this.id = computationId;
         angular.merge(this, computation);
@@ -126,7 +142,8 @@ angular.module('pandrugsFrontendApp')
       //update computation status...
       this.reloadComputations = function() {
         if (!this.isAnonymous()) {
-          user.getComputations(function(computations) {
+          user.getComputations(function(computations) {            
+            this.fetchedComputations = true;
             var savedExample;
 
             if (this.computations.example) {
@@ -144,13 +161,15 @@ angular.module('pandrugsFrontendApp')
               this.computations.example = savedExample;
             }
           }.bind(this));
-        } else if(this.computationId) {
+        } else if(this.computationId) {          
           user.getComputation('guest', this.computationId, function(computation) {
             this.computations = {};
             this.computations[this.computationId] = new Computation(this.computationId, computation);
-
+            this.fetchedComputations = true;
             this.notifyComputationIdChange();
           }.bind(this));
+        } else {
+          this.fetchedComputations = true;
         }
       }.bind(this);
     }]
