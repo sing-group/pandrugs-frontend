@@ -26,6 +26,7 @@
     display: block;
 }
 
+
 #report-header-data dt:nth-child(1), 
 #report-header-data dd:nth-child(2) {
     font-weight: bold;
@@ -40,6 +41,10 @@
 
 #report #logo {
     height: 30px;
+}
+
+#report .count-value {
+    font-weight: bold;
 }
 
 @media print{

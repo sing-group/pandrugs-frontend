@@ -38,15 +38,45 @@ angular.module('pandrugsFrontendApp')
 
       this.$onChanges = function (changes) {
         // log stuff
-        if (changes.queryResult) {
-          console.log(changes.queryResult.currentValue);
+        if (changes.geneDrugGroups) {
+          this.bestCandidateGeneDrugGroups = [];
+
+          this.bestCandidateGeneDrugGroups.statusCounts = {};
+          this.bestCandidateGeneDrugGroups.therapyTypeCounts = {};
+        
+          
+          changes.geneDrugGroups.currentValue.forEach(function (geneDrugGroup) {
+            if (geneDrugGroup.isBestCandidate()) {
+              this.bestCandidateGeneDrugGroups.push(geneDrugGroup);
+              
+              if (!this.bestCandidateGeneDrugGroups.statusCounts[geneDrugGroup.status]) {
+                this.bestCandidateGeneDrugGroups.statusCounts[geneDrugGroup.status] = 0;
+              }
+              this.bestCandidateGeneDrugGroups.statusCounts[geneDrugGroup.status]++;
+
+              var therapy = geneDrugGroup.therapy;
+              if (therapy === null) {
+                therapy = "OTHER";
+              }
+
+              if (!this.bestCandidateGeneDrugGroups.therapyTypeCounts[therapy]) {
+                this.bestCandidateGeneDrugGroups.therapyTypeCounts[therapy] = 0;
+              }
+              this.bestCandidateGeneDrugGroups.therapyTypeCounts[therapy]++; 
+            }
+
+          }.bind(this));
+          console.log(this.bestCandidateGeneDrugGroups.therapyTypeCounts);
+
+
+          console.log(changes.geneDrugGroups.currentValue);
         }
-        if (changes.multiomics) {
+        /*if (changes.multiomics) {
           console.log(changes.multiomics.currentValue);
         }
         if (changes.computation) {
           console.log(changes.computation.currentValue);
-        }
+        }*/
       }.bind(this);
 
       this.isSmallVariantsAnalysis = function () {
@@ -77,6 +107,10 @@ angular.module('pandrugsFrontendApp')
       this.getAnalysisType = function () {
         return this.isSmallVariantsAnalysis() ? "Small Variants" : "Multi-omics";
       }.bind(this);
+
+      this.getBestCandidates = function () {
+
+      }
 
 
 
