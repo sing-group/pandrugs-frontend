@@ -187,9 +187,9 @@
                                 DrugScore (DS),
                                 GeneScore (GS).</p>
 
-                            <table>
+                            <table id="best-candidates-table">
 
-                                <tbody>
+                                <thead>
                                     <tr>
                                         <td colspan="5">
                                             <p dir="ltr"><span>Drug&nbsp;</span></p>
@@ -216,10 +216,10 @@
                                         </td>
                                         <td colspan="4">&nbsp;</td>
                                     </tr>
-                                </tbody>
+                                </thead>
                                 <tbody ng-repeat="row in $ctrl.bestCandidateGeneDrugGroups">
                                     <tr>
-                                        <td rowspan="2">&nbsp;<p dir="ltr"><span>{{row.showDrugName}}</span></p>
+                                        <td rowspan="2">&nbsp;<p dir="ltr"><span class="drug-name">{{row.showDrugName | titlecase}}</span></p>
                                         </td>
                                         <td colspan="4">
                                             <p ng-repeat="geneDrug in row.geneDrugs" dir="ltr"><span>{{geneDrug.drugStatusInfo}}</span></p>
@@ -238,13 +238,13 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <p dir="ltr"><span>TT</span></p>
+                                            <p dir="ltr"><span>{{row.therapy | titlecase | replace:'_':' '}}</span></p>
                                         </td>
                                         <td>
-                                            <p dir="ltr"><span>Sensitivity</span></p>
+                                            <p dir="ltr"><span>{{row.getSensitivity() | titlecase}}</span></p>
                                         </td>
                                         <td>
-                                            <p dir="ltr"><span>Hydrolase</span></p>
+                                            <p dir="ltr"><span>{{row.family | enumeration}}</span></p>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -47,6 +47,17 @@
     font-weight: bold;
 }
 
+#best-candidates-table thead td {
+    font-weight: bold;
+}
+
+#best-candidates-table .drug-name {
+    font-weight: bold;
+}
+
+#best-candidates-table td {
+    padding: 5px;
+}
 @media print{
  
     a::after {
