@@ -43,12 +43,12 @@ angular.module('pandrugsFrontendApp')
 
           this.bestCandidateGeneDrugGroups.statusCounts = {};
           this.bestCandidateGeneDrugGroups.therapyTypeCounts = {};
-        
-          
+
+
           changes.geneDrugGroups.currentValue.forEach(function (geneDrugGroup) {
             if (geneDrugGroup.isBestCandidate()) {
               this.bestCandidateGeneDrugGroups.push(geneDrugGroup);
-              
+
               if (!this.bestCandidateGeneDrugGroups.statusCounts[geneDrugGroup.status]) {
                 this.bestCandidateGeneDrugGroups.statusCounts[geneDrugGroup.status] = 0;
               }
@@ -62,7 +62,7 @@ angular.module('pandrugsFrontendApp')
               if (!this.bestCandidateGeneDrugGroups.therapyTypeCounts[therapy]) {
                 this.bestCandidateGeneDrugGroups.therapyTypeCounts[therapy] = 0;
               }
-              this.bestCandidateGeneDrugGroups.therapyTypeCounts[therapy]++; 
+              this.bestCandidateGeneDrugGroups.therapyTypeCounts[therapy]++;
             }
 
           }.bind(this));
@@ -73,10 +73,10 @@ angular.module('pandrugsFrontendApp')
         }
         /*if (changes.multiomics) {
           console.log(changes.multiomics.currentValue);
-        }
+        }*/
         if (changes.computation) {
           console.log(changes.computation.currentValue);
-        }*/
+        }
       }.bind(this);
 
       this.isSmallVariantsAnalysis = function () {
@@ -108,8 +108,8 @@ angular.module('pandrugsFrontendApp')
         return this.isSmallVariantsAnalysis() ? "Small Variants" : "Multi-omics";
       }.bind(this);
 
-      this.getBestCandidates = function () {
-
+      this.getQueriedGenesLength = function () {
+        return this.isSmallVariantsAnalysis() ? this.computation.affectedGenes.length : this.geneList.length;
       }
 
 
