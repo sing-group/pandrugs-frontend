@@ -66,17 +66,12 @@ angular.module('pandrugsFrontendApp')
             }
 
           }.bind(this));
-          console.log(this.bestCandidateGeneDrugGroups.therapyTypeCounts);
-
-
-          console.log(changes.geneDrugGroups.currentValue);
+          
         }
         /*if (changes.multiomics) {
           console.log(changes.multiomics.currentValue);
         }*/
-        if (changes.computation) {
-          console.log(changes.computation.currentValue);
-        }
+        
       }.bind(this);
 
       this.isSmallVariantsAnalysis = function () {
@@ -111,9 +106,5 @@ angular.module('pandrugsFrontendApp')
       this.getQueriedGenesLength = function () {
         return this.isSmallVariantsAnalysis() ? this.computation.affectedGenes.length : this.geneList.length;
       }
-
-
-
-
     }]
   });

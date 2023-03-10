@@ -227,18 +227,16 @@
                                             
                                         </td>
                                         <td colspan="4" rowspan="2">
-                                            <p dir="ltr"><a
-                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22BRAF%22"><span>BRAF</span></a><span>(p.V600E
-                                                    / DT);&nbsp;</span></p>
-
-                                            <p dir="ltr"><a
-                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22VEMURAFENIB%22+%22MAP2K1%22"><span>MAP2K1</span></a><span>(p.V211D,
-                                                </span><span>#Up</span><span> / BM);</span></p>
+                                            <div ng-repeat="geneDrug in row.geneDrugs">
+                                                <p ng-repeat="gene in geneDrug.gene"  ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]" ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]" dir="ltr"><a
+                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>({{affectedGenesInfo.HGVS_cDNA}}/{{affectedGenesInfo.HGVS_protein}} / {{geneDrug.interactionType | titlecase | replace:'_':' ' }});&nbsp;</span></p>
+                                            </div> 
+                                            
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <p dir="ltr"><span>{{row.therapy | titlecase | replace:'_':' '}}</span></p>
+                                            <p dir="ltr" ng-if="row.therapy !== null"><span>{{row.therapy | titlecase | replace:'_':' '}}</span></p>
                                         </td>
                                         <td>
                                             <p dir="ltr"><span>{{row.getSensitivity() | titlecase}}</span></p>
