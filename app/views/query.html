@@ -181,7 +181,7 @@
           <div class="row">
               <h5>SELECTED OPTIONS</h5>
               <div class="col-md-6">
-                  <h6>Drug Status Level</h6>
+                  <h6>Drug Status</h6>
                   <p ng-if="advancedQueryOptions.cancerFda">FDA approved cancer</p>
                   <p ng-if="advancedQueryOptions.cancerClinical">Clinical trials cancer</p>
                   <p ng-if="advancedQueryOptions.otherFda">FDA approved other patologies</p>
@@ -189,10 +189,12 @@
                   <p ng-if="advancedQueryOptions.otherExperimental">Experimental</p>
               </div>
               <div class="col-md-6">
-                  <h6>Interaction Evidence Level</h6>
-                  <p ng-if="advancedQueryOptions.target">Target</p>
-                  <p ng-if="advancedQueryOptions.marker">Biomarker</p>
-                  <h6>Selected cancer types</h6>
+                  <h6>Interaction Type</h6>
+                  <p ng-if="advancedQueryOptions.directTarget">Direct target</p>
+                  <p ng-if="advancedQueryOptions.biomarker">Biomarker</p>
+                  <p ng-if="advancedQueryOptions.geneDependency">Genetic dependency</p>
+                  <p ng-if="advancedQueryOptions.pathwayMember">Pathway member</p>
+                  <h6>Selected cancer types</h6>  
                   <p ng-if="!advancedQueryOptions.areAllCancerTypesSelected()">
                     {{advancedQueryOptions.getSelectedCancerTypes() | enumeration}}
                   </p>
