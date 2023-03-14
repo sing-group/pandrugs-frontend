@@ -86,7 +86,7 @@
     </div>
   </div>
 </div>
-          
+
 <div class="row">
   <a id="download-csv-link" href="{{$ctrl.csvContent}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (complete version)</button></a>
   <a id="download-csv-link" href="{{$ctrl.csvContentSimple}}" download="data.csv"><button class="download-csv btn btn-primary">Download as CSV (simple version)</button></a>
@@ -121,13 +121,10 @@
           </button>
         </td>
         <td ng-bind-html="row.gene | mapAttribute : 'geneSymbol' | enumerationWithLink : 'http://www.ncbi.nlm.nih.gov/gene?term=[VALUE]' : true : '\\[VALUE\\]'"></td>
-        <td>
-          <span ng-if="row.pubchemId.length === 0">{{row.showDrugName}}</span>
-          <span ng-if="row.pubchemId.length > 0"><a href="https://pubchem.ncbi.nlm.nih.gov/compound/{{row.pubchemId[0]}}" target="_blank">{{row.showDrugName}}</a></span>
-        </td>
+        <td ng-bind-html="row.getDrugAsHtml()"></td>
         <td class="min-column">
           <div class="tooltipCSS">
-            <img ng-if="row.getBestInteraction() === 'biomarker'" class="img_icon" src="images/query/biomarker.svg"> 
+            <img ng-if="row.getBestInteraction() === 'biomarker'" class="img_icon" src="images/query/biomarker.svg">
             <img ng-if="row.getBestInteraction() === 'direct-target'" class="img_icon" src="images/query/direct-target.svg">
             <img ng-if="row.getBestInteraction() === 'pathway-member'"  class="img_icon" src="images/query/pathway-member.svg">
             <img ng-if="row.getBestInteraction() === 'gene-dependency'"  class="img_icon" src="images/query/genetic-dependency.svg">
@@ -182,7 +179,7 @@
           </div>
         </td>
         <td class="min-column" style="text-align: center" ng-if="$ctrl.computation.pharmcat === true">
-          <a ng-if="row.pharmCatGermLineAnnotation !== 'NOT_AVAILABLE'" 
+          <a ng-if="row.pharmCatGermLineAnnotation !== 'NOT_AVAILABLE'"
               ng-href="{{$ctrl.getPharmcatURL($ctrl.computation.id, row.showDrugName | lowercase)}}" target="pharmcatReport">
               <span title="{{row.pharmCatGermLineAnnotation | titlecase | replace:'_':' '}}" class="custom_icon {{row.pharmCatGermLineAnnotation | toIconClass}}"></span>
           </a>
@@ -200,11 +197,11 @@
       <!-- Gene Drugs -->
       <tr ng-repeat-start="geneDrug in row.geneDrugs" ng-if="row.moreinfo" class="moreinfo">
         <td colspan="6">
-          <div ng-if="geneDrug.drugStatusInfo.length > 0">{{geneDrug.drugStatusInfo}}</div>
+          <div ng-if="geneDrug.drugStatusInfo.length > 0" ng-bind-html="geneDrug.getDrugStatusInfoWithLinks()"></div>
           <div>
             Interaction:
             <span class="tooltipCSS">
-              <img ng-if="geneDrug.getInteraction() === 'biomarker'" class="img_icon" src="images/query/biomarker.svg"> 
+              <img ng-if="geneDrug.getInteraction() === 'biomarker'" class="img_icon" src="images/query/biomarker.svg">
               <img ng-if="geneDrug.getInteraction() === 'direct-target'" class="img_icon" src="images/query/direct-target.svg">
               <img ng-if="geneDrug.getInteraction() === 'pathway-member'"  class="img_icon" src="images/query/pathway-member.svg">
               <img ng-if="geneDrug.getInteraction() === 'gene-dependency'"  class="img_icon" src="images/query/genetic-dependency.svg">
@@ -290,14 +287,14 @@
           </span>
         </td>
         <td ng-if="$ctrl.showCnvInformation" style="text-align: center" class="min-column" >
-          <span class="{{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'amplification' | replace:'DEL':'deletion'}}" 
+          <span class="{{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'amplification' | replace:'DEL':'deletion'}}"
             ng-if="row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol]">
           {{row.calculatedGeneAnnotations.cnv[geneDrug.gene[0].geneSymbol] | replace:'AMP':'Amplification' | replace:'DEL':'Deletion' }}
           </span>
         </td>
         <td ng-if="$ctrl.showExpressionInformation" style="text-align: center" class="min-column" >
           <span ng-if="row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol]"
-            title="{{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | titlecase | replace:'_':' '}}" 
+            title="{{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | titlecase | replace:'_':' '}}"
             class="custom_icon {{row.calculatedGeneAnnotations.expression[geneDrug.gene[0].geneSymbol] | toIconClass}}"></span>
         </td>
       </tr>
