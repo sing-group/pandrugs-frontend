@@ -22,7 +22,7 @@
 
         <h1>Welcome to</h1>
         <p class="lead">
-          <img id="logo-big" src="images/pandrugs-logo-big.png" class="img-responsive"><br>
+          <img id="logo-big" src="images/pandrugs2-logo.svg" class="img-responsive"><br>
           A novel method for prioritizing therapies using individual multi-omics data
         </p>
         <p><a class="btn btn-lg btn-success" ng-href="#!/query">Query!
@@ -34,9 +34,9 @@
 <h3>What is PanDrugs?</h3>
       <p class="db_desc"><strong>PanDrugs</strong> provides a bioinformatics platform
 <strong>to prioritize anticancer drug treatments according to individual multi-omics 
-data</strong>. PanDrugs current version integrates data from <strong>24</strong> primary
-sources and supports <strong>74130</strong> drug-target associations obtained
-from <strong>4642</strong> genes and <strong>14658</strong> unique compounds.</p>
+data</strong>. The current version of PanDrugs database integrates data from <strong>23</strong> primary
+sources and stores <strong>74,087</strong> drug-target associations obtained
+from <strong>4,642</strong> genes and <strong>14,659</strong> unique compounds.</p>
 
 <p class="db_desc">
     <strong>Data input</strong>:
@@ -44,22 +44,23 @@ from <strong>4642</strong> genes and <strong>14658</strong> unique compounds.</p
       <li><strong>VCF file</strong>: for somatic and germline variant analysis.</li>
       <li><strong>RNK file</strong>: for pre-ranked gene lists.</li>
       <li><strong>TSV file</strong>: for CNV analysis.</li>
-      <li><strong>gene lists</strong>.</li>
-      <li><strong>drug queries</strong>.</li>
+      <li><strong>Gene lists</strong>.</li>
+      <li><strong>Drug queries</strong>.</li>
     </ol></p>
     <p class="db_desc">Please note PanDrugs terminology for druggable genes:
       <ol type="I">
-        <li><strong>Direct targets</strong>: Genes that contribute to a disease phenotype and can be directly
-        targeted by a drug (e.g. <i>BRAF</i> is a direct target for Vemurafenib).</li>
+        <li><strong>Direct targets</strong>: Genes that contribute to a disease phenotype and can be directly 
+        targeted by a drug (e.g. <i>BRAF</i> is a direct target of Vemurafenib).</li>
         <li><strong>Biomarkers</strong>: Genes whose genetic status is associated with a drug response 
         but are not the drug target themselves (e.g. <i>BRCA</i>-mutated
         cancers responding to PARP inhibitors).</li>
         <li><strong>Pathway members</strong>: Genes found within the pathway and downstream 
-          of a given undruggable gene (e.g. patients with mutations in <i>TSC1/2</i>
-          respond to a downstream inhibition of the mTOR pathway).</li>
-          <!-- 
-            <li><strong>Gene dependencies</strong>: Genes with a dependency relationship with a given undruggable gene (e.g.).</li> 
-          -->
+        of an altered gene (e.g. patients with mutations in <i>TSC1/2</i>
+        respond to downstream inhibition of the mTOR pathway).</li>
+        <li><strong>Genetic dependencies</strong>: Genes that depend upon an altered 
+        gene (e.g. patients with <i>BRAF</i> GoF treated with BRAF and MEK inhibitors 
+        can develop resistance involving MAPK signaling reactivation. Thus, PanDrugs suggests targeting 
+        <i>MAP2K1</i> in tumors with <i>BRAF</i> GoF).</li>
       </ol>
       </p>
       <img src="images/interactions.svg" id="interactions-legend">
@@ -67,13 +68,13 @@ from <strong>4642</strong> genes and <strong>14658</strong> unique compounds.</p
   </div>
   <div id="method">
     <h3>PanDrugs workflow</h3>
-    <p>PanDrugs considers drug indication and status, type of drug-gene association 
-    and curation level of the sources to calculate the <strong>Drug Score
-    (DScore)</strong>. <strong>The Gene Score (GScore)</strong> is
-    estimated according to gene essentiality, tumor vulnerability, relevance of the gene 
+    <p>PanDrugs considers drug indication and approval status, the number of genes associated 
+    with a drug, the nature and reliability of these associations and the type of drug response to 
+    calculate the <strong>Drug Score (DScore)</strong>. <strong>The Gene Score (GScore)</strong> is
+    estimated according to gene essentiality, tumour vulnerability, the relevance of the gene 
     in cancer, its druggability level, the biological impact of mutations, the frequency of 
     gene alterations and their clinical implications. PanDrugs resolves the 
-    <em>Best Therapeutic Candidates</em> based on both the <strong>DScore</strong> 
+    <strong>Best Therapeutic Candidates (BTC)</strong> based on both the <strong>DScore</strong> 
     and the <strong>GScore</strong>.</p>
     <img src="images/pandrugs-scoring.svg">
   </div>
@@ -85,10 +86,10 @@ from <strong>4642</strong> genes and <strong>14658</strong> unique compounds.</p
   </div>
   <div class="alert alert-info">
     <strong>Please cite us</strong>:
-    E. Piñeiro-Yáñez <i>et al.</i> (2018)
-    <a href="https://genomemedicine.biomedcentral.com/articles/10.1186/s13073-018-0546-1" target="_blank">
-    PanDrugs: a novel method to prioritize anticancer drug treatments according to individual genomic data</a>.
-    Genome Medicine. Volume 10:41. ISSN: 1756-994X.
+      Piñeiro-Yáñez, E. <i>et al.</i> (2018). 
+      <a href="https://doi.org/10.1186/s13073-018-0546-1" target="_blank" style="color:#000000">
+        PanDrugs: a novel method to prioritize anticancer drug treatments according to individual 
+        genomic data.</a> <i>Genome medicine, 10</i>(1), 41.
   </div>
 </div><!-- end of the container -->
 
@@ -105,18 +106,18 @@ from <strong>4642</strong> genes and <strong>14658</strong> unique compounds.</p
 
       <div class="modal-body">
         <p>To prevent unauthorized access or disclosure, PanDrugs uses several technical
-          measures to safeguard your data, in accordance with current technological and
+          measures to safeguard your data, following current technological and
           industry standards. In particular, all connections to and from our website are
-          encrypted using Secure Socket Layer (SSL). Passwords are hashed in our database.
-          Input VCFs are deleted right after execution. However, data analyzed with PanDrugs 
-          are stored in our private servers. This data includes annotations for somatic 
-          variants and PharmCAT’s report for germline ones. Removing an analysis implies 
-          that it will be completely and permanently removed from PanDrugs servers. Files 
-          are not shared with third parties.</p> <p> We ensure that data and results are 
-          kept at least 1 week for guest requests and at least 6 months for authenticated 
+          encrypted using Secure Socket Layer (SSL). Passwords are hashed in our database.</p> 
+          <p>Input VCFs are deleted right after execution. However, data analysed with PanDrugs 
+          are stored on our private servers. These data include annotations for somatic 
+          variants and PharmCAT's report for germline ones. Removing an analysis implies 
+          that it will be completely and permanently removed from PanDrugs servers. <strong>Files 
+          are not shared with third parties</strong>.</p> <p> We ensure that data and results are 
+          kept for at least 1 week for guest requests and at least 6 months for authenticated 
           users. </p> <p> However, if you prefer, you can <a
           href="http://github.com/sing-group/pandrugs-docker">build a docker image to run
-          PanDrugs in your own servers</a>. </p>
+          PanDrugs on your own servers</a>. </p>
       </div>
     </div>
   </div>
