@@ -153,10 +153,17 @@
 
                             <div class="row">
                                 <p class="col">
-                                    <strong>Legend:</strong> Drug status: Approved(AP), Clinical Trials(CT),
-                                    Experimental(EX). Drug type: Targeted therapy (TT), Chemotherapy(CTx), Combination
-                                    therapy (CbT), Hormone therapy (HT), Immunotherapy (IT), Photodynamic therapy (PdT),
-                                    Other therapy (OT)
+                                    <strong>Legend:</strong> Drug status:
+                                    Approved ({{ 'Approved' | pandrugsAcronym}}),
+                                    Clinical Trials ({{ 'Clinical Trials' | pandrugsAcronym}}),
+                                    Experimental ({{ 'Experimental' | pandrugsAcronym}}).
+                                    Drug type: Targeted therapy ({{ 'Targeted therapy' | pandrugsAcronym}}),
+                                    Chemotherapy ({{ 'Chemotherapy' | pandrugsAcronym}}),
+                                    Combination therapy ({{ 'Combination therapy' | pandrugsAcronym}}),
+                                    Hormone therapy ({{ 'Hormone therapy' | pandrugsAcronym}}),
+                                    Immunotherapy ({{ 'Immunotherapy' | pandrugsAcronym}}),
+                                    Photodynamic therapy ({{ 'Photodynamic therapy' | pandrugsAcronym}}),
+                                    Other therapy ({{ 'Other therapy' | pandrugsAcronym}})
                                 </p>
                             </div>
 
@@ -228,8 +235,8 @@
                                                     ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
                                                     ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
                                                     dir="ltr"><a
-                                                        href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>({{affectedGenesInfo.HGVS_cDNA}}/{{affectedGenesInfo.HGVS_protein}}
-                                                        / {{geneDrug.interactionType | titlecase | replace:'_':' '
+                                                        href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>&nbsp;({{affectedGenesInfo.HGVS_cDNA}}/{{affectedGenesInfo.HGVS_protein}}
+                                                        / {{geneDrug.interactionType | titlecase | replace:'_':' ' | pandrugsAcronym
                                                         }});&nbsp;</span></p>
                                             </div>
 
@@ -238,7 +245,7 @@
                                     <tr>
                                         <td colspan="2">
                                             <p dir="ltr" ng-if="row.therapy !== null"><span>{{row.therapy | titlecase |
-                                                    replace:'_':' '}}</span></p>
+                                                    replace:'_':' ' | pandrugsAcronym}}</span></p>
                                         </td>
                                         <td>
                                             <p dir="ltr"><span>{{row.getSensitivity() | titlecase}}</span></p>
