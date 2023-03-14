@@ -104,7 +104,7 @@ angular.module('pandrugsFrontendApp')
       }.bind(this);
 
       this.getQueriedGenesLength = function () {
-        return this.isSmallVariantsAnalysis() ? this.computation.affectedGenes.length : this.geneList.length;
+        return this.genePresence.present.length + this.genePresence.absent.length;
       }
     }]
   });
