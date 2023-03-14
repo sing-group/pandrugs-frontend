@@ -14,9 +14,11 @@
   You should have received a copy of the GNU General Public License
   along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div ng-show="!isLoading" class="row">
+<div ng-show="!isLoading" class="row">  
+  
   <button type="submit" class="btn btn-primary btn-lg" ng-show="hasResult()" ng-click="newQuery()" style="float:right">New Query</button>
-  <h2>{{hasResult() ? 'PanDrugs Candidate Therapies' : 'Query PanDrugs'}}</h2>
+  <h2>{{hasResult() ? 'PanDrugs Candidate Therapies' : 'Query PanDrugs'}}</h2><report ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult() && (selectedTab === 'vcfrank' || (selectedTab === 'multiomics' && multiOmics.computationId !== null))" gene-list="geneList"  gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
+  computation="computation" multiomics="multiOmics"/>
 </div>
 
 <div class="container-fluid">
@@ -221,10 +223,7 @@
   </div>
 
   <div class="row" ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult()">
-
-    <report ng-if="selectedTab === 'vcfrank' || (selectedTab === 'multiomics' && multiOmics.computationId !== null)" gene-list="geneList"  gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
-            computation="computation" multiomics="multiOmics"/>
-
+    
     <gene-results-table query-result="results" gene-drug-groups="resultsFiltered"
                         computation="computation" show-variant-information="selectedTab === 'vcfrank'" 
                         show-cnv-information="(selectedTab === 'multiomics' && multiOmics.cnvFile) || selectedTab === 'cnv'" 

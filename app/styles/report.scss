@@ -2,6 +2,10 @@
     font-family: 'Arial', sans-serif;
 }
 
+.report {
+    display: inline;    
+}
+
 #report .details {
     font-size: 0.9em;
 }
@@ -55,8 +59,8 @@
     font-weight: bold;
 }
 
-#best-candidates-table thead td {
-    font-weight: bold;
+#best-candidates-table tbody:nth-child(1) td {
+    font-weight: bold;    
 }
 
 #best-candidates-table .drug-name {
@@ -78,12 +82,13 @@
 
     .container-fluid {
         margin: 0px;
-        padding: 0px;
+        padding: 5px;
     }
 
     body {
         margin: 0px;
     }
+
     gene-results-table,
     #resultsContainer > div:nth-child(1),
     #resultsContainer > div:nth-child(2),
@@ -91,7 +96,9 @@
     .modal-header,
     report button[data-toggle="modal"],
     .header,
-    body>div>div>div:nth-child(1),
+    /*body>div>div>div:nth-child(1),*/
+    body>div>div>div:nth-child(1)>button,
+    body>div>div>div:nth-child(1)>h2,
     body>div>div>div:nth-child(2) {
         display: none;
     }

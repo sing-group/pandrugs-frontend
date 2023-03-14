@@ -16,8 +16,8 @@
 -->
 
 <div class="report">
-    <button type="button" class="btn btn-default" data-target="#report"
-        ng-click="$ctrl.showingReport = !$ctrl.showingReport" data-toggle="modal">See best candidates report</button>
+    <button type="button" class="btn btn-primary" data-target="#report"
+        ng-click="$ctrl.showingReport = !$ctrl.showingReport" data-toggle="modal"><span class="glyphicon glyphicon-file">&nbsp;</span>See best candidates report</button>
     <div id="report" class="modal fade" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -115,38 +115,35 @@
 
                                     <h3>Top-5 drug families:</h3>
                                     <ol>
-                                        <li>[TT] PI3K inhibitors - 7 [AP: 5; CT: 1; EX: 1]</li>
-                                        <li>2. [TT] EGFR inhibitors - 4 [AP: 1; CT: 2; EX: 1]</li>
-                                        <li>3. [TT] BRAF inhibitors - 2 [AP: 2; CT: 0; EX: 0]</li>
-                                        <li>4. [TT] MEK inhibitors - 2 [AP: 2; CT: 1; EX: 1]</li>
-                                        <li>5. [CTx] Cellular process - 1 [AP: 1; CT: 0; EX: 0]</li>
+                                        <li>[&lt;family&gt] &lt;family&gt; - &lt;count&gt; [AP: ??; CT: ??; EX: ??]</li>
+                                        <li>...</li>                                        
                                     </ol>
                                 </div>
                                 <div class="col-xs-6">
                                     <h3>GENES</h3>
                                     <dl>
                                         <dt># genes:</dt>
-                                        <dd>{{$ctrl.getQueriedGenesLength()}}</dd>
+                                        <dd><span class="count-value">{{$ctrl.getQueriedGenesLength()}}</span></dd>
                                         <dt># genes in Pandrugs:</dt>
-                                        <dd>{{$ctrl.genePresence.present.length}}</dd>
+                                        <dd><span class="count-value">{{$ctrl.genePresence.present.length}}</span></dd>
                                     </dl>
                                     <h3>ALL MOLECULAR EVIDENCES</h3>
                                     <dl>
                                         <dt># SNVs:</dt>
-                                        <dd>143 - Missense: 25; NS: 2; Damaging: 9</dd>
+                                        <dd>?? - Missense: ??; NS: ??; Damaging: ??</dd>
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
-                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">134 (Amp: 78; Del: 56)</dd>
+                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
                                         <dt># Exprs:
-                                        <dd>67 up, 54 down</dd>
+                                        <dd>?? up, ?? down</dd>
                                     </dl>
                                     <h3>BEST CANDIDATES</h3>
                                     <dl>
                                         <dt># SNVs:</dt>
-                                        <dd>13 - Missense: 25; NS: 2; Damaging: 9</dd>
+                                        <dd>?? - Missense: ??; NS: ??; Damaging: ??</dd>
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
-                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">14 (Amp: 8; Del: 4)</dd>
+                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
                                         <dt># Exprs:
-                                        <dd>67 up, 54 down</dd>
+                                        <dd>?? up, ?? down</dd>
                                     </dl>
                                 </div>
                             </div>
@@ -189,7 +186,7 @@
                                 GeneScore (GS).</p>
 
                             <table id="best-candidates-table">
-                                <thead>
+                                <tbody>
                                     <tr>
                                         <td colspan="5">
                                             <p dir="ltr"><span>Drug&nbsp;</span></p>
@@ -216,7 +213,7 @@
                                         </td>
                                         <td colspan="4">&nbsp;</td>
                                     </tr>
-                                </thead>
+                                </tbody>
                                 <tbody ng-repeat="row in $ctrl.bestCandidateGeneDrugGroups">
                                     <tr>
                                         <td rowspan="2">&nbsp;<p dir="ltr"><span class="drug-name">{{row.showDrugName |
