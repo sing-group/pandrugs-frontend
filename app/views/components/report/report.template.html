@@ -162,33 +162,26 @@
 
 
 
-                            <h2 class="row">DRUG-GENE ASSOCIATIONS BEST CANDIDATES</h2>
+                            <h2 class="row">BEST CANDIDATE DRUGS IN PANDRUGS</h2>
 
+                            <p class="details"><strong>Method:</strong> Patient’s alterations (e.g. mutations, germinal
+                                variants,
+                                amplifications and deletions) and gene expression alterations are searched in PanDrugsDB
+                                and reported according to PanDrugs scores (see GScore and DScore), which combine
+                                clinico-biological gene relevance and susceptibility to treatment, reflecting the
+                                evidence level of the gene-drug association to the clinical evidence.
+                            <p class="details"><strong>Table of results:</strong> In the following table, basic
+                                information of the patient´s alterations
+                                with relevant clinical implications can be found. Only the top best candidate drug-gene
+                                associations are reported in this report. For a detailed evaluation it is recommended to
+                                access the full PanDrugs analysis results.</p>
 
-                            <p>SUMMARY: PanDrugs suggest to treat (patient ID) with XXX based on xxxx alterations and
-                                xxxx. The germline
-                                alteration profile indicates xxxxx</p>
-
-                            <p>Method: Patient's alterations (e.g. mutations, germinal variants, amplifications and
-                                deletions) and gene
-                                expression alterations are searched in PanDrugsDB and reported according to PanDrugs
-                                scores (see GScore and
-                                DScore), which combine clinico-biological gene relevance and susceptibility to
-                                treatment, reflecting the
-                                evidence level of the gene-drug association to the clinical evidence. </p>
-
-                            <p>Table of results: In the following table, basic information of the patient´s alterations
-                                with relevant clinical
-                                implications can be found. Only the top best candidate drug-gene associations are
-                                reported in this report. For a
-                                detailed evaluation it is recommended to access the full PanDrugs analysis results.</p>
-
-                            <p>Legend: Direct target (DT), Biomarker(BM), Pathway member (PM), Genetic Dependency (GD),
+                            <p class="details"><strong>Legend:</strong> Direct target (DT), Biomarker(BM), Pathway
+                                member (PM), Genetic Dependency (GD),
                                 DrugScore (DS),
                                 GeneScore (GS).</p>
 
                             <table id="best-candidates-table">
-
                                 <thead>
                                     <tr>
                                         <td colspan="5">
@@ -219,24 +212,33 @@
                                 </thead>
                                 <tbody ng-repeat="row in $ctrl.bestCandidateGeneDrugGroups">
                                     <tr>
-                                        <td rowspan="2">&nbsp;<p dir="ltr"><span class="drug-name">{{row.showDrugName | titlecase}}</span></p>
+                                        <td rowspan="2">&nbsp;<p dir="ltr"><span class="drug-name">{{row.showDrugName |
+                                                    titlecase}}</span></p>
                                         </td>
                                         <td colspan="4">
-                                            <p ng-repeat="geneDrug in row.geneDrugs" dir="ltr"><span>{{geneDrug.drugStatusInfo}}</span></p>
+                                            <p ng-repeat="geneDrug in row.geneDrugs" dir="ltr">
+                                                <span>{{geneDrug.drugStatusInfo}}</span>
+                                            </p>
 
-                                            
+
                                         </td>
                                         <td colspan="4" rowspan="2">
                                             <div ng-repeat="geneDrug in row.geneDrugs">
-                                                <p ng-repeat="gene in geneDrug.gene"  ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]" ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]" dir="ltr"><a
-                                                    href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>({{affectedGenesInfo.HGVS_cDNA}}/{{affectedGenesInfo.HGVS_protein}} / {{geneDrug.interactionType | titlecase | replace:'_':' ' }});&nbsp;</span></p>
-                                            </div> 
-                                            
+                                                <p ng-repeat="gene in geneDrug.gene"
+                                                    ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
+                                                    ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
+                                                    dir="ltr"><a
+                                                        href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>({{affectedGenesInfo.HGVS_cDNA}}/{{affectedGenesInfo.HGVS_protein}}
+                                                        / {{geneDrug.interactionType | titlecase | replace:'_':' '
+                                                        }});&nbsp;</span></p>
+                                            </div>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <p dir="ltr" ng-if="row.therapy !== null"><span>{{row.therapy | titlecase | replace:'_':' '}}</span></p>
+                                            <p dir="ltr" ng-if="row.therapy !== null"><span>{{row.therapy | titlecase |
+                                                    replace:'_':' '}}</span></p>
                                         </td>
                                         <td>
                                             <p dir="ltr"><span>{{row.getSensitivity() | titlecase}}</span></p>
