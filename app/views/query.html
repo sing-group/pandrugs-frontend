@@ -144,12 +144,14 @@
               <th>Input file</th><td>{{file.name}}</td>
             </tr>
             <tr ng-if="selectedTab === 'multiomics' && multiOmics.computationId !== null"><th>Variant analysis</th><td>{{multiOmics.computation.name}}</td></tr>
+            <tr ng-if="selectedTab === 'multiomics' && multiOmics.computationId !== null"><th class="tabulated">No. variants</th><td>{{multiOmics.computation.variantsInInput}}</td></tr>
+            <tr ng-if="selectedTab === 'multiomics' && multiOmics.computationId !== null"><th class="tabulated">No. affected genes</th><td>{{multiOmics.computation.affectedGenes.length}}</td></tr>
             <tr ng-if="selectedTab !== 'vcfrank'"><th>No. input genes</th><td>{{geneList.length}}</td></tr>
             <tr ng-if="selectedTab === 'vcfrank'"><th>Name</th><td>{{computation.name}}</td></tr>
-            <tr ng-if="selectedTab === 'vcfrank'"><th>No. variants</th><td>{{computation.variantsInInput}}</td></tr>
-            <tr ng-if="selectedTab === 'vcfrank'"><th>No. affected genes</th><td>{{computation.affectedGenes.length}}</td></tr>
-            <tr><th>No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td></tr>
-            <tr><th>No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td></tr>
+            <tr ng-if="selectedTab === 'vcfrank'"><th class="tabulated">No. variants</th><td>{{computation.variantsInInput}}</td></tr>
+            <tr ng-if="selectedTab === 'vcfrank'"><th class="tabulated">No. affected genes</th><td>{{computation.affectedGenes.length}}</td></tr>
+            <tr><th class="tabulated">No. genes in PanDrugs</th><td>{{genePresence.present.length}}</td></tr>
+            <tr><th class="tabulated">No. genes not in PanDrugs</th><td>{{genePresence.absent.length}}</td></tr>
             <tr ng-if="selectedTab === 'vcfrank' && computation.pharmcat === true">
               <th>PharmCAT report</th>
               <td>

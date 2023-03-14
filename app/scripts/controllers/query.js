@@ -225,9 +225,7 @@ angular.module('pandrugsFrontendApp')
     //  ========== QUERY ========
     $scope.query = function() {
       if ($scope.selectedTab === 'genes' && $scope.geneList) {
-        db.genesPresence($scope.geneList).then(function(presence){
-          $scope.genePresence = presence;
-        });
+        this.getGenesPresence();
         this.searchBy(db.searchByGenes, $scope.geneList);
       } else if ($scope.selectedTab === 'drugs' && $scope.selectedDrug) {
         this.searchBy(db.searchByDrugs, [ $scope.selectedDrug ], AdvancedQueryOptionsFactory.createAdvancedQueryOptions());
@@ -242,42 +240,25 @@ angular.module('pandrugsFrontendApp')
 
         this.searchBy(db.computationIdSearch, $scope.computationId);
       } else if ($scope.selectedTab === 'multiomics' && $scope.getSelectedMultiOmicsItems() >= 2) {
+        $scope.geneList = [];
 
-        var readers = [];
-        var onOneReaded = function onOneReaded() {
-          if (readers.filter(function(r) { return r.readyState === FileReader.DONE;}).length === readers.length) {
-            //all files (one or two) are read
-            var allGenes = readers.map(function(reader) {return utilities.parseGenes(reader.result,false);})
-              .reduce(function(totalArray, currentSubArray) { return totalArray.concat(currentSubArray);}, []);
+        if ($scope.multiOmics.computation) {
+          $scope.geneList = $scope.multiOmics.computation.affectedGenes;
+        }
 
-            if ($scope.multiOmics.computation) {
-              allGenes = allGenes.concat($scope.multiOmics.computation.affectedGenes);
-            }
-
-            $scope.geneList = utilities.uniqueIgnoreCase(allGenes);
-
-            db.genesPresence($scope.geneList)
-                  .then(function(presence){
-                    $scope.genePresence = presence;
-              });
-          }
-        };
-
-        var files = [];
         if ($scope.multiOmics.cnvFile) {
-          files = files.concat($scope.multiOmics.cnvFile);
-        }
-        if ($scope.multiOmics.expressionFile) {
-          files = files.concat($scope.multiOmics.expressionFile);
-        }
-
-        readers = files.map(function() {
           var reader = new FileReader();
-          reader.onload = onOneReaded;          
-          return reader;
-        });
-        readers.forEach(function(reader, index)  {reader.readAsText(files[index]);});
-
+          reader.onload = function() {
+            $scope.geneList = $scope.geneList.concat(utilities.parseGenes(reader.result));
+            $scope.geneList = utilities.uniqueIgnoreCase($scope.geneList);
+            this.getGenesPresence();
+          }.bind(this);
+          reader.readAsText($scope.multiOmics.cnvFile);
+        }else{
+          $scope.geneList = utilities.uniqueIgnoreCase($scope.geneList);
+          this.getGenesPresence();
+        }
+        
         this.searchBy(db.multiOmicsSearch, $scope.multiOmics);
       }else if ($scope.selectedTab === 'cnv' && $scope.cnv) {
         this.fileReader($scope.cnv);
@@ -291,14 +272,18 @@ angular.module('pandrugsFrontendApp')
 
       reader.onload = function() {
         $scope.geneList = utilities.parseGenes(reader.result);
-          db.genesPresence($scope.geneList)
-            .then(function(presence){
-              $scope.genePresence = presence;
-          });
-      };
+          this.getGenesPresence();
+      }.bind(this);
 
       reader.readAsText(file);
     };
+
+    this.getGenesPresence = function(){
+      db.genesPresence($scope.geneList)
+              .then(function(presence){
+                  $scope.genePresence = presence;
+                });
+    }.bind(this);
 
     this.checkTriggerQuery = function() {
       if (this.triggerQueryOnChange && $scope.canQuery()) {
