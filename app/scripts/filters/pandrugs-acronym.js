@@ -47,7 +47,7 @@ angular.module('pandrugsFrontendApp')
             'gene dependency': 'GD',
             'drug score': 'DS',
             'gene score': 'GS'
-        }
+        };
 
         return function (input) {
             var lowercase = input.toLowerCase();
