@@ -17,7 +17,7 @@
 
 <div class="report">
     <button type="button" class="btn btn-primary" data-target="#report"
-        ng-click="$ctrl.showingReport = !$ctrl.showingReport" data-toggle="modal"><span class="glyphicon glyphicon-file">&nbsp;</span>See best candidates report</button>
+        ng-click="$ctrl.showingReport = !$ctrl.showingReport" data-keyboard="false" data-backdrop="static" data-toggle="modal"><span class="glyphicon glyphicon-file">&nbsp;</span>See best candidates report</button>
     <div id="report" class="modal fade" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -232,8 +232,8 @@
                                                     ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
                                                     ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
                                                     dir="ltr"><a
-                                                        href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>&nbsp;({{affectedGenesInfo.HGVS_protein}}
-                                                        / {{geneDrug.interactionType | titlecase | replace:'_':' ' | pandrugsAcronym
+                                                        href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a>
+                                                        <span>&nbsp;({{affectedGenesInfo.HGVS_protein}}<span ng-if="row.calculatedGeneAnnotations && row.calculatedGeneAnnotations.expression && row.calculatedGeneAnnotations.expression[gene.geneSymbol]"> / #{{row.calculatedGeneAnnotations.expression[gene.geneSymbol] | titlecase | replace:'_':' ' | pandrugsAcronym}}</span> / {{geneDrug.interactionType | titlecase | replace:'_':' ' | pandrugsAcronym
                                                         }});&nbsp;</span></p>
                                             </div>
 

@@ -46,7 +46,10 @@ angular.module('pandrugsFrontendApp')
             'genetic dependency': 'GD',
             'gene dependency': 'GD',
             'drug score': 'DS',
-            'gene score': 'GS'
+            'gene score': 'GS',
+            'overexpressed': 'Up',
+            'underexpressed': 'Down',
+            'highly overexpressed': 'Up'
         };
 
         return function (input) {
