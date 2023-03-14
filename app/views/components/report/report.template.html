@@ -130,7 +130,7 @@
                                     <h3>ALL MOLECULAR EVIDENCES</h3>
                                     <dl>
                                         <dt># SNVs:</dt>
-                                        <dd>?? - Missense: ??; NS: ??; Damaging: ??</dd>
+                                        <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
                                         <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
                                         <dt># Exprs:
@@ -139,7 +139,7 @@
                                     <h3>BEST CANDIDATES</h3>
                                     <dl>
                                         <dt># SNVs:</dt>
-                                        <dd>?? - Missense: ??; NS: ??; Damaging: ??</dd>
+                                        <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
                                         <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
                                         <dt># Exprs:

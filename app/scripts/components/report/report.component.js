@@ -40,12 +40,25 @@ angular.module('pandrugsFrontendApp')
         // log stuff
         if (changes.geneDrugGroups) {
           this.bestCandidateGeneDrugGroups = [];
-
           this.bestCandidateGeneDrugGroups.statusCounts = {};
           this.bestCandidateGeneDrugGroups.therapyTypeCounts = {};
 
+          this.snvCounts = { all: {}, inBestCandidates: {} };
+          this.expressionCounts = { all: {}, inBestCandidates: {} };
+
 
           changes.geneDrugGroups.currentValue.forEach(function (geneDrugGroup) {
+            geneDrugGroup.geneDrugs.forEach(function(geneDrug) {
+                geneDrug.gene.forEach(function(gene) {
+                  if (this.getComputation().affectedGenesInfo[gene.geneSymbol]) {
+                    this.snvCounts.all[gene.geneSymbol] = "yes";
+                    if (geneDrugGroup.isBestCandidate()) {
+                      this.snvCounts.inBestCandidates[gene.geneSymbol] = "yes";
+                      }
+                  }
+                }.bind(this));
+            }.bind(this));
+
             if (geneDrugGroup.isBestCandidate()) {
               this.bestCandidateGeneDrugGroups.push(geneDrugGroup);
 
@@ -66,12 +79,13 @@ angular.module('pandrugsFrontendApp')
             }
 
           }.bind(this));
-          
+
         }
+        
         /*if (changes.multiomics) {
           console.log(changes.multiomics.currentValue);
         }*/
-        
+
       }.bind(this);
 
       this.isSmallVariantsAnalysis = function () {
