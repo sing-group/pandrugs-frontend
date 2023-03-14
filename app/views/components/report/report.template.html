@@ -179,8 +179,8 @@
                                 evidence level of the gene-drug association to the clinical evidence.
                             <p class="details"><strong>Table of results:</strong> In the following table, basic
                                 information of the patient´s alterations
-                                with relevant clinical implications can be found. Only the top best candidate drug-gene
-                                associations are reported in this report. For a detailed evaluation it is recommended to
+                                with relevant clinical implications can be found. <strong>Only the top best candidate drug-gene
+                                associations are reported in this report</strong>. For a detailed evaluation it is recommended to
                                 access the full PanDrugs analysis results.</p>
 
                             <p class="details"><strong>Legend:</strong> Direct target (DT), Biomarker(BM), Pathway
@@ -235,7 +235,7 @@
                                                     ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
                                                     ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]"
                                                     dir="ltr"><a
-                                                        href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>&nbsp;({{affectedGenesInfo.HGVS_cDNA}}/{{affectedGenesInfo.HGVS_protein}}
+                                                        href="https://pubmed.ncbi.nlm.nih.gov/?term=%22{{row.showDrugName}}%22+%22{{gene.geneSymbol}}%22"><span>{{gene.geneSymbol}}</span></a><span>&nbsp;({{affectedGenesInfo.HGVS_protein}}
                                                         / {{geneDrug.interactionType | titlecase | replace:'_':' ' | pandrugsAcronym
                                                         }});&nbsp;</span></p>
                                             </div>
