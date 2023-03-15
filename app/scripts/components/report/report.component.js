@@ -39,17 +39,32 @@ angular.module('pandrugsFrontendApp')
       this.$onChanges = function (changes) {
         // log stuff
         if (changes.geneDrugGroups) {
+          console.log(changes.geneDrugGroups.currentValue);
+
           this.bestCandidateGeneDrugGroups = [];
           this.bestCandidateGeneDrugGroups.statusCounts = {};
           this.bestCandidateGeneDrugGroups.therapyTypeCounts = {};
 
           this.snvCounts = { all: {}, inBestCandidates: {} };
-          this.expressionCounts = { all: {}, inBestCandidates: {} };
+          this.expressionCounts = { allUp: {}, allDown: {}, upInBestCandidates: {}, downInBestCandidates: {} };
 
 
           changes.geneDrugGroups.currentValue.forEach(function (geneDrugGroup) {
             geneDrugGroup.geneDrugs.forEach(function(geneDrug) {
                 geneDrug.gene.forEach(function(gene) {
+                  if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.expression && geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol]) {
+                    if (geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol].toLowerCase().includes("under")) {
+                      this.expressionCounts.allDown[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
+                      if (geneDrugGroup.isBestCandidate()) {
+                        this.expressionCounts.downInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
+                      }
+                    } else if (geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol].toLowerCase().includes("over")) {
+                      this.expressionCounts.allUp[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
+                      if (geneDrugGroup.isBestCandidate()) {
+                        this.expressionCounts.upInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
+                      }
+                    }   
+                  }
                   if (this.getComputation().affectedGenesInfo[gene.geneSymbol]) {
                     this.snvCounts.all[gene.geneSymbol] = "yes";
                     if (geneDrugGroup.isBestCandidate()) {
@@ -103,6 +118,10 @@ angular.module('pandrugsFrontendApp')
 
       this.isMultiOmicsWithCNVAnalysis = function () {
         return this.multiomics && this.multiomics.cnvFile ? true : false;
+      }.bind(this);
+
+      this.isMultiOmicsWithExpressionAnalysis = function () {
+        return this.multiomics && this.multiomics.expressionFile ? true : false;
       }.bind(this);
 
       this.getComputation = function () {

@@ -133,8 +133,9 @@
                                         <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
                                         <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
-                                        <dt># Exprs:
-                                        <dd>?? up, ?? down</dd>
+                                        
+                                        <dt ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"># Exprs:
+                                        <dd ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.allUp).length}}</span> up, <span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.allDown).length}}</span> down</dd>
                                     </dl>
                                     <h3>BEST CANDIDATES</h3>
                                     <dl>
@@ -142,8 +143,8 @@
                                         <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
                                         <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
-                                        <dt># Exprs:
-                                        <dd>?? up, ?? down</dd>
+                                        <dt ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"># Exprs:
+                                        <dd ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.upInBestCandidates).length}}</span> up, <span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.downInBestCandidates).length}}</span> down</dd>
                                     </dl>
                                 </div>
                             </div>
