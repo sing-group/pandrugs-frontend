@@ -44,7 +44,7 @@ angular.module('pandrugsFrontendApp')
 
       this.$onInit = function () {
         if ($location.search().example === 'drugs') {
-          this.pasteTemsirolimus();
+          this.pasteEncorafenib();
         }
       }.bind(this);
 
@@ -95,8 +95,8 @@ angular.module('pandrugsFrontendApp')
         return this.drugItems.length > 0;
       };
 
-      this.pasteTemsirolimus = function () {
-        this.drug = 'Temsirolimus';
+      this.pasteEncorafenib = function () {
+        this.drug = 'Encorafenib';
         this.updateDrugList();
       }.bind(this);
     }]
