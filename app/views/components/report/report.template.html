@@ -131,8 +131,9 @@
                                     <dl>
                                         <dt># SNVs:</dt>
                                         <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
-                                        <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
-                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
+                                        
+                                        <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNV:
+                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.allAmp).length}}</span> amp, <span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.allDel).length}}</span> del</dd>
                                         
                                         <dt ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"># Exprs:
                                         <dd ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.allUp).length}}</span> up, <span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.allDown).length}}</span> down</dd>
@@ -141,8 +142,9 @@
                                     <dl>
                                         <dt># SNVs:</dt>
                                         <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
-                                        <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNVs:</dt>
-                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()">?? (Amp: ??; Del: ??)</dd>
+                                        <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNV:
+                                        <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.ampInBestCandidates).length}}</span> amp, <span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.delInBestCandidates).length}}</span> del</dd>
+                                            
                                         <dt ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"># Exprs:
                                         <dd ng-if="$ctrl.isMultiOmicsWithExpressionAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.upInBestCandidates).length}}</span> up, <span class="count-value">{{$ctrl.keys($ctrl.expressionCounts.downInBestCandidates).length}}</span> down</dd>
                                     </dl>

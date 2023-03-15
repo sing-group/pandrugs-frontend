@@ -47,12 +47,14 @@ angular.module('pandrugsFrontendApp')
 
           this.snvCounts = { all: {}, inBestCandidates: {} };
           this.expressionCounts = { allUp: {}, allDown: {}, upInBestCandidates: {}, downInBestCandidates: {} };
-
+          this.cnvCounts = { allAmp: {}, allDel: {}, ampInBestCandidates: {}, delInBestCandidates: {} };
 
           changes.geneDrugGroups.currentValue.forEach(function (geneDrugGroup) {
             geneDrugGroup.geneDrugs.forEach(function(geneDrug) {
                 geneDrug.gene.forEach(function(gene) {
                   if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.expression && geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol]) {
+                    
+                    // expression
                     if (geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol].toLowerCase().includes("under")) {
                       this.expressionCounts.allDown[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
                       if (geneDrugGroup.isBestCandidate()) {
@@ -63,7 +65,25 @@ angular.module('pandrugsFrontendApp')
                       if (geneDrugGroup.isBestCandidate()) {
                         this.expressionCounts.upInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
                       }
-                    }   
+                    }
+                  }
+
+                  //cnv
+                  
+                  if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.cnv && geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol]) {
+                    
+                    if (geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol].toLowerCase().includes("amp")) {
+                      this.cnvCounts.allAmp[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                      if (geneDrugGroup.isBestCandidate()) {
+                        this.cnvCounts.ampInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                      }
+                    } else if (geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol].toLowerCase().includes("del")) {
+                      this.cnvCounts.allDel[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                      if (geneDrugGroup.isBestCandidate()) {
+                        this.cnvCounts.delInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                      }
+                    }
+
                   }
                   if (this.getComputation().affectedGenesInfo[gene.geneSymbol]) {
                     this.snvCounts.all[gene.geneSymbol] = "yes";
