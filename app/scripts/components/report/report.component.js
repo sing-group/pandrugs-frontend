@@ -49,49 +49,70 @@ angular.module('pandrugsFrontendApp')
           this.expressionCounts = { allUp: {}, allDown: {}, upInBestCandidates: {}, downInBestCandidates: {} };
           this.cnvCounts = { allAmp: {}, allDel: {}, ampInBestCandidates: {}, delInBestCandidates: {} };
 
+          this.familyCounts = {};
+
           changes.geneDrugGroups.currentValue.forEach(function (geneDrugGroup) {
-            geneDrugGroup.geneDrugs.forEach(function(geneDrug) {
-                geneDrug.gene.forEach(function(gene) {
-                  if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.expression && geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol]) {
-                    
-                    // expression
-                    if (geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol].toLowerCase().includes("under")) {
-                      this.expressionCounts.allDown[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
-                      if (geneDrugGroup.isBestCandidate()) {
-                        this.expressionCounts.downInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
-                      }
-                    } else if (geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol].toLowerCase().includes("over")) {
-                      this.expressionCounts.allUp[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
-                      if (geneDrugGroup.isBestCandidate()) {
-                        this.expressionCounts.upInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
-                      }
-                    }
-                  }
+            if (geneDrugGroup.isBestCandidate()) {
 
-                  //cnv
-                  
-                  if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.cnv && geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol]) {
-                    
-                    if (geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol].toLowerCase().includes("amp")) {
-                      this.cnvCounts.allAmp[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
-                      if (geneDrugGroup.isBestCandidate()) {
-                        this.cnvCounts.ampInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
-                      }
-                    } else if (geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol].toLowerCase().includes("del")) {
-                      this.cnvCounts.allDel[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
-                      if (geneDrugGroup.isBestCandidate()) {
-                        this.cnvCounts.delInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
-                      }
-                    }
+              geneDrugGroup.family.forEach(function (family) {
+                if (!this.familyCounts[family]) {
+                  this.familyCounts[family] = { familyName: family, drugs: {}, APCount: 0, CTCount: 0, EXCount: 0 };
+                }
+                this.familyCounts[family].drugs[geneDrugGroup.standardDrugName] = 'yes';
+                if (geneDrugGroup.status.toLowerCase().includes('approved')) {
+                  this.familyCounts[family].APCount++;
+                }
+                if (geneDrugGroup.status.toLowerCase().includes('trials')) {
+                  this.familyCounts[family].CTCount++;
+                }
+                if (geneDrugGroup.status.toLowerCase().includes('experimental')) {
+                  this.familyCounts[family].EXCount++;
+                }
+              }.bind(this));
+            }
 
-                  }
-                  if (this.getComputation().affectedGenesInfo[gene.geneSymbol]) {
-                    this.snvCounts.all[gene.geneSymbol] = "yes";
+            geneDrugGroup.geneDrugs.forEach(function (geneDrug) {
+              geneDrug.gene.forEach(function (gene) {
+                if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.expression && geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol]) {
+
+                  // expression
+                  if (geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol].toLowerCase().includes('under')) {
+                    this.expressionCounts.allDown[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
                     if (geneDrugGroup.isBestCandidate()) {
-                      this.snvCounts.inBestCandidates[gene.geneSymbol] = "yes";
-                      }
+                      this.expressionCounts.downInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
+                    }
+                  } else if (geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol].toLowerCase().includes('over')) {
+                    this.expressionCounts.allUp[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
+                    if (geneDrugGroup.isBestCandidate()) {
+                      this.expressionCounts.upInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol];
+                    }
                   }
-                }.bind(this));
+                }
+
+                //cnv
+
+                if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.cnv && geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol]) {
+
+                  if (geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol].toLowerCase().includes('amp')) {
+                    this.cnvCounts.allAmp[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                    if (geneDrugGroup.isBestCandidate()) {
+                      this.cnvCounts.ampInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                    }
+                  } else if (geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol].toLowerCase().includes('del')) {
+                    this.cnvCounts.allDel[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                    if (geneDrugGroup.isBestCandidate()) {
+                      this.cnvCounts.delInBestCandidates[gene.geneSymbol] = geneDrugGroup.calculatedGeneAnnotations.cnv[gene.geneSymbol];
+                    }
+                  }
+
+                }
+                if (this.getComputation().affectedGenesInfo[gene.geneSymbol]) {
+                  this.snvCounts.all[gene.geneSymbol] = 'yes';
+                  if (geneDrugGroup.isBestCandidate()) {
+                    this.snvCounts.inBestCandidates[gene.geneSymbol] = 'yes';
+                  }
+                }
+              }.bind(this));
             }.bind(this));
 
             if (geneDrugGroup.isBestCandidate()) {
@@ -114,13 +135,23 @@ angular.module('pandrugsFrontendApp')
             }
 
           }.bind(this));
+          console.log(this.familyCounts);
 
         }
-        
+
+        //sort families
+        this.sortedFamilies = Object.values(this.familyCounts).sort(function (familyA, familyB) {
+          return (Object.keys(familyB.drugs).length - Object.keys(familyA.drugs).length);
+        });
+
         /*if (changes.multiomics) {
           console.log(changes.multiomics.currentValue);
         }*/
 
+      }.bind(this);
+
+      this.getTopKFamilies = function (top) {
+        return this.sortedFamilies.slice(0, top);
       }.bind(this);
 
       this.isSmallVariantsAnalysis = function () {

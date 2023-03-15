@@ -115,8 +115,10 @@
 
                                     <h3>Top-5 drug families:</h3>
                                     <ol>
-                                        <li>[&lt;family&gt] &lt;family&gt; - &lt;count&gt; [AP: ??; CT: ??; EX: ??]</li>
-                                        <li>...</li>                                        
+                                        <li ng-repeat="family in $ctrl.getTopKFamilies(5)">                                            
+                                            {{family.familyName}}; - {{$ctrl.keys(family.drugs).length}}; [AP: {{family.APCount}}; CT: {{family.CTCount}}; EX: {{family.EXCount}}]
+                                        </li>
+                                                                           
                                     </ol>
                                 </div>
                                 <div class="col-xs-6">
