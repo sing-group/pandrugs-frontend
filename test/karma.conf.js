@@ -40,6 +40,7 @@ module.exports = function(config) {
       'bower_components/bootstrap-fileinput/js/fileinput.min.js',
       'bower_components/pagedown/Markdown.Converter.js',
       'bower_components/pagedown/Markdown.Sanitizer.js',
+      'bower_components/pagedown/Markdown.Extra.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

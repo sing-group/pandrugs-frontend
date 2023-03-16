@@ -25,7 +25,7 @@
   },
   "overrides": {
     "pagedown": {
-      "main": ["./Markdown.Converter.js", "./Markdown.Sanitizer.js"]
+      "main": ["./Markdown.Converter.js", "./Markdown.Sanitizer.js", "./Markdown.Extra.js"]
     },
     "highcharts-release": {
       "main": ["./highcharts.js", "./highcharts-more.js", "./modules/exporting.js"]
