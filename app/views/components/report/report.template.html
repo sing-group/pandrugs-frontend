@@ -46,6 +46,12 @@
                                     <dd>{{$ctrl.date.toString()}}</dd>
                                     <dt>Analysis type:</dt>
                                     <dd>{{$ctrl.getAnalysisType()}}</dd>
+                                    <dt>Tumour type:</dt>
+                                    <dd ng-if="!$ctrl.advancedQueryOptions.areAllCancerTypesSelected()">
+                                        {{$ctrl.advancedQueryOptions.getSelectedCancerTypes() | enumeration}}
+                                    </dd>
+                                    <dd ng-if="$ctrl.advancedQueryOptions.areAllCancerTypesSelected()">All</dd>
+                                    
                                 </dl>
                             </div>
                             <div class="row">
@@ -116,7 +122,11 @@
                                     <h3>Top-5 drug families:</h3>
                                     <ol>
                                         <li ng-repeat="family in $ctrl.getTopKFamilies(5)">                                            
-                                            {{family.familyName}}<span ng-if="family.type"> [{{family.type | titlecase | replace:'_':' ' | pandrugsAcronym}}]</span>: <span class="count-value">{{$ctrl.keys(family.drugs).length}}</span> (AP: <span class="count-value">{{family.APCount}}</span>, CT: <span class="count-value">{{family.CTCount}}</span>, EX: <span class="count-value">{{family.EXCount}}</span>)
+                                            {{family.familyName}}<span ng-if="family.type"> [{{family.type | titlecase | replace:'_':' ' | pandrugsAcronym}}]</span>: 
+                                            <span class="count-value">{{$ctrl.keys(family.drugs).length}}</span> 
+                                            (AP: <span class="count-value">{{family.APCount}}</span>, 
+                                            CT: <span class="count-value">{{family.CTCount}}</span>, 
+                                            EX: <span class="count-value">{{family.EXCount}}</span>)
                                         </li>
                                                                            
                                     </ol>

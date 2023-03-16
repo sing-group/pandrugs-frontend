@@ -22,6 +22,7 @@ angular.module('pandrugsFrontendApp')
   .component('report', {
     templateUrl: 'views/components/report/report.template.html',
     bindings: {
+      advancedQueryOptions: '<',
       queryResult: '<',
       geneList: '<',
       genePresence: '<',
