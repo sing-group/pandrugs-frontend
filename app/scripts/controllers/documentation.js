@@ -31,7 +31,7 @@ var markdownControllerFactory = function(markdownSubdir, markdownFile, markdownN
         var markdown = response.data;
 
         var converter = new Markdown.Converter(); // jshint ignore:line
-        Markdown.Extra.init(converter);
+        Markdown.Extra.init(converter); // jshint ignore:line
         $scope.mdcontents = $sce.trustAsHtml(converter.makeHtml(markdown));
 
         // arrange images
