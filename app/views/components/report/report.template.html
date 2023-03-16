@@ -116,7 +116,7 @@
                                     <h3>Top-5 drug families:</h3>
                                     <ol>
                                         <li ng-repeat="family in $ctrl.getTopKFamilies(5)">                                            
-                                            {{family.familyName}}; - {{$ctrl.keys(family.drugs).length}}; [AP: {{family.APCount}}; CT: {{family.CTCount}}; EX: {{family.EXCount}}]
+                                            {{family.familyName}}<span ng-if="family.type"> [{{family.type | titlecase | replace:'_':' ' | pandrugsAcronym}}]</span>: <span class="count-value">{{$ctrl.keys(family.drugs).length}}</span> (AP: <span class="count-value">{{family.APCount}}</span>, CT: <span class="count-value">{{family.CTCount}}</span>, EX: <span class="count-value">{{family.EXCount}}</span>)
                                         </li>
                                                                            
                                     </ol>
@@ -253,7 +253,7 @@
                                             <p dir="ltr"><span>{{row.getSensitivity() | titlecase}}</span></p>
                                         </td>
                                         <td>
-                                            <p dir="ltr"><span>{{row.family | enumeration}}</span></p>
+                                            <p dir="ltr"><span>{{row.family | enumeration | replace:'Other':'Unknown'}}</span></p>
                                         </td>
                                     </tr>
                                 </tbody>

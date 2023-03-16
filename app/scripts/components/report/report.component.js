@@ -56,7 +56,7 @@ angular.module('pandrugsFrontendApp')
 
               geneDrugGroup.family.forEach(function (family) {
                 if (!this.familyCounts[family]) {
-                  this.familyCounts[family] = { familyName: family, drugs: {}, APCount: 0, CTCount: 0, EXCount: 0 };
+                  this.familyCounts[family] = { familyName: family.toLowerCase().includes('other') ? 'Unknown' : family, type: (family && !family.toLowerCase().includes('other')) ? geneDrugGroup.therapy : null, drugs: {}, APCount: 0, CTCount: 0, EXCount: 0 };
                 }
                 this.familyCounts[family].drugs[geneDrugGroup.standardDrugName] = 'yes';
                 if (geneDrugGroup.status.toLowerCase().includes('approved')) {
