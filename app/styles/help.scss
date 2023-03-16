@@ -31,5 +31,15 @@
 
 #helpcontents > ol:first-of-type > li {
   margin-top: 10px;
-  margin-down: 10px;
+  margin-bottom: 10px;
+}
+
+#mdcontents th, #mdcontents td {
+  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-right: 20px;
+}
+
+#mdcontents th { 
+  border-bottom: 1px solid grey;
 }

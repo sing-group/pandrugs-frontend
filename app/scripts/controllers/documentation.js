@@ -84,3 +84,36 @@ angular.module('pandrugsFrontendApp')
 angular.module('pandrugsFrontendApp')
   .controller('FaqCtrl', ['$scope', '$location', '$http', '$sce', '$timeout', '$anchorScroll',
   markdownControllerFactory('faqs', 'faqs.md', 'FAQs')]);
+
+  /**
+ * @ngdoc function
+ * @name pandrugsFrontendApp.controller:AboutCtrl
+ * @description
+ * # AboutCtrl
+ * Controller of the pandrugsFrontendApp
+ */
+  angular.module('pandrugsFrontendApp')
+  .controller('AboutCtrl', ['$scope', '$location', '$http', '$sce', '$timeout', '$anchorScroll',
+  markdownControllerFactory('about', 'about.md', 'About')]);
+
+  /**
+ * @ngdoc function
+ * @name pandrugsFrontendApp.controller:CitationCtrl
+ * @description
+ * # CitationCtrl
+ * Controller of the pandrugsFrontendApp
+ */
+    angular.module('pandrugsFrontendApp')
+    .controller('CitationCtrl', ['$scope', '$location', '$http', '$sce', '$timeout', '$anchorScroll',
+    markdownControllerFactory('citation', 'citation.md', 'Citation')]);
+
+  /**
+ * @ngdoc function
+ * @name pandrugsFrontendApp.controller:SourcesCtrl
+ * @description
+ * # SourcesCtrl
+ * Controller of the pandrugsFrontendApp
+ */
+    angular.module('pandrugsFrontendApp')
+    .controller('SourcesCtrl', ['$scope', '$location', '$http', '$sce', '$timeout', '$anchorScroll',
+    markdownControllerFactory('sources', 'sources.md', 'Sources')]);

@@ -453,7 +453,10 @@ module.exports = function (grunt) {
             'd3/*.*',
             'd3/data/*.*',
             'help/*.*',
-            'faqs/*.*'
+            'faqs/*.*',
+            'about/*.*',
+            'citation/*.*',
+            'sources/*.*'
           ]
         }, {
           expand: true,

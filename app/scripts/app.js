@@ -69,7 +69,7 @@ angular
         controller: 'MainCtrl'
       })
       .when('/about', {
-        templateUrl: 'views/about.html',
+        templateUrl: 'views/markdown.html',
         controller: 'AboutCtrl'
       })
       .when('/help', {
@@ -79,6 +79,14 @@ angular
       .when('/faqs', {
         templateUrl: 'views/markdown.html',
         controller: 'FaqCtrl'
+      })
+      .when('/citation', {
+        templateUrl: 'views/markdown.html',
+        controller: 'CitationCtrl'
+      })
+      .when('/sources', {
+        templateUrl: 'views/markdown.html',
+        controller: 'SourcesCtrl'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
