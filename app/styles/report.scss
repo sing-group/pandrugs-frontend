@@ -3,7 +3,12 @@
 }
 
 .report {
-    display: inline;    
+    display: inline;
+    text-align: left;
+}
+.report-component {
+    text-align: center;
+    padding: 5px;
 }
 
 #report .details {
@@ -32,6 +37,7 @@
 #report-contents dt, #report-contents dd {
     display: inline;
     font-weight: normal;
+    margin-left: 0px;
 }
 #report-contents dd::after {
     content: "";
@@ -90,7 +96,7 @@
     }
 
     gene-results-table,
-    #resultsContainer > div:nth-child(1),
+    .results-summary > div:nth-child(1),
     #resultsContainer > div:nth-child(2),
     footer,
     .modal-header,
@@ -117,6 +123,14 @@
     .report .modal-dialog {
         width: 100%;
         padding: 0px;
+    }
+
+    .results-summary {
+        width: 100% !important;
+        border: 0px !important;
+    }
+    #resultsContainer > div:nth-child(1) {
+        margin: 0 !important;
     }
 }
 

@@ -17,8 +17,7 @@
 <div ng-show="!isLoading" class="row">  
   
   <button type="submit" class="btn btn-primary btn-lg" ng-show="hasResult()" ng-click="newQuery()" style="float:right">New Query</button>
-  <h2>{{hasResult() ? 'PanDrugs Candidate Therapies' : 'Query PanDrugs'}}</h2><report ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult() && (selectedTab === 'vcfrank' || (selectedTab === 'multiomics' && multiOmics.computationId !== null))" advanced-query-options="advancedQueryOptions" gene-list="geneList" gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
-  computation="computation" multiomics="multiOmics"/>
+  <h2>{{hasResult() ? 'PanDrugs Candidate Therapies' : 'Query PanDrugs'}}</h2>
 </div>
 
 <div class="container-fluid">
@@ -111,6 +110,9 @@
   <div class="row">
     <div class="col-md-10 col-lg-8 col-md-push-1 col-lg-push-2 results-summary" ng-if="selectedTab === 'drugs'" ng-init="geneDrugGroup = resultsFiltered[0]">
       <div class="row">
+        
+      </div>
+      <div class="row">
         <div class="col-md-12">
           <h4 class="row">{{getTitleForCurrentResults()}}</h4>
           <dl>
@@ -136,6 +138,7 @@
     </div>
 
     <div class="col-md-10 col-lg-8 col-md-push-1 col-lg-push-2 results-summary" ng-if="selectedTab !== 'drugs'">
+      
       <div class="row">
         <div class="col-md-4" ng-if="selectedTab !== 'drugs'">
           <h4 class="row">{{getTitleForCurrentResults()}}</h4>
@@ -206,6 +209,10 @@
               </div>
           </div>
         </div>
+      </div>
+      <div class="row report-component" >
+        <report ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult() && (selectedTab === 'vcfrank' || (selectedTab === 'multiomics' && multiOmics.computationId !== null))" advanced-query-options="advancedQueryOptions" gene-list="geneList" gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
+  computation="computation" multiomics="multiOmics"/>
       </div>
     </div>
   </div>
