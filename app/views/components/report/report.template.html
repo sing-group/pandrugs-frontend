@@ -142,7 +142,7 @@
                                     <h3>ALL MOLECULAR EVIDENCES</h3>
                                     <dl>
                                         <dt># SNVs:</dt>
-                                        <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
+                                        <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all.total).length}}</span> (w. conseq: <span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all.withRelevantConsequence).length}}</span>, damaging: <span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all.damaging).length}}</span>, pathogenic: <span class="count-value">{{$ctrl.keys($ctrl.snvCounts.all.pathogenic).length}}</span>)</dd>
                                         
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNV:
                                         <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.allAmp).length}}</span> amp, <span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.allDel).length}}</span> del</dd>
@@ -153,7 +153,7 @@
                                     <h3>BEST CANDIDATES</h3>
                                     <dl>
                                         <dt># SNVs:</dt>
-                                        <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates).length}}</span> - Missense: ??; NS: ??; Damaging: ??</dd>
+                                        <dd><span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates.total).length}}</span> (w. conseq: <span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates.withRelevantConsequence).length}}</span>; damaging: <span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates.damaging).length}}</span>, pathogenic: <span class="count-value">{{$ctrl.keys($ctrl.snvCounts.inBestCandidates.pathogenic).length}}</span>)</dd>
                                         <dt ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"># CNV:
                                         <dd ng-if="$ctrl.isMultiOmicsWithCNVAnalysis()"><span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.ampInBestCandidates).length}}</span> amp, <span class="count-value">{{$ctrl.keys($ctrl.cnvCounts.delInBestCandidates).length}}</span> del</dd>
                                             

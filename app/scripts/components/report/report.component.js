@@ -46,7 +46,21 @@ angular.module('pandrugsFrontendApp')
           this.bestCandidateGeneDrugGroups.statusCounts = {};
           this.bestCandidateGeneDrugGroups.therapyTypeCounts = {};
 
-          this.snvCounts = { all: {}, inBestCandidates: {} };
+          this.snvCounts = { 
+            all: {
+              total: {},
+              withRelevantConsequence: {},
+              damaging: {},
+              pathogenic: {}
+            },
+
+            inBestCandidates: {
+              total: {},
+              withRelevantConsequence: {},
+              damaging: {},
+              pathogenic: {}
+            } 
+          };
           this.expressionCounts = { allUp: {}, allDown: {}, upInBestCandidates: {}, downInBestCandidates: {} };
           this.cnvCounts = { allAmp: {}, allDel: {}, ampInBestCandidates: {}, delInBestCandidates: {} };
 
@@ -54,7 +68,6 @@ angular.module('pandrugsFrontendApp')
 
           changes.geneDrugGroups.currentValue.forEach(function (geneDrugGroup) {
             if (geneDrugGroup.isBestCandidate()) {
-
               geneDrugGroup.family.forEach(function (family) {
                 if (!this.familyCounts[family]) {
                   this.familyCounts[family] = { familyName: family.toLowerCase().includes('other') ? 'Unknown' : family, type: (family && !family.toLowerCase().includes('other')) ? geneDrugGroup.therapy : null, drugs: {}, APCount: 0, CTCount: 0, EXCount: 0 };
@@ -71,7 +84,6 @@ angular.module('pandrugsFrontendApp')
                 }
               }.bind(this));
             }
-
             geneDrugGroup.geneDrugs.forEach(function (geneDrug) {
               geneDrug.gene.forEach(function (gene) {
                 if (geneDrugGroup.calculatedGeneAnnotations && geneDrugGroup.calculatedGeneAnnotations.expression && geneDrugGroup.calculatedGeneAnnotations.expression[gene.geneSymbol]) {
@@ -107,15 +119,53 @@ angular.module('pandrugsFrontendApp')
                   }
 
                 }
+
+                /*
+                 this.snvCounts = { 
+            all: {
+              total: {},
+              withRelevantConsequence: {},
+              damaging: {},
+              pathogenic: {}
+            },
+
+            inBestCandidates: {
+              total: {},
+              withRelevantConsequence: {},
+              damaging: {},
+              pathogenic: {}
+            } 
+          };*/
                 if (this.getComputation().affectedGenesInfo[gene.geneSymbol]) {
-                  this.snvCounts.all[gene.geneSymbol] = 'yes';
+                  
+                  this.snvCounts.all.total[gene.geneSymbol] = 'yes';
                   if (geneDrugGroup.isBestCandidate()) {
-                    this.snvCounts.inBestCandidates[gene.geneSymbol] = 'yes';
+                    this.snvCounts.inBestCandidates.total[gene.geneSymbol] = 'yes';
                   }
+
+                  var affectedGeneInfo = this.getComputation().affectedGenesInfo[gene.geneSymbol];
+                  if (this.hasRelevantConsequences(affectedGeneInfo)) {
+                    this.snvCounts.all.withRelevantConsequence[gene.geneSymbol] = 'yes';
+                    if (geneDrugGroup.isBestCandidate()) {
+                      this.snvCounts.inBestCandidates.withRelevantConsequence[gene.geneSymbol] = 'yes';
+                    }
+                  }
+                  if (this.isPathogenic(affectedGeneInfo)) {
+                    this.snvCounts.all.pathogenic[gene.geneSymbol] = 'yes';
+                    if (geneDrugGroup.isBestCandidate()) {
+                      this.snvCounts.inBestCandidates.pathogenic[gene.geneSymbol] = 'yes';                    
+                    }
+                  }
+                  if (this.isDamaging(affectedGeneInfo)) {
+                    this.snvCounts.all.damaging[gene.geneSymbol] = 'yes';
+                    if (geneDrugGroup.isBestCandidate()) {
+                      this.snvCounts.inBestCandidates.damaging[gene.geneSymbol] = 'yes';
+                    }
+                  }
+                  
                 }
               }.bind(this));
             }.bind(this));
-
             if (geneDrugGroup.isBestCandidate()) {
               this.bestCandidateGeneDrugGroups.push(geneDrugGroup);
 
@@ -136,8 +186,7 @@ angular.module('pandrugsFrontendApp')
             }
 
           }.bind(this));
-          console.log(this.familyCounts);
-
+          
         }
 
         //sort families
@@ -192,6 +241,30 @@ angular.module('pandrugsFrontendApp')
 
       this.getQueriedGenesLength = function () {
         return this.genePresence.present.length + this.genePresence.absent.length;
-      }
+      }.bind(this);
+
+      this.hasRelevantConsequences = function(affectedGeneInfo) {
+        for (var i = 0; i < this.getComputation().getAllRelevantConsequences().length; i++) {
+          if (affectedGeneInfo.consequence.includes(this.getComputation().getAllRelevantConsequences()[i])) {
+            return true;
+          }
+        }
+        return false;
+      }.bind(this);
+
+      this.isPathogenic = function(affectedGeneInfo) {
+        return affectedGeneInfo.cosmic_id.includes('PATHOGENIC') ||
+        affectedGeneInfo.clinvar_clinical_significance.includes('Pathogenic');
+      }.bind(this);
+      
+      this.isDamaging = function(affectedGeneInfo) {
+        return         (affectedGeneInfo.sift_effect.includes('deleterious') || affectedGeneInfo.sift_effect === 'inferred')
+        ||
+        (affectedGeneInfo.poly_effect === 'probably_damaging' || affectedGeneInfo.poly_effect === 'possibly_damaging'  || affectedGeneInfo.poly_effect === 'inferred')
+        ||
+        (affectedGeneInfo.CADD_phred !== '' && affectedGeneInfo.CADD_phred > 20)
+        ||
+        (affectedGeneInfo.interpro !== '');
+      }.bind(this);
     }]
   });
