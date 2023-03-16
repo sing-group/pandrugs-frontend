@@ -17,7 +17,7 @@
 <div ng-show="!isLoading" class="row">  
   
   <button type="submit" class="btn btn-primary btn-lg" ng-show="hasResult()" ng-click="newQuery()" style="float:right">New Query</button>
-  <h2>{{hasResult() ? 'PanDrugs Candidate Therapies' : 'Query PanDrugs'}}</h2><report ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult() && (selectedTab === 'vcfrank' || (selectedTab === 'multiomics' && multiOmics.computationId !== null))" advanced-query-options="advancedQueryOptions" geneList"  gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
+  <h2>{{hasResult() ? 'PanDrugs Candidate Therapies' : 'Query PanDrugs'}}</h2><report ng-if="selectedTab !== 'drugs' && hasAtLeastOneResult() && (selectedTab === 'vcfrank' || (selectedTab === 'multiomics' && multiOmics.computationId !== null))" advanced-query-options="advancedQueryOptions" gene-list="geneList" gene-presence="genePresence"  query-result="results" gene-drug-groups="resultsFiltered"
   computation="computation" multiomics="multiOmics"/>
 </div>
 
