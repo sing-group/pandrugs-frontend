@@ -184,7 +184,7 @@ angular.module('pandrugsFrontendApp')
       }.bind(this);
 
       this.getAnalysisType = function () {
-        return this.isSmallVariantsAnalysis() ? "Small Variants" : "Multi-omics";
+        return this.isSmallVariantsAnalysis() ? "Small Variants" : ("Multi-omics (Small Variants"+(this.isMultiOmicsWithExpressionAnalysis()? " + expression":"") + (this.isMultiOmicsWithCNVAnalysis()? " + CNV":"")+")");
       }.bind(this);
 
       this.getQueriedGenesLength = function () {
