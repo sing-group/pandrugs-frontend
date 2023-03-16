@@ -148,7 +148,9 @@ angular.module('pandrugsFrontendApp')
         /*if (changes.multiomics) {
           console.log(changes.multiomics.currentValue);
         }*/
-
+        if (changes.computation) {
+          console.log(changes.computation.currentValue);
+        }
       }.bind(this);
 
       this.getTopKFamilies = function (top) {

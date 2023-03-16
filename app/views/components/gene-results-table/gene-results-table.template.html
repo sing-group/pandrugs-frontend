@@ -80,7 +80,7 @@
           <dt>
             <span class="effect-prediction">C</span>
           </dt>
-          <dd><span>Condel</span></dd>
+          <dd><span>CADD</span></dd>
         </dl>
       </div>
     </div>
@@ -303,21 +303,19 @@
         <td ng-attr-colspan="{{13 + ($ctrl.showCnvInformation ? 1: 0) + ($ctrl.computation.pharmcat ? 1:0) + ($ctrl.showSnvInformation ? 1: 0) + ($ctrl.showExpressionInformation ? 1: 0) }}" style="border-top: 0px">
           <div ng-repeat="gene in geneDrug.gene" ng-if="$ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]" ng-init="affectedGenesInfo = $ctrl.getComputation().affectedGenesInfo[gene.geneSymbol]">
             <span class="variant-info">Variant information in gene {{gene.geneSymbol}}: {{affectedGenesInfo.HGVS_cDNA}} / {{affectedGenesInfo.HGVS_protein}}</span>
-            <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'stop_gained'" title="consequence of the variant in gene sequence">stop gained</span>
-            <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'frameshift_variant'" title="consequence of the variant in gene sequence">frameshift variant</span>
-            <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'missense_variant'" title="consequence of the variant in gene sequence">missense variant</span>
-            <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'inframe_insertion'" title="consequence of the variant in gene sequence">inframe insertion</span>
-            <span class="variant-consequence" ng-if="affectedGenesInfo.consequence === 'inframe_deletion'" title="consequence of the variant in gene sequence">inframe deletion</span>
-
+            
+            <span class="variant-consequence" ng-repeat="possibleConsequence in $ctrl.getComputation().getAllRelevantConsequences()" ng-if="affectedGenesInfo.consequence.includes(possibleConsequence)" title="consequence of the variant in gene sequence">{{possibleConsequence}}</span>
+            
             <span class="effect-prediction" ng-if="affectedGenesInfo.sift_effect.includes('deleterious') || affectedGenesInfo.sift_effect === 'inferred'" title="Sift prediction: {{affectedGenesInfo.sift_effect}}">S</span>
             <span class="effect-prediction" ng-if="affectedGenesInfo.poly_effect === 'probably_damaging' || affectedGenesInfo.poly_effect === 'possibly_damaging'  || affectedGenesInfo.poly_effect === 'inferred'" title="Polyphen prediction: {{affectedGenesInfo.poly_effect}}">P</span>
-            <span class="effect-prediction" ng-if="affectedGenesInfo.condel_effect === 'deleterious' || affectedGenesInfo.condel_effect === 'inferred'" title="Condel prediction: {{affectedGenesInfo.condel_effect}}">C</span>
+            <span class="effect-prediction" ng-if="affectedGenesInfo.CADD_phred !== '' && affectedGenesInfo.CADD_phred > 20" title="CADD prediction: {{affectedGenesInfo.CADD_phred}}">C</span>
 
             <span class="cosmic-prediction" ng-if="affectedGenesInfo.cosmic_id.includes('PATHOGENIC')" title="Pathogenic variant according to COSMIC">COSMIC</span>
             <span class="clinvar-prediction" ng-if="affectedGenesInfo.clinvar_clinical_significance.includes('Pathogenic')" title="Pathogenic variant according to ClinVar">ClinVar</span>
-            <span class="gmaf-value" ng-if="affectedGenesInfo.GMAF_freq !== '' && affectedGenesInfo.GMAF_freq < 1" title="Low GMAF frequency: {{affectedGenesInfo.GMAF_freq}}%">GMAF &lt; 1%</span>
+            
+            <span class="gmaf-value" ng-if="affectedGenesInfo.GMAF === '' || (affectedGenesInfo.GMAF !=='' && affectedGenesInfo.GMAF < 1)" title="Low GMAF frequency: {{affectedGenesInfo.GMAF}}%">GMAF &lt; 1%</span>
             <span class="exac-value" ng-if="affectedGenesInfo.ExAC !== '' && affectedGenesInfo.ExAC < 1" title = "Low ExAC: {{affectedGenesInfo.ExAC}}%">ExAC &lt; 1%</span>
-            <span class="gnomAD-value" ng-if="affectedGenesInfo.gnomAD !== '' && affectedGenesInfo.gnomAD < 1" title = "Low gnomAD: {{affectedGenesInfo.gnomAD}}%">gnomAD &lt; 1%</span>
+            <span class="gnomAD-value" ng-if="affectedGenesInfo.gnomAD === '' || ( affectedGenesInfo.gnomAD !== '' && affectedGenesInfo.gnomAD < 1)" title = "Low gnomAD: {{affectedGenesInfo.gnomAD}}%">gnomAD &lt; 1%</span>
             <span class="affected-domain" ng-if="affectedGenesInfo.interpro !== ''" title="Interpro affected domain">{{affectedGenesInfo.interpro}}</span>
           </div>
         </td>
