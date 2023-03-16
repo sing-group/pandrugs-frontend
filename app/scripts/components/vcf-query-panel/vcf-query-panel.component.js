@@ -64,21 +64,22 @@ angular.module('pandrugsFrontendApp')
                   if (!this.withPharmcat) {
                     if (colsCount > 11) {
                       isValid = false;
-                      error = "Number of columns exceeds 11";
+                      error = "Number of columns exceeds 11. ";
                     }
                   } else {
                     if (colsCount < 10 || colsCount > 11){
                       isValid = false;
-                      error = "Number of columns should be exactly 10 or 11";
+                      error = "For PharmCAT analysis the number of columns must be 10 or 11 in the VCF. ";
                     }
                   }
                   if (colsCount === 11) {                    
                     var lastTwoColumns = [line.split('\t')[9].toUpperCase(), line.split('\t')[10].toUpperCase()]; 
                     if (!lastTwoColumns.includes('TUMOR') || !lastTwoColumns.includes('NORMAL')) {                    
                         isValid = false;
-                        error = 'The two latests columns should be named "tumor/normal" or "normal/tumor';
+                        error = 'The two latests columns should be named "tumor/normal" or "normal/tumor. ';
                     }            
                   }
+                  error = error + 'See help for details.'
                   break;
               }
           }
