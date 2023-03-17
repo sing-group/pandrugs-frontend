@@ -43,14 +43,17 @@ angular.module('pandrugsFrontendApp')
       '"Status Description","Therapy","Drug response","Best Interaction","Family(ies)",' +
       '"Source(s)","DScore","GScore","Best Candidate Therapy","Warning(s)"';
 
-    function drugToLink(drug, pubchemId) {
+    function drugToLink(drug, pubchemId, showDrugName) {
+      if (!showDrugName) {
+        showDrugName = drug;
+      }
       var link = pubchemId === undefined
         ? 'https://pubchem.ncbi.nlm.nih.gov/#query=' + drug
         : 'https://pubchem.ncbi.nlm.nih.gov/compound/' + pubchemId;
 
       return '<a href="LINK" target="_blank">DRUG_NAME_TOKEN</a>'
         .replace('LINK', link)
-        .replace('DRUG_NAME_TOKEN', drug);
+        .replace('DRUG_NAME_TOKEN', showDrugName);
     }
 
     function geneToLink(geneSymbol) {
@@ -207,7 +210,7 @@ angular.module('pandrugsFrontendApp')
     GeneDrug.prototype.getDrugAndGenesAsHtml = function(joiner) {
       var geneSymbol = this.indirect !== null ? this.getIndirectGeneSymbol() : this.getGeneSymbols();
       geneSymbol = geneToLink(geneSymbol);
-      var drug = drugToLink(this.drug, this.getPubchemId());
+      var drug = drugToLink(this.drug, this.getPubchemId(), this.showDrugName);
 
       return $sce.trustAsHtml(drug + joiner + geneSymbol);
     };
