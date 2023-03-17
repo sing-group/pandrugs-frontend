@@ -21,7 +21,7 @@
 ### What is PanDrugs?<a name="what-is-pandrugs"></a>
 PanDrugs is a bioinformatics platform to prioritize anticancer drug treatments using individual multi-omics data. **This prioritization is performed through the intersection of two scores: the DScore and the GScore**.
 
-<div style="text-align: left"><img src="../images/pandrugs-scoring.svg" alt="PanDrugs Scoring" height="100%" width="100%"/>
+![PanDrugs Scoring](pandrugs-scoring.png)
 
 ### What does the DScore represent?<a name="dscore"></a>
 The **DScore** measures the **suitability of the treatment** for a particular patient. It is computed according to the drug indication and approval status, the number of genes associated with a drug, the nature and reliability of these associations and the type of drug response. The DScore **ranges from -1 to 1**, with the negative values corresponding to resistance and the positive values corresponding to sensitivity.

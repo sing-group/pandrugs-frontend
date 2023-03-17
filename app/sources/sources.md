@@ -1,7 +1,8 @@
-## PanDrugs Sources
+# PanDrugs Sources
+
 PanDrugs database (PanDrugsdb) integrates 74,087 drug-gene associations from 24 primary sources. In addition, PanDrugsdb relies on other databases to standardise drug and gene names and retrieve annotations to compute the DScore and GScore.
 
-<div style="text-align: left"><img src="pandrugsdb-sources.png" alt="PanDrugs Sources" height="100%" width="100%"/>
+![PanDrugs Sources](pandrugsdb-sources.png)
 
 | Source             | Version/Access Date\*/DOI      | License                     | Retrieved Information                                           |
 | ------------------ | ---------------------------- | --------------------------- | --------------------------------------------------------------- |
