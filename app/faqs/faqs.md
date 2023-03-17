@@ -6,7 +6,7 @@
 - [What are the Best Therapeutic Candidates (BTCs)?](#!/faqs#best-therapeutic-candidates)
 - [Which are PanDrugsdb sources?](#!/faqs#pandrugsdb-sources)
 - [What inputs does PanDrugs accept?](#!/faqs#pandrugs-inputs)
-<!-- - [What information does the report contain?](#!/faqs#report-info) -->
+- [What information does the report contain?](#!/faqs#report-info)
 - [Does PanDrugs include drug-gene associations involving mitochondrial genes?](#!/faqs#mitochondrial)
 - [Can I input a VCF containing only germline variants?](#!/faqs#only-germline)
 - [How do I cite PanDrugs?](#!/faqs#citation)
@@ -44,8 +44,8 @@ You can check all sources used to build PanDrugsdb on [Sources](#!/sources) page
 ### What inputs does PanDrugs accept?<a name="pandrugs-inputs"></a>
 For more information, please check the [Help](#!/help#query-options) page.
 
-<!-- ### What information does the report contain?<a name="report-info"></a> 
-For more information, please check the [help](#!/help) page. -->
+### What information does the report contain?<a name="report-info"></a> 
+For more information, please check the [Help](#!/help#report) page.
 
 ### Does PanDrugs include drug-gene associations involving mitochondrial genes?<a name="mitochondrial"></a>
 Yes, the current version of PanDrugsdb includes 73 drug-gene associations between 13 mitochondrial genes and 37 drugs.
@@ -69,14 +69,7 @@ PanDrugs is exclusively intended for research purposes and academic use. **It sh
 ### Can I use PanDrugs with non-cancer data?<a name="non-cancer-data"></a>
 PanDrugs has been designed to prioritize drugs using cancer genomics data. Nevertheless, genomics data from patients suffering from other conditions (e.g. Alzheimer's Disease) could be used for exploratory purposes. In such cases, please keep in mind that **the DScore and the GScore are biased towards cancer-related drugs and genes**. Thus, we recommend you **tier the results by the drug status and the association with the druggable gene**:
 
-| Drug Status     | Druggable Gene | Tier   |
-| --------------- | -------------- | ------ |
-| Approved        | Direct target  | Tier 1 |
-| Approved        | Biomarker      | Tier 2 |
-| Clinical Trials | Direct target  | Tier 3 |
-| Clinical Trials | Biomarker      | Tier 4 |
-| Experimental    | Direct target  | Tier 5 |
-| Experimental    | Biomarker      | Tier 6 |
+![Tier DScore](tier-table.png)]
 
 ### Can I use PanDrugs for commercial purposes?<a name="commercial-use"></a>
 PanDrugs is exclusively intended for research purposes and academic use. **In case you are interested in a collaboration, please contact the principal investigator [Fátima Al-Shahrour](mailto:falshahrour@cnio.es)**.
