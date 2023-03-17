@@ -28,6 +28,18 @@
  * Controller of the pandrugsFrontendApp
  */
 angular.module('pandrugsFrontendApp')
-  .controller('MainCtrl', function () {
-  //  $scope.d3view = 'genes';
-  });
+  .controller('MainCtrl', ['$scope', function ($scope) {
+    //  $scope.d3view = 'genes';
+
+    $scope.alert = true;
+
+    $scope.close = function(){
+      $scope.alert = false;
+    };
+
+  }]);
+
+
+
+
+    

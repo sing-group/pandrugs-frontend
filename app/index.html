@@ -87,8 +87,19 @@
       </nav>
     </div>
 
-    <div class="container-fluid">
-    <div ng-view=""></div>
+    <div class="container-fluid" ng-controller="MainCtrl">
+      <div class="row">
+        <div ng-if="alert === true" class="alert alert-info" role="alert">
+          <button type="button" class="close"  aria-label="Close" ng-click="close()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          This webpage is now for <strong>PanDrugs2</strong>, the most recent update of PanDrugs with new functionalities and database. 
+          The <strong>previous PanDrugs</strong> will be available for <strong>six months</strong> at 
+          <a href = "https://pandrugs-legacy.sing-group.org/#!/" target="_blank">pandrugs-legacy.sing-group.org</a>
+        </div>
+      </div>
+      
+     <div ng-view=""></div>
     </div>
 
     <footer>
