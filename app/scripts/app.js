@@ -107,7 +107,7 @@ angular
   }])
   .run(function($rootScope, $location, $anchorScroll){
     $rootScope.keys = Object.keys;
-
+    $rootScope.location = $location;
     //when the route is changed scroll to the proper element.
     $rootScope.$on('$routeChangeSuccess', function() {
       if($location.hash()) {

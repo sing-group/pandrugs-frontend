@@ -55,26 +55,26 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a ng-href="#!/"><img class="navbar-brand" src="images/pandrugs2-logo.svg"></a>
+            <a ng-href="#!/{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}"><img class="navbar-brand" src="images/pandrugs2-logo.svg"></a>
           </div>
 
           <div id="js-navbar-collapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-              <li ng-class="{ active: isActive('/') }"><a href="#!/">Home</a></li>
-              <li ng-class="{ active: isActive('/query/') }"><a ng-href="#!/query">Query</a></li>
-              <li ng-class="{ active: isActive('/tcga') }"><a ng-href="#!/tcga">PanDrugs in TCGA</a></li>
+              <li ng-class="{ active: isActive('/') }"><a href="#!/{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Home</a></li>
+              <li ng-class="{ active: isActive('/query/') }"><a ng-href="#!/query{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Query</a></li>
+              <li ng-class="{ active: isActive('/tcga') }"><a ng-href="#!/tcga{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">PanDrugs in TCGA</a></li>
               <li><a ng-href="{{BACKEND.APP}}">API</a></li>
-              <li ng-class="{ active: isActive('/help') }"><a ng-href="#!/help">Help</a></li>
-              <li ng-class="{ active: isActive('/faqs') }"><a ng-href="#!/faqs">FAQs</a></li>
+              <li ng-class="{ active: isActive('/help') }"><a ng-href="#!/help{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Help</a></li>
+              <li ng-class="{ active: isActive('/faqs') }"><a ng-href="#!/faqs{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">FAQs</a></li>
               <li class="dropdown pointer" ng-class="{ active: isActive('/about') || isActive('/citation') || isActive('/sources') }">
                 <a class="dropdown-toggle" data-toggle="dropdown">About<span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li ng-class="{ active: isActive('/about') }"><a href="#!/about">About us</a></li>
-                  <li ng-class="{ active: isActive('/citation') }"><a href="#!/citation">Citation</a></li>
-                  <li ng-class="{ active: isActive('/sources') }"><a href="#!/sources">Sources</a></li>
+                  <li ng-class="{ active: isActive('/about') }"><a href="#!/about{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">About us</a></li>
+                  <li ng-class="{ active: isActive('/citation') }"><a href="#!/citation{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Citation</a></li>
+                  <li ng-class="{ active: isActive('/sources') }"><a href="#!/sources{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Sources</a></li>
                 </ul>
               </li>
-              <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#!/login">Login</a></li>
+              <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#!/login{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Login</a></li>
               <li ng-show="getCurrentUser() !== 'anonymous'"><a class="pointer" ng-click="logout()">Logout ({{getCurrentUser()}})</a></li>
             </ul>
          
