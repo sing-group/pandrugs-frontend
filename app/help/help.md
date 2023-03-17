@@ -649,7 +649,7 @@ First, go to the small variants query tab and load the VCF as indicated in the s
 <div style="text-align: left;"><img src="vcf-query-example-input-01.png" alt="Multi-omics Query with VCF Input 1" height="40%" width="40%" max-width="600px"/>
 
 <!-- Update image -->
-<div style="text-align: left;"><img src="vcf-query-example-input-02.png" alt="Multi-omics Query with VCF Input 2" height="40%" width="40%" max-width="850px"/>
+<div style="text-align: left;"><img src="vcf-query-example-input-02.png" alt="Multi-omics Query with VCF Input 2" height="100%" width="100%" max-width="850px"/>
 
 Once the progress bar is complete, return to the multi-omics query tab.
 
