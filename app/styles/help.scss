@@ -43,3 +43,32 @@
 #mdcontents th { 
   border-bottom: 1px solid grey;
 }
+
+#mdcontents img {
+  max-width: 850px;
+}
+
+#mdcontents img[alt~="Sources"] {
+  max-width: initial;
+}
+
+#mdcontents img[alt~="Scoring"] {
+  max-width: initial;
+}
+#mdcontents img[alt="Tier DScore"] {
+  max-width: 500px;
+}
+
+#mdcontents img[src*="scatter-plot"],
+#mdcontents img[src*="query-output"] {
+  max-width: 1200px;
+}
+
+#mdcontents img[src*="query-example"] {
+  max-width: 1200px;
+}
+
+#mdcontents img[src*="pie-chart"],
+#mdcontents img[src*="analysis-options"] {
+  max-width: 600px;
+}
