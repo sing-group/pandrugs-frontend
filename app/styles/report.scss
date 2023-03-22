@@ -81,7 +81,9 @@
     a::after {
         content: "" !important;
     }
-
+    #report-contents ol {
+        padding-left: 1.5em;
+    }
     #report-contents {
         font-size: 9pt;
     }
@@ -100,6 +102,7 @@
     #resultsContainer > div:nth-child(2),
     footer,
     .modal-header,
+    .alert,
     report button[data-toggle="modal"],
     .header,
     /*body>div>div>div:nth-child(1),*/
