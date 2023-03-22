@@ -42,6 +42,7 @@ $dark-gray: #777777;
 $light-black: #333333;
 
 $medium-orange: #E36C0a;
+$light-orange: #f4cba9;
 
 $light-yellow: #FFFFE6;
 $medium-yellow: yellow;
@@ -51,6 +52,11 @@ $light-red: #FFEBE6;
 $medium-red: #D43F3A;
 $dark-red: #800000;
 
+$light-purple: #e4bfed;
+$dark-purple: #6e0e84;
+
+$light-pink: #e9b6d5;
+$dark-pink: #da108c;
 
 
 #logo-big {
@@ -393,18 +399,23 @@ $curated-color: $dark-green;
 $curated-background: $light-green;
 $nonCurated-color: $dark-red;
 $nonCurated-background: $light-red;
+
 $dgidb-color: $dark-green;
 $dgidb-background: $light-green;
-$moab-color: $medium-orange;
-$moab-background: $light-red;
-$targetCga-color: $dark-yellow;
-$targetCga-background: $light-yellow;
+$sabdad-color: $medium-orange;
+$sabdad-background: $light-orange;
+$moalmanac-color: $dark-yellow;
+$moalmanac-background: $light-yellow;
 $gdsc-color: $dark-blue;
 $gdsc-background: $light-blue;
-$ctrp-color: $dark-red;
-$ctrp-background: $light-red;
+$oncokb-color: $dark-red;
+$oncokb-background: $light-red;
 $expertCurated-color: $dark-gray;
 $expertCurated-background: $light-gray;
+$civic-color: $dark-purple;
+$civic-background: $light-purple;
+$drugbank-color: $dark-pink;
+$drugbank-background: $light-pink;
 
 .drug_source {
   @extend .boxed-element;
@@ -435,33 +446,31 @@ a.drug_source {
 }
 
 .drug_source[title="DGIdb"],
-.drug_source[title="DrugBank"],
 .drug_source[title="TTD"],
 .drug_source[title="PharmGKB"] {
   @include color-and-background-mixin($dgidb-color, $dgidb-background);
 }
 
 .drug_source[title="DGIdb"].active,
-.drug_source[title="DrugBank"].active,
 .drug_source[title="TTD"].active,
 .drug_source[title="PharmGKB"].active {
   @include color-and-background-mixin-hover($dgidb-color, $dgidb-background);
 }
 
-.drug_source[title="moAb"] {
-  @include color-and-background-mixin($moab-color, $moab-background);
+.drug_source[title="SAbDab"] {
+  @include color-and-background-mixin($sabdad-color, $sabdad-background);
 }
 
-.drug_source[title="moAb"].active {
-  @include color-and-background-mixin-hover($moab-color, $moab-background);
+.drug_source[title="SAbDab"].active {
+  @include color-and-background-mixin-hover($sabdad-color, $sabdad-background);
 }
 
-.drug_source[title="TARGET-CGA"] {
-  @include color-and-background-mixin($targetCga-color, $targetCga-background);
+.drug_source[title="MOAlmanac"] {
+  @include color-and-background-mixin($moalmanac-color, $moalmanac-background);
 }
 
-.drug_source[title="TARGET-CGA"].active {
-  @include color-and-background-mixin-hover($targetCga-color, $targetCga-background);
+.drug_source[title="MOAlmanac"].active {
+  @include color-and-background-mixin-hover($moalmanac-color, $moalmanac-background);
 }
 
 .drug_source[title="GDSC"] {
@@ -472,12 +481,28 @@ a.drug_source {
   @include color-and-background-mixin-hover($gdsc-color, $gdsc-background);
 }
 
-.drug_source[title="CTRP"] {
-  @include color-and-background-mixin($ctrp-color, $ctrp-background);
+.drug_source[title="OncoKB"] {
+  @include color-and-background-mixin($oncokb-color, $oncokb-background);
 }
 
-.drug_source[title="CTRP"].active {
-  @include color-and-background-mixin-hover($ctrp-color, $ctrp-background);
+.drug_source[title="OncoKB"].active {
+  @include color-and-background-mixin-hover($oncokb-color, $oncokb-background);
+}
+
+.drug_source[title="CIViC"] {
+  @include color-and-background-mixin($civic-color, $civic-background);
+}
+
+.drug_source[title="CIViC"].active {
+  @include color-and-background-mixin-hover($civic-color, $civic-background);
+}
+
+.drug_source[title="DrugBank"] {
+  @include color-and-background-mixin($drugbank-color, $drugbank-background);
+}
+
+.drug_source[title="DrugBank"].active {
+  @include color-and-background-mixin-hover($drugbank-color, $drugbank-background);
 }
 
 .drug_source[title="ExpertCurated"],
