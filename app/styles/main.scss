@@ -357,16 +357,18 @@ div.legend-body {
   background-image: url("../images/Expression/highly-overexpressed-oncogene.png");
 }
 
-.has_expression {
+.custom_icon.has_expression {
   background-image: url("../images/Icons/expression.png");
 }
 
-.has_cnv {
+.custom_icon.has_cnv {
   background-image: url("../images/Icons/cnvs.png");
 }
 
-.has_snv {
+.custom_icon.has_snv {
   background-image: url("../images/Icons/small-variants.png");
+  width: 30px;
+  height: 35px;
 }
 
 .boxed-element {
