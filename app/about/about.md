@@ -1,4 +1,4 @@
-t## About PanDrugs<a name="pandrugs-sources"></a>
+## About PanDrugs<a name="pandrugs-sources"></a>
 PanDrugs is a computational methodology implemented as a web tool to guide the selection of personalized treatments for cancer patients. 
 
 The first version of PanDrugs, which was published in 2018, prioritized anticancer drug treatments according to gene lists or somatic variants.
