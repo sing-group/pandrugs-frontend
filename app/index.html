@@ -72,6 +72,8 @@
                   <li ng-class="{ active: isActive('/about') }"><a href="#!/about{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">About us</a></li>
                   <li ng-class="{ active: isActive('/citation') }"><a href="#!/citation{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Citation</a></li>
                   <li ng-class="{ active: isActive('/sources') }"><a href="#!/sources{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Sources</a></li>
+                  <li ng-class="{ active: isActive('/pp') }"><a href="#!/pp{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Privacy Policy</a></li>
+                  <li ng-class="{ active: isActive('/tou') }"><a href="#!/tou{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Terms of Use</a></li>
                 </ul>
               </li>
               <li ng-show="getCurrentUser() === 'anonymous'" ng-class="{ active: isActive('/login') }"><a ng-href="#!/login{{location.search()['computationId']? '?computationId='+location.search()['computationId']:''}}">Login</a></li>
