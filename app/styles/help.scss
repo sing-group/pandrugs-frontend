@@ -52,33 +52,33 @@
   max-width: initial;
 }
 
-#mdcontents img[alt~="Scoring"] {
-  max-width: 1300px;
-}
+
 #mdcontents img[alt="Tier DScore"] {
   max-width: 500px;
 }
 
-#mdcontents img[src*="scatter-plot"],
-#mdcontents img[src*="query-output"] {
-  max-width: 1200px;
-}
-
-#mdcontents img[src*="query-example"] {
-  max-width: 1600px;
+#mdcontents img[alt*="Input 1"],
+#mdcontents img[alt*="New VCF Analysis"],
+#mdcontents img[alt*="Pre-computed DScores"],
+#mdcontents img[src*="pie-chart"],
+#mdcontents img[src*="analysis-options"] {
+  max-width: 600px;
 }
 
 #mdcontents img[alt*="Drug Query Input"] {
   max-width: 1000px;
 }
-#mdcontents img[alt*="Input 1"],
-#mdcontents img[alt*="New VCF Analysis"],
-#mdcontents img[alt*="PanDrugs Sources"],
-#mdcontents img[alt*="Pre-computed DScores"] {
-  max-width: 600px;
+
+#mdcontents img[src*="scatter-plot"],
+#mdcontents img[src*="query-output"],
+#mdcontents img[alt*="PanDrugs Sources"] {
+  max-width: 1200px;
 }
 
-#mdcontents img[src*="pie-chart"],
-#mdcontents img[src*="analysis-options"] {
-  max-width: 600px;
+#mdcontents img[alt~="Scoring"] {
+  max-width: 1300px;
+}
+
+#mdcontents img[src*="query-example"] {
+  max-width: 1600px;
 }
