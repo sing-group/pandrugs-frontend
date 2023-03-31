@@ -99,6 +99,12 @@ angular
       .when('/tcga', {
         templateUrl: 'views/tcga.html'
       })
+      .when('/pp', {
+        templateUrl: 'views/privacypolicy.html'
+      })
+      .when('/tou', {
+        templateUrl: 'views/termsofuse.html'
+      })
       .otherwise({
         redirectTo: '/'
       });
