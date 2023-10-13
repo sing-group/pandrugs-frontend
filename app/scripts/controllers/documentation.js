@@ -24,7 +24,8 @@
 var markdownControllerFactory = function(markdownSubdir, markdownFile, markdownName) {
   var markdownController = function($scope, $location, $http, $sce, $timeout, $anchorScroll) {
 
-   $scope.mdcontents = '<h3>Loading '+markdownName+'<img width=\"50px\" src=\"images/spinner.gif\"></h3>';
+   $scope.markdownName = markdownName;
+   $scope.mdcontents = '';
 
     $timeout(function () {
       $http.get(markdownSubdir + '/'+markdownFile).then(function (response) {

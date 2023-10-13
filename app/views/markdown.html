@@ -15,6 +15,7 @@
   along with PanDrugs Backend.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="container-fluid" id="md">
+  <h3 ng-if="mdcontents.length == 0">Loading {{markdownName}} <img width="50px" src="images/spinner.gif"></h3>
   <div id="mdcontents">
     <ng-bind-html ng-bind-html="mdcontents"/>
   </div>
