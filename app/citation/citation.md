@@ -1,6 +1,8 @@
 # Citing PanDrugs
 
-When citing our application, please refer to **PanDrugs publication:**
+When citing our application, please refer to **PanDrugs publications:**
+
+> [Jiménez-Santos, M.J., Nogueira-Rodríguez, A., Piñeiro-Yáñez, E., López-Fernández, H., García-Martín, S., Gómez-Plana, P., Reboiro-Jato, M., Gómez-López, G., Glez-Peña, D., Al-Shahrour, F. (2023). PanDrugs2: prioritizing cancer therapies using integrated individual multi-omics data. Nucleic Acids Research, 51 (Web Server Issue W1), pp. W411-W418.](https://doi.org/10.1093/nar/gkad412)
 
 > [Piñeiro-Yáñez, E., Reboiro-Jato, M., Gómez-López, G., Perales-Patón, J., Troulé, K., Rodríguez, J. M., Tejero, H., Shimamura, T., López-Casas, P. P., Carretero, J., Valencia, A., Hidalgo, M., Glez-Peña, D., & Al-Shahrour, F. (2018). PanDrugs: a novel method to prioritize anticancer drug treatments according to individual genomic data. Genome medicine, 10 (1), 41.](https://doi.org/10.1186/s13073-018-0546-1)
 
