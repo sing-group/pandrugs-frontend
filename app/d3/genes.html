@@ -5,11 +5,11 @@
 
 <!-- METADATA -->
 <title>PanDrugs vision across TCGA tumoral landscape</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="robots" content="noarchive">
 <meta name="hdl" content="PanDrugs vision across TCGA tumoral landscape">
-<meta name="lp" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on point mutations.">
+<meta name="lp" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations.">
 <meta name="dat" content="Dec 22, 2016">
 <meta name="DISPLAYDATE" content="Dec 22, 2016">
 <meta name="pdate" content="20161222">
@@ -34,7 +34,7 @@
 <meta name="PST" content="">
 <meta property="og:type" content="graph">
 <meta property="og:title" content="PanDrugs vision across TCGA tumoral landscape">
-<meta property="og:description" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on point mutations.">
+<meta property="og:description" content="This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations.">
 <meta property="og:image" content="https://static01.nyt.com/images/icons/t_logo_2048_black.png">
 <meta property="fb:app_id" content="">
 <meta name="twitter:card" value="">
@@ -74,7 +74,7 @@
 <div class="g-annotations">
   <div class="g-annotations-overall" style="opacity: 1; display: block;">
     <div class="g-annotation" style="left:620px;">
-            <button class="g-button" data-view="tumor" style="margin-top:70px;" onclick="window.top.postMessage('show-by-tumors', '*')">Show Tumors</button>
+    <button class="g-button" data-view="tumor" style="margin-top:120px;" onclick="window.top.postMessage('show-by-tumors', '*')">Show Tumors</button>
     </div>
   </div>
 </div>
@@ -84,17 +84,18 @@
     <button style="display:none;" class="g-search-clear">X</button>
   </div>
   <div class="g-buttons">
-    <button class="g-button g-active" data-view="overall"  onclick="window.top.postMessage('show-overall', '*')">The Overall Picture</button>
+    <button class="g-button g-active" data-view="overall" onclick="window.top.postMessage('show-overall', '*')">The Overall Picture</button>
     <button class="g-button" data-view="tumor" onclick="window.top.postMessage('show-by-tumor', '*')">The View by Tumor</button>
-    <button class="g-button-annot" data-view="overall" style="display: none; left: 620px; position: absolute;"  onclick="window.top.postMessage('show-overall', '*')">Show Overall</button>
+    <!-- IMPORTANT -->
+    <button class="g-button-annot" data-view="overall" style="display: none; left: 620px; margin-top:50px; position: absolute;" onclick="window.top.postMessage('show-overall', '*')">Show Overall</button>
   </div>
 </div>
 <div class="g-tumor-notes" style="opacity: 0; display: none;">
 </div>
-<div class="g-tip" style="width: 230px; height: 130px; display: none;">  
+<div class="g-tip" style="width: 230px; height: 120px; display: none;">
   <div class="g-tip-shadow"></div>
-  <svg class="g-tip-box" width="230" height="260">
-    <path transform="translate(101,90)" d="M0.5,44.4l5,-5H129v-135H-101v135H-5Z"></path>  
+  <svg class="g-tip-box" width="230" height="240">
+    <path transform="translate(101,80)" d="M0.5,44.4l5,-5H129v-135H-101v135H-5Z"></path>  
   </svg>
   <div class="g-tip-content">
     <div class="g-tip-title">Tumor</div>
@@ -117,7 +118,7 @@
     <div class="g-tip-metric" data-name="top">
       <span class="g-tip-metric-name"></span>
       <span class="g-tip-metric-value"></span>
-    </div>
+    </div>    
   </div>
 </div> <!-- end .g-tip -->
 </div> <!-- .end g-content -->
@@ -130,23 +131,23 @@
 
 // Vars for drugs
 // var consRadius = 20,
-//     dataFile = "data/pre_drugs.tsv",
+//     dataFile = "data/pre_drugs_v3.tsv",
 //     pageTitle = "PanDrugs across TCGA tumoral landscape (Drugs view)",
-//     pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations. Each bubble represents a treatment with a particular drug and the drug score is the highest one among the computed for each patient that could be treated with that compound. Only alterations with a gene score greater or equal than 0.6 are considered.",
+//     pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according to PanDrugs suggestions based on punctual genetic alterations. Each bubble represents a treatment with a particular drug and the drug score is the highest one among the computed for each patient that could be treated with that compound. Only alterations with a gene score greater or equal than 0.6 are considered. Representation shows the top 100 cases according to the percentage of patients in each TCGA cohort.",
 //     scoreName = "DScore",
 //     scoreDesc = "Measure of the suitability of the drug according to the genomic profile",
 //     metricNameNPhit = "Patients with drug assignment",
 //     metricNameNPtumor = "Patients in tumor",
 //     metricNameNPname = "Drug",
-//     metricNameTop = "Top genes",
+//     metricNameTop = "Top genes", 
 //     legendSizeDomain = [1, 5, 10, 15, 20],
 //     legendSizeTitle = "Drug / Tumor";
 
 // Vars for genes
 var consRadius = 60,
-    dataFile = "data/pre_genes.tsv",
+    dataFile = "data/pre_genes_v3.tsv",
     pageTitle = "PanDrugs across TCGA tumoral landscape (Genes view)",
-    pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study with druggable alterations according to the suggestions by PanDrugs based on punctual genetic alterations. Each bubble represents a druggable alteration and the gene score is the highest one among the computed for the altered gene in each patient. For each gene, the highest availability of the treatment is selected to establish the status label druggability of the gene (e.g. Approved in same tumor type is preferable before approved in other tumor types).",
+    pageDesc  = "This plot shows the percentage of patients in different tumor types from TCGA study with druggable alterations according to the suggestions by PanDrugs based on punctual genetic alterations. Each bubble represents a druggable alteration and the gene score is the highest one among the computed for the altered gene in each patient. For each gene, the highest availability of the treatment is selected to establish the status label druggability of the gene (e.g. Approved in same tumor type is preferable before approved in other tumor types). Only alterations with a gene score greater or equal than 0.6 are considered. A minimum percentage of 2 is required for the bubble to be represented.",
     scoreName = "GScore",
     scoreDesc = "Measure of the biological relevance of the gene in the tumoral process",
     metricNameNPhit = "Patients with gene affected",
@@ -170,7 +171,7 @@ function replaceWords() {
   d3.select("div[data-name='name'] span.g-tip-metric-name")
       .text(metricNameNPname);
   d3.select("div[data-name='top'] span.g-tip-metric-name")
-      .text(metricNameTop);
+      .text(metricNameTop);      
 
 } // end replaceWords
 
@@ -182,10 +183,10 @@ replaceWords();
 <script>(function() {
 
 
-// DECLARE MAIN VARS
-var margin = {top: 20, right: 95, bottom: 10, left: 125},
-    // width = 1100 - margin.left - margin.right,
-    width = 1200,
+// IMPORTANT: DECLARE MAIN VARS
+var margin = {top: 80, right: 0, bottom: 0, left: 130},
+    // width = 1870 - margin.left - margin.right,
+    width = 1522,
     height,
     tickExtension = 20; // extend grid lines beyond scale range
 
@@ -228,10 +229,11 @@ var z = d3.scale.ordinal()
     // Approved in other pathologies: #da7192
     // Approved in other pathologies and in clinical trials in cancer: #8376d5
     // Approved in same tumor type: #3ea87a
-    // Clinical trials: #d0ab62
+    // Clinical trials: #d0ab62 (NOT APPEAR)
     // Clinical trials in cancer: #e0966c
-    // Experimental: #2192ab    
-    .range(["#93b44b", "#da7192", "#8376d5", "#3ea87a", "#d0ab62", "#e0966c",  "#2192ab"]); // dark colors
+    // Experimental: #2192ab
+    // .range(["#93b44b", "#da7192", "#8376d5", "#3ea87a", "#d0ab62", "#e0966c",  "#2192ab"]); // dark colors  
+    .range(["#93b44b", "#da7192", "#8376d5", "#3ea87a", "#e0966c",  "#2192ab"]); // dark colors
 
 
 var xAxis = d3.svg.axis()
@@ -249,7 +251,7 @@ var quadtree = d3.geom.quadtree()
     .y(function(d) { return d.y; });
 
 var svg = d3.select(".g-graphic").append("svg")
-    .attr("height", 420 + margin.top + margin.bottom)
+    .attr("height", 420 + margin.top + margin.bottom) // IMPORTANT!! Change the height of overall graph
     .attr("width", width + margin.left + margin.right)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -263,6 +265,7 @@ var chartKey = d3.select(".g-graphic").append("svg")
 
 var gx = svg.append("g")
     .attr("class", "g-x g-axis")
+    .attr("transform", "translate(0,-60)") // IMPORTANT!! Change the position of xAxis
     .call(xAxis);
 
 var titleX = gx.append("text")
@@ -301,7 +304,8 @@ d3.tsv(dataFile, type, function(error, pandrugs) {
     return 0;
   });
 
-  height = 150 * tumors.length;
+  // Height between splitted bubble plots
+  height = 250 * tumors.length; // IMPORTANT!!
 
   y
       .domain(tumors.map(function(d) { return d.key; }))
@@ -381,7 +385,7 @@ d3.tsv(dataFile, type, function(error, pandrugs) {
       .data(tumors)
     .enter().append("div")
       .attr("class", "g-tumor-note")
-      .style("top", function(d) { return y(d.key) + "px"; })
+      .style("top", function(d) { return y(d.key)+50 + "px"; }) // IMPORTANT: The top size for the tumor-notes
       .html(function(d) { return tumorNoteByName[d.key]; });
 
   var tumorCompany = tumor.append("g")
@@ -389,6 +393,7 @@ d3.tsv(dataFile, type, function(error, pandrugs) {
     .selectAll("circle")
       .data(function(d) { return d.values; })
     .enter().append("circle")
+      .attr("dscore", function(d) { return d.score; })
       .attr("cx", function(d) { return d.cx; })
       .attr("cy", function(d) { return d.cy - y(d.tumor) + y0(nameAll); })
       .attr("r", function(d) { return (d.nphit/d.nptumor) * consRadius; })
@@ -511,7 +516,7 @@ d3.tsv(dataFile, type, function(error, pandrugs) {
 
     transition.select("svg")
         .delay(720)
-        .attr("height", 420 + margin.top + margin.bottom)
+        .attr("height", 420 + margin.top + margin.bottom) // IMPORTANT!! The height of overall graph in the transition
         .each("end", function() {
           gVoronoi.call(updateVoronoi,
             function(d) { return d.cx; },
@@ -668,8 +673,7 @@ d3.tsv(dataFile, type, function(error, pandrugs) {
     var dx, dy;
     if (currentView === "overall") dx = d.cx, dy = d.cy + y0(nameAll);
     else dx = d.x, dy = d.y + y(d.tumor);
-    // dy -= 19, dx += 50; // margin fudge factors
-    dy -= 70, dx += 25; // margin fudge factors
+    dy -= 20, dx += 30; // IMPORTANT!! margin fudge factors for the 'POP-UPS'
 
     tip.style("display", null)
         .style("top", (dy - r(d.score)) + "px")
@@ -766,7 +770,7 @@ function renderChartKey(g) {
 
   gColorTxtInstance.append("text")
       .data(z.domain().map(function(d, i) {
-        return d + ': ' + statusNoteByName[d];
+        return statusNoteByName[d].t + ': ' + statusNoteByName[d].d;
       }))
       .attr("x", 50)
       .attr("y", 6)
@@ -899,136 +903,214 @@ function type(d) {
 }
 
 var tumorNoteByName = {  
+"ACC": ""+
+	"Adrenocortical carcinoma<br/>"+
+	"Primary Site: Adrenal gland<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 89<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-ACC' target='_blank'>ACC</a> from TCGA<br/>",
 "BLCA": ""+
-  "Bladder Urothelial Carcinoma<br/>"+
-  "Primary Site: Bladder<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 153<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/UrothelialBladderCarcinoma' target='_blank'>BLCA</a> from TCGA<br/>",
+	"Bladder Urothelial Carcinoma<br/>"+
+	"Primary Site: Bladder<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 404<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-BLCA' target='_blank'>BLCA</a> from TCGA<br/>",
 "BRCA": ""+
-  "Breast Invasive Carcinoma<br/>"+
-  "Primary Site: Breast<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 934<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/breastductal' target='_blank'>breast ductal</a> and <a href='https://cancergenome.nih.gov/cancersselected/breastlobular' target='_blank'>breast lobular carcinomas</a> from TCGA<br/>",
+	"Breast invasive carcinoma<br/>"+
+	"Primary Site: Breast<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 966<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-BRCA' target='_blank'>BRCA</a> from TCGA<br/>",
 "CESC": ""+
-  "Cervical Squamous Cell Carcinoma and Endocervical Adenocarcinoma<br/>"+
-  "Primary Site: Cervix<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 134<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/cervicalcancer' target='_blank'>CESC</a> from TCGA<br/>",
+	"Cervical squamous cell carcinoma and endocervical adenocarcinoma<br/>"+
+	"Primary Site: Cervix uteri<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 281<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-CESC' target='_blank'>CESC</a> from TCGA<br/>",
+"CHOL": ""+
+	"Cholangiocarcinoma<br/>"+
+	"Primary Site: Gallbladder; Liver and intrahepatic bile ducts; Other and unspecified parts of biliary tract<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 48<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-CHOL' target='_blank'>CHOL</a> from TCGA<br/>",
 "COAD": ""+
-  "Colon Adenocarcinoma<br/>"+
-  "Primary Site: Colorectal<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 423<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/colorectaladenocarcinoma' target='_blank'>COAD</a> from TCGA<br/>",
+	"Colon adenocarcinoma<br/>"+
+	"Primary Site: Colon; Rectosigmoid junction<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 383<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-COAD' target='_blank'>COAD</a> from TCGA<br/>",
+"DLBC": ""+
+	"Lymphoid Neoplasm Diffuse Large B-cell Lymphoma<br/>"+
+	"Primary Site: Bones, joints and articular cartilage of other and unspecified sites; Brain; Breast; Colon; Connective, subcutaneous and other soft tissues; Heart, mediastinum, and pleura; Hematopoietic and reticuloendothelial systems; Lymph nodes; Other and unspecified major salivary glands; Retroperitoneum and peritoneum; Small intestine; Stomach; Testis; Thyroid gland<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 47<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-DLBC' target='_blank'>DLBC</a> from TCGA<br/>",
+"ESCA": ""+
+	"Esophageal carcinoma<br/>"+
+	"Primary Site: Esophagus; Stomach<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 182<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-ESCA' target='_blank'>ESCA</a> from TCGA<br/>",
 "GBM": ""+
-  "Glioblastoma Multiforme<br/>"+
-  "Primary Site: Brain<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 599<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/glioblastomamultiforme' target='_blank'>GBM</a> from TCGA<br/>",
+	"Glioblastoma multiforme<br/>"+
+	"Primary Site: Brain<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 365<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-GBM' target='_blank'>GBM</a> from TCGA<br/>",
 "HNSC": ""+
-  "Head and Neck Squamous Cell Carcinoma<br/>"+
-  "Primary Site: Head and Neck<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 343<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/headandneck' target='_blank'>HNSC</a> from TCGA<br/>",
+	"Head and Neck squamous cell carcinoma<br/>"+
+	"Primary Site: Base of tongue; Bones, joints and articular cartilage of other and unspecified sites; Floor of mouth; Gum; Hypopharynx; Larynx; Lip; Oropharynx; Other and ill-defined sites in lip, oral cavity and pharynx; Other and unspecified parts of mouth; Other and unspecified parts of tongue; Palate; Tonsil<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 505<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-HNSC' target='_blank'>HNSC</a> from TCGA<br/>",
+"KICH": ""+
+	"Kidney Chromophobe<br/>"+
+	"Primary Site: Kidney<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 66<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-KICH' target='_blank'>KICH</a> from TCGA<br/>",
 "KIRC": ""+
-  "Kidney Renal Clear Cell Carcinoma<br/>"+
-  "Primary Site: Kidney<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 502<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/kidneyclearcell' target='_blank'>KIRC</a> from TCGA<br/>",
+	"Kidney renal clear cell carcinoma<br/>"+
+	"Primary Site: Kidney<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 370<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-KIRC' target='_blank'>KIRC</a> from TCGA<br/>",
 "KIRP": ""+
-  "Kidney Renal Papillary Cell Carcinoma<br/>"+
-  "Primary Site: Kidney<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 117<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/kidneypapillary' target='_blank'>KIRP</a> from TCGA<br/>",
+	"Kidney renal papillary cell carcinoma<br/>"+
+	"Primary Site: Kidney<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 278<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-KIRP' target='_blank'>KIRP</a> from TCGA<br/>",
 "LAML": ""+
-  "Acute Myeloid Leukemia<br/>"+
-  "Primary Site: Bone Marrow<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 202<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/acutemyeloidleukemia' target='_blank'>LAML</a> from TCGA<br/>",
+	"Acute Myeloid Leukemia<br/>"+
+	"Primary Site: Hematopoietic and reticuloendothelial systems<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 124<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-LAML' target='_blank'>LAML</a> from TCGA<br/>",
 "LGG": ""+
-  "Brain Lower Grade Glioma<br/>"+
-  "Primary Site: Brain<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 222<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/lowergradeglioma' target='_blank'>LGG</a> from TCGA<br/>",
+	"Brain Lower Grade Glioma<br/>"+
+	"Primary Site: Brain<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 506<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-LGG' target='_blank'>LGG</a> from TCGA<br/>",
+"LIHC": ""+
+	"Liver hepatocellular carcinoma<br/>"+
+	"Primary Site: Liver and intrahepatic bile ducts<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 367<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-LIHC' target='_blank'>LIHC</a> from TCGA<br/>",
 "LUAD": ""+
-  "Lung Adenocarcinoma<br/>"+
-  "Primary Site: Lung<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 543<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/lungadenocarcinoma' target='_blank'>LUAD</a> from TCGA<br/>",
+	"Lung adenocarcinoma<br/>"+
+	"Primary Site: Bronchus and lung<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 497<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-LUAD' target='_blank'>LUAD</a> from TCGA<br/>",
 "LUSC": ""+
-  "Lung Squamous Cell Carcinoma<br/>"+
-  "Primary Site: Lung<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 389<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/lungsquamouscell' target='_blank'>LUSC</a> from TCGA<br/>",
+	"Lung squamous cell carcinoma<br/>"+
+	"Primary Site: Bronchus and lung<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 478<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-LUSC' target='_blank'>LUSC</a> from TCGA<br/>",
+"MESO": ""+
+	"Mesothelioma<br/>"+
+	"Primary Site: Bronchus and lung; Heart, mediastinum, and pleura<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 78<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-MESO' target='_blank'>MESO</a> from TCGA<br/>",
 "OV": ""+
-  "Ovarian Serous Cystadenocarcinoma<br/>"+
-  "Primary Site: Ovary<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 599<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/ovarian' target='_blank'>OV</a> from TCGA<br/>",
+	"Ovarian serous cystadenocarcinoma<br/>"+
+	"Primary Site: Ovary<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 406<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-OV' target='_blank'>OV</a> from TCGA<br/>",
 "PAAD": ""+
-  "Pancreatic Adenocarcinoma<br/>"+
-  "Primary Site: Pancreas<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 57<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/PancreaticDuctalAdenocarcinoma' target='_blank'>PAAD</a> from TCGA<br/>",
+	"Pancreatic adenocarcinoma<br/>"+
+	"Primary Site: Pancreas<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 171<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-PAAD' target='_blank'>PAAD</a> from TCGA<br/>",
+"PCPG": ""+
+	"Pheochromocytoma and Paraganglioma<br/>"+
+	"Primary Site: Adrenal gland; Connective, subcutaneous and other soft tissues; Heart, mediastinum, and pleura; Other and ill-defined sites; Other endocrine glands and related structures; Retroperitoneum and peritoneum; Spinal cord, cranial nerves, and other parts of central nervous system<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 178<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-PCPG' target='_blank'>PCPG</a> from TCGA<br/>",
 "PRAD": ""+
-  "Prostate Adenocarcinoma<br/>"+
-  "Primary Site: Prostate<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 180<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/prostatecancer' target='_blank'>PRAD</a> from TCGA<br/>",
+	"Prostate adenocarcinoma<br/>"+
+	"Primary Site: Prostate gland<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 489<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-PRAD' target='_blank'>PRAD</a> from TCGA<br/>",
 "READ": ""+
-  "Rectum Adenocarcinoma<br/>"+
-  "Primary Site: Colorectal<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 169<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/colorectaladenocarcinoma' target='_blank'>READ</a> from TCGA<br/>",
+	"Rectum adenocarcinoma<br/>"+
+	"Primary Site: Colon; Connective, subcutaneous and other soft tissues; Rectosigmoid junction; Rectum; Unknown<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 149<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-READ' target='_blank'>READ</a> from TCGA<br/>",
+"SARC": ""+
+	"Sarcoma<br/>"+
+	"Primary Site: Bones, joints and articular cartilage of limbs; Colon; Connective, subcutaneous and other soft tissues; Corpus uteri; Kidney; Meninges; Other and unspecified male genital organs; Other and unspecified parts of tongue; Ovary; Peripheral nerves and autonomic nervous system; Retroperitoneum and peritoneum; Stomach; Uterus, NOS<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 234<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-SARC' target='_blank'>SARC</a> from TCGA<br/>",
 "SKCM": ""+
-  "Skin Cutaneous Melanoma<br/>"+
-  "Primary Site: Skin<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 264<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/melanoma' target='_blank'>SKCM</a> from TCGA<br/>",
+	"Skin Cutaneous Melanoma<br/>"+
+	"Primary Site: Skin<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 410<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-SKCM' target='_blank'>SKCM</a> from TCGA<br/>",
 "STAD": ""+
-  "Stomach Adenocarcinoma<br/>"+
-  "Primary Site: Stomach<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 292<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/stomachcancer' target='_blank'>STAD</a> from TCGA<br/>",
+	"Stomach adenocarcinoma<br/>"+
+	"Primary Site: Stomach<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 403<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-STAD' target='_blank'>STAD</a> from TCGA<br/>",
+"TGCT": ""+
+	"Testicular Germ Cell Tumors<br/>"+
+	"Primary Site: Testis<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 124<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-TGCT' target='_blank'>TGCT</a> from TCGA<br/>",
 "THCA": ""+
-  "Thyroid Carcinoma<br/>"+
-  "Primary Site: Thyroid<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 435<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/thyroid' target='_blank'>THCA</a> from TCGA<br/>",
+	"Thyroid carcinoma<br/>"+
+	"Primary Site: Thyroid gland<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 488<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-THCA' target='_blank'>THCA</a> from TCGA<br/>",
+"THYM": ""+
+	"Thymoma<br/>"+
+	"Primary Site: Heart, mediastinum, and pleura; Thymus<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 121<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-THYM' target='_blank'>THYM</a> from TCGA<br/>",
 "UCEC": ""+
-  "Uterine Corpus Endometrial Carcinoma<br/>"+
-  "Primary Site: Uterus<br/>"+
-  "Type of alteration: Simple Nucleotide Variation<br/>"+
-  "Total data cases: 512<br/>"+
-  "View additional information about <a href='https://cancergenome.nih.gov/cancersselected/endometrial' target='_blank'>UCEC</a> from TCGA<br/>",
+	"Uterine Corpus Endometrial Carcinoma<br/>"+
+	"Primary Site: Corpus uteri; Uterus, NOS<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 447<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-UCEC' target='_blank'>UCEC</a> from TCGA<br/>",
+"UCS": ""+
+	"Uterine Carcinosarcoma<br/>"+
+	"Primary Site: Uterus, NOS<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 56<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-UCS' target='_blank'>UCS</a> from TCGA<br/>",
+"UVM": ""+
+	"Uveal Melanoma<br/>"+
+	"Primary Site: Eye and adnexa<br/>"+
+	"Type of alteration: Simple Nucleotide Variation<br/>"+
+	"Total data cases: 80<br/>"+
+	"See more on <a href='https://portal.gdc.cancer.gov/projects/TCGA-UVM' target='_blank'>UVM</a> from TCGA<br/>",
 };
 
 var statusNoteByName = {
-  "Approved in cancer": "Drugs approved by the FDA used in cancer treatment.",
-  "Approved in other pathologies": "Drugs approved by the FDA for conditions or pathologies different from cancer.",
-  "Approved in other pathologies and in clinical trials in cancer": "Drugs approved by the FDA for conditions or pathologies different from cancer but in a cancer clinical trial.",
-  "Approved in same tumor type": "Drugs approved by the FDA for the same tumor type than the TCGA category.",
-  "Clinical trials": "Drugs in clinical trials used in conditions or pathologies different from cancer.",
-  "Clinical trials in cancer": "Drugs in clinical trials used in cancer treatment.",
-  "Experimental": "Compounds in pre-clinical phase."
+  "Approved in cancer": {'t': "Approved in a different tumor type", 'd': "Drugs approved by the FDA used in cancer treatment for a different tumor type than the TCGA category." },
+  "Approved in other pathologies": { 't': "Approved in other pathologies", 'd': "Drugs approved by the FDA for conditions or pathologies different from cancer." },
+  "Approved in other pathologies and in clinical trials in cancer": { 't': "Approved in other pathologies and in clinical trials in cancer", 'd': "Drugs approved by the FDA for conditionsor pathologies different from cancer but in a cancer clinical trial." },
+  "Approved in same tumor type": { 't': "Approved in same tumor type", 'd': "Drugs approved by the FDA for the same tumor type than the TCGA category." },
+  "Clinical trials": { 't': "Clinical trials", 'd': "Drugs in clinical trials used in conditions or pathologies different from cancer." },
+  "Clinical trials in cancer": { 't': "Clinical trials in cancer", 'd': "Drugs in clinical trials used in cancer treatment." },
+  "Experimental": { 't': "Experimental", 'd': "Compounds in pre-clinical phase." }
 };
 
 })()</script>

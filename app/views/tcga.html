@@ -25,39 +25,47 @@
 
   // messages received from iframes, when clicking on buttons that implies
   // that the iframe height changes
-  window.onmessage = function() {
-    setTimeout(function(){
-      resizeIframe(document.getElementById('d3drugsiframe'))},
-      3000
+  window.onmessage = function () {
+    setTimeout(function () {
+      resizeIframe(document.getElementById('d3drugsiframe'))
+    },
+      3500
 
     );
-    setTimeout(function(){
-      resizeIframe(document.getElementById('d3genesiframe'))},
-      3000
+    setTimeout(function () {
+      resizeIframe(document.getElementById('d3genesiframe'))
+    },
+      3500
     );
   }
 
 </script>
 <div class="container-fluid" id="help">
-  <h3>PanDrugs across TCGA tumoral landscape (by <form id="d3viewform" class="form-horizontal" ng-init="d3view = 'drugs'">
-    <input type="radio" class = "toggle toggle-left" ng-model="d3view" value="drugs" id="d3view-drugs"><label for="d3view-drugs">Drugs</label><input type="radio" class = "toggle toggle-right" ng-model="d3view" value="genes" id="d3view-genes"><label for="d3view-genes">Genes</label>
-  </form>)
+  <h3>PanDrugs across TCGA tumoral landscape (by <form id="d3viewform" class="form-horizontal"
+      ng-init="d3view = 'drugs'">
+      <input type="radio" class="toggle toggle-left" ng-model="d3view" value="drugs" id="d3view-drugs"><label
+        for="d3view-drugs">Drugs</label><input type="radio" class="toggle toggle-right" ng-model="d3view" value="genes"
+        id="d3view-genes"><label for="d3view-genes">Genes</label>
+    </form>)
   </h3>
   <p class="tcga_desc" ng-if="d3view == 'genes'">
-  This bubble plot shows druggable mutated genes and their GScore obtained in each
-  TCGA tumor type. Bubble size represents the percentage of patients (per TCGA
-  tumor type) with a common druggable altered gene. Bubble color represents the
-  drug status (e.g. Approved, clinical trials and experimental). Only gene
-  alterations with a GScore ≥ 0.6 have been considered.
+    This plot shows the percentage of patients in different tumor types from TCGA study with druggable alterations
+    according to the suggestions by PanDrugs based on punctual genetic alterations. Each bubble represents a druggable
+    alteration and the gene score is the highest one among the computed for the altered gene in each patient. For each
+    gene, the highest availability of the treatment is selected to establish the status label druggability of the gene
+    (e.g. Approved in same tumor type is preferable before approved in other tumor types). Only alterations with a gene
+    score greater or equal than 0.6 are considered. A minimum percentage of 2 is required for the bubble to be
+    represented.
   </p>
   <p class="tcga_desc" ng-if="d3view == 'drugs'">
-  This bubble plot shows the drugs suggested by PanDrugs and their DScore computed
-  for each TCGA tumor type based on their point mutations. Bubble size represents
-  the percentage of TCGA patients that would be treated with a common drug
-  suggested by PanDrugs. Bubble color represents the drug status (e.g. Approved,
-  clinical trials and experimental).  Only gene alterations with a GScore ≥ 0.6
-  have been considered.
+    This plot shows the percentage of patients in different tumor types from TCGA study that would be treated according
+    to PanDrugs suggestions based on punctual genetic alterations. Each bubble represents a treatment with a particular
+    drug and the drug score is the highest one among the computed for each patient that could be treated with that
+    compound. Only alterations with a gene score greater or equal than 0.6 are considered. Representation shows the top
+    100 cases according to the percentage of patients in each TCGA cohort.
   </p>
-  <iframe id="d3genesiframe" ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
-  <iframe id="d3drugsiframe" ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="no" onload="resizeIframe(this)"></iframe>
+  <iframe id="d3genesiframe" ng-if="d3view == 'genes'" src="d3/genes.html" frameBorder="0" width="100%" scrolling="no"
+    onload="resizeIframe(this)"></iframe>
+  <iframe id="d3drugsiframe" ng-if="d3view == 'drugs'" src="d3/drugs.html" frameBorder="0" width="100%" scrolling="no"
+    onload="resizeIframe(this)"></iframe>
 </div>
