@@ -1,6 +1,6 @@
 {
   "name": "pandrugs-frontend",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "dependencies": {
     "angular": "1.6.4",
     "bootstrap-sass": "3.3.7",
